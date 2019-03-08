@@ -1,5 +1,5 @@
-import ActionConstant from '../ActionConstants.js';
-import {fetch} from 'whatwg-fetch';
+import ActionConstant from '../ActionConstants';
+import 'whatwg-fetch';
 
 const testJsonReceived = (res) => ({
     type: ActionConstant.ASYNC_SUCCESS,
@@ -7,13 +7,13 @@ const testJsonReceived = (res) => ({
 });
 
 const testJsonError = (hasErrored) => ({
-  type: ActionConstant.ASYNC_FAILURE,
+  type: ActionConstant.ASYNC_FAIL,
   hasErrored
 });
 
-const testJsonLoading = (loadingState) => ({
-  type: ActionConstant.ASYNC_IS_LOADING,
-  loadingState
+const testJsonLoading = (isLoading) => ({
+  type: ActionConstant.ASYNC_LOADING,
+  isLoading
 });
 
 export const getTestJson = () => {

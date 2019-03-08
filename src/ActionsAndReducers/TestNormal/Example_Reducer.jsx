@@ -1,10 +1,10 @@
-import ActionConstant from '../ActionConstants.js';
+import ActionConstant from '../ActionConstants';
 
 export const updateName = (state = '', action) => {
     switch (action.type) {
-        case ActionConstant.CHANGE_USERNAME:
+        case ActionConstant.NORMAL_ACTION:
             return state = action.payload;
         default:
-            return state;
+            return state = '';
     }
 };
