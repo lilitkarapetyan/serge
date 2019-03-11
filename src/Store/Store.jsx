@@ -1,6 +1,6 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
-import { updateName } from '../ActionsAndReducers/TestNormal/Example_Reducer';
-import { asyncReducer } from '../ActionsAndReducers/ExampleAsync/Async_Reducer';
+import { createMessageReducer } from "../ActionsAndReducers/pouchDb/pouchDb_Reducer";
+import { retrieveAllMessagesReducer } from "../ActionsAndReducers/pouchDb/pouchDbAllMessages_Reducer";
 import thunk from 'redux-thunk';
 
 const middlewares = [thunk];
@@ -12,6 +12,6 @@ if (process.env.NODE_ENV === `development`) {
 
 
 export default createStore(combineReducers({
-  username: updateName,
-  data: asyncReducer,
+  messageSendStatus: createMessageReducer,
+  allMessages: retrieveAllMessagesReducer,
 }), applyMiddleware(...middlewares));

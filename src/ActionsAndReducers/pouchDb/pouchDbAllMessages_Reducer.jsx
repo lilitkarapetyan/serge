@@ -3,26 +3,20 @@ import copyState from "../copyStateHelper.js";
 
 var initialState = {
   isLoading: false,
-  hasErrored: false,
-  payload: null
+  messages: [],
 };
 
-export const asyncReducer = (state = initialState, action) => {
+export const retrieveAllMessagesReducer = (state = initialState, action) => {
 
   var newState = copyState(state);
 
   switch (action.type) {
-
-    case ActionConstant.ASYNC_LOADING:
+    case ActionConstant.DB_MESSAGE_GET_LOADING:
       newState.isLoading = action.isLoading;
       return newState;
 
-    case ActionConstant.ASYNC_FAIL:
-      newState.hasErrored = action.error ? true : false;
-      return newState;
-
-    case ActionConstant.ASYNC_SUCCESS:
-      newState.payload = action.payload;
+    case ActionConstant.DB_SAVE_MESSAGES:
+      newState.messages = action.payload.rows;
       return newState;
 
     default:
