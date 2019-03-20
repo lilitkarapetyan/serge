@@ -6,16 +6,16 @@ var initialState = {
   messages: [],
 };
 
-export const retrieveAllMessagesReducer = (state = initialState, action) => {
+export const messageTypesReducer = (state = initialState, action) => {
 
   var newState = copyState(state);
 
   switch (action.type) {
-    case ActionConstant.DB_MESSAGE_GET_LOADING:
+    case ActionConstant.DB_MESSAGE_TYPES_GET:
       newState.isLoading = action.isLoading;
       return newState;
 
-    case ActionConstant.DB_SAVE_MESSAGES:
+    case ActionConstant.DB_MESSAGE_TYPES_SAVED:
       newState.messages = action.payload.rows;
       return newState;
 

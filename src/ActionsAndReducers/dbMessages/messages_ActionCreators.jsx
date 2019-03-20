@@ -2,7 +2,7 @@ import ActionConstant from '../ActionConstants';
 import 'whatwg-fetch';
 import check from 'check-types';
 
-import { addMessage, getAllMessages } from '../../pouchDB/db';
+import { addMessage, getAllMessages } from '../../pouchDB/dbMessageTypes';
 
 const DBMessageSaveStatus = (status) => ({
   type: ActionConstant.DB_MESSAGE_STATUS,
@@ -10,7 +10,7 @@ const DBMessageSaveStatus = (status) => ({
 });
 
 const DBSaveMessageArray = (messages) => ({
-  type: ActionConstant.DB_SAVE_MESSAGES,
+  type: ActionConstant.DB_MESSAGE_TYPES_SAVED,
   payload: messages
 });
 
@@ -20,13 +20,13 @@ const loadingDBMessageCreate = (isLoading) => ({
 });
 
 const loadingDBMessageGet = (isLoading) => ({
-  type: ActionConstant.DB_MESSAGE_GET_LOADING,
+  type: ActionConstant.DB_MESSAGE_TYPES_GET,
   isLoading
 });
 
-export const createDBMessage = (message) => {
+export const createMessageType = (message) => {
 
-  if (!check.object(message)) throw `createDBMessage() requires object with message, from & to NOT. ${message}`;
+  if (!check.object(message)) throw Error(`createMessageType() requires object with message, from & to NOT. ${message}`);
 
   return async (dispatch) => {
     dispatch(loadingDBMessageCreate(true));
@@ -43,7 +43,7 @@ export const createDBMessage = (message) => {
   }
 };
 
-export const retrieveAllMessages = () => {
+export const getAllMessageTypes = () => {
   return async (dispatch) => {
     dispatch(loadingDBMessageGet(true));
 
