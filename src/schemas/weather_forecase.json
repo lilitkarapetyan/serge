@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "properties": {
+    "Location": {
+      "type": "object",
+      "properties": {
+        "Lat": {
+          "type": "number"
+        },
+        "Lat Hemi": {
+          "type": "string",
+          "enum": [
+            "N",
+            "S"
+          ]
+        },
+        "Long": {
+          "type": "number"
+        },
+        "Long Hemi": {
+          "type": "string",
+          "enum": [
+            "E",
+            "W"
+          ]
+        }
+      },
+      "format": "grid"
+    },
+    "Valid from": {
+      "type": "string",
+      "format": "datetime-local"
+    },
+    "Valid until": {
+      "type": "string",
+      "format": "datetime-local"
+    },
+    "Forecast": {
+      "type": "string",
+      "format": "textarea"
+    }
+  },
+  "title": "Weather Forecast"
+}

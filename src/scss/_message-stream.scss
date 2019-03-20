@@ -1,0 +1,40 @@
+@import 'dependencies/variables';
+
+#messages {
+  border: 1px solid black;
+  height: 250px;
+  overflow-y: scroll;
+
+  .single-message {
+    padding-top: 15px;
+    padding-bottom: 15px;
+
+    &:nth-child(even) {
+      background: $lightGrey;
+    }
+
+    h4, h5 {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 20px;
+      line-height: 1.35em;
+      font-weight: 700;
+    }
+    h5 {
+      font-size: 16px;
+      font-weight: 400;
+    }
+    span {
+      font-family: 'IBM Plex Mono', sans-serif;
+      font-weight: bold;
+
+      &:first-of-type {
+        margin-right: .75em;
+      }
+    }
+    p {
+      font-family: 'IBM Plex Mono', sans-serif;
+      font-size: 14px;
+      margin-top: 1em;
+    }
+  }
+}

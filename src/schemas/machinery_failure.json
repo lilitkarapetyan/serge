@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "Date": {
+      "type": "string",
+      "format": "datetime-local"
+    },
+    "Status": {
+      "type": "string",
+      "enum": [
+        "Minor",
+        "Major",
+        "Critical"
+      ]
+    },
+    "Description": {
+      "type": "string",
+      "format": "textarea"
+    }
+  },
+  "title": "Machinery Failure",
+  "format": "grid"
+}
