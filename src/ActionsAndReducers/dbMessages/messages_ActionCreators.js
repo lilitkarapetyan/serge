@@ -2,7 +2,7 @@ import ActionConstant from '../ActionConstants';
 import 'whatwg-fetch';
 import check from 'check-types';
 
-import { addMessage, getAllMessages } from '../../pouchDB/dbMessageTypes';
+import { addMessage, getAllMessagesFromDB, getMessageFromDB } from '../../pouchDB/dbMessages';
 
 const DBMessageSaveStatus = (status) => ({
   type: ActionConstant.DB_MESSAGE_STATUS,
@@ -10,8 +10,13 @@ const DBMessageSaveStatus = (status) => ({
 });
 
 const DBSaveMessageArray = (messages) => ({
-  type: ActionConstant.DB_MESSAGE_TYPES_SAVED,
+  type: ActionConstant.DB_MESSAGE_SAVED,
   payload: messages
+});
+
+const DBSaveMessagePreview = (message) => ({
+  type: ActionConstant.DB_RETURNED_MESSAGE,
+  payload: message
 });
 
 const loadingDBMessageCreate = (isLoading) => ({
@@ -20,11 +25,20 @@ const loadingDBMessageCreate = (isLoading) => ({
 });
 
 const loadingDBMessageGet = (isLoading) => ({
-  type: ActionConstant.DB_MESSAGE_TYPES_GET,
+  type: ActionConstant.DB_MESSAGES_GET,
   isLoading
 });
 
-export const createMessageType = (message) => {
+export const resetMessagePreview = () => ({
+  type: ActionConstant.RESET_MESSAGE_PREVIEW,
+});
+
+
+/*
+ * - below are async getters
+ */
+
+export const createMessage = (message) => {
 
   if (!check.object(message)) throw Error(`createMessageType() requires object with message, from & to NOT. ${message}`);
 
@@ -35,7 +49,7 @@ export const createMessageType = (message) => {
 
     if (result.ok) {
       dispatch(DBMessageSaveStatus(result));
-      let messages = await getAllMessages();
+      let messages = await getAllMessagesFromDB();
       dispatch(DBSaveMessageArray(messages));
     }
 
@@ -43,11 +57,22 @@ export const createMessageType = (message) => {
   }
 };
 
-export const getAllMessageTypes = () => {
+export const getSingleMessage = (id) => {
   return async (dispatch) => {
     dispatch(loadingDBMessageGet(true));
 
-    let result = await getAllMessages();
+    let result = await getMessageFromDB(id);
+
+    dispatch(DBSaveMessagePreview(result));
+    dispatch(loadingDBMessageGet(false));
+  }
+};
+
+export const getAllMessages = () => {
+  return async (dispatch) => {
+    dispatch(loadingDBMessageGet(true));
+
+    let result = await getAllMessagesFromDB();
 
     dispatch(DBSaveMessageArray(result));
     dispatch(loadingDBMessageGet(false));

@@ -14,7 +14,7 @@ import JSONEditor from '@json-editor/json-editor';
 // }
 import '../scss/App.scss';
 
-class JsonCreator extends Component {
+class JsonEditor extends Component {
 
   constructor(props) {
     super(props);
@@ -67,4 +67,4 @@ const mapStateToProps = ({}) => ({
 
 });
 
-export default connect(mapStateToProps)(JsonCreator);
+export default connect(mapStateToProps)(JsonEditor);

@@ -1,0 +1,112 @@
+import React, { Component } from 'react';
+// import ReactDOM from "react-dom";
+import '../scss/App.scss';
+import { connect } from "react-redux";
+
+import JsonCreator from "../Components/JsonCreator";
+
+import {setOpenMessage} from "../ActionsAndReducers/setOpenMessage/setOpenMessage_ActionCreators";
+import {getAllMessageTypes} from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
+import { resetMessagePreview } from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
+
+import Link from "../Components/Link";
+import SearchList from "../Components/SearchList";
+
+class EditMessage extends Component {
+
+  constructor(props) {
+    super(props);
+
+    let viewType = this.props.currentViewURI.split('/')[2];
+
+    let messageToEdit = this.props.messages.messagePreviewId;
+
+    this.state = {
+      viewType,
+      messageList: messageToEdit ? this.props.messages.messages : this.props.messageTypes.messages, // set to state for filter, without filter don't set props to state to avoid bugs
+      searchInput: '',
+      messageToEdit,
+    };
+
+  }
+
+  componentWillMount() {
+    this.props.dispatch(getAllMessageTypes());
+    this.props.dispatch(resetMessagePreview());
+  };
+
+  componentWillReceiveProps(nextProps, nextContext) {
+
+    const messageToEdit = nextProps.messages.messagePreviewId;
+    const messageList = messageToEdit ? this.props.messages.messages : this.props.messageTypes.messages;
+    const nextMessageList = messageToEdit ? nextProps.messages.messages : nextProps.messageTypes.messages;
+
+    if (messageList.length !== nextMessageList.length) {
+      this.setState({
+        messageToEdit,
+        messageList: nextMessageList
+      });
+    }
+
+    // if (this.props.messageTypes.messages.length !== nextProps.messageTypes.messages.length) {
+    //   this.setState({
+    //     messageList: nextProps.messageTypes.messages
+    //   });
+    // }
+  }
+
+  setOpenMessageId(id) {
+    this.props.dispatch(setOpenMessage(id));
+  }
+
+  filterMessages = (input) => {
+
+    let value = input.target.value;
+
+    const messageList = this.state.messageToEdit ? this.props.messages : this.props.messageTypes;
+
+    let newState = messageList.messages.filter(function(mes) {
+      return mes.doc.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
+    });
+
+    console.log(newState);
+
+    this.setState({
+      messageList: newState,
+      searchInput: value.toLowerCase()
+    });
+  };
+
+  render() {
+    return (
+      <div className="view-wrapper">
+        <Link href="/">Home</Link>
+        <h1>Message library</h1>
+        <div className="flex-content-wrapper">
+          <div id="selection" className="flex-content">
+            <SearchList className="search"
+                        key="search-templates"
+                        messageList={this.state.messageList}
+                        filterMessages={this.filterMessages}
+                        searchInput={ this.state.searchInput }
+                        placeholder={'Select template'}
+            />
+          </div>
+          <div id="preview" className="flex-content flex-content--big">
+            {/*<JsonCreator id="preview" messageList={ this.state.messageList } curOpenMessageId={ this.props.curOpenMessageId } disabled={false} />*/}
+            <JsonCreator id="preview" disabled={false} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = ({ messages, messageTypes, curOpenMessageId, currentViewURI }) => ({
+  messages,
+  messageTypes,
+  curOpenMessageId,
+  currentViewURI
+});
+
+export default connect(mapStateToProps)(EditMessage);
