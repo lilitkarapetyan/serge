@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Link from "../Components/Link";
 
 import moment from "moment";
+import check from "check-types";
 
 import { getAllMessageTypes } from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
 import { setOpenMessage } from "../ActionsAndReducers/setOpenMessage/setOpenMessage_ActionCreators";
@@ -11,6 +12,7 @@ import { getAllMessages, resetMessagePreview } from "../ActionsAndReducers/dbMes
 
 import JsonEditor from "../Components/JsonCreator";
 import SearchList from "../Components/SearchList";
+import MessagePreview from "../Components/MessagePreview";
 // import { Edit, Duplicate, Delete } from "../ReusableLogic/editDuplicateDelete";
 import '../scss/App.scss';
 
@@ -148,47 +150,76 @@ class MessageUIContainer extends Component {
 
   // bring into component..
   // --------
-  createMessagePreview() {
-
-    var printObject = (obj) => {
-
-      let keyPropPairs = Object.entries(obj);
-
-      return keyPropPairs.map((pair, i) => {
-        if (typeof pair[1] === 'object') {
-          printObject(pair[1]);
-        }
-        if (moment(pair[1], moment.ISO_8601, true).isValid()) {
-          return <p key={`date${i}`}><b>{pair[0]}: </b>{moment(pair[1]).format('Do MMMM YYYY, h:mm:ss a')}</p>
-        }
-
-
-        return <p key={`${pair[0]}-${pair[1]}-${i}`}><b>{pair[0]}: </b>{pair[1]}</p>
-      });
-    };
-
-    if (!this.props.messages.messagePreview.details) return false;
-
-    let keyPropPairs = Object.entries(this.props.messages.messagePreview.details);
-
-    return keyPropPairs.map((pair, i) => {
-      if (i===0) {
-        return <h2 key="title">{pair[1]}</h2>
-      }
-
-      if (moment(pair[1], moment.ISO_8601, true).isValid()) {
-        return <p key={`date--${i}`}><b>{pair[0]}: </b>{moment(pair[1]).format('Do MMMM YYYY, h:mm:ss a')}</p>
-      }
-
-      if (typeof pair[1] === 'object') {
-        return printObject(pair[1]);
-      }
-
-      return <p key={`info-${i}`}>{pair[0]}: {pair[1]}</p>
-    });
-
-    return false;
-  }
+  // createMessagePreview() {
+  //
+  //   var printObject = (obj) => {
+  //
+  //     console.log('INPUT OBJ ---- ', obj);
+  //
+  //     let keyPropPairs = Object.entries(obj);
+  //
+  //     return keyPropPairs.map((pair, i) => {
+  //
+  //       console.log(pair);
+  //
+  //       // break ifs into methods within component
+  //       if (check.object(pair[1])) {
+  //         return <p key={`${pair[0]}-${pair[1]}-${i}`}><b>{pair[0]}: </b>{ printObject(pair[1]) }</p>
+  //       }
+  //
+  //       if (check.array.of.object(pair[1])) {
+  //         // don't do keyPropPairs do keyPropPairs for each item if item object
+  //         pair[1].forEach((item) => {
+  //           // CHECK NAME PROP ON EVERY OBJ
+  //           return <span key={`section--${item.name}`}>{ printObject(item) }</span>;
+  //         });
+  //       }
+  //
+  //       if (check.boolean(pair[1])) {
+  //         return <p key={`${pair[0]}-${pair[1]}-${i}`}>{pair[1] ? pair[0] : false}</p>
+  //       }
+  //
+  //       if (moment(pair[1], moment.ISO_8601, true).isValid()) {
+  //         return <p key={`date${i}`}><b>{pair[0]}: </b>{moment(pair[1]).format('Do MMMM YYYY, h:mm:ss a')}</p>
+  //       }
+  //
+  //       console.log(pair[0], pair[1]);
+  //
+  //       return <p key={`${pair[0]}-${pair[1]}-${i}`}><b>{pair[0]}: </b>{pair[1]}</p>
+  //     });
+  //   };
+  //
+  //   if (!this.props.messages.messagePreview.details) return false;
+  //
+  //   let keyPropPairs = Object.entries(this.props.messages.messagePreview.details);
+  //
+  //   return keyPropPairs.map((pair, i) => {
+  //
+  //     if (i===0) {
+  //       return <h2 key="title">{pair[1]}</h2>
+  //     }
+  //
+  //     if (moment(pair[1], moment.ISO_8601, true).isValid()) {
+  //       return <p key={`date--${i}`}><b>{pair[0]}: </b>{moment(pair[1]).format('Do MMMM YYYY, h:mm:ss a')}</p>
+  //     }
+  //
+  //     if (check.object(pair[1])) {
+  //       return printObject(pair[1]);
+  //     }
+  //
+  //     if (check.array.of.object(pair[1])) {
+  //       // don't do keyPropPairs do keyPropPairs for each item if item object
+  //       pair[1].forEach((item) => {
+  //         return printObject(item);
+  //       });
+  //     }
+  //
+  //     return <p key={`info-${i}`}>{pair[0]}: {pair[1]}</p>
+  //   });
+  //
+  //   return false;
+  // }
+  // BRING INTO COMPONENT
 
 
   render() {
@@ -205,8 +236,9 @@ class MessageUIContainer extends Component {
               <JsonEditor id="preview" messageList={ this.props.messageTypes } curOpenMessageId={ this.props.curOpenMessageId } disabled={true} />
             :
               // show message in preview
-              <div>
-                 { this.createMessagePreview() }
+              <div id="message-preview">
+                 {/*{ this.createMessagePreview() }*/}
+                <MessagePreview detail={this.props.messages.messagePreview.details} />
               </div>
             }
           </div>

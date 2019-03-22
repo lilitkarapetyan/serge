@@ -36,31 +36,43 @@ class JsonCreator extends Component {
 
 
     if (nextProps.curOpenMessageId.length > 0) {
+
       this.editor = new JSONEditor(this.editorPreviewRef.current, {
         // schema: this.props.messageList.find((mes) => mes.id === nextProps.curOpenMessageId).doc.details,
         schema: nextProps.messageTypes.messages.find((mes) => mes.id === nextProps.curOpenMessageId).doc.details,
         theme: 'bootstrap4'
       });
 
-      if (this.state.selectedSchema !== nextState.selectedSchema) {
+      if (
+        this.state.selectedSchema !== nextState.selectedSchema ||
+        this.state.selectedSchema.length === 0
+      ) {
+
         this.setState({
           selectedSchema: nextProps.messageTypes.messages.find((mes) => mes.id === nextProps.curOpenMessageId).id
         });
       }
     }
 
-    if (nextProps.messages.messagePreviewId.length > 0 && nextProps.edit) {
+    if (
+      nextProps.messages.messagePreviewId.length > 0 &&
+      nextProps.messageTypes.messages.length > 0 &&
+      nextProps.edit
+    ) {
+
+      const schemaId = nextProps.messages.messages.find((mes) => mes.id === nextProps.messages.messagePreviewId).doc.schemaId;
 
       this.editor = new JSONEditor(this.editorPreviewRef.current, {
-        schema: nextProps.messageList.find((mes) => mes.id === nextProps.messages.messagePreviewId),
+        schema: nextProps.messageTypes.messages.find((mes) => mes.id === schemaId).doc.details,
         theme: 'bootstrap4'
       });
 
-      const data = nextProps.messages.messages.filter(function(mes) {
+      const data = nextProps.messages.messages.find(function(mes) {
         return mes.doc._id.toLowerCase().indexOf(nextProps.messages.messagePreviewId.toLowerCase()) > -1;
       });
-      console.log(data);
-      this.editor.setValue(data);
+
+      this.editor.setValue(data.doc.details);
+
     }
 
     if (this.props.disabled) {
@@ -87,7 +99,7 @@ class JsonCreator extends Component {
 
 const mapStateToProps = ({ messages, messageTypes, curOpenMessageId, currentViewURI }) => ({
   messages,
-  // messageTypes,
+  messageTypes,
   curOpenMessageId,
   currentViewURI,
 });
