@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from "react-redux";
 
-import { createMessage } from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
+import { createMessage, updateMessage } from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
 
 import JSONEditor from '@json-editor/json-editor';
 // import flatpickr from "flatpickr";
@@ -13,6 +13,7 @@ import JSONEditor from '@json-editor/json-editor';
 //     "allowInput": true
 // }
 import '../scss/App.scss';
+import {setSelectedSchema} from "../ActionsAndReducers/selectedSchema/selectedSchema_ActionCreators";
 
 class JsonCreator extends Component {
 
@@ -25,15 +26,31 @@ class JsonCreator extends Component {
     this.state = {
       selectedSchema: ''
     };
-
   }
+
+  createEditMessageEditor(nextProps) {
+    const schemaId = nextProps.messages.messages.find((mes) => mes.id === nextProps.messages.messagePreviewId).doc.schemaId;
+
+    console.log(nextProps.messages);
+
+    this.editor = new JSONEditor(this.editorPreviewRef.current, {
+      schema: nextProps.messageTypes.messages.find((mes) => mes.id === schemaId).doc.details,
+      theme: 'bootstrap4'
+    });
+
+    const data = nextProps.messages.messages.find(function(mes) {
+      return mes.doc._id.toLowerCase().indexOf(nextProps.messages.messagePreviewId.toLowerCase()) > -1;
+    });
+
+    this.editor.setValue(data.doc.details);
+  }
+
 
   componentWillUpdate(nextProps, nextState, nextContext) {
 
     if (this.editor) {
       this.editor.destroy();
     }
-
 
     if (nextProps.curOpenMessageId.length > 0) {
 
@@ -42,16 +59,6 @@ class JsonCreator extends Component {
         schema: nextProps.messageTypes.messages.find((mes) => mes.id === nextProps.curOpenMessageId).doc.details,
         theme: 'bootstrap4'
       });
-
-      if (
-        this.state.selectedSchema !== nextState.selectedSchema ||
-        this.state.selectedSchema.length === 0
-      ) {
-
-        this.setState({
-          selectedSchema: nextProps.messageTypes.messages.find((mes) => mes.id === nextProps.curOpenMessageId).id
-        });
-      }
     }
 
     if (
@@ -59,30 +66,29 @@ class JsonCreator extends Component {
       nextProps.messageTypes.messages.length > 0 &&
       nextProps.edit
     ) {
-
-      const schemaId = nextProps.messages.messages.find((mes) => mes.id === nextProps.messages.messagePreviewId).doc.schemaId;
-
-      this.editor = new JSONEditor(this.editorPreviewRef.current, {
-        schema: nextProps.messageTypes.messages.find((mes) => mes.id === schemaId).doc.details,
-        theme: 'bootstrap4'
-      });
-
-      const data = nextProps.messages.messages.find(function(mes) {
-        return mes.doc._id.toLowerCase().indexOf(nextProps.messages.messagePreviewId.toLowerCase()) > -1;
-      });
-
-      this.editor.setValue(data.doc.details);
-
+      this.createEditMessageEditor(nextProps);
     }
 
     if (this.props.disabled) {
       this.editor.disable();
     }
+
+    const selectedSchema = nextProps.messageTypes.messages.find((mes) => mes.id === nextProps.curOpenMessageId);
+
+    if (!selectedSchema) return false;
+
+    if (selectedSchema.id !== nextProps.selectedSchema) {
+      this.props.dispatch(setSelectedSchema(selectedSchema.id));
+    }
   }
 
 
   saveMessage = () => {
-    this.props.dispatch(createMessage(this.editor.getValue(), this.state.selectedSchema));
+    if (this.props.edit) {
+      this.props.dispatch(updateMessage(this.editor.getValue(), this.props.messages.messagePreviewId, this.props.selectedSchema));
+    } else {
+      this.props.dispatch(createMessage(this.editor.getValue(), this.props.selectedSchema));
+    }
   };
 
 
@@ -97,11 +103,12 @@ class JsonCreator extends Component {
   }
 }
 
-const mapStateToProps = ({ messages, messageTypes, curOpenMessageId, currentViewURI }) => ({
+const mapStateToProps = ({ messages, messageTypes, curOpenMessageId, currentViewURI, selectedSchema }) => ({
   messages,
   messageTypes,
   curOpenMessageId,
   currentViewURI,
+  selectedSchema
 });
 
 export default connect(mapStateToProps)(JsonCreator);

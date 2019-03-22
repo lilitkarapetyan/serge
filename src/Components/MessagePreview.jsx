@@ -11,6 +11,9 @@ class MessagePreview extends Component {
     super(props);
   }
 
+  componentWillMount() {
+  }
+
   createObjItem(pair) {
     const that = this;
     return <span key={`objItem--${pair[0]}-${pair[1]}`}><b>{pair[0]}: </b>{ that.deconstructObj(pair[1]) }</span>
@@ -26,7 +29,6 @@ class MessagePreview extends Component {
 
   createStrItem(pair, withoutName) {
     // if (withoutName) return <p key={`${pair[0]}-${pair[1]}`}>{pair[1]}</p>;
-
     return <span key={`${pair[0]}-${pair[1]}`}><b>{pair[0]}: </b>{pair[1]}</span>
   }
 
@@ -72,7 +74,7 @@ class MessagePreview extends Component {
 
     return keyPropPairs.map((pair, i) => {
 
-      if (i===0) return <h2 key="title">{pair[1]}</h2>;
+      if (i===0) return <h2 key={`title${pair[1]}`}>{pair[1]}</h2>;
 
       if (check.object(pair[1])) return that.createObjItem(pair);
       if (check.array.of.object(pair[1])) return that.deconstructArr(pair);

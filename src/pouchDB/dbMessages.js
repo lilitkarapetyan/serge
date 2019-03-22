@@ -81,7 +81,29 @@ export function addMessage(messageObj, schemaId) {
   };
   return db.put(message)
     .then(function(res) { return res })
-};
+}
+
+
+export function updateMessageInDB(message, id, schemaId) {
+
+  console.log(id);
+
+  return new Promise((resolve, reject) => {
+    db.get(id)
+      .then(function (doc) {
+        console.log(doc);
+        return db.put({
+          _id: id,
+          _rev: doc._rev,
+          details: message,
+          schemaId
+        });
+      })
+      .catch(function (err) {
+        console.log(err);
+      })
+  });
+}
 
 
 export function getMessageFromDB(id) {
