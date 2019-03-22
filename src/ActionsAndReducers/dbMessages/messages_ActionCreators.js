@@ -2,7 +2,7 @@ import ActionConstant from '../ActionConstants';
 import 'whatwg-fetch';
 import check from 'check-types';
 
-import { addMessage, getAllMessagesFromDB, getMessageFromDB } from '../../pouchDB/dbMessages';
+import {addMessage, getAllMessagesFromDB, getMessageFromDB, updateMessageInDB} from '../../pouchDB/dbMessages';
 
 const DBMessageSaveStatus = (status) => ({
   type: ActionConstant.DB_MESSAGE_STATUS,
@@ -57,13 +57,32 @@ export const createMessage = (message, schemaId) => {
   }
 };
 
+export const updateMessage = (message, id) => {
+
+  if (!check.object(message)) throw Error(`createMessageType() requires object with message, from & to NOT. ${message}`);
+
+  return async (dispatch) => {
+    dispatch(loadingDBMessageCreate(true));
+
+    let result = await updateMessageInDB(message, id);
+
+    console.log(result);
+
+    if (result.ok) {
+      dispatch(DBMessageSaveStatus(result));
+      let messages = await getAllMessagesFromDB();
+      dispatch(DBSaveMessageArray(messages));
+    }
+
+    dispatch(loadingDBMessageCreate(false));
+  }
+};
+
 export const getSingleMessage = (id) => {
   return async (dispatch) => {
     dispatch(loadingDBMessageGet(true));
 
     let result = await getMessageFromDB(id);
-
-    console.log(result);
 
     dispatch(DBSaveMessagePreview(result));
     dispatch(loadingDBMessageGet(false));

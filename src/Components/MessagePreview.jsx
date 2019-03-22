@@ -11,9 +11,17 @@ class MessagePreview extends Component {
     super(props);
   }
 
+  componentWillMount() {
+  }
+
   createObjItem(pair) {
     const that = this;
-    return <span key={`objItem--${pair[0]}-${pair[1]}`}><b>{pair[0]}: </b>{ that.deconstructObj(pair[1]) }</span>
+    return (
+      <>
+        {/*<h3>{pair[0]}</h3>*/}
+        <span key={`objItem--${pair[0]}-${pair[1]}`}>{ that.deconstructObj(pair[1]) }</span>
+      </>
+    )
   }
 
   createBoolItem(pair) {
@@ -21,26 +29,34 @@ class MessagePreview extends Component {
   }
 
   createTimeItem(pair) {
-    return <span key={`dateTime-${pair[1]}`}><b>{pair[0]}: </b>{moment(pair[1]).format('Do MMMM YYYY, h:mm:ss a')}</span>
+
+    return (
+      <>
+        <h3>{pair[0]}</h3>
+        <span key={`dateTime-${pair[1]}`}>{moment(pair[1]).format('Do MMMM YYYY, hh:mm')}</span>
+      </>
+    )
   }
 
   createStrItem(pair, withoutName) {
     // if (withoutName) return <p key={`${pair[0]}-${pair[1]}`}>{pair[1]}</p>;
-
     return <span key={`${pair[0]}-${pair[1]}`}><b>{pair[0]}: </b>{pair[1]}</span>
+    // return <span key={`${pair[0]}-${pair[1]}`}>{pair[1]}</span>
   }
 
   deconstructArr(pair) {
     const that = this;
-    return pair[1].map((item) => {
-      // CHECK NAME PROP ON EVERY OBJ
-      return (
-        <>
-          <h3>{pair[0]}</h3>
-          <span key={`section--${item.name}`}>{ that.deconstructObj(item) }</span>
-        </>
-      );
-    });
+    return (
+      <>
+        <h3>{pair[0]}</h3>
+        {pair[1].map((item) => {
+          // CHECK NAME PROP ON EVERY OBJ
+          return (
+              <span key={`section--${item.name}`}>{ that.deconstructObj(item) }</span>
+          );
+        })}
+      </>
+    );
   }
 
 
@@ -72,7 +88,7 @@ class MessagePreview extends Component {
 
     return keyPropPairs.map((pair, i) => {
 
-      if (i===0) return <h2 key="title">{pair[1]}</h2>;
+      if (i===0) return <h2 key={`title${pair[1]}`}>{pair[1]}</h2>;
 
       if (check.object(pair[1])) return that.createObjItem(pair);
       if (check.array.of.object(pair[1])) return that.deconstructArr(pair);
@@ -82,7 +98,7 @@ class MessagePreview extends Component {
       return (
         <>
           <h3>{pair[0]}</h3>
-          { that.createStrItem(pair) }
+          <span key={`${pair[0]}-${pair[1]}`}>{pair[1]}</span>
         </>
       )
 

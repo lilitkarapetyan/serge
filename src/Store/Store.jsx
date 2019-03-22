@@ -3,6 +3,7 @@ import { messageTypesReducer } from "../ActionsAndReducers/dbMessageTypes/messag
 import { messagesReducer } from "../ActionsAndReducers/dbMessages/messages_Reducer";
 import { curOpenMessageReducer } from "../ActionsAndReducers/setOpenMessage/setOpenMessage_Reducer";
 import { setCurrentViewURIReducer } from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_Reducer";
+import { selectedSchemaReducer } from "../ActionsAndReducers/selectedSchema/selectedSchema_Reducer";
 
 import thunk from 'redux-thunk';
 
@@ -19,4 +20,5 @@ export default createStore(combineReducers({
   messages: messagesReducer,
   curOpenMessageId: curOpenMessageReducer,
   currentViewURI: setCurrentViewURIReducer,
+  selectedSchema: selectedSchemaReducer,
 }), applyMiddleware(...middlewares));

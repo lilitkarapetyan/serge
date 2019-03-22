@@ -1,11 +1,11 @@
 import ActionConstant from '../ActionConstants';
 
-export const setCurrentViewURIReducer = (state = '/', action) => {
+export const selectedSchemaReducer = (state = '', action) => {
 
   let newState = state;
 
   switch (action.type) {
-    case ActionConstant.SET_CURRENT_VIEW_FROM_URI:
+    case ActionConstant.SET_SELECTED_SCHEMA:
       newState = action.payload;
       return newState;
 
