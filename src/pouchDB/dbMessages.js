@@ -1,15 +1,12 @@
 import PouchDB from 'pouchdb-browser';
-import warGameSchema from "../schemas/wargame.json";
-import machineryFailure from "../schemas/machinery_failure";
-import weatherForecast from "../schemas/weather_forecase";
 
-var db = new PouchDB('messageTypes');
+var db = new PouchDB('messages');
 // var remoteCouch = 'http://couchbase:CUe+1+2n@http://35.245.63.98:8091/messages';
 
 
-window.clearDatabase = function() {
+window.clearDatabase2 = function() {
   db.destroy().then(function(res) {
-    console.log('database cleared');
+    console.log('database 2 cleared');
   });
 };
 
@@ -20,7 +17,7 @@ db.setMaxListeners(15);
 db.changes({
   since: 'now',
   live: true
-}).on('change', getAllMessages);
+}).on('change', getAllMessagesFromDB);
 
 var opts = {live: true};
 db.replicate.to(db, opts, () => 'An Error has occurred.');
@@ -30,62 +27,74 @@ db.replicate.from(db, opts, () => 'An Error has occurred.');
   for development
  */
 
-var populateDb = function () {
-  var wargame = {
-    _id: new Date().toISOString(),
-    title: 'wargame schema',
-    details: warGameSchema,
-    completed: false
-  };
-  db.put(wargame);
+// var populateDb = function () {
+//   var wargame = {
+//     _id: new Date().toISOString(),
+//     title: 'wargame schema',
+//     details: warGameSchema,
+//     completed: false
+//   };
+//   db.put(wargame);
+//
+//   setTimeout(function () {
+//     var machine = {
+//       _id: new Date().toISOString(),
+//       title: 'machinery failure',
+//       details: machineryFailure,
+//       completed: false
+//     };
+//     db.put(machine);
+//   },1000);
+//
+//   setTimeout(function () {
+//     var weather = {
+//       _id: new Date().toISOString(),
+//       title: 'weather forecast',
+//       details: weatherForecast,
+//       completed: false
+//     };
+//     db.put(weather).then(() => {
+//       console.log('DATA BASE COMPLETE');
+//       window.location.reload(true);
+//     });
+//   },2000);
+// };
 
-  setTimeout(function () {
-    var machine = {
-      _id: new Date().toISOString(),
-      title: 'machinery failure',
-      details: machineryFailure,
-      completed: false
-    };
-    db.put(machine);
-  },1000);
-
-  setTimeout(function () {
-    var weather = {
-      _id: new Date().toISOString(),
-      title: 'weather forecast',
-      details: weatherForecast,
-      completed: false
-    };
-    db.put(weather).then(() => {
-      console.log('DATA BASE COMPLETE');
-      window.location.reload(true);
-    });
-  },2000);
-
-};
-
-db.allDocs().then(entries => {
-  if (entries.rows.length === 0) {
-    populateDb();
-  }
-});
+// db.allDocs().then(entries => {
+//   if (entries.rows.length === 0) {
+//     populateDb();
+//   }
+// });
 
 
 /**
  * @param message
  * @type object
  */
-export function addMessage(messageObj) {
+export function addMessage(messageObj, schemaId) {
+
   var message = {
     _id: new Date().toISOString(),
     details: messageObj,
+    schemaId: schemaId,
     completed: false
   };
   return db.put(message)
     .then(function(res) { return res })
 };
 
-export function getAllMessages() {
+
+export function getMessageFromDB(id) {
+  return new Promise((resolve, reject) => {
+    db.get(id, {include_docs: true}, function(err, doc) {
+      if (err) reject('something went wrong');
+      resolve(doc);
+    });
+  });
+}
+
+
+export function getAllMessagesFromDB() {
   return new Promise((resolve, reject) => {
     db.allDocs({include_docs: true, descending: true}, function(err, doc) {
       if (err) reject('something went wrong');

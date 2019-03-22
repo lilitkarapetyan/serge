@@ -1,6 +1,10 @@
 {
   "type": "object",
   "properties": {
+    "Title": {
+      "type": "string",
+      "title": "Title"
+    },
     "Location": {
       "type": "object",
       "properties": {

@@ -1,6 +1,9 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
-import { createMessageReducer } from "../ActionsAndReducers/pouchDb/pouchDb_Reducer";
-import { retrieveAllMessagesReducer } from "../ActionsAndReducers/pouchDb/pouchDbAllMessages_Reducer";
+import { messageTypesReducer } from "../ActionsAndReducers/dbMessageTypes/messageTypes_Reducer";
+import { messagesReducer } from "../ActionsAndReducers/dbMessages/messages_Reducer";
+import { curOpenMessageReducer } from "../ActionsAndReducers/setOpenMessage/setOpenMessage_Reducer";
+import { setCurrentViewURIReducer } from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_Reducer";
+
 import thunk from 'redux-thunk';
 
 const middlewares = [thunk];
@@ -12,6 +15,8 @@ if (process.env.NODE_ENV === `development`) {
 
 
 export default createStore(combineReducers({
-  messageSendStatus: createMessageReducer,
-  allMessages: retrieveAllMessagesReducer,
+  messageTypes: messageTypesReducer,
+  messages: messagesReducer,
+  curOpenMessageId: curOpenMessageReducer,
+  currentViewURI: setCurrentViewURIReducer,
 }), applyMiddleware(...middlewares));

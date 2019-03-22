@@ -38,14 +38,14 @@ export const resetMessagePreview = () => ({
  * - below are async getters
  */
 
-export const createMessage = (message) => {
+export const createMessage = (message, schemaId) => {
 
   if (!check.object(message)) throw Error(`createMessageType() requires object with message, from & to NOT. ${message}`);
 
   return async (dispatch) => {
     dispatch(loadingDBMessageCreate(true));
 
-    var result = await addMessage(message);
+    var result = await addMessage(message, schemaId);
 
     if (result.ok) {
       dispatch(DBMessageSaveStatus(result));
@@ -62,6 +62,8 @@ export const getSingleMessage = (id) => {
     dispatch(loadingDBMessageGet(true));
 
     let result = await getMessageFromDB(id);
+
+    console.log(result);
 
     dispatch(DBSaveMessagePreview(result));
     dispatch(loadingDBMessageGet(false));

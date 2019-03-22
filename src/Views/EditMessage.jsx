@@ -3,48 +3,72 @@ import React, { Component } from 'react';
 import '../scss/App.scss';
 import { connect } from "react-redux";
 
-// import JSONEditor from '@json-editor/json-editor';
+import JsonCreator from "../Components/JsonCreator";
 
-// import warGameSchema from "../schemas/wargame.json";
-import JsonEditor from "./MessageUIContainer";
-// import {Link} from "react-router-dom";
-// import SearchList from "../Components/SearchList";
-import {setOpenMessage} from "../ActionsAndReducers/setOpenMessage/setOpenMessage_ActionCreators";
+import { getAllMessageTypes } from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
+import { resetMessagePreview } from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
 
-class CreateTemplate extends Component {
+import Link from "../Components/Link";
+import SearchList from "../Components/SearchList";
+
+class EditMessage extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      creatorType: this.props.match.url.split('/')[2]
+      messageToEdit: this.props.messages.messagePreviewId,
+      messageList: this.props.messages.messages, // set to state for filter, without filter don't set props to state to avoid bugs
+      searchInput: '',
     };
-
-    console.log(this.props.match.url.split('/')[2]);
   }
 
-  setOpenMessageId(id) {
-    this.props.dispatch(setOpenMessage(id));
+  componentWillMount() {
+    this.props.dispatch(getAllMessageTypes());
   }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+
+    if (this.props.messages.messages.length !== nextProps.messages.messages.length) {
+      this.setState({
+        messageToEdit: nextProps.messages.messagePreviewId,
+        messageList:  nextProps.messages.messages
+      });
+    }
+  }
+
+  filterMessages = (input) => {
+
+    let value = input.target.value;
+
+    let newState = this.props.messages.messages.filter(function(mes) {
+      return mes.doc.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
+    });
+
+    this.setState({
+      messageList: newState,
+      searchInput: value.toLowerCase()
+    });
+  };
 
   render() {
-    var that = this;
+
     return (
       <div className="view-wrapper">
-        <h1>Message {this.state.creatorType}</h1>
+        <Link href="/">Home</Link>
+        <h1>Message library</h1>
         <div className="flex-content-wrapper">
           <div id="selection" className="flex-content">
-            <input type="text" className="search" key="search-templates" placeholder={`Search ${this.state.creatorType}`} onChange={ this.filterMessages } />
-            {this.props.messageTypes.messages.map(function(item) {
-              return <span href="#" onClick={that.setOpenMessageId.bind(that, item.doc._id)} key={item.doc._id}>{item.doc.title}</span>
-            })}
+            <SearchList className="search"
+                        key="search-templates"
+                        messageList={ this.state.messageList }
+                        filterMessages={ this.filterMessages }
+                        searchInput={ this.state.searchInput }
+                        placeholder={ 'Select template' }
+            />
           </div>
           <div id="preview" className="flex-content flex-content--big">
-              <p>Preview</p>
-            <JsonEditor id="preview" messageTypes={ this.props.messageTypes.messages } curOpenMessageId={ this.props.curOpenMessageId } />
-          </div>
-          <div id="function" className="flex-content flex-content--sml">
-
+            <JsonCreator id="preview" disabled={ false } edit={ true } messageList={this.state.messageList} />
           </div>
         </div>
       </div>
@@ -52,10 +76,11 @@ class CreateTemplate extends Component {
   }
 }
 
-// temp use allMessages
-const mapStateToProps = ({ messageTypes, curOpenMessageId }) => ({
+const mapStateToProps = ({ messages, messageTypes, curOpenMessageId, currentViewURI }) => ({
+  messages,
   messageTypes,
-  curOpenMessageId
+  curOpenMessageId,
+  currentViewURI
 });
 
-export default connect(mapStateToProps)(CreateTemplate);
+export default connect(mapStateToProps)(EditMessage);

@@ -3,6 +3,10 @@
   "description": "Setup wargame",
   "type": "object",
   "properties": {
+    "Title": {
+      "type": "string",
+      "title": "Title"
+    },
     "forces": {
       "type": "object",
       "title": "forces",

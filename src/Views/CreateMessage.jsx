@@ -17,59 +17,34 @@ class EditMessage extends Component {
   constructor(props) {
     super(props);
 
-    let viewType = this.props.currentViewURI.split('/')[2];
-
-    let messageToEdit = this.props.messages.messagePreviewId;
-
     this.state = {
-      viewType,
-      messageList: messageToEdit ? this.props.messages.messages : this.props.messageTypes.messages, // set to state for filter, without filter don't set props to state to avoid bugs
+      messageList: this.props.messageTypes.messages, // set to state for filter, without filter don't set props to state to avoid bugs
       searchInput: '',
-      messageToEdit,
     };
 
   }
 
   componentWillMount() {
     this.props.dispatch(getAllMessageTypes());
-    this.props.dispatch(resetMessagePreview());
   };
 
   componentWillReceiveProps(nextProps, nextContext) {
 
-    const messageToEdit = nextProps.messages.messagePreviewId;
-    const messageList = messageToEdit ? this.props.messages.messages : this.props.messageTypes.messages;
-    const nextMessageList = messageToEdit ? nextProps.messages.messages : nextProps.messageTypes.messages;
-
-    if (messageList.length !== nextMessageList.length) {
+    if (this.props.messageTypes.messages.length !== nextProps.messageTypes.messages.length) {
       this.setState({
-        messageToEdit,
-        messageList: nextMessageList
+        messageList: nextProps.messageTypes.messages
       });
     }
-
-    // if (this.props.messageTypes.messages.length !== nextProps.messageTypes.messages.length) {
-    //   this.setState({
-    //     messageList: nextProps.messageTypes.messages
-    //   });
-    // }
   }
 
-  setOpenMessageId(id) {
-    this.props.dispatch(setOpenMessage(id));
-  }
 
   filterMessages = (input) => {
 
     let value = input.target.value;
 
-    const messageList = this.state.messageToEdit ? this.props.messages : this.props.messageTypes;
-
-    let newState = messageList.messages.filter(function(mes) {
+    let newState = this.props.messageTypes.messages.filter(function(mes) {
       return mes.doc.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
     });
-
-    console.log(newState);
 
     this.setState({
       messageList: newState,
@@ -93,7 +68,6 @@ class EditMessage extends Component {
             />
           </div>
           <div id="preview" className="flex-content flex-content--big">
-            {/*<JsonCreator id="preview" messageList={ this.state.messageList } curOpenMessageId={ this.props.curOpenMessageId } disabled={false} />*/}
             <JsonCreator id="preview" disabled={false} />
           </div>
         </div>

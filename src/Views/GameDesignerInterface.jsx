@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+
+import Link from "../Components/Link";
 
 import '../scss/App.scss';
 
@@ -9,11 +10,15 @@ export default class GameDesignerInterface extends Component {
     super(props);
   }
 
+  updateHistory = () => {
+
+  };
+
   render() {
     return (
       <div id="umpire">
-        <Link to="/umpireMenu/templates">Message Templates..</Link>
-        <Link to="/umpireMenu/library">Message Library..</Link>
+        <Link href="/umpireMenu/templates" onClick={this.updateHistory}>Message Templates..</Link>
+        <Link href="/umpireMenu/library">Message Library..</Link>
       </div>
     );
   }

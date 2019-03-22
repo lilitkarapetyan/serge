@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 // import ReactDOM from "react-dom";
 import '../scss/App.scss';
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-
+import Link from "../Components/Link"
 import JSONEditor from '@json-editor/json-editor';
 
 class EditTemplate extends Component {
@@ -32,7 +31,7 @@ class EditTemplate extends Component {
   render() {
     return (
       <div className="table">
-        <Link to="/">Home</Link>
+        <Link href="/">Home</Link>
         <div className="container">
           <h3>Schema Editor</h3>
           <div id="schema-editor" ref={this.editorRef}></div>
@@ -42,8 +41,7 @@ class EditTemplate extends Component {
   }
 }
 
-// temp use allMessages
-const mapStateToProps = ({ messageTypes , curOpenMessageId}) => ({
+const mapStateToProps = ({ messageTypes, curOpenMessageId}) => ({
   messageTypes,
   curOpenMessageId
 });

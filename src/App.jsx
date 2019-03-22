@@ -1,30 +1,23 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import { Link } from 'react-router-dom';
+import UniversalRouter from "universal-router";
 
-import logo from './logo.svg';
+import Router from "./Components/Router";
+
 import './scss/App.scss';
 
 import Store from './Store/Store';
-import Welcome from './Views/Welcome';
-import About from './Views/About';
+// import GameDesignerInterface from './Views/GameDesignerInterface';
+// import MessageUIContainer from './Views/MessageUIContainer';
+// import EditMessage from './Views/EditMessage';
+// import EditTemplate from './Views/EditTemplate';
+
 
 class App extends Component {
   render() {
     return (
         <Provider store={Store}>
-          <Router>
-            <div className="App">
-              <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo"/>
-                <Link to="/">Home</Link>
-                <Link to="/about">About</Link>
-              </header>
-              <Route exact path="/" component={Welcome} />
-              <Route path="/about" component={About} />
-            </div>
-          </Router>
+          <Router />
         </Provider>
     );
   }

@@ -14,13 +14,17 @@ import JSONEditor from '@json-editor/json-editor';
 // }
 import '../scss/App.scss';
 
-class JsonEditor extends Component {
+class JsonCreator extends Component {
 
   constructor(props) {
     super(props);
 
     this.editor = null;
     this.editorPreviewRef = React.createRef();
+
+    this.state = {
+      selectedSchema: ''
+    };
 
   }
 
@@ -30,25 +34,43 @@ class JsonEditor extends Component {
       this.editor.destroy();
     }
 
+
     if (nextProps.curOpenMessageId.length > 0) {
       this.editor = new JSONEditor(this.editorPreviewRef.current, {
-        schema: this.props.messageList.messages.find((mes) => mes.id === nextProps.curOpenMessageId).doc.details,
+        // schema: this.props.messageList.find((mes) => mes.id === nextProps.curOpenMessageId).doc.details,
+        schema: nextProps.messageTypes.messages.find((mes) => mes.id === nextProps.curOpenMessageId).doc.details,
         theme: 'bootstrap4'
       });
 
-      if (this.props.disabled) {
-        this.editor.disable();
+      if (this.state.selectedSchema !== nextState.selectedSchema) {
+        this.setState({
+          selectedSchema: nextProps.messageTypes.messages.find((mes) => mes.id === nextProps.curOpenMessageId).id
+        });
       }
-    } else {
-      if (this.editor) {
-        this.editor.destroy();
-      }
+    }
+
+    if (nextProps.messages.messagePreviewId.length > 0 && nextProps.edit) {
+
+      this.editor = new JSONEditor(this.editorPreviewRef.current, {
+        schema: nextProps.messageList.find((mes) => mes.id === nextProps.messages.messagePreviewId),
+        theme: 'bootstrap4'
+      });
+
+      const data = nextProps.messages.messages.filter(function(mes) {
+        return mes.doc._id.toLowerCase().indexOf(nextProps.messages.messagePreviewId.toLowerCase()) > -1;
+      });
+      console.log(data);
+      this.editor.setValue(data);
+    }
+
+    if (this.props.disabled) {
+      this.editor.disable();
     }
   }
 
 
   saveMessage = () => {
-    this.props.dispatch(createMessage(this.editor.getValue()));
+    this.props.dispatch(createMessage(this.editor.getValue(), this.state.selectedSchema));
   };
 
 
@@ -63,8 +85,11 @@ class JsonEditor extends Component {
   }
 }
 
-const mapStateToProps = ({}) => ({
-
+const mapStateToProps = ({ messages, messageTypes, curOpenMessageId, currentViewURI }) => ({
+  messages,
+  // messageTypes,
+  curOpenMessageId,
+  currentViewURI,
 });
 
-export default connect(mapStateToProps)(JsonEditor);
+export default connect(mapStateToProps)(JsonCreator);
