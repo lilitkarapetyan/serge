@@ -85,11 +85,9 @@ export function addMessage(messageObj, schemaId) {
 
 
 export function updateMessageInDB(message, id) {
-
   return new Promise((resolve, reject) => {
     db.get(id)
       .then(function (doc) {
-
         return db.put({
           _id: id,
           _rev: doc._rev,
