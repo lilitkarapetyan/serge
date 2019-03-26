@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 
 import '../scss/App.scss';
-import {setOpenMessage} from "../ActionsAndReducers/setOpenMessage/setOpenMessage_ActionCreators";
+import {setOpenMessage} from "../ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators";
 import {getSingleMessage} from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
+
+import moment from "moment";
 
 class SearchList extends Component {
 
@@ -13,7 +15,6 @@ class SearchList extends Component {
     this.state = {
       creatorType: this.props.creatorType || this.props.currentViewURI.split('/')[2],
     };
-
   }
 
   setOpenMessageId(id) {
@@ -57,13 +58,15 @@ class SearchList extends Component {
             // how the data moves back and forth, it breaks Reacts initial idea of 1 way data flow.
 
             let title;
-            if (that.state.creatorType === 'create' || that.state.creatorType === 'edit') {
-              title = item.doc.title;
+            if (that.state.creatorType === 'create') {
+              title = item.details.title;
+              return <a href="#" onClick={that.setOpenMessageId.bind(that, item._id)} key={item._id}>{title}</a>
             } else {
-              title = item.doc.details.Title;
+              title = item.details.Title;
+              let date = moment(item.lastUpdated).format('DD/MM/YY');
+              return <a href="#" onClick={that.setOpenMessageId.bind(that, item._id)} key={item._id}>{title} - {date}</a>
             }
-
-            return <a href="#" onClick={that.setOpenMessageId.bind(that, item.doc._id)} key={item.doc._id}>{title}</a>
+            // that.state.creatorType === 'edit'
           })
         }
       </>

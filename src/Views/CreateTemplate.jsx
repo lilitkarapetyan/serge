@@ -17,7 +17,7 @@ class EditTemplate extends Component {
 
   componentDidMount() {
 
-    let schema = this.props.messageTypes.messages.find((mes) => mes.id === this.props.curOpenMessageId);
+    let schema = this.props.messageTypes.messages.find((mes) => mes.id === this.props.umpireMenu.currentOpenMessageSchemaID);
 
     if (schema !== undefined) {
       this.editor = new JSONEditor(this.editorRef.current, {
@@ -41,9 +41,9 @@ class EditTemplate extends Component {
   }
 }
 
-const mapStateToProps = ({ messageTypes, curOpenMessageId}) => ({
+const mapStateToProps = ({ messageTypes, umpireMenu}) => ({
   messageTypes,
-  curOpenMessageId
+  umpireMenu
 });
 
 export default connect(mapStateToProps)(EditTemplate);

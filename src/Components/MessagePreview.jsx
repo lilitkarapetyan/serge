@@ -40,7 +40,7 @@ class MessagePreview extends Component {
 
   createStrItem(pair, withoutName) {
     // if (withoutName) return <p key={`${pair[0]}-${pair[1]}`}>{pair[1]}</p>;
-    return <span key={`${pair[0]}-${pair[1]}`}><b>{pair[0]}: </b>{pair[1]}</span>
+    return <span key={`strItem-${pair[0]}-${pair[1]}`}><b>{pair[0]}: </b>{pair[1]}</span>
     // return <span key={`${pair[0]}-${pair[1]}`}>{pair[1]}</span>
   }
 
@@ -52,7 +52,7 @@ class MessagePreview extends Component {
         {pair[1].map((item) => {
           // CHECK NAME PROP ON EVERY OBJ
           return (
-              <span key={`section--${item.name}`}>{ that.deconstructObj(item) }</span>
+              <span key={`section-${item.name}`}>{ that.deconstructObj(item) }</span>
           );
         })}
       </>
@@ -88,7 +88,7 @@ class MessagePreview extends Component {
 
     return keyPropPairs.map((pair, i) => {
 
-      if (i===0) return <h2 key={`title${pair[1]}`}>{pair[1]}</h2>;
+      if (i===0) return <h2 key={`title-${pair[1]}`}>{pair[1]}</h2>;
 
       if (check.object(pair[1])) return that.createObjItem(pair);
       if (check.array.of.object(pair[1])) return that.deconstructArr(pair);

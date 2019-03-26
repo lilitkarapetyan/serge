@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 
 import { connect } from "react-redux";
 
-import { createMessage, updateMessage } from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
+import {
+  createMessage,
+  resetMessagePreview,
+  updateMessage
+} from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
 
 import JSONEditor from '@json-editor/json-editor';
 // import flatpickr from "flatpickr";
@@ -13,7 +17,8 @@ import JSONEditor from '@json-editor/json-editor';
 //     "allowInput": true
 // }
 import '../scss/App.scss';
-import {setSelectedSchema} from "../ActionsAndReducers/selectedSchema/selectedSchema_ActionCreators";
+import {setSelectedSchema} from "../ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators";
+import {setCurrentViewFromURI} from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
 
 class JsonCreator extends Component {
 
@@ -29,18 +34,22 @@ class JsonCreator extends Component {
   }
 
   createEditMessageEditor(nextProps) {
-    const schemaId = nextProps.messages.messages.find((mes) => mes.id === nextProps.messages.messagePreviewId).doc.schemaId;
+
+    const schemaId = nextProps.messages.messages.find((mes) => mes._id === nextProps.messages.messagePreviewId).schemaId;
+
+    // HERE
+    console.log(schemaId);
 
     this.editor = new JSONEditor(this.editorPreviewRef.current, {
-      schema: nextProps.messageTypes.messages.find((mes) => mes.id === schemaId).doc.details,
+      schema: nextProps.messageTypes.messages.find((mes) => mes._id === schemaId).details,
       theme: 'bootstrap4'
     });
 
     const data = nextProps.messages.messages.find(function(mes) {
-      return mes.doc._id.toLowerCase().indexOf(nextProps.messages.messagePreviewId.toLowerCase()) > -1;
+      return mes._id.toLowerCase().indexOf(nextProps.messages.messagePreviewId.toLowerCase()) > -1;
     });
 
-    this.editor.setValue(data.doc.details);
+    this.editor.setValue(data.details);
   }
 
 
@@ -50,11 +59,11 @@ class JsonCreator extends Component {
       this.editor.destroy();
     }
 
-    if (nextProps.curOpenMessageId.length > 0) {
+    if (nextProps.umpireMenu.currentOpenMessageSchemaID.length > 0) {
 
       this.editor = new JSONEditor(this.editorPreviewRef.current, {
-        // schema: this.props.messageList.find((mes) => mes.id === nextProps.curOpenMessageId).doc.details,
-        schema: nextProps.messageTypes.messages.find((mes) => mes.id === nextProps.curOpenMessageId).doc.details,
+        // schema: this.props.messageList.find((mes) => mes.id === nextProps.umpireMenu.currentOpenMessageSchemaID).doc.details,
+        schema: nextProps.messageTypes.messages.find((mes) => mes._id === nextProps.umpireMenu.currentOpenMessageSchemaID).details,
         theme: 'bootstrap4'
       });
     }
@@ -71,12 +80,13 @@ class JsonCreator extends Component {
       this.editor.disable();
     }
 
-    const selectedSchema = nextProps.messageTypes.messages.find((mes) => mes.id === nextProps.curOpenMessageId);
+    const selectedSchema = nextProps.messageTypes.messages.find((mes) => mes._id === nextProps.umpireMenu.currentOpenMessageSchemaID);
 
     if (!selectedSchema) return false;
 
-    if (selectedSchema.id !== nextProps.selectedSchema) {
-      this.props.dispatch(setSelectedSchema(selectedSchema.id));
+    // will loop and crash app if constantly calling dispatch within componentWillUpdate
+    if (selectedSchema._id !== nextProps.umpireMenu.selectedSchemaID) {
+      this.props.dispatch(setSelectedSchema(selectedSchema._id));
     }
   }
 
@@ -85,8 +95,11 @@ class JsonCreator extends Component {
     if (this.props.edit) {
       this.props.dispatch(updateMessage(this.editor.getValue(), this.props.messages.messagePreviewId));
     } else {
-      this.props.dispatch(createMessage(this.editor.getValue(), this.props.selectedSchema));
+      this.props.dispatch(createMessage(this.editor.getValue(), this.props.umpireMenu.selectedSchemaID));
     }
+    this.props.dispatch(resetMessagePreview());
+    window.history.pushState({}, '', '/umpireMenu/library');
+    this.props.dispatch(setCurrentViewFromURI('/umpireMenu/library'));
   };
 
 
@@ -101,12 +114,11 @@ class JsonCreator extends Component {
   }
 }
 
-const mapStateToProps = ({ messages, messageTypes, curOpenMessageId, currentViewURI, selectedSchema }) => ({
+const mapStateToProps = ({ messages, messageTypes, selectedSchema, umpireMenu }) => ({
   messages,
   messageTypes,
-  curOpenMessageId,
-  currentViewURI,
-  selectedSchema
+  selectedSchema,
+  umpireMenu
 });
 
 export default connect(mapStateToProps)(JsonCreator);

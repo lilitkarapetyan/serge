@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import JsonCreator from "../Components/JsonCreator";
 
-import {setOpenMessage} from "../ActionsAndReducers/setOpenMessage/setOpenMessage_ActionCreators";
+import {setOpenMessage} from "../ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators";
 import {getAllMessageTypes} from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
 import { resetMessagePreview } from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
 
@@ -21,12 +21,13 @@ class EditMessage extends Component {
       messageList: this.props.messageTypes.messages, // set to state for filter, without filter don't set props to state to avoid bugs
       searchInput: '',
     };
-
   }
+
 
   componentWillMount() {
     this.props.dispatch(getAllMessageTypes());
   };
+
 
   componentWillReceiveProps(nextProps, nextContext) {
 
@@ -43,7 +44,7 @@ class EditMessage extends Component {
     let value = input.target.value;
 
     let newState = this.props.messageTypes.messages.filter(function(mes) {
-      return mes.doc.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
+      return mes.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
     });
 
     this.setState({
@@ -76,10 +77,9 @@ class EditMessage extends Component {
   }
 }
 
-const mapStateToProps = ({ messages, messageTypes, curOpenMessageId, currentViewURI }) => ({
+const mapStateToProps = ({ messages, messageTypes, currentViewURI }) => ({
   messages,
   messageTypes,
-  curOpenMessageId,
   currentViewURI
 });
 

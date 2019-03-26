@@ -30,9 +30,9 @@ class JsonCreator extends Component {
       this.editor.destroy();
     }
 
-    if (nextProps.curOpenMessageId.length > 0) {
+    if (nextProps.umpireMenu.currentOpenMessageSchemaID.length > 0) {
       this.editor = new JSONEditor(this.editorPreviewRef.current, {
-        schema: this.props.messageList.messages.find((mes) => mes.id === nextProps.curOpenMessageId).doc.details,
+        schema: this.props.messageList.messages.find((mes) => mes.id === nextProps.umpireMenu.currentOpenMessageSchemaID).doc.details,
         theme: 'bootstrap4'
       });
 
@@ -63,8 +63,9 @@ class JsonCreator extends Component {
   }
 }
 
-const mapStateToProps = ({}) => ({
-
+const mapStateToProps = ({ messageTypes, umpireMenu }) => ({
+  messageTypes,
+  umpireMenu,
 });
 
 export default connect(mapStateToProps)(JsonCreator);

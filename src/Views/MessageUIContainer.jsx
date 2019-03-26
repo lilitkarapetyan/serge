@@ -6,14 +6,14 @@ import moment from "moment";
 import check from "check-types";
 
 import { getAllMessageTypes } from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
-import { setOpenMessage } from "../ActionsAndReducers/setOpenMessage/setOpenMessage_ActionCreators";
+import { setOpenMessage } from "../ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators";
+import { getAllMessages, resetMessagePreview, duplicateMessage } from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
+import { modalAction } from "../ActionsAndReducers/Modal/Modal_ActionCreators";
 
-import { getAllMessages, resetMessagePreview } from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
 
 import JsonEditor from "../Components/JsonCreator";
 import SearchList from "../Components/SearchList";
 import MessagePreview from "../Components/MessagePreview";
-// import { Edit, Duplicate, Delete } from "../ReusableLogic/editDuplicateDelete";
 import '../scss/App.scss';
 
 class MessageUIContainer extends Component {
@@ -43,6 +43,7 @@ class MessageUIContainer extends Component {
   }
 
   componentWillMount() {
+    //..needed? - re-evaluate
     this.props.dispatch(setOpenMessage(''));
   }
 
@@ -85,14 +86,14 @@ class MessageUIContainer extends Component {
     switch (this.state.creatorType) {
       case 'templates':
         newState = this.props.messageTypes.messages.filter(function(mes) {
-          return mes.doc.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
+          return mes.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
         });
 
         break;
 
       case 'library':
         newState = this.props.messages.messages.filter(function(mes) {
-          return mes.doc.details.Title.toLowerCase().indexOf(value.toLowerCase()) > -1;
+          return mes.details.Title.toLowerCase().indexOf(value.toLowerCase()) > -1;
         });
         break;
 
@@ -144,6 +145,19 @@ class MessageUIContainer extends Component {
   }
 
 
+  duplicateMessage = () => {
+
+    this.props.dispatch(duplicateMessage(this.props.messages.messagePreviewId));
+
+  };
+
+  deleteMessage = () => {
+
+    this.props.dispatch(modalAction.open());
+
+  };
+
+
   render() {
     return (
       <div className="view-wrapper">
@@ -155,7 +169,10 @@ class MessageUIContainer extends Component {
           <div id="preview" className="flex-content flex-content--big">
             <p>Preview</p>
             { this.state.creatorType === 'templates' ?
-              <JsonEditor id="preview" messageList={ this.props.messageTypes } curOpenMessageId={ this.props.curOpenMessageId } disabled={true} />
+              <JsonEditor id="preview"
+                          messageList={ this.props.messageTypes }
+                          // currentOpenMessageSchemaID={ this.props.umpireMenu.currentOpenMessageSchemaID }
+                          disabled={true} />
             :
               <div id="message-preview">
                 <MessagePreview detail={this.props.messages.messagePreview.details} />
@@ -164,8 +181,8 @@ class MessageUIContainer extends Component {
           </div>
           <div id="function" className="flex-content flex-content--sml">
             <Link href={this.state.creatorType === 'templates' ? "/messageCreator/edit/template" : "/messageCreator/edit/message"}>Edit</Link>
-            <Link href="/">Duplicate</Link>
-            <Link href="/">Delete</Link>
+            <span onClick={this.duplicateMessage}>Duplicate</span>
+            <span onClick={this.deleteMessage}>Delete</span>
           </div>
         </div>
       </div>
@@ -174,11 +191,11 @@ class MessageUIContainer extends Component {
 }
 
 // temp use allMessages
-const mapStateToProps = ({ messageTypes, messages, curOpenMessageId, currentViewURI }) => ({
+const mapStateToProps = ({ messageTypes, messages, currentViewURI, umpireMenu }) => ({
   messageTypes,
   messages,
-  curOpenMessageId,
-  currentViewURI
+  currentViewURI,
+  umpireMenu
 });
 
 export default connect(mapStateToProps)(MessageUIContainer);

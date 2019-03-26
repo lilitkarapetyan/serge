@@ -6,6 +6,7 @@ export const selectedSchemaReducer = (state = '', action) => {
 
   switch (action.type) {
     case ActionConstant.SET_SELECTED_SCHEMA:
+      console.log(action.payload);
       newState = action.payload;
       return newState;
 

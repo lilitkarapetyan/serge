@@ -1,9 +1,12 @@
 import PouchDB from 'pouchdb-browser';
+import pouchFind from 'pouchdb-find';
 import warGameSchema from "../schemas/wargame.json";
 import machineryFailure from "../schemas/machinery_failure";
 import weatherForecast from "../schemas/weather_forecase";
 
+PouchDB.plugin(pouchFind);
 var db = new PouchDB('messageTypes');
+
 // var remoteCouch = 'http://couchbase:CUe+1+2n@http://35.245.63.98:8091/messages';
 
 
@@ -87,9 +90,25 @@ export function addMessage(messageObj) {
 
 export function getAllMessages() {
   return new Promise((resolve, reject) => {
-    db.allDocs({include_docs: true, descending: true}, function(err, doc) {
-      if (err) reject('something went wrong');
-      resolve(doc);
-    });
+    // db.allDocs({include_docs: true, descending: true}, function(err, doc) {
+    //   if (err) reject('something went wrong');
+    //   resolve(doc);
+    // });
+
+    db.createIndex({index: {fields: ['lastUpdated']}})
+      .then(function () {
+        return db.find({
+          selector: {
+            lastUpdated: {$gte: null}
+          },
+          sort: ['lastUpdated']
+        });
+      })
+      .then(function (result) {
+        resolve(result.docs);
+      })
+      .catch(function (err) {
+        reject(err);
+      })
   });
 }

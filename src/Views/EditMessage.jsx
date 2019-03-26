@@ -10,6 +10,7 @@ import { resetMessagePreview } from "../ActionsAndReducers/dbMessages/messages_A
 
 import Link from "../Components/Link";
 import SearchList from "../Components/SearchList";
+import {setCurrentViewFromURI} from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
 
 class EditMessage extends Component {
 
@@ -27,6 +28,8 @@ class EditMessage extends Component {
     this.props.dispatch(getAllMessageTypes());
   }
 
+
+
   componentWillReceiveProps(nextProps, nextContext) {
 
     if (this.props.messages.messages.length !== nextProps.messages.messages.length) {
@@ -42,7 +45,7 @@ class EditMessage extends Component {
     let value = input.target.value;
 
     let newState = this.props.messages.messages.filter(function(mes) {
-      return mes.doc.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
+      return mes.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
     });
 
     this.setState({
@@ -59,16 +62,20 @@ class EditMessage extends Component {
         <h1>Message library</h1>
         <div className="flex-content-wrapper">
           <div id="selection" className="flex-content">
-            <SearchList className="search"
-                        key="search-templates"
-                        messageList={ this.state.messageList }
-                        filterMessages={ this.filterMessages }
-                        searchInput={ this.state.searchInput }
-                        placeholder={ 'Select template' }
-            />
+            {/*<SearchList className="search"*/}
+                        {/*key="search-templates"*/}
+                        {/*messageList={ this.state.messageList }*/}
+                        {/*filterMessages={ this.filterMessages }*/}
+                        {/*searchInput={ this.state.searchInput }*/}
+                        {/*placeholder={ 'Select template' }*/}
+            {/*/>*/}
           </div>
           <div id="preview" className="flex-content flex-content--big">
-            <JsonCreator id="preview" disabled={ false } edit={ true } messageList={this.props.messageTypes} />
+            <JsonCreator id="preview"
+                         disabled={ false }
+                         edit={ true }
+                         // messageList={this.props.messageTypes}
+            />
           </div>
         </div>
       </div>
@@ -76,11 +83,9 @@ class EditMessage extends Component {
   }
 }
 
-const mapStateToProps = ({ messages, messageTypes, curOpenMessageId, currentViewURI }) => ({
+const mapStateToProps = ({ messages, messageTypes }) => ({
   messages,
-  messageTypes,
-  curOpenMessageId,
-  currentViewURI
+  messageTypes
 });
 
 export default connect(mapStateToProps)(EditMessage);
