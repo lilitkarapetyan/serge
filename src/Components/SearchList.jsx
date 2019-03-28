@@ -58,7 +58,13 @@ class SearchList extends Component {
             // ES5 way to pass properties to click handlers from arrays, another option is to build a sub-component but I don't like
             // how the data moves back and forth, it breaks Reacts initial idea of 1 way data flow.
 
-            let active = item._id === that.props.messages.messagePreviewId ? 'active' : null;
+            let active;
+            if (that.props.currentViewURI === "/messageCreator/create/message") {
+              active = item._id === that.props.umpireMenu.selectedSchemaID ? 'active' : null;
+            } else {
+              active = item._id === that.props.messages.messagePreviewId ? 'active' : null;
+            }
+
             let title;
             if (that.state.creatorType === 'create') {
               title = item.details.title;
@@ -77,9 +83,10 @@ class SearchList extends Component {
 }
 
 // empty mapStateToProps is here for react-redux to wire up the dispatch function to props so firing actions is possible.
-const mapStateToProps = ({ currentViewURI, messages }) => ({
+const mapStateToProps = ({ currentViewURI, messages, umpireMenu }) => ({
   currentViewURI,
-  messages
+  messages,
+  umpireMenu
 });
 
 

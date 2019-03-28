@@ -20,6 +20,6 @@
   //margin-top: 59px;
   a, span {
     font-size: calc(#{$titleSize} * .9);
-    line-height: $titleLine;
+    margin-bottom: 1.15em;
   }
 }

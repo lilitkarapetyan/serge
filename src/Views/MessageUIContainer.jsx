@@ -16,7 +16,7 @@ import SearchList from "../Components/SearchList";
 import MessagePreview from "../Components/MessagePreview";
 import '../scss/App.scss';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHome} from "@fortawesome/free-solid-svg-icons";
+import {faHome, faEdit, faClone, faTrash} from "@fortawesome/free-solid-svg-icons";
 
 class MessageUIContainer extends Component {
 
@@ -42,7 +42,10 @@ class MessageUIContainer extends Component {
         messageList: this.state.creatorType === 'templates' ? nextProps.messageTypes.messages : nextProps.messages.messages,
       });
     }
+
+    if (nextProps.messages.messages.length !== this.props.messages.messages.length) setTimeout(this.filterMessages, 1); // setTimeout to wait one tick to allow messageList to update
   }
+
 
   componentWillMount() {
     //..needed? - re-evaluate
@@ -80,8 +83,8 @@ class MessageUIContainer extends Component {
   // arrow functions are es6 syntax and preferable if babel compiler can compile them. - They have the scope of where they're
   // defined unlike a normal function that has it's own scope.
   filterMessages = (input) => {
-
-    let value = input.target.value;
+    
+    let value = input ? input.target.value : this.state.searchInput;
 
     let newState;
 
@@ -90,7 +93,6 @@ class MessageUIContainer extends Component {
         newState = this.props.messageTypes.messages.filter(function(mes) {
           return mes.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
         });
-
         break;
 
       case 'library':
@@ -106,7 +108,7 @@ class MessageUIContainer extends Component {
 
     this.setState({
       messageList: newState,
-      searchInput: value.toLowerCase()
+      searchInput: input ? value.toLowerCase() : this.state.searchInput
     });
   };
 
@@ -181,9 +183,15 @@ class MessageUIContainer extends Component {
             }
           </div>
           <div id="function" className="flex-content flex-content--sml">
-            <Link href={this.state.creatorType === 'templates' ? "/messageCreator/edit/template" : "/messageCreator/edit/message"}>Edit</Link>
-            <span className="link" onClick={this.duplicateMessage}>Duplicate</span>
-            <span className="link" onClick={this.deleteMessage}>Delete</span>
+            { this.props.messages.messagePreviewId.length > 0 ?
+              <>
+                <Link class="link" href={this.state.creatorType === 'templates' ? "/messageCreator/edit/template" : "/messageCreator/edit/message"}><FontAwesomeIcon icon={faEdit} />Edit</Link>
+                <span className="link" onClick={this.duplicateMessage}><FontAwesomeIcon icon={faClone} />Duplicate</span>
+                <span className="link" onClick={this.deleteMessage}><FontAwesomeIcon icon={faTrash} />Delete</span>
+              </>
+              :
+              null
+            }
           </div>
         </div>
       </div>

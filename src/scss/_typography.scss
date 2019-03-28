@@ -19,22 +19,29 @@ h4 {
   cursor: pointer;
 }
 
-span.link {
-  display: block;
-  width: fit-content;
-  cursor: pointer;
-
-  &:hover {
-    color: $darkGrey;
-    text-decoration: underline;
-  }
-}
-
 a {
   display: block;
   width: fit-content;
 
   &:hover {
     color: $darkGrey;
+  }
+}
+
+a.link,
+span.link {
+  display: block;
+  width: fit-content;
+  cursor: pointer;
+
+  svg {
+    min-width: 30px;
+    padding: 4px;
+    margin-right: 2px;
+  }
+
+  &:hover {
+    color: $darkGrey;
+    text-decoration: none;
   }
 }
