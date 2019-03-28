@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 import Select from 'react-virtualized-select';
 // Import default styles.
 // This only needs to be done once; probably during bootstrapping process.
-import "react-select/dist/react-select.css";
-import "react-virtualized-select/styles.css";
+// import "react-select/dist/react-select.css";
+// import "react-virtualized-select/styles.css";
 
 import { createMessage, getAllMessages } from "../ActionsAndReducers/pouchDb/pouchDb_ActionCreators.jsx";
 

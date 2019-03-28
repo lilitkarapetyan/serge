@@ -173,9 +173,7 @@ class MessageUIContainer extends Component {
             <p>Preview</p>
             { this.state.creatorType === 'templates' ?
               <JsonCreator id="preview"
-                          // messageList={ this.props.messageTypes }
-                          // currentOpenMessageSchemaID={ this.props.umpireMenu.currentOpenMessageSchemaID }
-                          disabled={true} />
+                           disabled={true} />
             :
               <div id="message-preview">
                 <MessagePreview detail={this.props.messages.messagePreview.details} />

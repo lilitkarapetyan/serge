@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import ReactDOM from "react-dom";
 import '../scss/App.scss';
 import { connect } from "react-redux";
 
@@ -71,7 +70,7 @@ class EditMessage extends Component {
             />
           </div>
           <div id="preview" className="flex-content flex-content--big">
-            <JsonCreator id="preview" disabled={false} />
+            <JsonCreator id="preview" disabled={false} createNew={true} />
           </div>
         </div>
       </div>

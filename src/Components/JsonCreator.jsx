@@ -92,10 +92,10 @@ class JsonCreator extends Component {
 
 
   saveMessage = () => {
-    if (!this.props.disabled) {
-      this.props.dispatch(updateMessage(this.editor.getValue(), this.props.messages.messagePreviewId));
-    } else {
+    if (this.props.createNew) {
       this.props.dispatch(createMessage(this.editor.getValue(), this.props.umpireMenu.selectedSchemaID));
+    } else {
+      this.props.dispatch(updateMessage(this.editor.getValue(), this.props.messages.messagePreviewId));
     }
     this.props.dispatch(resetMessagePreview());
     window.history.pushState({}, '', '/umpireMenu/library');

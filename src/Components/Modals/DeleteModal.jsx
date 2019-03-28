@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
 import { deleteMessage } from "../../ActionsAndReducers/dbMessages/messages_ActionCreators";
 
-// import PlusIcon from "../../static/svgs/plusIcon";
-
 class DeleteModal extends Component {
 
   constructor(props) {

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import ReactDOM from "react-dom";
 import '../scss/App.scss';
 import { connect } from "react-redux";
 import Link from "../Components/Link"

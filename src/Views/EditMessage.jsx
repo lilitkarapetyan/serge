@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import ReactDOM from "react-dom";
 import '../scss/App.scss';
 import { connect } from "react-redux";
 
@@ -76,7 +75,6 @@ class EditMessage extends Component {
           <div id="preview" className="flex-content flex-content--solo-item">
             <JsonCreator id="preview"
                          disabled={ false }
-                         // messageList={this.props.messageTypes}
             />
           </div>
         </div>

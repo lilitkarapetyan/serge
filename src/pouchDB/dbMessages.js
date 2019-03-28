@@ -3,8 +3,6 @@ import pouchFind from 'pouchdb-find';
 
 PouchDB.plugin(pouchFind);
 var db = new PouchDB('messages');
-// var remoteCouch = 'http://couchbase:CUe+1+2n@http://35.245.63.98:8091/messages';
-
 
 window.clearDatabase2 = function() {
   db.destroy().then(function(res) {
@@ -16,57 +14,10 @@ window.clearDatabase2 = function() {
  * Subscribes to changes to the database, increase max listeners from 10, create db.
  */
 db.setMaxListeners(15);
-// db.changes({
-//   since: 'now',
-//   live: true
-// }).on('change', getAllMessagesFromDB);
 
 var opts = {live: true};
 db.replicate.to(db, opts, () => 'An Error has occurred.');
 db.replicate.from(db, opts, () => 'An Error has occurred.');
-
-/*
-  for development
- */
-
-// var populateDb = function () {
-//   var wargame = {
-//     _id: new Date().toISOString(),
-//     title: 'wargame schema',
-//     details: warGameSchema,
-//     completed: false
-//   };
-//   db.put(wargame);
-//
-//   setTimeout(function () {
-//     var machine = {
-//       _id: new Date().toISOString(),
-//       title: 'machinery failure',
-//       details: machineryFailure,
-//       completed: false
-//     };
-//     db.put(machine);
-//   },1000);
-//
-//   setTimeout(function () {
-//     var weather = {
-//       _id: new Date().toISOString(),
-//       title: 'weather forecast',
-//       details: weatherForecast,
-//       completed: false
-//     };
-//     db.put(weather).then(() => {
-//       console.log('DATA BASE COMPLETE');
-//       window.location.reload(true);
-//     });
-//   },2000);
-// };
-
-// db.allDocs().then(entries => {
-//   if (entries.rows.length === 0) {
-//     populateDb();
-//   }
-// });
 
 
 /**

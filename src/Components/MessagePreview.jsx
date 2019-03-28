@@ -40,9 +40,7 @@ class MessagePreview extends Component {
   }
 
   createStrItem(pair, withoutName) {
-    // if (withoutName) return <p key={`${pair[0]}-${pair[1]}`}>{pair[1]}</p>;
     return <span key={`strItem-${pair[0]}-${pair[1]}`}><b>{pair[0]}: </b>{pair[1]}</span>
-    // return <span key={`${pair[0]}-${pair[1]}`}>{pair[1]}</span>
   }
 
   deconstructArr(pair) {

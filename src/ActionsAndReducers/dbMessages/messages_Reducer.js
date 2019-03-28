@@ -22,7 +22,6 @@ export const messagesReducer = (state = initialState, action) => {
 
     case ActionConstant.DB_MESSAGE_SAVED:
       newState.messages = action.payload;
-      // newState.messages = action.payload.rows; // .payload.rows
       return newState;
 
     case ActionConstant.DB_RETURNED_MESSAGE:
