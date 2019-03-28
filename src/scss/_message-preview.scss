@@ -1,8 +1,25 @@
-
-
+@import 'dependencies/variables';
 
 #message-preview {
+
+  h3 {
+    font-size: 1.4em;
+    padding: .75em 0 .5em 0;
+  }
+
+  .group-section {
+    margin-top: $umpireMenuMargin ;
+  }
+
   span {
     display: block;
+  }
+}
+
+#function {
+  //margin-top: 59px;
+  a, span {
+    font-size: calc(#{$titleSize} * .9);
+    line-height: $titleLine;
   }
 }

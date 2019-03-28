@@ -16,9 +16,14 @@ export default class GameDesignerInterface extends Component {
 
   render() {
     return (
-      <div id="umpire">
-        <Link href="/umpireMenu/templates" onClick={this.updateHistory}>Message Templates..</Link>
-        <Link href="/umpireMenu/library">Message Library..</Link>
+      <div id="umpire" className="flex-content-wrapper">
+        <div className="flex-content flex-content--big">
+          <Link href="/umpireMenu/templates" onClick={this.updateHistory}>Message Templates</Link>
+          <Link href="/umpireMenu/library">Message Library</Link>
+        </div>
+        <div className="flex-content flex-content--big">
+          <span>Games</span>
+        </div>
       </div>
     );
   }

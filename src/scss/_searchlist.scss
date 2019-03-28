@@ -1,0 +1,37 @@
+@import './dependencies/variables';
+
+.searchlist {
+
+  height: 100%;
+
+  &--input {
+    width: 100%;
+    margin-top: 1.2em;
+    padding: .45em;
+  }
+
+  &--list {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+    height: 100%;
+    max-height: calc(88vh - 153px);
+    overflow-y: scroll;
+
+    span {
+      width: 100%;
+      padding: .65em .45em;
+      cursor: pointer;
+
+      &:hover {
+        color: $darkGrey;
+        text-decoration: none;
+      }
+      
+      &.active {
+        background: $lightGrey;
+        color: $darkGrey;
+      }
+    }
+  }
+}

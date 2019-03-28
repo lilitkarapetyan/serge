@@ -1,0 +1,14 @@
+@import "dependencies/variables";
+
+#home-btn {
+  position: absolute;
+  display: flex;
+  width: $paddingWidth;
+  left: 0;
+  justify-content: center;
+  padding-left: 2px;
+}
+
+.btn-secondary span {
+  color: #fff;
+}

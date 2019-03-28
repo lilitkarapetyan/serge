@@ -3,12 +3,35 @@
 @import 'dependencies/variables';
 @import 'dependencies/reset';
 @import '~bootstrap/scss/bootstrap';
-@import 'typography';
 @import 'flex-layout';
-@import 'message-stream';
-@import 'editor-preview';
+@import 'typography';
+@import 'btns';
+//@import 'message-stream';
+@import 'json-editor';
 @import 'message-preview';
+@import 'preview-editor';
+@import 'searchlist';
 @import 'modal';
+
+.view-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  min-height: 100vh;
+  padding: $paddingHeight $paddingWidth;
+}
+
+#umpire {
+  width: 100vw;
+  height: 100vh;
+  padding: 15vh 12vw;
+
+  a, span {
+    font-size: $titleSize;
+    line-height: $titleLine;
+  }
+}
 
 /*
   Bootstrap overrides..
@@ -16,27 +39,4 @@
 
 .form-control {
   height: fit-content;
-}
-
-//.App-header {
-//  background-color: #282c34;
-//  min-height: 100vh;
-//  display: flex;
-//  flex-direction: column;
-//  align-items: center;
-//  justify-content: center;
-//  font-size: calc(10px + 2vmin);
-//  color: white;
-//}
-
-//.App-link {
-//  color: #61dafb;
-//}
-
-.view-wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  height: auto;
-  padding: 3%;
 }

@@ -11,10 +11,12 @@ import { getAllMessages, resetMessagePreview, duplicateMessage } from "../Action
 import { modalAction } from "../ActionsAndReducers/Modal/Modal_ActionCreators";
 
 
-import JsonEditor from "../Components/JsonCreator";
+import JsonCreator from "../Components/JsonCreator";
 import SearchList from "../Components/SearchList";
 import MessagePreview from "../Components/MessagePreview";
 import '../scss/App.scss';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faHome} from "@fortawesome/free-solid-svg-icons";
 
 class MessageUIContainer extends Component {
 
@@ -161,6 +163,7 @@ class MessageUIContainer extends Component {
   render() {
     return (
       <div className="view-wrapper">
+        <Link href="/" id="home-btn"><FontAwesomeIcon icon={faHome} size="3x" /></Link>
         <h1>Message {this.state.creatorType}</h1>
         <div className="flex-content-wrapper">
           <div id="selection" className="flex-content">
@@ -169,8 +172,8 @@ class MessageUIContainer extends Component {
           <div id="preview" className="flex-content flex-content--big">
             <p>Preview</p>
             { this.state.creatorType === 'templates' ?
-              <JsonEditor id="preview"
-                          messageList={ this.props.messageTypes }
+              <JsonCreator id="preview"
+                          // messageList={ this.props.messageTypes }
                           // currentOpenMessageSchemaID={ this.props.umpireMenu.currentOpenMessageSchemaID }
                           disabled={true} />
             :
@@ -181,8 +184,8 @@ class MessageUIContainer extends Component {
           </div>
           <div id="function" className="flex-content flex-content--sml">
             <Link href={this.state.creatorType === 'templates' ? "/messageCreator/edit/template" : "/messageCreator/edit/message"}>Edit</Link>
-            <span onClick={this.duplicateMessage}>Duplicate</span>
-            <span onClick={this.deleteMessage}>Delete</span>
+            <span className="link" onClick={this.duplicateMessage}>Duplicate</span>
+            <span className="link" onClick={this.deleteMessage}>Delete</span>
           </div>
         </div>
       </div>

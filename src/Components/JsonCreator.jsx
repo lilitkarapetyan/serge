@@ -71,7 +71,7 @@ class JsonCreator extends Component {
     if (
       nextProps.messages.messagePreviewId.length > 0 &&
       nextProps.messageTypes.messages.length > 0 &&
-      nextProps.edit
+      !nextProps.disabled
     ) {
       this.createEditMessageEditor(nextProps);
     }
@@ -92,7 +92,7 @@ class JsonCreator extends Component {
 
 
   saveMessage = () => {
-    if (this.props.edit) {
+    if (!this.props.disabled) {
       this.props.dispatch(updateMessage(this.editor.getValue(), this.props.messages.messagePreviewId));
     } else {
       this.props.dispatch(createMessage(this.editor.getValue(), this.props.umpireMenu.selectedSchemaID));
@@ -106,9 +106,13 @@ class JsonCreator extends Component {
   render() {
     return (
       <>
-        {!this.props.disabled ? <h2 onClick={this.saveMessage}>Save Message</h2> : null }
-          <div id="editor-preview" ref={this.editorPreviewRef}></div>
-        {!this.props.disabled ? <h2 onClick={this.saveMessage}>Save Message</h2> : null }
+        <div className="button-wrap">
+          {!this.props.disabled ? <h2 onClick={this.saveMessage}>Save Message</h2> : null }
+        </div>
+          <div id="preview-editor" ref={this.editorPreviewRef}></div>
+        <div className="button-wrap">
+          {!this.props.disabled ? <h2 onClick={this.saveMessage}>Save Message</h2> : null }
+        </div>
       </>
     );
   }

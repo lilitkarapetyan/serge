@@ -12,6 +12,7 @@ class MessagePreview extends Component {
   }
 
   componentWillMount() {
+
   }
 
   createObjItem(pair) {
@@ -19,7 +20,7 @@ class MessagePreview extends Component {
     return (
       <>
         {/*<h3>{pair[0]}</h3>*/}
-        <span key={`objItem--${pair[0]}-${pair[1]}`}>{ that.deconstructObj(pair[1]) }</span>
+        <span key={`objItem--${pair[0]}-${pair[1]}`} className="group-section">{ that.deconstructObj(pair[1]) }</span>
       </>
     )
   }
@@ -33,7 +34,7 @@ class MessagePreview extends Component {
     return (
       <>
         <h3>{pair[0]}</h3>
-        <span key={`dateTime-${pair[1]}`}>{moment(pair[1]).format('Do MMMM YYYY, hh:mm')}</span>
+        <span key={`dateTime-${pair[1]}`}>{moment(pair[1]).format('Do MMMM YYYY, HH:mm')}</span>
       </>
     )
   }

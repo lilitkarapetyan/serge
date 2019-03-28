@@ -1,7 +1,7 @@
 .flex-content-wrapper {
   display: flex;
   flex-direction: row;
-  height: 100%;
+  flex-grow: 1;
 
   .flex-content {
     display: flex;
@@ -9,16 +9,9 @@
     flex-wrap: nowrap;
     justify-items: flex-start;
     min-width: 26%;
-    padding: 0 3%;
-    height: 100%;
 
-    &:first-child {
-      padding: 0;
-      padding-right: 4.5%;
-    }
-    &:last-child {
-      padding: 0;
-    }
+    //padding: 0 3%;
+    //height: 100%;
 
     &--sml {
       //flex-grow: 1;
@@ -27,7 +20,25 @@
 
     &--big {
       //flex-grow: 2;
-      min-width: 50%;
+      min-width: 45%;
+      margin: 0 2.5%;
+    }
+
+    &--solo-item {
+      min-width: 55%;
+      margin: 0 auto;
+    }
+
+    &--main-menu {
+      a {
+        font-size: 2em;
+        text-decoration: underline;
+        margin-top: 2em;
+
+        &:first-of-type {
+          margin-top: 0;
+        }
+      }
     }
   }
 }

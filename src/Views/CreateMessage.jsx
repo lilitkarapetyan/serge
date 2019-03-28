@@ -11,6 +11,8 @@ import { resetMessagePreview } from "../ActionsAndReducers/dbMessages/messages_A
 
 import Link from "../Components/Link";
 import SearchList from "../Components/SearchList";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faHome} from "@fortawesome/free-solid-svg-icons";
 
 class EditMessage extends Component {
 
@@ -56,7 +58,7 @@ class EditMessage extends Component {
   render() {
     return (
       <div className="view-wrapper">
-        <Link href="/">Home</Link>
+        <Link href="/" id="home-btn"><FontAwesomeIcon icon={faHome} size="3x" /></Link>
         <h1>Message library</h1>
         <div className="flex-content-wrapper">
           <div id="selection" className="flex-content">

@@ -25,7 +25,7 @@ class Link extends Component {
 
   render() {
     return (
-      <a href={this.props.href} onClick={this.onClickHandler}>
+      <a href={this.props.href} onClick={this.onClickHandler} id={this.props.id ? this.props.id : null}>
         {this.props.children}
       </a>
     );
