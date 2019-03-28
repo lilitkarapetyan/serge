@@ -17,18 +17,18 @@ class EditTemplate extends Component {
 
   }
 
-  componentDidMount() {
-
-    let schema = this.props.messageTypes.messages.find((mes) => mes.id === this.props.umpireMenu.currentOpenMessageSchemaID);
-
-    if (schema !== undefined) {
-      this.editor = new JSONEditor(this.editorRef.current, {
-        schema: schema.doc.details,
-      });
-    } else {
-
-    }
-  }
+  // componentDidMount() {
+  //
+  //   let schema = this.props.messageTypes.messages.find((mes) => mes.id === this.props.umpireMenu.currentOpenMessageSchemaID);
+  //
+  //   if (schema !== undefined) {
+  //     this.editor = new JSONEditor(this.editorRef.current, {
+  //       schema: schema.doc.details,
+  //     });
+  //   } else {
+  //
+  //   }
+  // }
 
   render() {
     return (

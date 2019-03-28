@@ -32,26 +32,7 @@ class JsonCreator extends Component {
       selectedSchema: ''
     };
   }
-
-  createEditMessageEditor(nextProps) {
-
-    const schemaId = nextProps.messages.messages.find((mes) => mes._id === nextProps.messages.messagePreviewId).schemaId;
-
-    // HERE
-    console.log(schemaId);
-
-    this.editor = new JSONEditor(this.editorPreviewRef.current, {
-      schema: nextProps.messageTypes.messages.find((mes) => mes._id === schemaId).details,
-      theme: 'bootstrap4'
-    });
-
-    const data = nextProps.messages.messages.find(function(mes) {
-      return mes._id.toLowerCase().indexOf(nextProps.messages.messagePreviewId.toLowerCase()) > -1;
-    });
-
-    this.editor.setValue(data.details);
-  }
-
+  
 
   componentWillUpdate(nextProps, nextState, nextContext) {
 
@@ -59,11 +40,13 @@ class JsonCreator extends Component {
       this.editor.destroy();
     }
 
-    if (nextProps.umpireMenu.currentOpenMessageSchemaID.length > 0) {
-
+    if (
+      nextProps.umpireMenu.selectedSchemaID.length > 0 &&
+      nextProps.messageTypes &&
+      nextProps.messageTypes.messages.length > 0
+    ) {
       this.editor = new JSONEditor(this.editorPreviewRef.current, {
-        // schema: this.props.messageList.find((mes) => mes.id === nextProps.umpireMenu.currentOpenMessageSchemaID).doc.details,
-        schema: nextProps.messageTypes.messages.find((mes) => mes._id === nextProps.umpireMenu.currentOpenMessageSchemaID).details,
+        schema: nextProps.messageTypes.messages.find((mes) => mes._id === nextProps.umpireMenu.selectedSchemaID).details,
         theme: 'bootstrap4'
       });
     }
@@ -73,20 +56,15 @@ class JsonCreator extends Component {
       nextProps.messageTypes.messages.length > 0 &&
       !nextProps.disabled
     ) {
-      this.createEditMessageEditor(nextProps);
+
+      const data = nextProps.messages.messages.find(function(mes) {
+        return mes._id.toLowerCase().indexOf(nextProps.messages.messagePreviewId.toLowerCase()) > -1;
+      });
+      this.editor.setValue(data.details);
     }
 
     if (this.props.disabled) {
       this.editor.disable();
-    }
-
-    const selectedSchema = nextProps.messageTypes.messages.find((mes) => mes._id === nextProps.umpireMenu.currentOpenMessageSchemaID);
-
-    if (!selectedSchema) return false;
-
-    // will loop and crash app if constantly calling dispatch within componentWillUpdate
-    if (selectedSchema._id !== nextProps.umpireMenu.selectedSchemaID) {
-      this.props.dispatch(setSelectedSchema(selectedSchema._id));
     }
   }
 

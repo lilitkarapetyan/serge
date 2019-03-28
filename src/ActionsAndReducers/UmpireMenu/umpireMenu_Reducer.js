@@ -15,11 +15,7 @@ export const umpireMenuReducer = (state = initialState, action) => {
     case ActionConstant.SET_SELECTED_SCHEMA:
       newState.selectedSchemaID = action.payload;
       return newState;
-
-    case ActionConstant.CURRENT_OPEN_MESSAGE_TYPE:
-      newState.currentOpenMessageSchemaID = action.payload;
-      return newState;
-
+      
     default:
       return newState;
   }

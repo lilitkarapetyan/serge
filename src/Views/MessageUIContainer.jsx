@@ -6,7 +6,6 @@ import moment from "moment";
 import check from "check-types";
 
 import { getAllMessageTypes } from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
-import { setOpenMessage } from "../ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators";
 import { getAllMessages, resetMessagePreview, duplicateMessage } from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
 import { modalAction } from "../ActionsAndReducers/Modal/Modal_ActionCreators";
 
@@ -47,11 +46,6 @@ class MessageUIContainer extends Component {
   }
 
 
-  componentWillMount() {
-    //..needed? - re-evaluate
-    this.props.dispatch(setOpenMessage(''));
-  }
-
   buildMessageBoard() {
 
     switch (this.state.creatorType) {
@@ -73,17 +67,12 @@ class MessageUIContainer extends Component {
   }
 
 
-  setOpenMessageId(id) {
-    this.props.dispatch(setOpenMessage(id));
-  }
-
-
   // event listener functions from the DOM will lose scope of this to the React Class unless stated as an arrow function
   // or this is bound to them within the constructor like.. this.filterMessages = this.filterMessages.bind(this);
   // arrow functions are es6 syntax and preferable if babel compiler can compile them. - They have the scope of where they're
   // defined unlike a normal function that has it's own scope.
   filterMessages = (input) => {
-    
+
     let value = input ? input.target.value : this.state.searchInput;
 
     let newState;

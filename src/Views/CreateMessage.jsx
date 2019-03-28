@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 
 import JsonCreator from "../Components/JsonCreator";
 
-import {setOpenMessage} from "../ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators";
 import {getAllMessageTypes} from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
 import { resetMessagePreview } from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
 

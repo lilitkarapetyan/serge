@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 
 import '../scss/App.scss';
-import {setOpenMessage} from "../ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators";
+import {setSelectedSchema} from "../ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators";
 import {getSingleMessage} from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
 
 import moment from "moment";
@@ -17,25 +17,25 @@ class SearchList extends Component {
     };
   }
 
-  setOpenMessageId(id) {
+  setSelectedSchemaId(item) {
 
     switch (this.state.creatorType) {
       case 'templates':
-        this.props.dispatch(setOpenMessage(id));
+
         break;
 
       case 'library':
-        // this.props.dispatch(setOpenMessage(id));
-        this.props.dispatch(getSingleMessage(id));
+        this.props.dispatch(setSelectedSchema(item.schemaId));
+        this.props.dispatch(getSingleMessage(item._id));
         break;
 
       case 'create':
-        this.props.dispatch(setOpenMessage(id));
+        this.props.dispatch(setSelectedSchema(item._id));
         break;
-
-      case 'edit':
-        this.props.dispatch(setOpenMessage(id));
-        break;
+      //
+      // case 'edit':
+      //   this.props.dispatch(setSelectedSchema(id));
+      //   break;
 
       default:
         console.log('error');
@@ -65,14 +65,16 @@ class SearchList extends Component {
               active = item._id === that.props.messages.messagePreviewId ? 'active' : null;
             }
 
-            let title;
+          console.log(item);
+
+          let title;
             if (that.state.creatorType === 'create') {
               title = item.details.title;
-              return <span href="#" onClick={that.setOpenMessageId.bind(that, item._id)} key={item._id} className={active}>{title}</span>
+              return <span href="#" onClick={that.setSelectedSchemaId.bind(that, item)} key={item._id} className={active}>{title}</span>
             } else {
               title = item.details.Title;
               let date = moment(item.lastUpdated).format('DD/MM/YY');
-              return <span href="#" onClick={that.setOpenMessageId.bind(that, item._id)} key={item._id} className={active}>{title} - {date}</span>
+              return <span href="#" onClick={that.setSelectedSchemaId.bind(that, item)} key={item._id} className={active}>{title} - {date}</span>
             }
           })
         }
