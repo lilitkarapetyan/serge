@@ -12,7 +12,7 @@ import SearchList from "../Components/SearchList";
 import {setCurrentViewFromURI} from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
+import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 
 class EditMessage extends Component {
 
@@ -60,7 +60,9 @@ class EditMessage extends Component {
 
     return (
       <div className="view-wrapper">
-        <Link href="/" id="home-btn"><FontAwesomeIcon icon={faHome} size="3x" /></Link>
+        <div id="sidebar">
+          <Link href="/" id="home-btn"><FontAwesomeIcon icon={faArrowLeft} size="2x" /></Link>
+        </div>
         <h1>Message library</h1>
         <div className="flex-content-wrapper">
           {/*<div id="selection" className="flex-content">*/}

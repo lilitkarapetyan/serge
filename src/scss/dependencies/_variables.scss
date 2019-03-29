@@ -9,3 +9,26 @@ $paddingHeight: 6vh;
 
 $titleSize: 1.85em;
 $titleLine: 2.5em;
+
+$primaryColor: #415b76;
+$primaryTriadColor: #835855;
+$primaryTriadColorTransparent: rgba(131, 88, 85, .25);
+$secondaryColor: #394959;
+
+$lightBlue: #eff4f2;
+
+@mixin shadow() {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+@mixin btnDown() {
+  box-shadow: 0 0 0 rgba(0,0,0,0.16), 0 0 0 rgba(0,0,0,0.23);
+}
+
+@mixin transition() {
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+@mixin transitionPadding() {
+  transition: padding 0.3s cubic-bezier(.25,.8,.25,1);
+}

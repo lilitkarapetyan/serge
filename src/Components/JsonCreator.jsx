@@ -20,6 +20,11 @@ import '../scss/App.scss';
 import {setSelectedSchema} from "../ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators";
 import {setCurrentViewFromURI} from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
 
+import Link from "../Components/Link";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSave} from "@fortawesome/free-solid-svg-icons";
+
+
 class JsonCreator extends Component {
 
   constructor(props) {
@@ -32,7 +37,7 @@ class JsonCreator extends Component {
       selectedSchema: ''
     };
   }
-  
+
 
   componentWillUpdate(nextProps, nextState, nextContext) {
 
@@ -76,8 +81,6 @@ class JsonCreator extends Component {
       this.props.dispatch(updateMessage(this.editor.getValue(), this.props.messages.messagePreviewId));
     }
     this.props.dispatch(resetMessagePreview());
-    window.history.pushState({}, '', '/umpireMenu/library');
-    this.props.dispatch(setCurrentViewFromURI('/umpireMenu/library'));
   };
 
 
@@ -85,11 +88,11 @@ class JsonCreator extends Component {
     return (
       <>
         <div className="button-wrap">
-          {!this.props.disabled ? <h2 onClick={this.saveMessage}>Save Message</h2> : null }
+          {!this.props.disabled ? <Link href="/umpireMenu/library" onClickMethod={this.saveMessage} class="link"><FontAwesomeIcon icon={faSave} />Save Message</Link> : null }
         </div>
           <div id="preview-editor" ref={this.editorPreviewRef}></div>
         <div className="button-wrap">
-          {!this.props.disabled ? <h2 onClick={this.saveMessage}>Save Message</h2> : null }
+          {!this.props.disabled ? <Link href="/umpireMenu/library" onClickMethod={this.saveMessage} class="link"><FontAwesomeIcon icon={faSave} />Save Message</Link> : null }
         </div>
       </>
     );

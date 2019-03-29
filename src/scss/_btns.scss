@@ -1,14 +1,130 @@
 @import "dependencies/variables";
 
 #home-btn {
-  position: absolute;
   display: flex;
   width: $paddingWidth;
-  left: 0;
+  height: 48px;
   justify-content: center;
   padding-left: 2px;
+  color: $lightBlue;;
+
+  svg {
+    align-self: center;
+    margin-top: 3px;
+  }
 }
 
-.btn-secondary span {
-  color: #fff;
+.btn-secondary {
+  // override bootstrap specificity
+  margin-bottom: 1.15em;
+  background: none;
+  border: none;
+  box-shadow: none;
+  border-radius: 2px !important;
+  margin-bottom: 0;
+
+  &:hover {
+    background: $primaryTriadColorTransparent;
+  }
+
+  &:active,
+  &:focus,
+  &:visited {
+    color: $primaryTriadColor !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  &:disabled {
+    background: none !important;
+    color: #707070;
+  }
+
+  span {
+    color: $primaryTriadColor;
+    font-weight: 500;
+  }
+}
+
+#function {
+  //margin-top: 59px;
+  padding-left: 1.15em;
+  height: fit-content;
+
+  a.link, span.link {
+    margin-bottom: 1.15em;
+    color: $primaryTriadColor;
+    background: none;
+    box-shadow: none;
+
+    &:hover {
+      background: $primaryTriadColorTransparent;
+    }
+  }
+}
+
+a.link,
+span.link {
+  display: block;
+  width: fit-content;
+  padding: 8px 14px 8px 6px;
+  font-size: 16px;
+  font-weight: 500;
+  color: $lightBlue;
+  background: $primaryColor;
+  border-radius: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  @include shadow();
+
+  svg {
+    min-width: 30px;
+    margin-right: 2px;
+  }
+
+  @include transition();
+
+  &:hover {
+    text-decoration: none;
+    @include btnDown();
+  }
+}
+
+button {
+  border: none;
+}
+
+.btn-action {
+  display: block;
+  width: fit-content;
+  padding: 8px 14px;
+  margin-left: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 2px;
+  text-transform: uppercase;
+
+  &--primary {
+    color: $lightBlue;
+    background: $primaryTriadColor;
+
+    @include shadow();
+    @include transition();
+
+    &:hover {
+      color: $lightBlue;
+      @include btnDown();
+    }
+  }
+
+  &--secondary {
+    color: $primaryTriadColor;
+    background: none;
+
+    &:hover {
+      color: $primaryTriadColor;
+    }
+  }
 }

@@ -15,7 +15,7 @@ import SearchList from "../Components/SearchList";
 import MessagePreview from "../Components/MessagePreview";
 import '../scss/App.scss';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHome, faEdit, faClone, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faPencilAlt, faClone, faTrash, faArrowLeft,faPlus} from "@fortawesome/free-solid-svg-icons";
 
 class MessageUIContainer extends Component {
 
@@ -111,7 +111,7 @@ class MessageUIContainer extends Component {
       case 'templates':
 
         return [
-            <Link href="/messageCreator/create/template" key="templates">Create new template</Link>,
+            <Link href="/messageCreator/create/template" key="templates" class="link">Create new template</Link>,
             <SearchList key="searchlist"
                         creatorType={ this.state.creatorType }
                         messageList={ this.state.messageList }
@@ -123,7 +123,7 @@ class MessageUIContainer extends Component {
       case 'library':
 
         return [
-            <Link href="/messageCreator/create/message" key="messages">Create new Message</Link>,
+            <Link href="/messageCreator/create/message" key="messages" class="link"><FontAwesomeIcon icon={faPlus} />Create new Message</Link>,
             <SearchList key="searchlist"
                         creatorType={ this.state.creatorType }
                         messageList={ this.state.messageList }
@@ -139,29 +139,28 @@ class MessageUIContainer extends Component {
 
 
   duplicateMessage = () => {
-
     this.props.dispatch(duplicateMessage(this.props.messages.messagePreviewId));
-
   };
 
+
   deleteMessage = () => {
-
     this.props.dispatch(modalAction.open());
-
   };
 
 
   render() {
     return (
       <div className="view-wrapper">
-        <Link href="/" id="home-btn"><FontAwesomeIcon icon={faHome} size="3x" /></Link>
+        <div id="sidebar">
+          <Link href="/" id="home-btn"><FontAwesomeIcon icon={faArrowLeft} size="2x" /></Link>
+        </div>
         <h1>Message {this.state.creatorType}</h1>
         <div className="flex-content-wrapper">
           <div id="selection" className="flex-content">
             { this.createSearchListSection() }
           </div>
           <div id="preview" className="flex-content flex-content--big">
-            <p>Preview</p>
+            <p className="heading--sml">Preview</p>
             { this.state.creatorType === 'templates' ?
               <JsonCreator id="preview"
                            disabled={true} />
@@ -172,9 +171,10 @@ class MessageUIContainer extends Component {
             }
           </div>
           <div id="function" className="flex-content flex-content--sml">
+            <p className="heading--sml">Actions</p>
             { this.props.messages.messagePreviewId.length > 0 ?
               <>
-                <Link class="link" href={this.state.creatorType === 'templates' ? "/messageCreator/edit/template" : "/messageCreator/edit/message"}><FontAwesomeIcon icon={faEdit} />Edit</Link>
+                <Link class="link" href={this.state.creatorType === 'templates' ? "/messageCreator/edit/template" : "/messageCreator/edit/message"}><FontAwesomeIcon icon={faPencilAlt} />Edit</Link>
                 <span className="link" onClick={this.duplicateMessage}><FontAwesomeIcon icon={faClone} />Duplicate</span>
                 <span className="link" onClick={this.deleteMessage}><FontAwesomeIcon icon={faTrash} />Delete</span>
               </>

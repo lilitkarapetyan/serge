@@ -1,15 +1,20 @@
 @import './dependencies/variables';
 
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 400;
+  font-weight: 500;
   margin: 0;
 }
 
 h1, h2, h3, h4, h5, h6, span, p, a {
-  color: $grey;
+  color: $secondaryColor;
+}
+
+p,a {
+  font-size: 16px;
 }
 
 h1 {
+  // color ?
   margin-bottom: $umpireMenuMargin;
 }
 
@@ -24,24 +29,14 @@ a {
   width: fit-content;
 
   &:hover {
-    color: $darkGrey;
+    color: $secondaryColor;
   }
 }
 
-a.link,
-span.link {
-  display: block;
-  width: fit-content;
-  cursor: pointer;
+.heading {
 
-  svg {
-    min-width: 30px;
-    padding: 4px;
-    margin-right: 2px;
-  }
-
-  &:hover {
+  &--sml {
     color: $darkGrey;
-    text-decoration: none;
+    font-weight: bold;
   }
 }

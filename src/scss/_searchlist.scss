@@ -19,18 +19,25 @@
     overflow-y: scroll;
 
     span {
+      //width: calc(100% - 1vw);
       width: 100%;
-      padding: .65em .45em;
+      padding: 1em .45em;
       cursor: pointer;
+      border-bottom: 1px solid #f2f2f2;
+
+      @include transitionPadding();
 
       &:hover {
         color: $darkGrey;
         text-decoration: none;
+        padding-left: .85em;
       }
       
       &.active {
-        background: $lightGrey;
+        padding-left: .85em;
         color: $darkGrey;
+        font-weight: bold;
+        background: #fff;
       }
     }
   }

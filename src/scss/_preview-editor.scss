@@ -5,10 +5,8 @@
     display: flex;
     flex-direction: row-reverse;
 
-    h2 {
-      width: fit-content;
-      cursor: pointer;
-      padding: $umpireMenuMargin 0;
+    a {
+      margin: $umpireMenuMargin 0;
     }
   }
 
