@@ -12,12 +12,12 @@ Console commands for during dev and demos
 
 ### `npm i` to install dependencies
 
-### for demo run `npm start`
+### for demo run `npm run start`
 
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### `npm test` (currently 0 e2e tests)
+### `npm run test` (currently 0 e2e tests)
 
 Launches the test runner in the interactive watch mode.<br>
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
