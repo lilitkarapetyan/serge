@@ -7,13 +7,13 @@ import moment from "moment";
 
 class MessagePreview extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
-  componentWillMount() {
-
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
+  //
+  // componentWillMount() {
+  //
+  // }
 
   createObjItem(pair) {
     const that = this;

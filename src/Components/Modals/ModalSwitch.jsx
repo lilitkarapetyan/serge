@@ -2,14 +2,14 @@ import React, {Component} from 'react';
 import "../../scss/App.scss";
 import { connect } from 'react-redux';
 import DefaultModal from './DeleteModal';
-import EditModal from './EditModal';
-import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
+// import EditModal from './EditModal';
+// import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
 
 class ModalSwitch extends Component {
 
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   render() {
 

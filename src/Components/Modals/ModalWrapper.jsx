@@ -1,12 +1,12 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component}  from 'react';
 import { connect } from 'react-redux';
 import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
 
 class ModalWrapper extends Component {
 
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   handleBackgroundClick = (e) => {
     if (e.target === e.currentTarget) this.props.dispatch(modalAction.close());

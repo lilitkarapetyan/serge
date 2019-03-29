@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import '../scss/App.scss';
 import { connect } from "react-redux";
 import Link from "../Components/Link"
-import JSONEditor from '@json-editor/json-editor';
+// import JSONEditor from '@json-editor/json-editor';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 

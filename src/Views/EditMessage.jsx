@@ -5,11 +5,11 @@ import { connect } from "react-redux";
 import JsonCreator from "../Components/JsonCreator";
 
 import { getAllMessageTypes } from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
-import { resetMessagePreview } from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
+// import { resetMessagePreview } from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
 
 import Link from "../Components/Link";
-import SearchList from "../Components/SearchList";
-import {setCurrentViewFromURI} from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
+// import SearchList from "../Components/SearchList";
+// import {setCurrentViewFromURI} from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';

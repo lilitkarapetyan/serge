@@ -17,8 +17,8 @@ import JSONEditor from '@json-editor/json-editor';
 //     "allowInput": true
 // }
 import '../scss/App.scss';
-import {setSelectedSchema} from "../ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators";
-import {setCurrentViewFromURI} from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
+// import {setSelectedSchema} from "../ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators";
+// import {setCurrentViewFromURI} from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
 
 import Link from "../Components/Link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";

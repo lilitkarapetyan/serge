@@ -7,9 +7,9 @@ import '../scss/App.scss';
 
 class Link extends Component {
 
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   onClickHandler = (e) => {
 

@@ -38,14 +38,11 @@ class Router extends Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-
-    if (this.props.currentViewURI !== nextProps.currentViewURI) {
-      this.router.resolve({ pathname: nextProps.currentViewURI }).then(result => {{
-        this.setState({
-          currentView: result,
-        });
-      }});
-    }
+    this.router.resolve({ pathname: nextProps.currentViewURI }).then(result => {
+      this.setState({
+        currentView: result,
+      });
+    });
   }
 
   render() {

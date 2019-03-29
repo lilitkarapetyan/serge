@@ -32,7 +32,8 @@
   }
 
   .display-text-wrapper {
-    padding: 20px 20px 20px 20px;
+    padding: 20px;
+    order: 2;
   }
 
   h3 {
@@ -50,10 +51,6 @@
   }
   span.price {
     line-height: 2em;
-  }
-
-  .display-text-wrapper {
-    order: 2;
   }
 
   .display-image-wrapper {

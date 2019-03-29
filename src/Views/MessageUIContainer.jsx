@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Link from "../Components/Link";
 
-import moment from "moment";
-import check from "check-types";
+// import moment from "moment";
+// import check from "check-types";
 
 import { getAllMessageTypes } from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
-import { getAllMessages, resetMessagePreview, duplicateMessage } from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
+import { getAllMessages, duplicateMessage } from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
 import { modalAction } from "../ActionsAndReducers/Modal/Modal_ActionCreators";
 
 
@@ -104,8 +104,6 @@ class MessageUIContainer extends Component {
 
   createSearchListSection() {
 
-    var that = this;
-
     switch (this.state.creatorType) {
 
       case 'templates':
@@ -174,9 +172,9 @@ class MessageUIContainer extends Component {
             <p className="heading--sml">Actions</p>
             { this.props.messages.messagePreviewId.length > 0 ?
               <>
-                <Link class="link" href={this.state.creatorType === 'templates' ? "/messageCreator/edit/template" : "/messageCreator/edit/message"}><FontAwesomeIcon icon={faPencilAlt} />Edit</Link>
-                <span className="link" onClick={this.duplicateMessage}><FontAwesomeIcon icon={faClone} />Duplicate</span>
-                <span className="link" onClick={this.deleteMessage}><FontAwesomeIcon icon={faTrash} />Delete</span>
+                <Link class="link link--secondary" href={this.state.creatorType === 'templates' ? "/messageCreator/edit/template" : "/messageCreator/edit/message"}><FontAwesomeIcon icon={faPencilAlt} />Edit</Link>
+                <span className="link link--secondary" onClick={this.duplicateMessage}><FontAwesomeIcon icon={faClone} />Duplicate</span>
+                <span className="link link--secondary" onClick={this.deleteMessage}><FontAwesomeIcon icon={faTrash} />Delete</span>
               </>
               :
               null

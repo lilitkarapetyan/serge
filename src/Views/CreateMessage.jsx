@@ -10,7 +10,7 @@ import { resetMessagePreview } from "../ActionsAndReducers/dbMessages/messages_A
 import Link from "../Components/Link";
 import SearchList from "../Components/SearchList";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowLeft, faHome} from "@fortawesome/free-solid-svg-icons";
+import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 
 class EditMessage extends Component {
 
@@ -63,8 +63,7 @@ class EditMessage extends Component {
         <h1>Message library</h1>
         <div className="flex-content-wrapper">
           <div id="selection" className="flex-content">
-            <SearchList className="search"
-                        key="search-templates"
+            <SearchList key="search-templates"
                         messageList={this.state.messageList}
                         filterMessages={this.filterMessages}
                         searchInput={ this.state.searchInput }

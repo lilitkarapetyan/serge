@@ -6,7 +6,7 @@
   height: 48px;
   justify-content: center;
   padding-left: 2px;
-  color: $lightBlue;;
+  color: $lightBlue;
 
   svg {
     align-self: center;
@@ -16,12 +16,11 @@
 
 .btn-secondary {
   // override bootstrap specificity
-  margin-bottom: 1.15em;
+  margin-bottom: 0;
   background: none;
   border: none;
   box-shadow: none;
   border-radius: 2px !important;
-  margin-bottom: 0;
 
   &:hover {
     background: $primaryTriadColorTransparent;
@@ -48,20 +47,8 @@
 }
 
 #function {
-  //margin-top: 59px;
   padding-left: 1.15em;
   height: fit-content;
-
-  a.link, span.link {
-    margin-bottom: 1.15em;
-    color: $primaryTriadColor;
-    background: none;
-    box-shadow: none;
-
-    &:hover {
-      background: $primaryTriadColorTransparent;
-    }
-  }
 }
 
 a.link,
@@ -89,6 +76,27 @@ span.link {
   &:hover {
     text-decoration: none;
     @include btnDown();
+  }
+
+  &--large {
+    font-size: $titleSize;
+    line-height: 1em;
+    padding: .6em 1em;
+  }
+
+  &--secondary {
+    margin-bottom: 1.15em;
+    color: $primaryTriadColor;
+    background: none;
+    box-shadow: none;
+
+    &:hover {
+      background: $primaryTriadColorTransparent;
+    }
+  }
+
+  &--noIcon {
+    padding: 8px 14px;
   }
 }
 

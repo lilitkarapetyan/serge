@@ -29,16 +29,12 @@
   height: 100vh;
   padding: 15vh 12vw;
 
-  a, span {
+  a {
+    margin-bottom: 1.15em;
+  }
+
+  span {
     font-size: $titleSize;
     line-height: $titleLine;
   }
-}
-
-/*
-  Bootstrap overrides..
- */
-
-.form-control {
-
 }

@@ -4,15 +4,12 @@ import "../../scss/App.scss";
 import { connect } from 'react-redux';
 import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
 import { deleteMessage } from "../../ActionsAndReducers/dbMessages/messages_ActionCreators";
-import Link from "../../Views/MessageUIContainer";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 
 class DeleteModal extends Component {
 
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   hideModal = () => {
     this.props.dispatch(modalAction.close());
