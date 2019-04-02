@@ -60,6 +60,9 @@ export const createMessage = (message, schemaId) => {
       dispatch(DBSaveMessageArray(messages));
     }
     dispatch(loadingDBMessageCreate(false));
+
+    window.history.pushState({}, '', "/umpireMenu/library");
+    dispatch(setCurrentViewFromURI("/umpireMenu/library"));
   }
 };
 
