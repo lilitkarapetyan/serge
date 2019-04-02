@@ -11,11 +11,11 @@ import { modalAction } from "../ActionsAndReducers/Modal/Modal_ActionCreators";
 
 
 import JsonCreator from "../Components/JsonCreator";
-import SearchList from "../Components/SearchList";
 import MessagePreview from "../Components/MessagePreview";
 import '../scss/App.scss';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPencilAlt, faClone, faTrash, faArrowLeft,faPlus} from "@fortawesome/free-solid-svg-icons";
+import SearchList from "../Components/SearchList";
 
 class MessageUIContainer extends Component {
 
@@ -80,13 +80,13 @@ class MessageUIContainer extends Component {
     switch (this.state.creatorType) {
       case 'templates':
         newState = this.props.messageTypes.messages.filter(function(mes) {
-          return mes.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
+          return mes.details.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
         });
         break;
 
       case 'library':
         newState = this.props.messages.messages.filter(function(mes) {
-          return mes.details.Title.toLowerCase().indexOf(value.toLowerCase()) > -1;
+          return mes.details.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
         });
         break;
 
@@ -110,23 +110,17 @@ class MessageUIContainer extends Component {
 
         return [
             <Link href="/messageCreator/create/template" key="templates" class="link">Create new template</Link>,
-            <SearchList key="searchlist"
-                        creatorType={ this.state.creatorType }
-                        messageList={ this.state.messageList }
-                        filterMessages={ this.filterMessages }
-                        searchInput={ this.state.searchInput }
-            />,
+          <SearchList key="searchlist-new"
+                      listData={this.props.messages}
+          />
         ];
 
       case 'library':
 
         return [
             <Link href="/messageCreator/create/message" key="messages" class="link"><FontAwesomeIcon icon={faPlus} />Create new Message</Link>,
-            <SearchList key="searchlist"
-                        creatorType={ this.state.creatorType }
-                        messageList={ this.state.messageList }
-                        filterMessages={ this.filterMessages }
-                        searchInput={ this.state.searchInput }
+            <SearchList key="searchlist-new"
+                        listData={this.props.messages}
             />
         ];
 

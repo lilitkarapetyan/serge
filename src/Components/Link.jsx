@@ -7,10 +7,6 @@ import '../scss/App.scss';
 
 class Link extends Component {
 
-  // constructor(props) {
-  //   super(props);
-  // }
-
   onClickHandler = (e) => {
 
     if (this.props.onClickMethod) this.props.onClickMethod();

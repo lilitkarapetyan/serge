@@ -1,6 +1,9 @@
 import PouchDB from 'pouchdb-browser';
 import pouchFind from 'pouchdb-find';
 
+import deepCopy from "../ActionsAndReducers/copyStateHelper.js";
+import moment from "moment";
+
 PouchDB.plugin(pouchFind);
 var db = new PouchDB('messages');
 
@@ -28,6 +31,8 @@ export function addMessage(messageObj, schemaId) {
 
   let time = new Date().toISOString();
 
+  // make sure name is unique
+
   var message = {
     _id: time,
     lastUpdated: time,
@@ -47,10 +52,14 @@ export function duplicateMessageDB(messageId) {
   return new Promise((resolve, reject) => {
     db.get(messageId)
       .then(function (doc) {
+
+        var updatedMessage = deepCopy(doc.details);
+            updatedMessage.title = `${updatedMessage.title}~${moment(time).format("hh:mm:ss")}`;
+
         return db.put({
           _id: time,
           lastUpdated: time,
-          details: doc.details,
+          details: updatedMessage,
           schemaId: doc.schemaId
         });
       })
@@ -66,7 +75,27 @@ export function duplicateMessageDB(messageId) {
 
 
 export function updateMessageInDB(message, id) {
+  // make sure name is unique
 
+  return new Promise((resolve, reject) => {
+    (async() => {
+
+      const allMessages = await getAllMessagesFromDB();
+      const matchedName = allMessages.find((el) => el.details.title === message.title && el._id !== id);
+
+      if (matchedName) {
+        reject("Message title already used");
+        return;
+      }
+
+      const addToDB = await updateMessage(message, id);
+      resolve(addToDB);
+
+    })();
+  });
+}
+
+function updateMessage(message, id) {
   return new Promise((resolve, reject) => {
     db.get(id)
       .then(function (doc) {
@@ -135,6 +164,5 @@ export function getAllMessagesFromDB() {
       reject(err);
       console.log(err);
     });
-
   });
 }

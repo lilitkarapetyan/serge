@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 
 import {
   createMessage,
-  resetMessagePreview,
   updateMessage
 } from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
 
@@ -17,10 +16,7 @@ import JSONEditor from '@json-editor/json-editor';
 //     "allowInput": true
 // }
 import '../scss/App.scss';
-// import {setSelectedSchema} from "../ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators";
-// import {setCurrentViewFromURI} from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
 
-import Link from "../Components/Link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSave} from "@fortawesome/free-solid-svg-icons";
 
@@ -41,8 +37,9 @@ class JsonCreator extends Component {
 
   componentWillUpdate(nextProps, nextState, nextContext) {
 
-    if (this.editor) {
+    if (this.editor && this.props.createNew) {
       this.editor.destroy();
+      this.editor = null;
     }
 
     if (
@@ -50,6 +47,9 @@ class JsonCreator extends Component {
       nextProps.messageTypes &&
       nextProps.messageTypes.messages.length > 0
     ) {
+
+      if (this.editor) return;
+
       this.editor = new JSONEditor(this.editorPreviewRef.current, {
         schema: nextProps.messageTypes.messages.find((mes) => mes._id === nextProps.umpireMenu.selectedSchemaID).details,
         theme: 'bootstrap4'
@@ -80,7 +80,6 @@ class JsonCreator extends Component {
     } else {
       this.props.dispatch(updateMessage(this.editor.getValue(), this.props.messages.messagePreviewId));
     }
-    this.props.dispatch(resetMessagePreview());
   };
 
 
@@ -88,11 +87,11 @@ class JsonCreator extends Component {
     return (
       <>
         <div className="button-wrap">
-          {!this.props.disabled ? <Link href="/umpireMenu/library" onClickMethod={this.saveMessage} class="link"><FontAwesomeIcon icon={faSave} />Save Message</Link> : null }
+          {!this.props.disabled ? <span onClick={this.saveMessage} className="link"><FontAwesomeIcon icon={faSave} />Save Message</span> : null }
         </div>
           <div id="preview-editor" ref={this.editorPreviewRef}></div>
         <div className="button-wrap">
-          {!this.props.disabled ? <Link href="/umpireMenu/library" onClickMethod={this.saveMessage} class="link"><FontAwesomeIcon icon={faSave} />Save Message</Link> : null }
+          {!this.props.disabled ? <span onClick={this.saveMessage} className="link"><FontAwesomeIcon icon={faSave} />Save Message</span> : null }
         </div>
       </>
     );

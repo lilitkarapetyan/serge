@@ -9,6 +9,8 @@ import { addMessage,
          duplicateMessageDB,
          deleteMessageDB } from '../../pouchDB/dbMessages';
 
+import {setCurrentViewFromURI} from "../setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
+
 const DBMessageSaveStatus = (status) => ({
   type: ActionConstant.DB_MESSAGE_STATUS,
   payload: status
@@ -88,21 +90,27 @@ export const updateMessage = (message, id) => {
   return async (dispatch) => {
     dispatch(loadingDBMessageCreate(true));
 
-    const result = await updateMessageInDB(message, id);
+    try {
+      const result = await updateMessageInDB(message, id);
 
-    if (result) {
-      dispatch(DBMessageSaveStatus(result));
+      if (result) {
+        dispatch(DBMessageSaveStatus(result));
 
-      let responses = await Promise.all([getAllMessagesFromDB(), getMessageFromDB(result.id)]);
-      let [messages, message] = [...responses];
+        let responses = await Promise.all([getAllMessagesFromDB(), getMessageFromDB(result.id)]);
+        let [messages, message] = [...responses];
 
-      dispatch(DBSaveMessagePreview(message));
-      dispatch(DBSaveMessageArray(messages));
+        dispatch(DBSaveMessagePreview(message));
+        dispatch(DBSaveMessageArray(messages));
+        dispatch(loadingDBMessageCreate(false));
 
-    } else {
-      // create error message
+        window.history.pushState({}, '', "/umpireMenu/library");
+        dispatch(setCurrentViewFromURI("/umpireMenu/library"));
+
+      }
+    } catch (e) {
+      // CREATE ERROR WARNING MESSAGE
+      alert(e);
     }
-    dispatch(loadingDBMessageCreate(false));
   }
 };
 

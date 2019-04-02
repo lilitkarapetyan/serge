@@ -1,9 +1,9 @@
 {
   "type": "object",
   "properties": {
-    "Title": {
+    "title": {
       "type": "string",
-      "title": "Title"
+      "Title": "Title"
     },
     "Date": {
       "type": "string",

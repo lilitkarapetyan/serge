@@ -45,7 +45,7 @@ class EditMessage extends Component {
     let value = input.target.value;
 
     let newState = this.props.messageTypes.messages.filter(function(mes) {
-      return mes.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
+      return mes.details.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
     });
 
     this.setState({
@@ -64,10 +64,8 @@ class EditMessage extends Component {
         <div className="flex-content-wrapper">
           <div id="selection" className="flex-content">
             <SearchList key="search-templates"
-                        messageList={this.state.messageList}
-                        filterMessages={this.filterMessages}
-                        searchInput={ this.state.searchInput }
-                        placeholder={'Select template'}
+                            listData={this.props.messageTypes}
+                            placeholder={'Select template'}
             />
           </div>
           <div id="preview" className="flex-content flex-content--big">
