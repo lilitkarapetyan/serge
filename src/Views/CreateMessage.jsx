@@ -69,7 +69,7 @@ class EditMessage extends Component {
             />
           </div>
           <div id="preview" className="flex-content flex-content--big">
-            <JsonCreator id="preview" disabled={false} createNew={true} />
+            <JsonCreator id="preview" disabled={false} create={true} />
           </div>
         </div>
       </div>

@@ -47,7 +47,7 @@ class SearchList extends Component {
 
     switch (this.state.createView) {
       case 'templates':
-
+        this.props.dispatch(setSelectedSchema(item._id));
         break;
 
       case 'library':
@@ -103,6 +103,11 @@ class SearchList extends Component {
 
             let active;
             switch (that.state.createView) {
+
+              case "templates":
+                active = item._id === that.props.umpireMenu.selectedSchemaID ? 'active' : null;
+                break;
+
               case "create":
                 active = item._id === that.props.umpireMenu.selectedSchemaID ? 'active' : null;
                 break;

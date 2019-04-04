@@ -16,8 +16,6 @@ export const messageTypesReducer = (state = initialState, action) => {
       return newState;
 
     case ActionConstant.DB_MESSAGE_TYPES_SAVED:
-      console.log(action.payload);
-      // newState.messages = action.payload.rows;
       newState.messages = action.payload;
       return newState;
 

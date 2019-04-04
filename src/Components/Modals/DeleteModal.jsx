@@ -4,6 +4,8 @@ import "../../scss/App.scss";
 import { connect } from 'react-redux';
 import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
 import { deleteMessage } from "../../ActionsAndReducers/dbMessages/messages_ActionCreators";
+import { deleteMessageType } from "../../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
+import {setPreviewSchema, setSelectedSchema} from "../../ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators";
 
 class DeleteModal extends Component {
 
@@ -16,7 +18,13 @@ class DeleteModal extends Component {
   };
 
   deleteMessage = () => {
-    this.props.dispatch(deleteMessage(this.props.messages.messagePreviewId));
+    if (this.props.currentViewURI === "/umpireMenu/templates") {
+      this.props.dispatch(deleteMessageType(this.props.umpireMenu.selectedSchemaID));
+      this.props.dispatch(setPreviewSchema(""));
+      this.props.dispatch(setSelectedSchema(""));
+    } else {
+      this.props.dispatch(deleteMessage(this.props.messages.messagePreviewId));
+    }
   };
 
   render() {
@@ -38,9 +46,11 @@ class DeleteModal extends Component {
   }
 }
 
-const mapStateToProps = ({ currentModal, messages }) => ({
+const mapStateToProps = ({ currentModal, messages, umpireMenu, currentViewURI }) => ({
   currentModal,
-  messages
+  messages,
+  umpireMenu,
+  currentViewURI
 });
 
 export default connect(mapStateToProps)(DeleteModal);

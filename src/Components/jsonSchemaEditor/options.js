@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import {
   Card,
@@ -9,18 +9,18 @@ import {
   InputGroup,
   InputGroupAddon,
   Input
-} from 'reactstrap'
+} from 'reactstrap';
 
-import { booleanOptions } from '../../defaults/jsonEditor'
+import { booleanOptions } from './defaultOptions';
 
 
 class EditorPreview extends Component {
 
   constructor(props, content) {
-    super(props, content)
+    super(props, content);
 
-    this.onBooleanOptionsChange = this.onBooleanOptionsChange.bind(this)
-    this.onLayoutChange = this.onLayoutChange.bind(this)
+    this.onBooleanOptionsChange = this.onBooleanOptionsChange.bind(this);
+    this.onLayoutChange = this.onLayoutChange.bind(this);
   }
 
   onBooleanOptionsChange(e) {
@@ -79,7 +79,7 @@ class EditorPreview extends Component {
 EditorPreview.propTypes = {
   onChange: PropTypes.func.isRequired,
   options: PropTypes.object.isRequired
-}
+};
 
 
 export default EditorPreview

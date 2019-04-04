@@ -37,7 +37,7 @@ class JsonCreator extends Component {
 
   componentWillUpdate(nextProps, nextState, nextContext) {
 
-    if (this.editor && this.props.createNew) {
+    if (this.editor && nextProps.umpireMenu.selectedSchemaID !== this.props.umpireMenu.selectedSchemaID) {
       this.editor.destroy();
       this.editor = null;
     }
@@ -68,14 +68,14 @@ class JsonCreator extends Component {
       this.editor.setValue(data.details);
     }
 
-    if (this.props.disabled) {
+    if (this.props.disabled && this.editor) {
       this.editor.disable();
     }
   }
 
 
   saveMessage = () => {
-    if (this.props.createNew) {
+    if (this.props.create) {
       this.props.dispatch(createMessage(this.editor.getValue(), this.props.umpireMenu.selectedSchemaID));
     } else {
       this.props.dispatch(updateMessage(this.editor.getValue(), this.props.messages.messagePreviewId));

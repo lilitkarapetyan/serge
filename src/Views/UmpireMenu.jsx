@@ -2,11 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Link from "../Components/Link";
 
-// import moment from "moment";
-// import check from "check-types";
+import {
+  getAllMessageTypes,
+  duplicateMessageType,
+  deleteMessageType
+} from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
 
-import { getAllMessageTypes } from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
-import { getAllMessages, duplicateMessage } from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
+import {
+  getAllMessages,
+  duplicateMessage
+} from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
+
 import { modalAction } from "../ActionsAndReducers/Modal/Modal_ActionCreators";
 
 
@@ -17,7 +23,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPencilAlt, faClone, faTrash, faArrowLeft,faPlus} from "@fortawesome/free-solid-svg-icons";
 import SearchList from "../Components/SearchList";
 
-class MessageUIContainer extends Component {
+class UmpireMenu extends Component {
 
   constructor(props) {
     super(props);
@@ -109,17 +115,17 @@ class MessageUIContainer extends Component {
       case 'templates':
 
         return [
-            <Link href="/messageCreator/create/template" key="templates" class="link">Create new template</Link>,
-          <SearchList key="searchlist-new"
-                      listData={this.props.messages}
-          />
+            <Link href="/messageCreator/create/template" key="templates" class="link"><FontAwesomeIcon icon={faPlus} />Create new template</Link>,
+            <SearchList key="searchlist"
+                        listData={this.props.messageTypes}
+            />
         ];
 
       case 'library':
 
         return [
             <Link href="/messageCreator/create/message" key="messages" class="link"><FontAwesomeIcon icon={faPlus} />Create new Message</Link>,
-            <SearchList key="searchlist-new"
+            <SearchList key="searchlist"
                         listData={this.props.messages}
             />
         ];
@@ -128,6 +134,40 @@ class MessageUIContainer extends Component {
         break;
     }
   }
+
+
+  createMessagesActions() {
+    return this.props.messages.messagePreviewId.length > 0 ?
+      <>
+        <Link class="link link--secondary" href={this.state.creatorType === 'templates' ? "/messageCreator/edit/template" : "/messageCreator/edit/message"}><FontAwesomeIcon icon={faPencilAlt} />Edit</Link>
+        <span className="link link--secondary" onClick={this.duplicateMessage}><FontAwesomeIcon icon={faClone} />Duplicate</span>
+        <span className="link link--secondary" onClick={this.deleteMessage}><FontAwesomeIcon icon={faTrash} />Delete</span>
+      </>
+      :
+      null;
+  }
+
+
+  createTemplatesActions() {
+    return this.props.umpireMenu.selectedSchemaID.length > 0 ?
+      <>
+        <Link class="link link--secondary" href={this.state.creatorType === 'templates' ? "/messageCreator/edit/template" : "/messageCreator/edit/message"}><FontAwesomeIcon icon={faPencilAlt} />Edit</Link>
+        <span className="link link--secondary" onClick={this.duplicateTemplate}><FontAwesomeIcon icon={faClone} />Duplicate</span>
+        <span className="link link--secondary" onClick={this.deleteTemplate}><FontAwesomeIcon icon={faTrash} />Delete</span>
+      </>
+      :
+      null;
+  };
+
+
+  duplicateTemplate = () => {
+    this.props.dispatch(duplicateMessageType(this.props.umpireMenu.selectedSchemaID))
+  };
+
+
+  deleteTemplate = () => {
+    this.props.dispatch(modalAction.open());
+  };
 
 
   duplicateMessage = () => {
@@ -155,7 +195,9 @@ class MessageUIContainer extends Component {
             <p className="heading--sml">Preview</p>
             { this.state.creatorType === 'templates' ?
               <JsonCreator id="preview"
-                           disabled={true} />
+                           disabled={true}
+                           previewForm={true}
+              />
             :
               <div id="message-preview">
                 <MessagePreview detail={this.props.messages.messagePreview.details} />
@@ -164,14 +206,11 @@ class MessageUIContainer extends Component {
           </div>
           <div id="function" className="flex-content flex-content--sml">
             <p className="heading--sml">Actions</p>
-            { this.props.messages.messagePreviewId.length > 0 ?
-              <>
-                <Link class="link link--secondary" href={this.state.creatorType === 'templates' ? "/messageCreator/edit/template" : "/messageCreator/edit/message"}><FontAwesomeIcon icon={faPencilAlt} />Edit</Link>
-                <span className="link link--secondary" onClick={this.duplicateMessage}><FontAwesomeIcon icon={faClone} />Duplicate</span>
-                <span className="link link--secondary" onClick={this.deleteMessage}><FontAwesomeIcon icon={faTrash} />Delete</span>
-              </>
-              :
-              null
+
+            {this.state.creatorType === 'templates' ?
+              this.createTemplatesActions()
+            :
+              this.createMessagesActions()
             }
           </div>
         </div>
@@ -180,7 +219,6 @@ class MessageUIContainer extends Component {
   }
 }
 
-// temp use allMessages
 const mapStateToProps = ({ messageTypes, messages, currentViewURI, umpireMenu }) => ({
   messageTypes,
   messages,
@@ -188,4 +226,4 @@ const mapStateToProps = ({ messageTypes, messages, currentViewURI, umpireMenu })
   umpireMenu
 });
 
-export default connect(mapStateToProps)(MessageUIContainer);
+export default connect(mapStateToProps)(UmpireMenu);

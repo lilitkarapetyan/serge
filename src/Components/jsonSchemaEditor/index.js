@@ -1,28 +1,25 @@
-import React, { Component } from 'react'
-import { css } from 'aphrodite/no-important'
-import styles from './styles'
-import jsonMetaSchema from './data.json'
-import { Container, Col, Row } from 'reactstrap'
-import JSONEditor from '@json-editor/json-editor'
-import Editor from './jsonEditor'
-import Preview from './editorPreview'
-import SchemaView from './metaSchema'
-import Options from './options'
-import DevSection from '../devSection'
+import React, { Component } from 'react';
+import jsonMetaSchema from './data.json';
+import JSONEditor from '@json-editor/json-editor';
+import Editor from './jsonEditor';
+import Preview from './editorPreview';
+import '@fortawesome/fontawesome-free/css/all.css';
+import { setPreviewSchema } from "../../ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators";
+import {connect} from "react-redux";
 
-class MessageTypes extends Component {
+class SchemaEditor extends Component {
 
   constructor(props, content) {
-    super(props, content)
+    super(props, content);
 
-    JSONEditor.defaults.options.iconlib = "fontawesome5"
-    JSONEditor.defaults.options.theme   = 'bootstrap4'
-    this.updateMetaSchema = this.updateMetaSchema.bind(this)
-    this.updatePreviewSchema = this.updatePreviewSchema.bind(this)
-    this.updateOptions = this.updateOptions.bind(this)
+    JSONEditor.defaults.options.iconlib = "fontawesome5";
+    JSONEditor.defaults.options.theme   = 'bootstrap4';
+    this.updateMetaSchema = this.updateMetaSchema.bind(this);
+    this.updatePreviewSchema = this.updatePreviewSchema.bind(this);
+    this.updateOptions = this.updateOptions.bind(this);
 
-    this.schemaEditor = null
-    this.editorPreview = null
+    this.schemaEditor = null;
+    this.editorPreview = null;
 
     this.defaultValue = {
       "type": "object",
@@ -46,7 +43,13 @@ class MessageTypes extends Component {
       },
       "title": "Machinery Failure",
       "format": "grid"
+    };
+
+
+    if (this.props.schemaId) {
+      this.defaultValue = this.props.messageTypes.messages.find((mes) => mes._id === this.props.schemaId).details;
     }
+
 
     this.state = {
       metaSchema: jsonMetaSchema,
@@ -60,52 +63,42 @@ class MessageTypes extends Component {
 
   updatePreviewSchema(schema) {
     console.log("preview update");
-    this.setState({previewSchema: schema})
+    this.setState({previewSchema: schema});
+
+    this.props.dispatch(setPreviewSchema(schema));
   }
 
   updateOptions(options) {
     console.log("options update");
-    this.setState({options: options})
+    this.setState({options: options});
   }
 
   updateMetaSchema(schema) {
     console.log("editor update");
-    this.setState({metaschema: schema})
+    this.setState({metaschema: schema});
   }
 
   render() {
     return (
-      <div className={css(styles.main)}>
-        <Container fluid>
-          <Row>
-            <Col md={6}>
-              <Editor
-                schema={this.state.metaSchema}
-                onChange={this.updatePreviewSchema}
-                options={this.state.options}
-                defaultValue={this.defaultValue}
-              />
-            </Col>
-            <Col md={6}>
-              <Preview schema={this.state.previewSchema}/>
-            </Col>
-          </Row>
-          <DevSection>
-            <div className={css(styles.devSection)}>
-              <Row>
-                <Col md={6}>
-                  <Options options={this.state.options} onChange={this.updateOptions}/>
-                </Col>
-                <Col md={6}>
-                  <SchemaView value={this.state.metaSchema} onSchemaSubmit={this.updateMetaSchema}/>
-                </Col>
-              </Row>
-            </div>
-          </DevSection>
-        </Container>
-      </div>
+      <>
+        <div className="flex-content flex-content--left50">
+          <Editor
+            schema={this.state.metaSchema}
+            onChange={this.updatePreviewSchema}
+            options={this.state.options}
+            defaultValue={this.defaultValue}
+          />
+        </div>
+        <div className="flex-content flex-content--right50">
+          <Preview schema={this.state.previewSchema}/>
+        </div>
+      </>
     )
   }
 }
 
-export default MessageTypes
+const mapStateToProps = ({ umpireMenu, }) => ({
+  umpireMenu,
+});
+
+export default connect(mapStateToProps)(SchemaEditor);

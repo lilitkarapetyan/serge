@@ -27,21 +27,48 @@ db.replicate.from(db, opts, () => 'An Error has occurred.');
  * @param message
  * @type object
  */
-export function addMessage(messageObj, schemaId) {
+export function addMessageInDb(messageObj, schemaId) {
 
-  let time = new Date().toISOString();
+  return new Promise((resolve, reject) => {
+    (async() => {
 
-  // make sure name is unique
+      const allMessages = await getAllMessagesFromDB();
+      const matchedName = allMessages.find((el) => el.details.title === messageObj.title && el._id !== messageObj.id);
 
-  var message = {
-    _id: time,
-    lastUpdated: time,
-    details: messageObj,
-    schemaId: schemaId,
-    completed: false
-  };
-  return db.put(message)
-    .then(function(res) { return res })
+      if (matchedName) {
+        reject("Message title already used");
+        return;
+      }
+
+      const addToDB = await createMessage(messageObj, schemaId);
+      resolve(addToDB);
+
+    })();
+  });
+}
+
+function createMessage(messageObj, schemaId) {
+  return new Promise((resolve, reject) => {
+
+    let time = new Date().toISOString();
+
+    let message = {
+      _id: time,
+      lastUpdated: time,
+      details: messageObj,
+      schemaId: schemaId,
+      completed: false
+    };
+
+    return db.put(message)
+      .then(function (result) {
+        resolve(result);
+      })
+      .catch(function (err) {
+        console.log(err);
+        reject(false);
+      })
+  });
 }
 
 
@@ -75,7 +102,6 @@ export function duplicateMessageDB(messageId) {
 
 
 export function updateMessageInDB(message, id) {
-  // make sure name is unique
 
   return new Promise((resolve, reject) => {
     (async() => {
@@ -89,6 +115,7 @@ export function updateMessageInDB(message, id) {
       }
 
       const addToDB = await updateMessage(message, id);
+
       resolve(addToDB);
 
     })();
@@ -146,7 +173,6 @@ export function getMessageFromDB(id) {
 
 export function getAllMessagesFromDB() {
   return new Promise((resolve, reject) => {
-
     return db.changes({
       since: 0,
       include_docs: true,

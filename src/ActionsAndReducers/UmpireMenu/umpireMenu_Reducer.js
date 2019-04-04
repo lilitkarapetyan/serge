@@ -3,8 +3,7 @@ import deepCopy from "../copyStateHelper.js";
 
 const initialState = {
   selectedSchemaID: '',
-  currentViewURI: '',
-  currentOpenMessageSchemaID: '',
+  previewSchema: {}
 };
 
 export const umpireMenuReducer = (state = initialState, action) => {
@@ -15,7 +14,11 @@ export const umpireMenuReducer = (state = initialState, action) => {
     case ActionConstant.SET_SELECTED_SCHEMA:
       newState.selectedSchemaID = action.payload;
       return newState;
-      
+
+    case ActionConstant.SET_PREVIEW_SCHEMA:
+      newState.previewSchema = action.payload;
+      return newState;
+
     default:
       return newState;
   }

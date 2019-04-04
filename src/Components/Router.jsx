@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import UniversalRouter from "universal-router";
 
 import GameDesignerInterface from '../Views/GameDesignerInterface';
-import MessageUIContainer from '../Views/MessageUIContainer';
+import UmpireMenu from '../Views/UmpireMenu';
 import EditMessage from '../Views/EditMessage';
 import CreateMessage from '../Views/CreateMessage';
 import EditTemplate from '../Views/EditTemplate';
@@ -23,7 +23,7 @@ class Router extends Component {
 
     this.routes = [
       { path: '/', action: () => <GameDesignerInterface/> },
-      { path: '/umpireMenu/:creatorType', action: () => <MessageUIContainer /> },
+      { path: '/umpireMenu/:creatorType', action: () => <UmpireMenu /> },
       { path: '/messageCreator', children: [
           { path: '/create/template', action: () => <CreateTemplate /> },
           { path: '/edit/template', action: () => <EditTemplate /> },

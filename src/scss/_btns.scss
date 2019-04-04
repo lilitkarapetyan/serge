@@ -14,6 +14,15 @@
   }
 }
 
+.button-wrap {
+  display: flex;
+  flex-direction: row-reverse;
+
+  span {
+    margin: $umpireMenuMargin 0;
+  }
+}
+
 .btn-secondary {
   // override bootstrap specificity
   margin-bottom: 0;
@@ -43,6 +52,10 @@
   span {
     color: $primaryTriadColor;
     font-weight: 500;
+  }
+
+  i {
+    color: $primaryTriadColor;
   }
 }
 

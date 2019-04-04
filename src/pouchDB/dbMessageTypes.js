@@ -1,13 +1,13 @@
 import PouchDB from 'pouchdb-browser';
 import pouchFind from 'pouchdb-find';
-import warGameSchema from "../schemas/wargame.json";
+// import warGameSchema from "../schemas/wargame.json";
 import machineryFailure from "../schemas/machinery_failure";
 import weatherForecast from "../schemas/weather_forecase";
+import deepCopy from "../ActionsAndReducers/copyStateHelper";
+import moment from "moment";
 
 PouchDB.plugin(pouchFind);
 var db = new PouchDB('messageTypes');
-
-// var remoteCouch = 'http://couchbase:CUe+1+2n@http://35.245.63.98:8091/messages';
 
 
 window.clearDatabase = function() {
@@ -16,14 +16,6 @@ window.clearDatabase = function() {
   });
 };
 
-/*
- * Subscribes to changes to the database, increase max listeners from 10, create db.
- */
-db.setMaxListeners(15);
-db.changes({
-  since: 'now',
-  live: true
-}).on('change', getAllMessages);
 
 var opts = {live: true};
 db.replicate.to(db, opts, () => 'An Error has occurred.');
@@ -34,27 +26,27 @@ db.replicate.from(db, opts, () => 'An Error has occurred.');
  */
 
 var populateDb = function () {
-  var wargame = {
+  // var wargame = {
+  //   _id: new Date().toISOString(),
+  //   title: 'wargame schema',
+  //   details: warGameSchema,
+  //   completed: false
+  // };
+  // db.put(wargame);
+
+  var machine = {
     _id: new Date().toISOString(),
-    title: 'wargame schema',
-    details: warGameSchema,
+    lastUpdated:  new Date().toISOString(),
+    title: 'machinery failure',
+    details: machineryFailure,
     completed: false
   };
-  db.put(wargame);
-
-  setTimeout(function () {
-    var machine = {
-      _id: new Date().toISOString(),
-      title: 'machinery failure',
-      details: machineryFailure,
-      completed: false
-    };
-    db.put(machine);
-  },1000);
+  db.put(machine);
 
   setTimeout(function () {
     var weather = {
       _id: new Date().toISOString(),
+      lastUpdated: new Date().toISOString(),
       title: 'weather forecast',
       details: weatherForecast,
       completed: false
@@ -63,7 +55,7 @@ var populateDb = function () {
       console.log('DATA BASE COMPLETE');
       window.location.reload(true);
     });
-  },2000);
+  },1000);
 
 };
 
@@ -75,40 +67,164 @@ db.allDocs().then(entries => {
 
 
 /**
- * @param message
+ * @param schema
  * @type object
  */
-export function addMessage(messageObj) {
-  var message = {
-    _id: new Date().toISOString(),
-    details: messageObj,
-    completed: false
-  };
-  return db.put(message)
-    .then(function(res) { return res })
-};
 
-export function getAllMessages() {
+export function addMessageType(schema) {
+
   return new Promise((resolve, reject) => {
-    // db.allDocs({include_docs: true, descending: true}, function(err, doc) {
-    //   if (err) reject('something went wrong');
-    //   resolve(doc);
-    // });
+    (async() => {
 
-    db.createIndex({index: {fields: ['lastUpdated']}})
+      const allMessages = await getAllMessagesFromDB();
+
+      const matchedName = allMessages.find((messageType) => messageType.title.toLowerCase() === schema.title.toLowerCase());
+
+      if (matchedName) {
+        reject("Message title already used");
+        return;
+      }
+
+      const addToDB = await createAndAddNewMessageType(schema);
+      resolve(addToDB);
+
+    })();
+  });
+}
+
+function createAndAddNewMessageType(schema) {
+  return new Promise((resolve, reject) => {
+
+    let time = new Date().toISOString();
+
+    var schemaObj = {
+      _id: time,
+      lastUpdated: time,
+      title: schema.title,
+      details: schema,
+      completed: false
+    };
+
+    return db.put(schemaObj)
+      .then(function (result) {
+        resolve(result);
+      })
+      .catch(function (err) {
+        console.log(err);
+        reject(false);
+      })
+  });
+}
+
+
+export function duplicateMessageTypeDB(id) {
+
+  let time = new Date().toISOString();
+
+  return new Promise((resolve, reject) => {
+    db.get(id)
+      .then(function (doc) {
+
+        var updatedMessage = deepCopy(doc.details);
+        updatedMessage.title = `${updatedMessage.title}~${moment(time).format("hh:mm:ss")}`;
+
+        return db.put({
+          _id: time,
+          lastUpdated: time,
+          title: updatedMessage.title,
+          details: updatedMessage,
+        });
+      })
       .then(function () {
-        return db.find({
-          selector: {
-            lastUpdated: {$gte: null}
-          },
-          sort: ['lastUpdated']
+        resolve(true);
+      })
+      .catch(function (err) {
+        console.log(err);
+        reject(false);
+      })
+  });
+}
+
+
+export function updateMessageTypeInDB(schema, id) {
+  return new Promise((resolve, reject) => {
+    (async() => {
+
+      const allMessages = await getAllMessagesFromDB();
+      const matchedName = allMessages.find((el) => el.title === schema.title && el._id !== id);
+
+      if (matchedName) {
+        reject("Message title already used");
+        return;
+      }
+
+      const addToDB = await updateMessage(schema, id);
+      resolve(addToDB);
+
+    })();
+  });
+}
+
+
+function updateMessage(schema, id) {
+  return new Promise((resolve, reject) => {
+    db.get(id)
+      .then(function (doc) {
+        return db.put({
+          _id: doc._id,
+          lastUpdated: new Date().toISOString(),
+          _rev: doc._rev,
+          title: schema.title,
+          details: schema
         });
       })
       .then(function (result) {
-        resolve(result.docs);
+        console.log(result);
+        resolve(result);
       })
       .catch(function (err) {
-        reject(err);
+        console.log(err);
+        reject(false);
       })
+  });
+}
+
+
+export function deleteMessageTypeDB(id) {
+  return new Promise((resolve, reject) => {
+    db.get(id)
+      .then(function (doc) {
+        return db.remove(doc);
+      })
+      .then(function (result) {
+        resolve(result);
+      })
+      .catch(function (err) {
+        console.log(err);
+        reject(false);
+      })
+  });
+}
+
+
+export function getAllMessagesFromDB() {
+  return new Promise((resolve, reject) => {
+    return db.changes({
+      since: 0,
+      include_docs: true,
+      descending: true,
+    })
+    .then(function (changes) {
+
+      let results = changes.results.map((a) => a.doc);
+      results = results.filter((a) => !a.hasOwnProperty('_deleted') && a.hasOwnProperty('details'));
+
+      resolve(results);
+    })
+    .catch(function (err) {
+      // handle errors
+      reject(err);
+      console.log(err);
+    });
   });
 }

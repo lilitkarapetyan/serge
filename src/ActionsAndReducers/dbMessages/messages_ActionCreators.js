@@ -2,7 +2,7 @@ import ActionConstant from '../ActionConstants';
 import 'whatwg-fetch';
 import check from 'check-types';
 
-import { addMessage,
+import { addMessageInDb,
          getAllMessagesFromDB,
          getMessageFromDB,
          updateMessageInDB,
@@ -52,17 +52,21 @@ export const createMessage = (message, schemaId) => {
   return async (dispatch) => {
     dispatch(loadingDBMessageCreate(true));
 
-    var result = await addMessage(message, schemaId);
+    try {
+      var result = await addMessageInDb(message, schemaId);
 
-    if (result.ok) {
-      dispatch(DBMessageSaveStatus(result));
-      let messages = await getAllMessagesFromDB();
-      dispatch(DBSaveMessageArray(messages));
+      if (result.ok) {
+        dispatch(DBMessageSaveStatus(result));
+        let messages = await getAllMessagesFromDB();
+        dispatch(DBSaveMessageArray(messages));
+      }
+      dispatch(loadingDBMessageCreate(false));
+      dispatch(setCurrentViewFromURI("/umpireMenu/library"));
+    } catch(e) {
+      dispatch(loadingDBMessageCreate(false));
+      alert(e);
     }
-    dispatch(loadingDBMessageCreate(false));
 
-    window.history.pushState({}, '', "/umpireMenu/library");
-    dispatch(setCurrentViewFromURI("/umpireMenu/library"));
   }
 };
 
@@ -96,6 +100,8 @@ export const updateMessage = (message, id) => {
     try {
       const result = await updateMessageInDB(message, id);
 
+      console.log(result);
+
       if (result) {
         dispatch(DBMessageSaveStatus(result));
 
@@ -105,13 +111,12 @@ export const updateMessage = (message, id) => {
         dispatch(DBSaveMessagePreview(message));
         dispatch(DBSaveMessageArray(messages));
         dispatch(loadingDBMessageCreate(false));
-
-        window.history.pushState({}, '', "/umpireMenu/library");
         dispatch(setCurrentViewFromURI("/umpireMenu/library"));
 
       }
     } catch (e) {
       // CREATE ERROR WARNING MESSAGE
+      dispatch(loadingDBMessageCreate(false));
       alert(e);
     }
   }

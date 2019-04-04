@@ -1,15 +1,6 @@
 @import 'dependencies/variables';
 
 #preview {
-  .button-wrap {
-    display: flex;
-    flex-direction: row-reverse;
-
-    span {
-      margin: $umpireMenuMargin 0;
-    }
-  }
-
   #preview-editor {
     h3 {
       padding-bottom: $umpireMenuMargin;

@@ -25,6 +25,18 @@
       margin: 0 2.5%;
     }
 
+    &--left50 {
+      //flex-grow: 2;
+      min-width: 47.5%;
+      margin-right: 2.5%;
+    }
+
+    &--right50 {
+      //flex-grow: 2;
+      min-width: 47.5%;
+      margin-left: 2.5%;
+    }
+
     &--solo-item {
       min-width: 55%;
       margin: 0 auto;
