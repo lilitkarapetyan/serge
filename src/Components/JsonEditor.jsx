@@ -3,17 +3,10 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 
 import {
-  createMessage,
+  updateMessage
 } from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
 
 import JSONEditor from '@json-editor/json-editor';
-// import flatpickr from "flatpickr";
-// for json.. datetime-local
-// "flatpickr": {
-//   "wrap": true,
-//     "time_24hr": true,
-//     "allowInput": true
-// }
 import '../scss/App.scss';
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -42,29 +35,20 @@ class JsonCreator extends Component {
     }
 
     if (
-      nextProps.umpireMenu.selectedSchemaID.length > 0 &&
-      nextProps.messageTypes &&
-      nextProps.messageTypes.messages.length > 0
+      nextProps.messages.messagePreviewId.length > 0 &&
+      nextProps.umpireMenu.selectedSchemaID.length > 0
     ) {
 
       if (this.editor) return;
 
       this.editor = new JSONEditor(this.editorPreviewRef.current, {
-        schema: nextProps.messageTypes.messages.find((mes) => mes._id === nextProps.umpireMenu.selectedSchemaID).details,
+        schema: nextProps.messages.messagePreview.schema,
         theme: 'bootstrap4'
       });
     }
 
-    if (
-      nextProps.messages.messagePreviewId.length > 0 &&
-      nextProps.messageTypes.messages.length > 0 &&
-      !nextProps.disabled
-    ) {
-
-      const data = nextProps.messages.messages.find(function(mes) {
-        return mes._id.toLowerCase().indexOf(nextProps.messages.messagePreviewId.toLowerCase()) > -1;
-      });
-      this.editor.setValue(data.details);
+    if (nextProps.messages.messagePreview.details) {
+      this.editor.setValue(nextProps.messages.messagePreview.details);
     }
 
     if (this.props.disabled && this.editor) {
@@ -74,8 +58,7 @@ class JsonCreator extends Component {
 
 
   saveMessage = () => {
-    let schema = this.props.messageTypes.messages.find((mes) => mes._id === this.props.umpireMenu.selectedSchemaID).details;
-    this.props.dispatch(createMessage(this.editor.getValue(), {...schema, _id: this.props.umpireMenu.selectedSchemaID}));
+    this.props.dispatch(updateMessage(this.editor.getValue(), this.props.messages.messagePreviewId));
   };
 
 

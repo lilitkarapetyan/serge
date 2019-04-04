@@ -61,7 +61,7 @@ class EditMessage extends Component {
           <Link href="/" id="home-btn"><FontAwesomeIcon icon={faArrowLeft} size="2x" /></Link>
         </div>
         <h1>Message library</h1>
-        <div className="flex-content-wrapper">
+         <div className="flex-content-wrapper">
           <div id="selection" className="flex-content">
             <SearchList key="search-templates"
                             listData={this.props.messageTypes}
@@ -69,7 +69,7 @@ class EditMessage extends Component {
             />
           </div>
           <div id="preview" className="flex-content flex-content--big">
-            <JsonCreator id="preview" disabled={false} create={true} />
+            <JsonCreator id="preview" disabled={false} />
           </div>
         </div>
       </div>

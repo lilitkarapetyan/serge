@@ -24,6 +24,9 @@ class SchemaEditor extends Component {
     this.defaultValue = {
       "type": "object",
       "properties": {
+        "title": {
+          "type": "string"
+        },
         "Date": {
           "type": "string",
           "format": "datetime-local"

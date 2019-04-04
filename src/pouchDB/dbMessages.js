@@ -27,7 +27,7 @@ db.replicate.from(db, opts, () => 'An Error has occurred.');
  * @param message
  * @type object
  */
-export function addMessageInDb(messageObj, schemaId) {
+export function addMessageInDb(messageObj, schema) {
 
   return new Promise((resolve, reject) => {
     (async() => {
@@ -40,14 +40,14 @@ export function addMessageInDb(messageObj, schemaId) {
         return;
       }
 
-      const addToDB = await createMessage(messageObj, schemaId);
+      const addToDB = await createMessage(messageObj, schema);
       resolve(addToDB);
 
     })();
   });
 }
 
-function createMessage(messageObj, schemaId) {
+function createMessage(messageObj, schema) {
   return new Promise((resolve, reject) => {
 
     let time = new Date().toISOString();
@@ -56,7 +56,7 @@ function createMessage(messageObj, schemaId) {
       _id: time,
       lastUpdated: time,
       details: messageObj,
-      schemaId: schemaId,
+      schema: schema,
       completed: false
     };
 
@@ -87,7 +87,7 @@ export function duplicateMessageDB(messageId) {
           _id: time,
           lastUpdated: time,
           details: updatedMessage,
-          schemaId: doc.schemaId
+          schema: doc.schema
         });
       })
       .then(function () {
@@ -131,7 +131,7 @@ function updateMessage(message, id) {
           lastUpdated: new Date().toISOString(),
           _rev: doc._rev,
           details: message,
-          schemaId: doc.schemaId
+          schema: doc.schema
         });
       })
       .then(function (result) {

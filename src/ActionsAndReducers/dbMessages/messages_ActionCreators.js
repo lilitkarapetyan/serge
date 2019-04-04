@@ -45,7 +45,7 @@ export const resetMessagePreview = () => ({
  * - below are async getters
  */
 
-export const createMessage = (message, schemaId) => {
+export const createMessage = (message, schema) => {
 
   if (!check.object(message)) throw Error(`createMessageType() requires object with message, from & to NOT. ${message}`);
 
@@ -53,7 +53,7 @@ export const createMessage = (message, schemaId) => {
     dispatch(loadingDBMessageCreate(true));
 
     try {
-      var result = await addMessageInDb(message, schemaId);
+      var result = await addMessageInDb(message, schema);
 
       if (result.ok) {
         dispatch(DBMessageSaveStatus(result));

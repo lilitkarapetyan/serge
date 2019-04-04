@@ -51,7 +51,7 @@ class SearchList extends Component {
         break;
 
       case 'library':
-        this.props.dispatch(setSelectedSchema(item.schemaId));
+        this.props.dispatch(setSelectedSchema(item.schema._id));
         this.props.dispatch(getSingleMessage(item._id));
         break;
 

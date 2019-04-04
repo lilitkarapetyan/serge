@@ -13,6 +13,7 @@ import Link from "../Components/Link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft, faSave} from "@fortawesome/free-solid-svg-icons";
 import SchemaEditor from "../Components/jsonSchemaEditor/index";
+import {setSelectedSchema} from "../ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators";
 
 class EditMessage extends Component {
 

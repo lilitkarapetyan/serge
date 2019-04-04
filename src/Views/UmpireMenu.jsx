@@ -22,6 +22,7 @@ import '../scss/App.scss';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPencilAlt, faClone, faTrash, faArrowLeft,faPlus} from "@fortawesome/free-solid-svg-icons";
 import SearchList from "../Components/SearchList";
+import {setSelectedSchema} from "../ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators";
 
 class UmpireMenu extends Component {
 
@@ -38,6 +39,10 @@ class UmpireMenu extends Component {
 
     this.buildMessageBoard();
   }
+
+  componentWillMount() {
+    this.props.dispatch(setSelectedSchema(""));
+  };
 
   componentWillReceiveProps(nextProps, nextContext) {
 

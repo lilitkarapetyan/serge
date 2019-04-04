@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../scss/App.scss';
 import { connect } from "react-redux";
 
-import JsonCreator from "../Components/JsonCreator";
+import JsonEditor from "../Components/JsonEditor";
 
 import { getAllMessageTypes } from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
 // import { resetMessagePreview } from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
@@ -75,7 +75,7 @@ class EditMessage extends Component {
             {/*/>*/}
           {/*</div>*/}
           <div id="preview" className="flex-content flex-content--solo-item">
-            <JsonCreator id="preview"
+            <JsonEditor id="preview"
                          disabled={ false }
             />
           </div>
