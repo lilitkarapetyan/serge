@@ -1,10 +1,11 @@
 import ActionConstant from '../ActionConstants.js';
 
 export const modalAction = {
-  open: () => ({
+  open: (openModal) => ({
     type: ActionConstant.OPEN_MODAL,
     payload: {
       open: true,
+      modal: openModal,
     },
   }),
 
@@ -12,6 +13,7 @@ export const modalAction = {
     type: ActionConstant.CLOSE_MODAL,
     payload: {
       open: false,
+      modal: '',
     },
   })
 };

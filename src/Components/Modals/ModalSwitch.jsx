@@ -1,33 +1,40 @@
 import React, {Component} from 'react';
 import "../../scss/App.scss";
 import { connect } from 'react-redux';
-import DefaultModal from './DeleteModal';
-// import EditModal from './EditModal';
+import AddForceModal from "./AddForceModal";
+import DeleteModal from './DeleteModal';
 // import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
 
 class ModalSwitch extends Component {
 
-  // constructor(props) {
-  //   super(props);
-  // }
+  constructor(props) {
+    super(props);
+  }
 
   render() {
 
+    var modal;
+    console.log(this.props.currentModal);
 
-    // if (this.props.currentModal.data === undefined) return null;
+    switch (this.props.currentModal.modal) {
 
-    // const editModal = this.props.currentModal.data.editable;
-    //
-    // var modal;
-    //
-    // if (editModal) {
-    //   modal = <EditModal />;
-    // } else {
-    //   modal = <DefaultModal />;
-    // }
+      case "addForce":
+        modal = <AddForceModal />;
+        break;
+
+      case "delete":
+        modal = <DeleteModal />;
+        break;
+
+      default:
+        modal = false;
+        break;
+    }
 
     return (
-      <DefaultModal/>
+      <>
+        {modal}
+      </>
     )
   }
 };

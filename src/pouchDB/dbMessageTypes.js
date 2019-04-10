@@ -1,13 +1,13 @@
 import PouchDB from 'pouchdb-browser';
-import pouchFind from 'pouchdb-find';
 // import warGameSchema from "../schemas/wargame.json";
 import machineryFailure from "../schemas/machinery_failure";
 import weatherForecast from "../schemas/weather_forecase";
 import deepCopy from "../ActionsAndReducers/copyStateHelper";
 import moment from "moment";
+import uniqid from "uniqid";
+import {MSG_TYPE_STORE} from "./consts";
 
-PouchDB.plugin(pouchFind);
-var db = new PouchDB('messageTypes');
+var db = new PouchDB(MSG_TYPE_STORE);
 
 
 window.clearDatabase = function() {
@@ -17,9 +17,9 @@ window.clearDatabase = function() {
 };
 
 
-var opts = {live: true};
-db.replicate.to(db, opts, () => 'An Error has occurred.');
-db.replicate.from(db, opts, () => 'An Error has occurred.');
+// var opts = {live: true};
+// db.replicate.to(db, opts, () => 'An Error has occurred.');
+// db.replicate.from(db, opts, () => 'An Error has occurred.');
 
 /*
   for development
@@ -126,7 +126,8 @@ export function duplicateMessageTypeDB(id) {
       .then(function (doc) {
 
         var updatedMessage = deepCopy(doc.details);
-        updatedMessage.title = `${updatedMessage.title}~${moment(time).format("hh:mm:ss")}`;
+        // updatedMessage.title = `${updatedMessage.title}~${moment(time).format("hh:mm:ss:SS")}`;
+        updatedMessage.title = `${updatedMessage.title} Copy-${uniqid.time()}`;
 
         return db.put({
           _id: time,
@@ -159,6 +160,7 @@ export function updateMessageTypeInDB(schema, id) {
       }
 
       const addToDB = await updateMessage(schema, id);
+
       resolve(addToDB);
 
     })();
@@ -179,7 +181,6 @@ function updateMessage(schema, id) {
         });
       })
       .then(function (result) {
-        console.log(result);
         resolve(result);
       })
       .catch(function (err) {
@@ -210,7 +211,7 @@ export function deleteMessageTypeDB(id) {
 export function getAllMessagesFromDB() {
   return new Promise((resolve, reject) => {
     return db.changes({
-      since: 0,
+      since: 1,
       include_docs: true,
       descending: true,
     })

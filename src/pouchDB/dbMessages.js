@@ -1,11 +1,11 @@
 import PouchDB from 'pouchdb-browser';
-import pouchFind from 'pouchdb-find';
 
 import deepCopy from "../ActionsAndReducers/copyStateHelper.js";
 import moment from "moment";
+import uniqid from "uniqid";
+import {MSG_STORE} from "./consts";
 
-PouchDB.plugin(pouchFind);
-var db = new PouchDB('messages');
+var db = new PouchDB(MSG_STORE);
 
 window.clearDatabase2 = function() {
   db.destroy().then(function(res) {
@@ -81,7 +81,8 @@ export function duplicateMessageDB(messageId) {
       .then(function (doc) {
 
         var updatedMessage = deepCopy(doc.details);
-            updatedMessage.title = `${updatedMessage.title}~${moment(time).format("hh:mm:ss")}`;
+            // updatedMessage.title = `${updatedMessage.title}~${moment(time).format("hh:mm:ss:SS")}`;
+            updatedMessage.title = `${updatedMessage.title} Copy-${uniqid.time()}`;
 
         return db.put({
           _id: time,

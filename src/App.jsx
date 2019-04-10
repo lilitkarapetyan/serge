@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import DeleteModal from "./Components/Modals/DeleteModal.jsx";
+import ModalSwitch from "./Components/Modals/ModalSwitch";
 
 import Router from "./Components/Router";
 
@@ -14,7 +14,7 @@ class App extends Component {
     return (
         <Provider store={Store}>
           <Router />
-          <DeleteModal/>
+          <ModalSwitch/>
         </Provider>
     );
   }

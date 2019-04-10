@@ -6,6 +6,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1, h2, h3, h4, h5, h6, span, p, a {
+  font-family: "Segoe UI", sans-serif;
   color: $secondaryColor;
 }
 
@@ -15,6 +16,7 @@ p,a {
 
 h1 {
   // color ?
+  width: fit-content;
   margin-bottom: $umpireMenuMargin;
 }
 
@@ -38,5 +40,10 @@ a {
   &--sml {
     color: $darkGrey;
     font-weight: bold;
+    margin-bottom: 0;
+  }
+
+  &--mleft {
+    margin-left: 6px;
   }
 }

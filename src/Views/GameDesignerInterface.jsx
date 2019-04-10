@@ -1,37 +1,53 @@
 import React, { Component } from 'react';
+import {connect} from "react-redux";
 
 import Link from "../Components/Link";
 
 import '../scss/App.scss';
 // import SearchList from "../Components/SearchList";
 
-export default class GameDesignerInterface extends Component {
+import {
+  populateWargameStore
+} from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
-  // constructor(props) {
-  //   super(props);
-  // }
+import WargameSearchList from "../Components/WargameSearchList";
 
-  updateHistory = () => {
+class GameDesignerInterface extends Component {
 
-  };
+  constructor(props) {
+    super(props);
+  }
+
+
+  componentWillMount() {
+    this.props.dispatch(populateWargameStore());
+  }
+
 
   render() {
     return (
       <div id="umpire" className="flex-content-wrapper">
         <div className="flex-content flex-content--big">
-          <Link href="/umpireMenu/templates" onClick={this.updateHistory} class="link link--secondary link--large">Message Templates</Link>
+          <Link href="/umpireMenu/templates" class="link link--secondary link--large">Message Templates</Link>
           <Link href="/umpireMenu/library" class="link link--secondary link--large">Message Library</Link>
         </div>
         <div className="flex-content flex-content--big">
           <span>Games</span>
-          <Link href="#" class="link link--noIcon">Create</Link>
-          {/*<SearchList creatorType={ this.state.creatorType }*/}
-                      {/*messageList={ this.state.messageList }*/}
-                      {/*filterMessages={ this.filterMessages }*/}
-                      {/*searchInput={ this.state.searchInput }*/}
-          {/*/>*/}
+          <Link href="/gameSetup" class="link link--noIcon">Create</Link>
+          <WargameSearchList key="searchlist"
+                             listData={this.props.wargame.wargameNames}
+                             selectedWargame={this.props.wargame.selectedWargame}
+          />
         </div>
       </div>
     );
   }
 }
+
+// empty mapStateToProps is here for react-redux to wire up the dispatch function to props so firing actions is possible.
+const mapStateToProps = ({wargame}) => ({
+  wargame
+});
+
+
+export default connect(mapStateToProps)(GameDesignerInterface);

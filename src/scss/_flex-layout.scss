@@ -4,19 +4,33 @@
   flex-grow: 1;
   align-items: baseline;
 
+  &--distribute {
+    justify-content: space-between;
+    flex-grow: 0;
+  }
+
   .flex-content {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    justify-items: flex-start;
+    justify-content: flex-start;
     min-width: 26%;
 
-    //padding: 0 3%;
-    //height: 100%;
+    &--row {
+      flex-direction: row;
+      margin-bottom: 2.75em;
+    }
 
     &--sml {
       //flex-grow: 1;
       min-width: 24%;
+      justify-content: center;
+
+    }
+
+    &--fill {
+      flex-grow: 1;
+      min-width: 50%;
     }
 
     &--big {

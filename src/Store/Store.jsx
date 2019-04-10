@@ -4,6 +4,8 @@ import { messagesReducer } from "../ActionsAndReducers/dbMessages/messages_Reduc
 import { currentModal } from "../ActionsAndReducers/Modal/Modal_Reducer";
 import { currentViewURIReducer } from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_Reducer";
 import { umpireMenuReducer } from "../ActionsAndReducers/UmpireMenu/umpireMenu_Reducer";
+import {gameSetupReducer} from "../ActionsAndReducers/GameSetup/gameSetup_Reducer";
+import {wargamesReducer} from "../ActionsAndReducers/dbWargames/wargames_Reducer";
 
 import thunk from 'redux-thunk';
 
@@ -21,4 +23,7 @@ export default createStore(combineReducers({
   umpireMenu: umpireMenuReducer,
   currentViewURI: currentViewURIReducer,
   currentModal,
+  // combine gameSetup & wargame reducer
+  gameSetup: gameSetupReducer,
+  wargame: wargamesReducer,
 }), applyMiddleware(...middlewares));

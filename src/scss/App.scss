@@ -13,6 +13,7 @@
 @import 'preview-editor';
 @import 'searchlist';
 @import 'modal';
+@import 'progress';
 
 .view-wrapper {
   position: relative;
@@ -20,7 +21,7 @@
   flex-direction: column;
   height: auto;
   min-height: 100vh;
-  padding: $paddingHeight calc(#{$paddingWidth} + 1vw);
+  padding: $paddingHeight 1vw $paddingHeight calc(#{$paddingWidth} + 1vw);
   background-color: #fafcff; // ??
 }
 

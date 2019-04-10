@@ -5,7 +5,6 @@ import Link from "../Components/Link";
 import {
   getAllMessageTypes,
   duplicateMessageType,
-  deleteMessageType
 } from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
 
 import {
@@ -171,7 +170,7 @@ class UmpireMenu extends Component {
 
 
   deleteTemplate = () => {
-    this.props.dispatch(modalAction.open());
+    this.props.dispatch(modalAction.open("delete"));
   };
 
 
@@ -181,7 +180,7 @@ class UmpireMenu extends Component {
 
 
   deleteMessage = () => {
-    this.props.dispatch(modalAction.open());
+    this.props.dispatch(modalAction.open("delete"));
   };
 
 

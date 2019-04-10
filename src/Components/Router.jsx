@@ -9,6 +9,7 @@ import EditMessage from '../Views/EditMessage';
 import CreateMessage from '../Views/CreateMessage';
 import EditTemplate from '../Views/EditTemplate';
 import CreateTemplate from '../Views/CreateTemplate';
+import GameSetup from "../Views/GameSetup";
 
 import '../scss/App.scss';
 
@@ -30,7 +31,8 @@ class Router extends Component {
           { path: '/create/message', action: () => <CreateMessage /> },
           { path: '/edit/message', action: () => <EditMessage /> },
         ]
-      }
+      },
+      { path: '/gameSetup', action: () => <GameSetup /> },
     ];
 
     this.router = new UniversalRouter(this.routes);
