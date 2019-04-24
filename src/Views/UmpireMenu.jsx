@@ -9,7 +9,7 @@ import {
 
 import {
   getAllMessages,
-  duplicateMessage
+  duplicateMessage, getSingleMessage
 } from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
 
 import { modalAction } from "../ActionsAndReducers/Modal/Modal_ActionCreators";
@@ -31,7 +31,7 @@ class UmpireMenu extends Component {
     let creatorType = this.props.currentViewURI.split('/')[2];
 
     this.state = {
-      searchInput: '',
+      searchQuery: '',
       creatorType: creatorType,
       messageList: creatorType === 'templates' ? this.props.messageTypes.messages : this.props.messages.messages,
     };
@@ -45,7 +45,7 @@ class UmpireMenu extends Component {
 
   componentWillReceiveProps(nextProps, nextContext) {
 
-    if (this.state.searchInput.length === 0) {
+    if (this.state.searchQuery.length === 0) {
       // only on page load
       this.setState({
         messageList: this.state.creatorType === 'templates' ? nextProps.messageTypes.messages : nextProps.messages.messages,
@@ -77,13 +77,32 @@ class UmpireMenu extends Component {
   }
 
 
+  setSelectedSchemaId = (item) => {
+
+    switch (this.state.creatorType) {
+      case 'templates':
+        this.props.dispatch(setSelectedSchema(item._id));
+        break;
+
+      case 'library':
+        this.props.dispatch(setSelectedSchema(item.schema._id));
+        this.props.dispatch(getSingleMessage(item._id));
+        break;
+
+      default:
+        console.log('error');
+        break;
+    }
+  }
+
+
   // event listener functions from the DOM will lose scope of this to the React Class unless stated as an arrow function
   // or this is bound to them within the constructor like.. this.filterMessages = this.filterMessages.bind(this);
   // arrow functions are es6 syntax and preferable if babel compiler can compile them. - They have the scope of where they're
   // defined unlike a normal function that has it's own scope.
   filterMessages = (input) => {
 
-    let value = input ? input.target.value : this.state.searchInput;
+    let value = input ? input.target.value : this.state.searchQuery;
 
     let newState;
 
@@ -107,7 +126,7 @@ class UmpireMenu extends Component {
 
     this.setState({
       messageList: newState,
-      searchInput: input ? value.toLowerCase() : this.state.searchInput
+      searchQuery: value
     });
   };
 
@@ -121,7 +140,12 @@ class UmpireMenu extends Component {
         return [
             <Link href="/messageCreator/create/template" key="templates" class="link"><FontAwesomeIcon icon={faPlus} />Create new template</Link>,
             <SearchList key="searchlist"
-                        listData={this.props.messageTypes}
+                        listData={this.state.messageList}
+                        searchQuery={this.state.searchQuery}
+                        filter={this.filterMessages}
+                        selected={this.props.umpireMenu.selectedSchemaID}
+                        setSelected={this.setSelectedSchemaId}
+                        placeholder={'Select template'}
             />
         ];
 
@@ -130,7 +154,12 @@ class UmpireMenu extends Component {
         return [
             <Link href="/messageCreator/create/message" key="messages" class="link"><FontAwesomeIcon icon={faPlus} />Create new Message</Link>,
             <SearchList key="searchlist"
-                        listData={this.props.messages}
+                        listData={this.state.messageList}
+                        searchQuery={this.state.searchQuery}
+                        filter={this.filterMessages}
+                        selected={this.props.messages.messagePreviewId}
+                        setSelected={this.setSelectedSchemaId}
+                        placeholder={'Select template'}
             />
         ];
 

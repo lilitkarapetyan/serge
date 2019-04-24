@@ -2,15 +2,10 @@ import ActionConstant from '../ActionConstants';
 import 'whatwg-fetch';
 import check from 'check-types';
 
-import {
-  addMessageType,
-  getAllMessagesFromDB,
-  updateMessageTypeInDB,
-  duplicateMessageTypeDB,
-  deleteMessageTypeDB
-} from '../../pouchDB/dbMessageTypes';
+import * as messageTypesApi from "../../api/messageTypes_api";
 
 import {setCurrentViewFromURI} from "../setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
+import {showNotification} from "../Notification/Notification_ActionCreators";
 
 const DBMessageSaveStatus = (status) => ({
   type: ActionConstant.DB_MESSAGE_STATUS,
@@ -32,6 +27,7 @@ const loadingDBMessageGet = (isLoading) => ({
   isLoading
 });
 
+
 export const createMessageType = (schema) => {
 
   if (!check.object(schema)) throw Error(`createMessageType() requires schema object & NOT. ${schema}`);
@@ -42,18 +38,23 @@ export const createMessageType = (schema) => {
 
     try {
 
-      var result = await addMessageType(schema);
+      var result = await messageTypesApi.postNewMessage(schema);
+
+      if (result.err) {
+        dispatch(showNotification(result.err));
+        dispatch(loadingDBMessageCreate(false));
+      }
 
       if (result.ok) {
         dispatch(DBMessageSaveStatus(result));
-        let messages = await getAllMessagesFromDB();
+        let messages = await messageTypesApi.getAllMessagesFromDb();
         dispatch(DBSaveMessageArray(messages));
+
+        dispatch(loadingDBMessageCreate(false));
+        dispatch(setCurrentViewFromURI("/umpireMenu/templates"));
       }
-      dispatch(loadingDBMessageCreate(false));
-      dispatch(setCurrentViewFromURI("/umpireMenu/templates"));
 
     } catch (err) {
-      alert(err);
       console.log(err);
     }
   }
@@ -67,17 +68,16 @@ export const duplicateMessageType = (id) => {
   return async (dispatch) => {
     dispatch(loadingDBMessageCreate(true));
 
-    var result = await duplicateMessageTypeDB(id);
+    var result = await messageTypesApi.duplicateMessageInDb(id);
 
     if (result) {
       dispatch(DBMessageSaveStatus(true));
-      let messages = await getAllMessagesFromDB();
+      let messages = await messageTypesApi.getAllMessagesFromDb();
       dispatch(DBSaveMessageArray(messages));
     }
     dispatch(loadingDBMessageCreate(false));
   }
 };
-
 
 export const updateMessageType = (schema, id) => {
 
@@ -87,12 +87,17 @@ export const updateMessageType = (schema, id) => {
     dispatch(loadingDBMessageCreate(true));
 
     try {
-      const result = await updateMessageTypeInDB(schema, id);
+      const result = await messageTypesApi.updateMessageInDb(schema, id);
 
-      if (result) {
-        dispatch(DBMessageSaveStatus(result));
+      if (result.err) {
+        dispatch(showNotification(result.err));
+        dispatch(loadingDBMessageCreate(false));
+      }
 
-        let allMessages = await getAllMessagesFromDB();
+      if (result.ok) {
+        dispatch(DBMessageSaveStatus(result.ok));
+
+        let allMessages = await messageTypesApi.getAllMessagesFromDb();
 
         dispatch(DBSaveMessageArray(allMessages));
         dispatch(loadingDBMessageCreate(false));
@@ -115,10 +120,10 @@ export const deleteMessageType = (messageId) => {
   return async (dispatch) => {
     dispatch(loadingDBMessageCreate(true));
 
-    var result = await deleteMessageTypeDB(messageId);
+    var result = await messageTypesApi.deleteMessageFromDb(messageId);
 
     if (result) {
-      let messages = await getAllMessagesFromDB();
+      let messages = await messageTypesApi.getAllMessagesFromDb();
       dispatch(DBSaveMessageArray(messages));
     } else {
       // error action
@@ -133,7 +138,7 @@ export const getAllMessageTypes = () => {
   return async (dispatch) => {
     dispatch(loadingDBMessageGet(true));
 
-    let result = await getAllMessagesFromDB();
+    let result = await messageTypesApi.getAllMessagesFromDb();
 
     dispatch(DBSaveMessageArray(result));
     dispatch(loadingDBMessageGet(false));

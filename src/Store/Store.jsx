@@ -4,8 +4,8 @@ import { messagesReducer } from "../ActionsAndReducers/dbMessages/messages_Reduc
 import { currentModal } from "../ActionsAndReducers/Modal/Modal_Reducer";
 import { currentViewURIReducer } from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_Reducer";
 import { umpireMenuReducer } from "../ActionsAndReducers/UmpireMenu/umpireMenu_Reducer";
-import {gameSetupReducer} from "../ActionsAndReducers/GameSetup/gameSetup_Reducer";
-import {wargamesReducer} from "../ActionsAndReducers/dbWargames/wargames_Reducer";
+import { wargamesReducer } from "../ActionsAndReducers/dbWargames/wargames_Reducer";
+import { notificationReducer } from "../ActionsAndReducers/Notification/Notification_Reducer";
 
 import thunk from 'redux-thunk';
 
@@ -16,14 +16,12 @@ if (process.env.NODE_ENV === `development`) {
   middlewares.push(logger);
 }
 
-
 export default createStore(combineReducers({
   messageTypes: messageTypesReducer,
   messages: messagesReducer,
   umpireMenu: umpireMenuReducer,
   currentViewURI: currentViewURIReducer,
   currentModal,
-  // combine gameSetup & wargame reducer
-  gameSetup: gameSetupReducer,
+  notification: notificationReducer,
   wargame: wargamesReducer,
 }), applyMiddleware(...middlewares));

@@ -75,6 +75,9 @@ class JsonCreator extends Component {
 
   saveMessage = () => {
     let schema = this.props.messageTypes.messages.find((mes) => mes._id === this.props.umpireMenu.selectedSchemaID).details;
+    console.log(this.editor.getValue());
+
+    console.log({...schema, _id: this.props.umpireMenu.selectedSchemaID});
     this.props.dispatch(createMessage(this.editor.getValue(), {...schema, _id: this.props.umpireMenu.selectedSchemaID}));
   };
 

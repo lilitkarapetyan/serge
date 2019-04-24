@@ -1,0 +1,17 @@
+@import "dependencies/variables";
+
+#notification {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px 20px;
+  color: $lightBlue;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: $errorColor;
+  text-align: center;
+
+  svg {
+    margin-left: 10px;
+    cursor: pointer;
+  }
+}

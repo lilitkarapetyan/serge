@@ -15,8 +15,8 @@ class DropdownInput extends Component {
 
   render() {
     return (
-      <select disabled={this.props.disabled} defaultValue={this.props.data ? this.props.data : "placeholder"} onChange={this.onChange}>
-        <option disabled value="placeholder">{this.props.placeholder}</option>
+      <select disabled={this.props.disabled} value={this.props.data ? this.props.data : "placeholder"} onChange={this.onChange}>
+        <option value="placeholder">{this.props.placeholder}</option>
         { this.props.selectOptions.map((opt, i) => {
           return (<option key={`${opt}${i}`} value={opt}>{opt}</option>)
         })}

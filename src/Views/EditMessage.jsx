@@ -65,15 +65,6 @@ class EditMessage extends Component {
         </div>
         <h1>Message library</h1>
         <div className="flex-content-wrapper">
-          {/*<div id="selection" className="flex-content">*/}
-            {/*<SearchList className="search"*/}
-                        {/*key="search-templates"*/}
-                        {/*messageList={ this.state.messageList }*/}
-                        {/*filterMessages={ this.filterMessages }*/}
-                        {/*searchInput={ this.state.searchInput }*/}
-                        {/*placeholder={ 'Select template' }*/}
-            {/*/>*/}
-          {/*</div>*/}
           <div id="preview" className="flex-content flex-content--solo-item">
             <JsonEditor id="preview"
                          disabled={ false }

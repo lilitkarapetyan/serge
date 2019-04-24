@@ -3,55 +3,58 @@ import ModalWrapper from './ModalWrapper';
 import "../../scss/App.scss";
 import { connect } from 'react-redux';
 import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
-import {addNewForce, setSelectedForce} from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
+import {
+  addNewChannel,
+  setSelectedChannel
+} from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
-class AddForceModal extends Component {
+class AddChannelModal extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      forceName: ''
+      channelName: ''
     };
   }
 
   hideModal = () => {
 
     this.setState({
-      forceName: '',
+      channelName: '',
     });
 
     this.props.dispatch(modalAction.close());
   };
 
 
-  setNewForceName = (e) => {
+  setChannelName = (e) => {
 
     this.setState({
-      forceName: e.target.value,
-      sameName: this.props.wargame.tabs[this.props.wargame.currentTab].data.forces[e.target.value]
+      channelName: e.target.value,
+      sameName: this.props.wargame.tabs[this.props.wargame.currentTab].data.channels[e.target.value]
     });
   };
 
-  addForce = () => {
-    this.props.dispatch(addNewForce(this.state.forceName));
-    this.props.dispatch(setSelectedForce(this.state.forceName));
+  addChannel = () => {
+    this.props.dispatch(addNewChannel(this.state.channelName));
+    this.props.dispatch(setSelectedChannel(this.state.channelName));
   };
 
   render() {
 
     if (!this.props.currentModal.open) return false;
 
-    var disable = this.state.forceName.length < 1 || this.state.sameName;
+    var disable = this.state.channelName.length < 1 || this.state.sameName;
 
     return (
       <ModalWrapper>
         <div className="display-text-wrapper">
-          <h3>Create force</h3>
+          <h3>Create channel</h3>
           {this.state.sameName ? <p className="notification">Already exists</p> : false}
-          <input autoFocus className="modal-input" type="text" onChange={this.setNewForceName} />
+          <input autoFocus className="modal-input" type="text" onChange={this.setChannelName} />
           <div className="buttons">
-            <button disabled={disable} name="add" className="btn btn-action btn-action--primary" onClick={this.addForce}>Add</button>
+            <button disabled={disable} name="add" className="btn btn-action btn-action--primary" onClick={this.addChannel}>Add</button>
             <button name="cancel" className="btn btn-action btn-action--secondary" onClick={this.hideModal}>Cancel</button>
           </div>
         </div>
@@ -65,4 +68,4 @@ const mapStateToProps = ({ wargame, currentModal }) => ({
   currentModal
 });
 
-export default connect(mapStateToProps)(AddForceModal);
+export default connect(mapStateToProps)(AddChannelModal);

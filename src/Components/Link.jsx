@@ -16,8 +16,6 @@ class Link extends Component {
 
     if (!aNewTab && !anExternalLink) {
       e.preventDefault();
-      // history.push(props.href);
-      window.history.pushState({}, '', this.props.href);
       this.props.dispatch(setCurrentViewFromURI(this.props.href));
     }
   };

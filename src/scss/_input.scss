@@ -1,0 +1,9 @@
+@import "dependencies/variables";
+
+.invalid-input {
+  background: rgba(150, 0, 0, 0.5) !important;
+}
+
+#notification {
+  position: absolute;
+}

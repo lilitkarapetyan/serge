@@ -1,0 +1,81 @@
+@import "dependencies/variables";
+
+.channelsTab,
+.forcesTab {
+
+  padding: 0 2%;
+
+  h3 {
+    display: inline-flex;
+    width: 33%;
+    text-overflow: ellipsis;
+    margin-bottom: 35px;
+  }
+
+  .heading--sml {
+    margin-bottom: 6px;
+  }
+
+  .link {
+    display: inline-flex;
+  }
+
+  textarea {
+    width: 100%;
+    height: 200px;
+  }
+}
+
+.channelsTab {
+
+  table {
+
+    font-family: "Segoe UI", sans-serif;
+    margin-top: 12px;
+    table-layout: fixed;
+    width: 100%;
+
+    svg {
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    thead {
+      tr th {
+        padding: 6px;
+      }
+      border-bottom: 1px solid $lightGrey;
+      margin-bottom: 12px;
+    }
+
+    tbody {
+      tr {
+        td {
+          padding: 12px 6px;
+        }
+
+        &:nth-child(even) {
+          background: $lightGrey;
+        }
+
+        &:last-of-type {
+          background: transparent;
+        }
+      }
+    }
+
+    th, td {
+      width: 25%;
+    }
+
+    th:nth-of-type(3),
+    td:nth-of-type(3) {
+      width: 40%
+    }
+
+    th:nth-of-type(4),
+    td:nth-of-type(4) {
+      width: 10%
+    }
+  }
+}

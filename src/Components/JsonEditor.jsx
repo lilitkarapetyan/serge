@@ -34,9 +34,12 @@ class JsonCreator extends Component {
       this.editor = null;
     }
 
+    // check logic
     if (
-      nextProps.messages.messagePreviewId.length > 0 &&
+      nextProps.messages.messagePreviewId.length > 0 ||
       nextProps.umpireMenu.selectedSchemaID.length > 0
+      // nextProps.messages.messagePreviewId.length > 0 &&
+      // nextProps.umpireMenu.selectedSchemaID.length > 0
     ) {
 
       if (this.editor) return;

@@ -4,7 +4,7 @@ import TextInput from "../../Components/Inputs/TextInput";
 import DropdownInput from "../../Components/Inputs/DropdownInput";
 import Row from "../../Components/Layout/Row";
 
-import { setGameData } from "../../ActionsAndReducers/GameSetup/gameSetup_ActionCreators";
+import { setGameData } from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 import TextArea from "../../Components/Inputs/TextArea";
 
 class SettingsTab extends Component {
@@ -12,6 +12,7 @@ class SettingsTab extends Component {
   constructor(props) {
     super(props);
   };
+
 
   updateDescription = (value) => {
     this.props.dispatch(setGameData({gameDescription: value}));
@@ -34,6 +35,7 @@ class SettingsTab extends Component {
   };
 
   render() {
+
     return (
       <div className="flex-content-wrapper">
 
@@ -41,7 +43,7 @@ class SettingsTab extends Component {
           <p className="heading--sml">Game description &amp; objectives</p>
           <TextArea
             updateStore={this.updateDescription}
-            data={this.props.gameSetup.tabs[this.props.tab].data.gameDescription}
+            data={this.props.wargame.tabs[this.props.wargame.currentTab].data.gameDescription}
           />
         </div>
 
@@ -56,7 +58,7 @@ class SettingsTab extends Component {
                 updateStore={this.updateSpatialRepresentation}
                 selectOptions={["opt1", "opt2", "opt3"]}
                 placeholder="Select spatial representation"
-                data={this.props.gameSetup.tabs[this.props.tab].data.spatialRepresentation}
+                data={this.props.wargame.tabs[this.props.wargame.currentTab].data.spatialRepresentation}
               />
             </div>
           </Row>
@@ -69,7 +71,8 @@ class SettingsTab extends Component {
               <TextInput
                 updateStore={this.updatePlanningInterval}
                 options={{ numInput: true }}
-                data={this.props.gameSetup.tabs[this.props.tab].data.planningInterval}
+                data={this.props.wargame.tabs[this.props.wargame.currentTab].data.planningInterval}
+                validInput={true}
               />
             </div>
             <div className="flex-content flex-content--sml">
@@ -85,7 +88,8 @@ class SettingsTab extends Component {
               <TextInput
                 updateStore={this.updateReplayInterval}
                 options={{ numInput: true }}
-                data={this.props.gameSetup.tabs[this.props.tab].data.replayInterval}
+                data={this.props.wargame.tabs[this.props.wargame.currentTab].data.replayInterval}
+                validInput={true}
               />
             </div>
             <div className="flex-content flex-content--sml">
@@ -102,7 +106,7 @@ class SettingsTab extends Component {
                 updateStore={this.updateTurnStrategy}
                 selectOptions={["opt1", "opt2", "opt3"]}
                 placeholder="Not implemented yet"
-                data={this.props.gameSetup.tabs[this.props.tab].data.turnStrategy}
+                data={this.props.wargame.tabs[this.props.wargame.currentTab].data.turnStrategy}
                 // disabled={true}
               />
             </div>
@@ -114,9 +118,8 @@ class SettingsTab extends Component {
   }
 }
 
-// temp use allMessages
-const mapStateToProps = ({ gameSetup }) => ({
-  gameSetup,
+const mapStateToProps = ({ wargame }) => ({
+  wargame,
 });
 
 export default connect(mapStateToProps)(SettingsTab);

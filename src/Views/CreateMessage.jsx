@@ -11,6 +11,7 @@ import Link from "../Components/Link";
 import SearchList from "../Components/SearchList";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
+import {setSelectedSchema} from "../ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators";
 
 class EditMessage extends Component {
 
@@ -50,8 +51,12 @@ class EditMessage extends Component {
 
     this.setState({
       messageList: newState,
-      searchInput: value.toLowerCase()
+      searchQuery: value
     });
+  };
+
+  setSelectedSchemaId = (item) => {
+    this.props.dispatch(setSelectedSchema(item._id));
   };
 
   render() {
@@ -64,8 +69,12 @@ class EditMessage extends Component {
          <div className="flex-content-wrapper">
           <div id="selection" className="flex-content">
             <SearchList key="search-templates"
-                            listData={this.props.messageTypes}
-                            placeholder={'Select template'}
+                        listData={this.state.messageList}
+                        searchQuery={this.state.searchQuery}
+                        filter={this.filterMessages}
+                        selected={this.props.umpireMenu.selectedSchemaID}
+                        setSelected={this.setSelectedSchemaId}
+                        placeholder={'Select template'}
             />
           </div>
           <div id="preview" className="flex-content flex-content--big">
@@ -77,9 +86,10 @@ class EditMessage extends Component {
   }
 }
 
-const mapStateToProps = ({ messages, messageTypes, currentViewURI }) => ({
+const mapStateToProps = ({ messages, messageTypes, umpireMenu, currentViewURI }) => ({
   messages,
   messageTypes,
+  umpireMenu,
   currentViewURI
 });
 

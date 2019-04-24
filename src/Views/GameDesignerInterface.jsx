@@ -7,7 +7,8 @@ import '../scss/App.scss';
 // import SearchList from "../Components/SearchList";
 
 import {
-  populateWargameStore
+  populateWargameStore,
+  createNewWargameDB,
 } from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
 import WargameSearchList from "../Components/WargameSearchList";
@@ -23,6 +24,9 @@ class GameDesignerInterface extends Component {
     this.props.dispatch(populateWargameStore());
   }
 
+  createWargame = () => {
+    this.props.dispatch(createNewWargameDB());
+  };
 
   render() {
     return (
@@ -33,10 +37,13 @@ class GameDesignerInterface extends Component {
         </div>
         <div className="flex-content flex-content--big">
           <span>Games</span>
-          <Link href="/gameSetup" class="link link--noIcon">Create</Link>
+          <Link
+            href="/gameSetup"
+            class="link link--noIcon"
+            onClickMethod={this.createWargame}
+          >Create</Link>
           <WargameSearchList key="searchlist"
-                             listData={this.props.wargame.wargameNames}
-                             selectedWargame={this.props.wargame.selectedWargame}
+                             listData={this.props.wargame.wargameList}
           />
         </div>
       </div>

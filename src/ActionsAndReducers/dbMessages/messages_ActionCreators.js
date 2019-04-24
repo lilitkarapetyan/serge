@@ -2,14 +2,11 @@ import ActionConstant from '../ActionConstants';
 import 'whatwg-fetch';
 import check from 'check-types';
 
-import { addMessageInDb,
-         getAllMessagesFromDB,
-         getMessageFromDB,
-         updateMessageInDB,
-         duplicateMessageDB,
-         deleteMessageDB } from '../../pouchDB/dbMessages';
+import * as messagesApi from "../../api/messages_api";
 
+import { showNotification } from "../Notification/Notification_ActionCreators";
 import {setCurrentViewFromURI} from "../setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
+import {apiPath, headers} from "../../pouchDB/consts";
 
 const DBMessageSaveStatus = (status) => ({
   type: ActionConstant.DB_MESSAGE_STATUS,
@@ -41,10 +38,6 @@ export const resetMessagePreview = () => ({
 });
 
 
-/*
- * - below are async getters
- */
-
 export const createMessage = (message, schema) => {
 
   if (!check.object(message)) throw Error(`createMessageType() requires object with message, from & to NOT. ${message}`);
@@ -53,22 +46,26 @@ export const createMessage = (message, schema) => {
     dispatch(loadingDBMessageCreate(true));
 
     try {
-      var result = await addMessageInDb(message, schema);
+      var result = await messagesApi.addMessage(message, schema);
+
+      if (result.err) {
+        dispatch(showNotification(result.err));
+      }
 
       if (result.ok) {
         dispatch(DBMessageSaveStatus(result));
-        let messages = await getAllMessagesFromDB();
+        let messages = await messagesApi.getAllMessagesFromDb();
         dispatch(DBSaveMessageArray(messages));
+        dispatch(loadingDBMessageCreate(false));
+        dispatch(setCurrentViewFromURI("/umpireMenu/library"));
       }
-      dispatch(loadingDBMessageCreate(false));
-      dispatch(setCurrentViewFromURI("/umpireMenu/library"));
     } catch(e) {
       dispatch(loadingDBMessageCreate(false));
       alert(e);
     }
-
   }
 };
+
 
 
 export const duplicateMessage = (messageId) => {
@@ -78,11 +75,11 @@ export const duplicateMessage = (messageId) => {
   return async (dispatch) => {
     dispatch(loadingDBMessageCreate(true));
 
-    var result = await duplicateMessageDB(messageId);
+    var result = await messagesApi.duplicateMessageInDb(messageId);
 
     if (result) {
       dispatch(DBMessageSaveStatus(result));
-      let messages = await getAllMessagesFromDB();
+      let messages = await messagesApi.getAllMessagesFromDb();
       dispatch(DBSaveMessageArray(messages));
     }
     dispatch(loadingDBMessageCreate(false));
@@ -98,14 +95,16 @@ export const updateMessage = (message, id) => {
     dispatch(loadingDBMessageCreate(true));
 
     try {
-      const result = await updateMessageInDB(message, id);
+      const result = await messagesApi.updateMessageInDb(id, message);
 
-      console.log(result);
+      if (result.err) {
+        dispatch(showNotification(result.err));
+      }
 
-      if (result) {
+      if (result.ok) {
         dispatch(DBMessageSaveStatus(result));
 
-        let responses = await Promise.all([getAllMessagesFromDB(), getMessageFromDB(result.id)]);
+        let responses = await Promise.all([messagesApi.getAllMessagesFromDb(), messagesApi.getMessage(result.id)]);
         let [messages, message] = [...responses];
 
         dispatch(DBSaveMessagePreview(message));
@@ -122,6 +121,7 @@ export const updateMessage = (message, id) => {
   }
 };
 
+
 export const deleteMessage = (messageId) => {
 
   if (!check.string(messageId)) throw Error(`duplicateMessage() requires a string Not. ${messageId}`);
@@ -129,10 +129,10 @@ export const deleteMessage = (messageId) => {
   return async (dispatch) => {
     dispatch(loadingDBMessageCreate(true));
 
-    var result = await deleteMessageDB(messageId);
+    var result = await messagesApi.deleteMessageFromDb(messageId);
 
     if (result) {
-      let messages = await getAllMessagesFromDB();
+      let messages = await messagesApi.getAllMessagesFromDb();
       dispatch(DBSaveMessageArray(messages));
       dispatch(resetMessagePreview());
     } else {
@@ -143,6 +143,7 @@ export const deleteMessage = (messageId) => {
   }
 };
 
+
 export const getSingleMessage = (id) => {
 
   if (!check.string(id)) throw Error(`duplicateMessage() requires a string id..`);
@@ -150,7 +151,7 @@ export const getSingleMessage = (id) => {
   return async (dispatch) => {
     dispatch(loadingDBMessageGet(true));
 
-    let result = await getMessageFromDB(id);
+    let result = await messagesApi.getMessage(id);
 
     dispatch(DBSaveMessagePreview(result));
     dispatch(loadingDBMessageGet(false));
@@ -161,7 +162,7 @@ export const getAllMessages = () => {
   return async (dispatch) => {
     dispatch(loadingDBMessageGet(true));
 
-    let result = await getAllMessagesFromDB();
+    let result = await messagesApi.getAllMessagesFromDb();
 
     dispatch(DBSaveMessageArray(result));
     dispatch(loadingDBMessageGet(false));

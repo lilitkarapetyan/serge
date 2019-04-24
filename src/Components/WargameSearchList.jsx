@@ -7,7 +7,14 @@ import {getSingleMessage} from "../ActionsAndReducers/dbMessages/messages_Action
 
 import moment from "moment";
 import _ from "lodash";
-import {getAllDataFromWargame} from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
+import {
+  editWargame,
+  duplicateWargame,
+} from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
+import {setCurrentViewFromURI} from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
+
+import {faClone, faPencilAlt} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class WargameSearchList extends Component {
 
@@ -15,7 +22,7 @@ class WargameSearchList extends Component {
     super(props);
 
     this.state = {
-      messageList: this.props.listData, // for HOC
+      messageList: this.props.listData,
       searchQuery: this.props.listData,
       searchInput: "",
     };
@@ -44,20 +51,37 @@ class WargameSearchList extends Component {
   }
 
   setSelectedWargame(name) {
-    this.props.dispatch(getAllDataFromWargame(name));
+    this.props.dispatch(editWargame(name));
+    this.props.dispatch(setCurrentViewFromURI('/gameSetup'));
+  }
+
+  duplicateWargame(name) {
+    this.props.dispatch(duplicateWargame(name));
   }
 
   filterMessages = (input) => {
 
     let value = input ? input.target.value : this.state.searchInput;
 
-    let searchQuery = this.props.listData.filter(function(name) {
-      return name.toLowerCase().indexOf(value.toLowerCase()) > -1;
+    let searchQuery = this.props.listData.filter(function(db) {
+      return db.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
     });
 
     this.setState({
       searchQuery,
-      searchInput: input ? value.toLowerCase() : this.state.searchInput
+      searchInput: input ? value : this.state.searchInput
+    });
+  };
+
+  displayControls = (activeTitle) => {
+    this.setState({
+      activeTitle,
+    });
+  };
+
+  hideControls = () => {
+    this.setState({
+      activeTitle: false,
     });
   };
 
@@ -69,19 +93,22 @@ class WargameSearchList extends Component {
 
     return (
       <div className="searchlist">
-        <input type="text" className="searchlist--input" key="search-templates" placeholder="Search games" onChange={ this.filterMessages } value={this.state.searchInput} />
-        <div className="searchlist--list">
-          { list.map(function(name) {
-
-            // onClick handlers should not contain instantiating () to pass a specific value, .bind can be used here this is a simpler
-            // ES5 way to pass properties to click handlers from arrays, another option is to build a sub-component but I don't like
-            // how the data moves back and forth, it breaks Reacts initial idea of 1 way data flow.
-
-            console.log(that.props.selectedWargame);
-
+        <input type="text" className="searchlist-input" key="search-templates" placeholder="Search games" onChange={ this.filterMessages } value={this.state.searchInput} />
+        <div className="searchlist-list">
+          { list.map(function(db) {
             // let active
-
-            return <span href="#" onClick={that.setSelectedWargame.bind(that, name)} key={name} >{name}</span>
+            return (
+              <span className="searchlist-title" key={db.title} onMouseOver={that.displayControls.bind(that, db.title)} onMouseLeave={that.hideControls}>
+                {db.title}
+                {that.state.activeTitle === db.title ?
+                  <>
+                    <FontAwesomeIcon icon={faPencilAlt} onClick={that.setSelectedWargame.bind(that, db.name)} />
+                    <FontAwesomeIcon icon={faClone} onClick={that.duplicateWargame.bind(that, db.name)} />
+                  </>
+                  : null
+                }
+              </span>
+            )
           })}
         </div>
       </div>

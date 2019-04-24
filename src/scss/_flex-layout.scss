@@ -19,6 +19,10 @@
     &--row {
       flex-direction: row;
       margin-bottom: 2.75em;
+
+      .column {
+        flex-direction: column;
+      }
     }
 
     &--sml {

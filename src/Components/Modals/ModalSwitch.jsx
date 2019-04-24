@@ -3,6 +3,7 @@ import "../../scss/App.scss";
 import { connect } from 'react-redux';
 import AddForceModal from "./AddForceModal";
 import DeleteModal from './DeleteModal';
+import AddChannelModal from "./AddChannelModal";
 // import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
 
 class ModalSwitch extends Component {
@@ -14,7 +15,6 @@ class ModalSwitch extends Component {
   render() {
 
     var modal;
-    console.log(this.props.currentModal);
 
     switch (this.props.currentModal.modal) {
 
@@ -24,6 +24,10 @@ class ModalSwitch extends Component {
 
       case "delete":
         modal = <DeleteModal />;
+        break;
+
+      case "addChannel":
+        modal = <AddChannelModal />;
         break;
 
       default:
