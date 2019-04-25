@@ -1,5 +1,5 @@
 process.env.NODE_ENV = 'test';
-
+const consts = require('../consts.js');
 const PouchDB = require('pouchdb-core');
 PouchDB.plugin(require('pouchdb-adapter-leveldb'));
 require('pouchdb-all-dbs')(PouchDB);
@@ -26,7 +26,7 @@ describe('messageTypes', () => {
         qty = dbs.length;
         dbs.forEach((name) => {
           // make connection to database
-          var db = new PouchDB(name, {adapter: 'leveldb'});
+          var db = new PouchDB(consts.databasePath+name, {adapter: 'leveldb'});
 
           db.destroy().then(() => {
             count += 1;

@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 
 import * as messages from "../../../ActionsAndReducers/dbMessages/messages_ActionCreators";
 import * as messagesApi from "../../../api/messages_api";
-import machineryFailure from "../../../schemas/machinery_failure.json";
+import machineryFailure from "../../../Schemas/machinery_failure.json";
 import ActionConstant from "../../../ActionsAndReducers/ActionConstants";
 import {messagesReducer} from "../../../ActionsAndReducers/dbMessages/messages_Reducer";
 

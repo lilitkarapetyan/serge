@@ -47,9 +47,10 @@ export const getWargame = () => {
   }
 };
 
-export const saveMessage = (dbName, channel, message) => {
+export const saveMessage = (dbName, details, message) => {
   return async (dispatch) => {
-    let response = await wargamesApi.postNewMessage(dbName, channel, message);
+
+    let response = await wargamesApi.postNewMessage(dbName, details, message);
 
     let wargame = await wargamesApi.getWargame();
     let messages = await wargamesApi.getAllMessages(wargame.name);

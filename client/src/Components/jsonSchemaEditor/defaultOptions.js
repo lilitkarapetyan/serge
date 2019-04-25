@@ -2,7 +2,7 @@ export const booleanOptions = [
   { value: "required_by_default", label: "Object properties required by default", selected: false },
   { value: "display_required_only", label: "Only show required properties by default", selected: false },
   { value: "no_additional_properties", label: "No additional object properties", selected: false },
-  { value: "ajax", label: "Allow loading schemas via Ajax", selected: false },
+  { value: "ajax", label: "Allow loading Schemas via Ajax", selected: false },
   { value: "disable_edit_json", label: 'Disable "Edit JSON" buttons' },
   { value: "disable_collapse", label: "Disable collapse buttons", selected: false },
   { value: "disable_properties", label: "Disable properties buttons", selected: false },

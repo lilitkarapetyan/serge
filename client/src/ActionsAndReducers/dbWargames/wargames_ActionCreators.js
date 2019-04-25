@@ -5,7 +5,7 @@ import _ from "lodash";
 
 import * as wargamesApi from "../../api/wargames_api";
 
-import { apiPath, headers } from "../../pouchDB/consts";
+import { apiPath, headers } from "../../api/consts";
 
 
 export const setCurrentTab = (tab) => ({

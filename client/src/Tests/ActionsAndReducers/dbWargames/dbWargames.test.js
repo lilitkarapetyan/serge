@@ -7,7 +7,7 @@ import * as wargamesApi from "../../../api/wargames_api";
 import {
   forceTemplate,
   channelTemplate,
-} from "../../../pouchDB/consts";
+} from "../../../api/consts";
 
 import ActionConstant from "../../../ActionsAndReducers/ActionConstants";
 import _ from "lodash";

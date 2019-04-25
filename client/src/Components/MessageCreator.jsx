@@ -30,14 +30,19 @@ class JsonCreator extends Component {
 
   sendMessage = () => {
 
-    let forces = this.props.wargame.allChannels[this.props.wargame.selectedChannel];
-    let templates = _.uniqBy(_.flatMap(forces, (force) => force.templates), _.isEqual);
-    templates = templates.map((item) => item.value);
+    // let forces = this.props.playerUi.allChannels[this.props.playerUi.selectedChannel];
+    // let templates = _.uniqBy(_.flatMap(forces, (force) => force.templates), _.isEqual);
+    // templates = templates.map((item) => item.value);
 
-    let to = this.props.wargame.allChannels[this.props.wargame.selectedChannel].map((item) => item.force);
-    let from = this.props.wargame.selectedForce;
+    let messageDetails = {
+      channel: this.props.playerUi.selectedChannel,
+      from: {
+        force: this.props.playerUi.selectedForce,
+        role: this.props.selectedRole,
+      },
+    };
 
-    this.props.dispatch(saveMessage(this.props.wargame.currentWargame, {templates, to, from}, this.editor.getValue()));
+    this.props.dispatch(saveMessage(this.props.playerUi.currentWargame, messageDetails, this.editor.getValue()));
     this.props.dispatch(getAllMessages());
   };
 
@@ -68,8 +73,8 @@ class JsonCreator extends Component {
   }
 }
 
-const mapStateToProps = ({ wargame }) => ({
-  wargame
+const mapStateToProps = ({ playerUi }) => ({
+  playerUi
 });
 
 export default connect(mapStateToProps)(JsonCreator);

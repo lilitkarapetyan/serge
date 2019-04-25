@@ -15,8 +15,9 @@ class MessagesList extends Component {
 
   render() {
 
-    let messages = this.props.messages.filter((item) => item.channel === this.props.curChannel);
+    let messages = this.props.messages.filter((item) => item.details.channel === this.props.curChannel);
 
+    console.log(this.props.messages);
     console.log(messages);
 
     return (

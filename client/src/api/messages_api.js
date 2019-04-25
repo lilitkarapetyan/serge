@@ -1,5 +1,5 @@
 import {fetch} from "whatwg-fetch";
-import {apiPath, headers} from "../pouchDB/consts";
+import {apiPath, headers} from "./consts";
 
 export const addMessage = (message, schema) => {
   return new Promise((resolve, reject) => {

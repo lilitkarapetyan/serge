@@ -188,7 +188,7 @@ var wargames = (function() {
     });
   };
 
-  var saveMessage = function (dbName, channel, message) {
+  var saveMessage = function (dbName, details, message) {
 
     let db = wargameDbStore.find((db) => db.name === dbName).db;
     let uniqId = uniqid.time();
@@ -197,7 +197,7 @@ var wargames = (function() {
 
       db.put({
         _id: uniqId,
-        channel,
+        details,
         message,
       })
         .then((res) => {

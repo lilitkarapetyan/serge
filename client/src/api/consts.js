@@ -16,6 +16,11 @@ export const forceTemplate = {
 
 export const channelTemplate = [];
 
+
+export const databasePath = 'http://localhost:5000/';
+export const MSG_STORE = "messages";
+export const MSG_TYPE_STORE = "message_types";
+
 // export const channelTemplate = [{
 //   force: 'white',
 //   role: 'General',

@@ -1,5 +1,5 @@
 import {fetch} from "whatwg-fetch";
-import {apiPath, headers} from "../pouchDB/consts";
+import {apiPath, headers} from "./consts";
 import _ from "lodash";
 
 
@@ -104,13 +104,13 @@ export const getWargame = () => {
     .catch((err) => console.log(err));
 };
 
-export const postNewMessage = (dbName, channel, message) => {
+export const postNewMessage = (dbName, details, message) => {
 
   return new Promise((resolve, reject) => {
     fetch(`${apiPath}/wargames/createMessage`, {
       method: 'POST',
       headers,
-      body: JSON.stringify({dbName, channel, message})
+      body: JSON.stringify({dbName, details, message})
     })
       .then((response) => {
         return response.json();

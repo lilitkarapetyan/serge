@@ -133,8 +133,8 @@ Object.defineProperty(SchemaEditor.prototype, 'constructor', {
 SchemaEditor.prototype.updateSchema = function(schema) {
     this.destroy();
 
-    // Add extra validation logic for integer schemas that use the `range` format.
-    // For integer schemas that use the `range` format we require that minimum and maximum properties are set, too.
+    // Add extra validation logic for integer Schemas that use the `range` format.
+    // For integer Schemas that use the `range` format we require that minimum and maximum properties are set, too.
     var range_integer_validator = function(schema, value, path) {
         var errors = [];
         if(value !== null && value.type === 'integer' && value.format === 'range') {

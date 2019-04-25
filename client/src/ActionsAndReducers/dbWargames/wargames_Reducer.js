@@ -6,7 +6,7 @@ import uniqId from "uniqid";
 import {
   forceTemplate,
   channelTemplate,
-} from "../../pouchDB/consts";
+} from "../../api/consts";
 
 var initialState = {
   isLoading: false,

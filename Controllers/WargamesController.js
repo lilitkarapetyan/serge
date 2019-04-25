@@ -76,7 +76,7 @@ router.get('/getActive', function (req, res) {
 
 router.post('/createMessage', function (req, res) {
 
-  wargames.saveMessage(req.body.dbName, req.body.channel, req.body.force, req.body.message)
+  wargames.saveMessage(req.body.dbName, req.body.details, req.body.message)
     .then((dbRes) => {
       res.status(200).send(dbRes);
     })

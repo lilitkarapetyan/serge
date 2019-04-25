@@ -6,7 +6,7 @@ import * as messagesApi from "../../api/messages_api";
 
 import { showNotification } from "../Notification/Notification_ActionCreators";
 import {setCurrentViewFromURI} from "../setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
-import {apiPath, headers} from "../../pouchDB/consts";
+import {apiPath, headers} from "../../api/consts";
 
 const DBMessageSaveStatus = (status) => ({
   type: ActionConstant.DB_MESSAGE_STATUS,
