@@ -1,23 +1,124 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="85e6d853-67dd-49ee-9110-0be789839fc9" name="Default Changelist" comment="">
-<<<<<<< HEAD
-      <change beforePath="$PROJECT_DIR$/src/Components/MessagePreview.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MessagePreview.jsx" afterDir="false" />
-=======
-      <change afterPath="$PROJECT_DIR$/src/ActionsAndReducers/selectedSchema/selectedSchema_ActionCreators.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ActionsAndReducers/selectedSchema/selectedSchema_Reducer.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Components/Methods.js" afterDir="false" />
+    <list default="true" id="4475b6b2-0b2d-4e9b-ae80-f36ccda70c0a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/server/client/src/ActionsAndReducers/playerUi/playerUi_ActionCreators.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/client/src/ActionsAndReducers/playerUi/playerUi_Reducer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/client/src/Views/ChooseInterface.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/client/src/Views/MessageFeeds.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/client/src/Views/MessagesList.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/client/src/Views/PlayerUi.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/serge-react.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ActionsAndReducers/ActionConstants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ActionsAndReducers/ActionConstants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ActionsAndReducers/dbMessages/messages_ActionCreators.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ActionsAndReducers/dbMessages/messages_ActionCreators.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/JsonCreator.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/JsonCreator.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/MessagePreview.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MessagePreview.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Store/Store.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Store/Store.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/MessageUIContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/MessageUIContainer.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pouchDB/dbMessages.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pouchDB/dbMessages.js" afterDir="false" />
->>>>>>> 742e962b8fcf720214cdb0bfdee1207febe5f7be
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ActionsAndReducers/ActionConstants.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ActionsAndReducers/Modal/Modal_ActionCreators.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ActionsAndReducers/Modal/Modal_Reducer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ActionsAndReducers/Notification/Notification_ActionCreators.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ActionsAndReducers/Notification/Notification_Reducer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ActionsAndReducers/UmpireMenu/umpireMenu_Reducer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ActionsAndReducers/copyStateHelper.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ActionsAndReducers/dbMessageTypes/messageTypes_Reducer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ActionsAndReducers/dbMessages/messages_ActionCreators.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ActionsAndReducers/dbMessages/messages_Reducer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ActionsAndReducers/dbWargames/wargames_ActionCreators.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ActionsAndReducers/dbWargames/wargames_Reducer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ActionsAndReducers/deepCompare.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_Reducer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Inputs/DropdownInput.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Inputs/TextArea.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Inputs/TextInput.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/JsonCreator.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/JsonEditor.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Layout/ChannelsTable.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Layout/EditSubscriptionRow.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Layout/RemovableGroupItem.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Layout/Row.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Link.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/MessagePreview.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Modals/AddChannelModal.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Modals/AddForceModal.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Modals/DeleteModal.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Modals/ModalSwitch.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Modals/ModalWrapper.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Notification.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/ProgressBar/ProgressBar.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Router.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/SearchList.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/TabsSearchList.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/ValidationNotification.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/WargameSearchList.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/jsonSchemaEditor/data.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/jsonSchemaEditor/defaultOptions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/jsonSchemaEditor/devSection/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/jsonSchemaEditor/editorPreview.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/jsonSchemaEditor/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/jsonSchemaEditor/json-schema-editor/editor.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/jsonSchemaEditor/jsonEditor.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/jsonSchemaEditor/metaSchema.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/jsonSchemaEditor/options.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/jsonSchemaEditor/styles.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Helpers/copyStateHelper.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Helpers/deepCompare.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Store/Store.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tests/ActionsAndReducers/dbMessageTypes/dbMessageTypes.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tests/ActionsAndReducers/dbMessages/dbMessages.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tests/ActionsAndReducers/dbWargames/dbWargames.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/ChildWrapper.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/CreateMessage.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/CreateTemplate.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/EditMessage.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/EditTemplate.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/GameDesignerInterface.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/GameSetup.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/TabViews/ChannelsTab.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/TabViews/ForcesTab.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/TabViews/SettingsTab.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/TabbedView.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/UmpireMenu.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/messageTypes_api.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/messages_api.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/wargames_api.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pouchDB/consts.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schemas/machinery_failure.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schemas/wargame.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schemas/weather_forecase.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scss/App.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scss/_btns.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scss/_flex-layout.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scss/_gameSetup.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scss/_input.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scss/_json-editor.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scss/_message-preview.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scss/_modal.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scss/_notification.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scss/_preview-editor.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scss/_progress.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scss/_searchlist.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scss/_sidebar.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scss/_typography.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scss/dependencies/_reset.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scss/dependencies/_variables.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scss/dependencies/flatpickr.min.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/setupJest.js" beforeDir="false" />
     </list>
+    <ignored path="$PROJECT_DIR$/database_api/node_modules/" />
+    <ignored path="$PROJECT_DIR$/umpire_ui/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -29,106 +130,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Views/MessageUIContainer.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-161">
-              <caret line="44" column="24" lean-forward="true" selection-start-line="44" selection-start-column="24" selection-end-line="44" selection-end-column="24" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Components/MessagePreview.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-            <state relative-caret-position="630">
-              <caret line="35" column="103" selection-start-line="35" selection-start-column="103" selection-end-line="35" selection-end-column="103" />
-=======
-            <state relative-caret-position="-709">
-              <caret line="30" column="78" selection-start-line="30" selection-start-column="78" selection-end-line="30" selection-end-column="78" />
->>>>>>> 742e962b8fcf720214cdb0bfdee1207febe5f7be
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ActionsAndReducers/setOpenMessage/setOpenMessage_ActionCreators.js">
-          <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-            <state relative-caret-position="161">
-              <caret line="16" column="3" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
-=======
-            <state relative-caret-position="69">
-              <caret line="3" column="33" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
->>>>>>> 742e962b8fcf720214cdb0bfdee1207febe5f7be
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-<<<<<<< HEAD
-        <entry file="file://$PROJECT_DIR$/src/Components/JsonCreator.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-663">
-              <caret line="27" column="6" lean-forward="true" selection-start-line="27" selection-start-column="6" selection-end-line="27" selection-end-column="6" />
-=======
-        <entry file="file://$PROJECT_DIR$/src/Components/SearchList.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="16" column="3" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Components/JsonCreator.jsx">
+        <entry file="file://$PROJECT_DIR$/server/client/src/Views/GameDesignerInterface.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="33" column="36" lean-forward="true" selection-start-line="33" selection-start-column="36" selection-end-line="33" selection-end-column="36" />
->>>>>>> 742e962b8fcf720214cdb0bfdee1207febe5f7be
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-                <element signature="e#386#412#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Store/Store.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-            <state relative-caret-position="253">
-              <caret line="11" selection-start-line="11" selection-end-line="15" />
-=======
-            <state relative-caret-position="460">
-              <caret line="20" column="37" lean-forward="true" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
->>>>>>> 742e962b8fcf720214cdb0bfdee1207febe5f7be
-              <folding>
-                <element signature="e#0#70#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ActionsAndReducers/setOpenMessage/setOpenMessage_Reducer.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="5" column="44" selection-start-line="5" selection-start-column="44" selection-end-line="5" selection-end-column="44" />
+            <state relative-caret-position="368">
+              <caret line="26" column="25" selection-start-line="26" selection-start-column="25" selection-end-line="26" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -137,57 +143,22 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-<<<<<<< HEAD
-=======
-      <find>JsonEditor</find>
-      <find>getAllMessageTypes</find>
->>>>>>> 742e962b8fcf720214cdb0bfdee1207febe5f7be
-      <find>SearchList</find>
-      <find>curOpenMessageId</find>
-      <find>setOpenMessage</find>
-      <find>viewType</find>
-      <find>currentViewURI</find>
-      <find>this.dispatch(resetMessagePreview())</find>
-      <find>resetMessagePreviewId</find>
-      <find>resetMessagePreview</find>
-      <find>ActionsAndReducers\ActionConstants.jsx</find>
-      <find>ActionConstants.jsx</find>
-      <find>messagePreviewId</find>
-      <find>DB_RETURNED_MESSAGE</find>
-      <find>setState</find>
-      <find>createMessage</find>
-      <find>getMessageFromDB</find>
-      <find>DBSaveMessagePreview</find>
-      <find>.view-wr</find>
-      <find>//</find>
-      <find>schemaId</find>
-      <find>addMessage</find>
-      <find>createMessage(</find>
-      <find>selectedSchema</find>
-      <find>console.lo</find>
-      <find>&lt;Json</find>
-      <find>setOpenMessageId</find>
-      <find>getSingleMessage</find>
-      <find>messagePreview</find>
-      <find>CURRENT_OPEN_MESSAGE</find>
-<<<<<<< HEAD
-      <find>setSelectedSchema</find>
-      <find>console</find>
-=======
->>>>>>> 742e962b8fcf720214cdb0bfdee1207febe5f7be
+      <find>PouchDb</find>
+      <find>/client/ump</find>
+      <find>&lt;Link</find>
+      <find>&lt;Link</find>
+      <find>currentViewUri</find>
+      <find>window.</find>
+      <find>Link</find>
+      <find>ALL_WARGAME_NAMES_SAVED</find>
+      <find>getAll</find>
+      <find>this.props.wargame</find>
+      <find>getWargame</find>
+      <find>clearDatabase</find>
+      <find>this.props.currentViewURI.split('/')[2]</find>
+      <find>this.props.currentViewURI.split('/')</find>
+      <find>/umpireMenu</find>
     </findStrings>
-    <replaceStrings>
-      <replace>messageCreator/template/create</replace>
-      <replace>messageCreator/template/edit</replace>
-      <replace>messageCreator/message/create</replace>
-      <replace>messageCreator/message/edit</replace>
-      <replace>messageCreator/createTemplate</replace>
-      <replace>/create/message</replace>
-      <replace>/create/template</replace>
-      <replace>/edit/template</replace>
-      <replace>/edit/message</replace>
-      <replace>currentViewURI</replace>
-    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -195,88 +166,60 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-<<<<<<< HEAD
-=======
-        <option value="$PROJECT_DIR$/src/scss/dependencies/_bootswatch.scss" />
->>>>>>> 742e962b8fcf720214cdb0bfdee1207febe5f7be
-        <option value="$PROJECT_DIR$/src/scss/dependencies/_variables.scss" />
-        <option value="$PROJECT_DIR$/src/kintoDB/db.js" />
-        <option value="$PROJECT_DIR$/src/kintoDB/messagesDb.js" />
-        <option value="$PROJECT_DIR$/src/ActionsAndReducers/pouchDb/pouchDbAllMessages_Reducer.jsx" />
-        <option value="$PROJECT_DIR$/src/ActionsAndReducers/pouchDb/pouchDb_ActionCreators.jsx" />
-        <option value="$PROJECT_DIR$/src/Views/MessageTests.jsx" />
-        <option value="$PROJECT_DIR$/src/pouchDB/db.js" />
-        <option value="$PROJECT_DIR$/src/Components/MessageLink.jsx" />
-        <option value="$PROJECT_DIR$/src/pouchDB/dbMessageTypes.js" />
-        <option value="$PROJECT_DIR$/src/ActionsAndReducers/setOpenMessage/setOpenMessage_Reducer.jsx" />
-        <option value="$PROJECT_DIR$/src/ActionsAndReducers/setOpenMessage/setOpenMessage_ActionCreators.jsx" />
-        <option value="$PROJECT_DIR$/src/Views/ChildWrapper.jsx" />
-        <option value="$PROJECT_DIR$/src/ActionsAndReducers/getOpenMessageTypeById/getOpenMessageTypeById_Reducer.jsx" />
-        <option value="$PROJECT_DIR$/src/Views/CreateTemplate.jsx" />
-        <option value="$PROJECT_DIR$/src/scss/_editor-preview.scss" />
-        <option value="$PROJECT_DIR$/src/scss/_flex-layout.scss" />
-        <option value="$PROJECT_DIR$/src/scss/_typography.scss" />
-        <option value="$PROJECT_DIR$/src/index.jsx" />
-        <option value="$PROJECT_DIR$/src/ActionsAndReducers/setCurrentViewFromURI/setCurrentViewFromURI_ActionCreators.jsx" />
-        <option value="$PROJECT_DIR$/src/History/history.js" />
-        <option value="$PROJECT_DIR$/src/Views/GameDesignerInterface.jsx" />
-        <option value="$PROJECT_DIR$/src/App.jsx" />
-        <option value="$PROJECT_DIR$/src/Components/Link.jsx" />
-        <option value="$PROJECT_DIR$/src/ActionsAndReducers/setCurrentViewFromURI/setCurrentViewFromURI_Reducer.jsx" />
-        <option value="$PROJECT_DIR$/src/schemas/machinery_failure.json" />
-        <option value="$PROJECT_DIR$/src/schemas/weather_forecase.json" />
-        <option value="$PROJECT_DIR$/src/schemas/wargame.json" />
-        <option value="$PROJECT_DIR$/src/ActionsAndReducers/copyStateHelper.js" />
-        <option value="$PROJECT_DIR$/src/Views/EditTemplate.jsx" />
-        <option value="$PROJECT_DIR$/src/ReusableLogic/editDuplicateDelete.js" />
-        <option value="$PROJECT_DIR$/src/Components/JsonEditor.jsx" />
-        <option value="$PROJECT_DIR$/src/Components/SearchList.jsx" />
-        <option value="$PROJECT_DIR$/src/ActionsAndReducers/ActionConstants.jsx" />
-        <option value="$PROJECT_DIR$/src/ActionsAndReducers/dbMessages/messages_ActionCreators.jsx" />
-        <option value="$PROJECT_DIR$/src/ActionsAndReducers/dbMessages/messages_Reducer.jsx" />
-        <option value="$PROJECT_DIR$/src/Components/Router.jsx" />
-        <option value="$PROJECT_DIR$/src/Views/CreateMessage.jsx" />
-        <option value="$PROJECT_DIR$/src/Views/EditMessage.jsx" />
-        <option value="$PROJECT_DIR$/src/scss/_message-preview.scss" />
-        <option value="$PROJECT_DIR$/src/scss/App.scss" />
-        <option value="$PROJECT_DIR$/src/ActionsAndReducers/ActionConstants.js" />
-        <option value="$PROJECT_DIR$/src/ActionsAndReducers/selectedSchema/selectedSchema_ActionCreators.js" />
-        <option value="$PROJECT_DIR$/src/ActionsAndReducers/setOpenMessage/setOpenMessage_Reducer.js" />
-<<<<<<< HEAD
-        <option value="$PROJECT_DIR$/src/Views/MessageUIContainer.jsx" />
-        <option value="$PROJECT_DIR$/src/ActionsAndReducers/selectedSchema/selectedSchema_Reducer.js" />
-        <option value="$PROJECT_DIR$/src/ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_Reducer.js" />
-        <option value="$PROJECT_DIR$/src/Store/Store.jsx" />
-        <option value="$PROJECT_DIR$/src/ActionsAndReducers/dbMessages/messages_ActionCreators.js" />
-        <option value="$PROJECT_DIR$/src/pouchDB/dbMessages.js" />
-        <option value="$PROJECT_DIR$/src/Components/JsonCreator.jsx" />
-        <option value="$PROJECT_DIR$/src/Components/MessagePreview.jsx" />
-=======
-        <option value="$PROJECT_DIR$/src/ActionsAndReducers/selectedSchema/selectedSchema_Reducer.js" />
-        <option value="$PROJECT_DIR$/src/Store/Store.jsx" />
-        <option value="$PROJECT_DIR$/src/ActionsAndReducers/dbMessages/messages_ActionCreators.js" />
-        <option value="$PROJECT_DIR$/src/pouchDB/dbMessages.js" />
-        <option value="$PROJECT_DIR$/src/Components/MessagePreview.jsx" />
-        <option value="$PROJECT_DIR$/src/Views/MessageUIContainer.jsx" />
-        <option value="$PROJECT_DIR$/src/Components/JsonCreator.jsx" />
->>>>>>> 742e962b8fcf720214cdb0bfdee1207febe5f7be
+        <option value="$PROJECT_DIR$/database_api/package.json" />
+        <option value="$PROJECT_DIR$/database_api/server.js" />
+        <option value="$PROJECT_DIR$/database_api/app.js" />
+        <option value="$PROJECT_DIR$/umpire_ui/package.json" />
+        <option value="$PROJECT_DIR$/server/app_umpire_ui/package.json" />
+        <option value="$PROJECT_DIR$/server/app_player_ui/package.json" />
+        <option value="$PROJECT_DIR$/server/consts.js" />
+        <option value="$PROJECT_DIR$/server/Databases/messagesDbs.js" />
+        <option value="$PROJECT_DIR$/server/Databases/messageTypesDbs.js" />
+        <option value="$PROJECT_DIR$/server/server.js" />
+        <option value="$PROJECT_DIR$/server/client/src/Views/GameDesignerInterface.jsx" />
+        <option value="$PROJECT_DIR$/server/app.js" />
+        <option value="$PROJECT_DIR$/server/client/src/Components/routeConstants.js" />
+        <option value="$PROJECT_DIR$/server/client/src/Views/CreateTemplate.jsx" />
+        <option value="$PROJECT_DIR$/server/client/src/Views/CreateMessage.jsx" />
+        <option value="$PROJECT_DIR$/server/client/src/Views/GameSetup.jsx" />
+        <option value="$PROJECT_DIR$/server/client/src/Views/EditMessage.jsx" />
+        <option value="$PROJECT_DIR$/server/client/src/Views/EditTemplate.jsx" />
+        <option value="$PROJECT_DIR$/server/client/src/Components/Link.jsx" />
+        <option value="$PROJECT_DIR$/server/client/src/Views/ChooseInterface.jsx" />
+        <option value="$PROJECT_DIR$/server/app_player_ui/src/ActionsAndReducers/playerUi/playerUi_Reducer.js" />
+        <option value="$PROJECT_DIR$/server/client/src/ActionsAndReducers/ActionConstants.js" />
+        <option value="$PROJECT_DIR$/server/client/src/Store/Store.jsx" />
+        <option value="$PROJECT_DIR$/server/client/src/Views/PlayerUi.jsx" />
+        <option value="$PROJECT_DIR$/server/client/src/Views/MessageFeeds.jsx" />
+        <option value="$PROJECT_DIR$/server/client/src/scss/_flex-layout.scss" />
+        <option value="$PROJECT_DIR$/server/client/src/ActionsAndReducers/playerUi/playerUi_ActionCreators.js" />
+        <option value="$PROJECT_DIR$/server/Databases/wargameDbs.js" />
+        <option value="$PROJECT_DIR$/server/Controllers/WargamesController.js" />
+        <option value="$PROJECT_DIR$/server/client/src/api/wargames_api.js" />
+        <option value="$PROJECT_DIR$/server/README.md" />
+        <option value="$PROJECT_DIR$/server/client/src/Components/WargameSearchList.jsx" />
+        <option value="$PROJECT_DIR$/server/client/src/Views/UmpireMenu.jsx" />
+        <option value="$PROJECT_DIR$/server/client/src/Components/Router.jsx" />
+        <option value="$PROJECT_DIR$/server/client/src/ActionsAndReducers/dbMessages/messages_ActionCreators.js" />
+        <option value="$PROJECT_DIR$/server/client/src/ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators.js" />
+        <option value="$PROJECT_DIR$/server/client/src/Tests/ActionsAndReducers/dbMessages/dbMessages.test.js" />
+        <option value="$PROJECT_DIR$/server/client/src/Tests/ActionsAndReducers/dbMessageTypes/dbMessageTypes.test.js" />
+        <option value="$PROJECT_DIR$/server/client/src/Components/Modals/DeleteModal.jsx" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
-    <option name="x" value="1745" />
-    <option name="y" value="206" />
-    <option name="width" value="1920" />
-    <option name="height" value="1080" />
-  </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="2" id="Add" />
+    <option name="x" value="1912" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -287,100 +230,61 @@
             <path>
               <item name="serge" type="b2602c69:ProjectViewProjectNode" />
               <item name="serge" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="serge" type="b2602c69:ProjectViewProjectNode" />
+              <item name="serge" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="serge" type="b2602c69:ProjectViewProjectNode" />
+              <item name="serge" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="serge" type="b2602c69:ProjectViewProjectNode" />
               <item name="serge" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="ActionsAndReducers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="serge" type="b2602c69:ProjectViewProjectNode" />
-              <item name="serge" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="ActionsAndReducers" type="462c0819:PsiDirectoryNode" />
-              <item name="dbMessages" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="serge" type="b2602c69:ProjectViewProjectNode" />
-              <item name="serge" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="ActionsAndReducers" type="462c0819:PsiDirectoryNode" />
-              <item name="selectedSchema" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="serge" type="b2602c69:ProjectViewProjectNode" />
-              <item name="serge" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="ActionsAndReducers" type="462c0819:PsiDirectoryNode" />
-              <item name="setCurrentViewFromURI" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="serge" type="b2602c69:ProjectViewProjectNode" />
-              <item name="serge" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="ActionsAndReducers" type="462c0819:PsiDirectoryNode" />
-              <item name="setOpenMessage" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="serge" type="b2602c69:ProjectViewProjectNode" />
-              <item name="serge" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="Components" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="serge" type="b2602c69:ProjectViewProjectNode" />
               <item name="serge" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-<<<<<<< HEAD
-              <item name="pouchDB" type="462c0819:PsiDirectoryNode" />
+              <item name="Views" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="serge" type="b2602c69:ProjectViewProjectNode" />
               <item name="serge" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-=======
->>>>>>> 742e962b8fcf720214cdb0bfdee1207febe5f7be
-              <item name="Store" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="editor.config.ad.shown" value="true" />
-    <property name="full.screen.before.presentation.mode" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/node_modules/react-scripts/node_modules/eslint" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.standard" value="true" />
-    <property name="node.js.path.for.package.eslint" value="project" />
-    <property name="node.js.path.for.package.standard" value="project" />
-    <property name="node.js.selected.package.eslint" value="C:\Users\User\Documents\_projects\Serge\gitHub\serge\node_modules\react-scripts\node_modules\eslint" />
-    <property name="node.js.selected.package.standard" value="C:\Users\User\Documents\_projects\Serge\gitHub\serge\node_modules\react-scripts\node_modules\eslint" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
-    <property name="ts.external.directory.path" value="C:\Users\User\Documents\_projects\Serge\gitHub\serge\node_modules\typescript\lib" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2018.3.4\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\User\Documents\_projects\Serge\gitHub\serge\src\ActionsAndReducers" />
-      <recent name="C:\Users\User\Documents\_projects\Serge\gitHub\serge\src\Components" />
-      <recent name="C:\Users\User\Documents\_projects\Serge\gitHub\serge\src\Views" />
-      <recent name="C:\Users\User\Documents\_projects\Serge\gitHub\serge\src\pouchDB" />
-      <recent name="C:\Users\User\Documents\_projects\Serge\gitHub\serge\src\ActionsAndReducers\setOpenMessage" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\User\Documents\_projects\Serge\gitHub\serge\src\Tests\ActionsAndReducers\dbMessages" />
-      <recent name="C:\Users\User\Documents\_projects\Serge\gitHub\serge\src\scss\dependencies" />
-      <recent name="C:\Users\User\Documents\_projects\Serge\gitHub\serge\public" />
-      <recent name="C:\Users\User\Documents\_projects\Serge\gitHub\serge\src\Dependencies" />
+      <recent name="C:\Users\User\Documents\_projects\Serge\gitHub\serge\server\client\src\Components" />
+      <recent name="C:\Users\User\Documents\_projects\Serge\gitHub\serge\server\client\src\ActionsAndReducers" />
+      <recent name="C:\Users\User\Documents\_projects\Serge\gitHub\serge\server\client\src\Views" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -400,36 +304,26 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="85e6d853-67dd-49ee-9110-0be789839fc9" name="Default Changelist" comment="" />
-      <created>1551809575378</created>
+      <changelist id="4475b6b2-0b2d-4e9b-ae80-f36ccda70c0a" name="Default Changelist" comment="" />
+      <created>1556117241308</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1551809575378</updated>
-      <workItem from="1551809578976" duration="6342000" />
-      <workItem from="1551935391770" duration="6120000" />
-      <workItem from="1552177295022" duration="32751000" />
-      <workItem from="1552578610333" duration="30475000" />
-      <workItem from="1552797254225" duration="42778000" />
-      <workItem from="1553129853232" duration="13759000" />
-      <workItem from="1553173417254" duration="8351000" />
+      <updated>1556117241308</updated>
+      <workItem from="1556117242526" duration="2332000" />
+      <workItem from="1556119641221" duration="11721000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-<<<<<<< HEAD
-    <option name="totallyTimeSpent" value="202620000" />
-=======
-    <option name="totallyTimeSpent" value="198640000" />
->>>>>>> 742e962b8fcf720214cdb0bfdee1207febe5f7be
+    <option name="totallyTimeSpent" value="14053000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="0" width="1920" height="1080" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25237092" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24973656" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="npm" order="2" side_tool="true" />
-      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32997987" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -437,494 +331,437 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="TypeScript" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
-    <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24973656" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="npm" order="2" side_tool="true" />
-      <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32997987" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="TypeScript" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Views/ChildWrapper.jsx">
+    <entry file="file://$PROJECT_DIR$/database_api/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="17" column="4" lean-forward="true" selection-start-column="3" selection-end-line="24" selection-end-column="57" />
+        <state relative-caret-position="230">
+          <caret line="10" column="21" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ActionsAndReducers/getOpenMessageTypeById/getOpenMessageTypeById_Reducer.jsx" />
-    <entry file="file://$PROJECT_DIR$/src/pouchDB/db.js" />
-    <entry file="file://$PROJECT_DIR$/../../../oscarSite/thephotoshopfe/package.json">
+    <entry file="file://$PROJECT_DIR$/umpire_ui/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-690" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/scss/_flex-layout.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="11" column="18" lean-forward="true" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
+        <state relative-caret-position="763">
+          <caret line="64" column="47" lean-forward="true" selection-start-line="64" selection-start-column="47" selection-end-line="64" selection-end-column="47" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/bootstrap/scss/_type.scss">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/bootstrap/scss/bootstrap.scss">
+    <entry file="file://$PROJECT_DIR$/server/app_umpire_ui/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-46" />
+        <state relative-caret-position="786">
+          <caret line="63" column="2" selection-start-line="63" selection-start-column="2" selection-end-line="63" selection-end-column="35" />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/scss/_typography.scss">
+    <entry file="file://$PROJECT_DIR$/server/client/src/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="22" selection-start-column="22" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/scss/_editor-preview.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="8" column="1" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/History/history.js" />
-    <entry file="file://$PROJECT_DIR$/src/ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" column="34" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Views/GameDesignerInterface.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" selection-start-line="2" selection-end-line="2" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="18" column="27" selection-start-line="18" selection-start-column="27" selection-end-line="18" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/SearchMessages.jsx" />
-    <entry file="file://$PROJECT_DIR$/src/ActionsAndReducers/dbMessageTypes/messageTypes_Reducer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/schemas/machinery_failure.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/schemas/wargame.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ActionsAndReducers/copyStateHelper.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="4" column="56" selection-start-line="4" selection-start-column="56" selection-end-line="4" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/schemas/weather_forecase.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-157">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Views/EditTemplate.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="556">
-          <caret line="32" column="29" lean-forward="true" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
-          <folding>
-            <element signature="e#79#105#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/JsonEditor.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ReusableLogic/editDuplicateDelete.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="10" column="2" lean-forward="true" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Views/CreateTemplate.jsx">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/Router.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="10" column="53" lean-forward="true" selection-start-line="10" selection-start-column="53" selection-end-line="10" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Tests/ActionsAndReducers/dbMessages/dbMessages.test.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Views/MessageTests.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="55" column="24" selection-start-line="55" selection-start-column="24" selection-end-line="55" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-            <element signature="e#225#269#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pouchDB/dbMessageTypes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="878">
-          <caret line="77" column="16" selection-start-line="77" selection-start-column="16" selection-end-line="77" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="556">
-          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Views/CreateMessage.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="70" column="54" selection-start-line="70" selection-start-column="54" selection-end-line="70" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Views/EditMessage.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="70" column="107" selection-start-line="70" selection-start-column="107" selection-end-line="70" selection-end-column="107" />
-          <folding>
-            <element signature="e#79#105#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/Link.jsx">
+    <entry file="file://$PROJECT_DIR$/server/client/src/api/messages_api.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="7" lean-forward="true" selection-start-column="7" selection-end-column="7" />
           <folding>
-            <element signature="e#0#41#0" expanded="true" />
+            <element signature="e#0#35#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/scss/_message-preview.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="5" column="19" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/scss/App.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="713">
-          <caret line="37" column="19" selection-start-line="37" selection-start-column="19" selection-end-line="37" selection-end-column="20" />
-<<<<<<< HEAD
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/Methods.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ActionsAndReducers/ActionConstants.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="11" column="2" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ActionsAndReducers/setOpenMessage/setOpenMessage_Reducer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="5" column="44" selection-start-line="5" selection-start-column="44" selection-end-line="5" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/react.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="457" column="8" selection-start-line="457" selection-start-column="8" selection-end-line="457" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Views/MessageUIContainer.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-161">
-          <caret line="44" column="24" lean-forward="true" selection-start-line="44" selection-start-column="24" selection-end-line="44" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-=======
->>>>>>> 742e962b8fcf720214cdb0bfdee1207febe5f7be
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/SearchList.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="16" column="3" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-<<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/src/ActionsAndReducers/setOpenMessage/setOpenMessage_ActionCreators.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" column="33" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ActionsAndReducers/dbMessages/messages_Reducer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="648">
-          <caret line="33" column="35" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
-=======
-    <entry file="file://$PROJECT_DIR$/src/Components/Methods.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ActionsAndReducers/selectedSchema/selectedSchema_Reducer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" column="34" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ActionsAndReducers/selectedSchema/selectedSchema_ActionCreators.js">
+    <entry file="file://$PROJECT_DIR$/server/Databases/messageTypesDbs.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="92">
-          <caret line="4" column="2" selection-start-line="4" selection-start-column="2" selection-end-line="4" selection-end-column="2" />
+          <caret line="10" column="21" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ActionsAndReducers/dbMessages/messages_ActionCreators.js">
+    <entry file="file://$PROJECT_DIR$/server/Databases/messagesDbs.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="66" column="23" lean-forward="true" selection-start-line="66" selection-start-column="23" selection-end-line="66" selection-end-column="23" />
->>>>>>> 742e962b8fcf720214cdb0bfdee1207febe5f7be
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="207">
+          <caret line="9" column="38" selection-start-line="9" selection-start-column="38" selection-end-line="9" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-<<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/src/ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_Reducer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="12" column="22" lean-forward="true" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ActionsAndReducers/selectedSchema/selectedSchema_Reducer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="12" column="21" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ActionsAndReducers/selectedSchema/selectedSchema_ActionCreators.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" column="30" lean-forward="true" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="30" />
-=======
-    <entry file="file://$PROJECT_DIR$/src/pouchDB/dbMessages.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="591">
-          <caret line="98" column="18" selection-start-line="98" selection-start-column="18" selection-end-line="98" selection-end-column="18" />
->>>>>>> 742e962b8fcf720214cdb0bfdee1207febe5f7be
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Store/Store.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-        <state relative-caret-position="253">
-          <caret line="11" selection-start-line="11" selection-end-line="15" />
-=======
-        <state relative-caret-position="460">
-          <caret line="20" column="37" lean-forward="true" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
->>>>>>> 742e962b8fcf720214cdb0bfdee1207febe5f7be
-          <folding>
-            <element signature="e#0#70#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-<<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/src/pouchDB/dbMessages.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="453">
-          <caret line="92" selection-start-line="92" selection-end-line="92" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ActionsAndReducers/dbMessages/messages_ActionCreators.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="430">
-          <caret line="64" column="36" lean-forward="true" selection-start-line="64" selection-start-column="36" selection-end-line="64" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/JsonCreator.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-663">
-          <caret line="27" column="6" lean-forward="true" selection-start-line="27" selection-start-column="6" selection-end-line="27" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-            <element signature="e#386#412#0" expanded="true" />
-          </folding>
-=======
-    <entry file="file://$PROJECT_DIR$/src/ActionsAndReducers/ActionConstants.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="11" column="2" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ActionsAndReducers/setOpenMessage/setOpenMessage_Reducer.js">
+    <entry file="file://$PROJECT_DIR$/server/server.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="115">
-          <caret line="5" column="44" selection-start-line="5" selection-start-column="44" selection-end-line="5" selection-end-column="44" />
+          <caret line="5" column="42" selection-start-line="5" selection-start-column="42" selection-end-line="5" selection-end-column="42" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ActionsAndReducers/setOpenMessage/setOpenMessage_ActionCreators.js">
+    <entry file="file://$PROJECT_DIR$/server/consts.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" column="33" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
+        <state relative-caret-position="763">
+          <caret line="58" column="17" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/react.d.ts">
+    <entry file="file://$PROJECT_DIR$/server/client/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="457" column="8" selection-start-line="457" selection-start-column="8" selection-end-line="457" selection-end-column="8" />
->>>>>>> 742e962b8fcf720214cdb0bfdee1207febe5f7be
+        <state relative-caret-position="-276" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/app_player_ui/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1081">
+          <caret line="47" column="35" selection-start-line="47" selection-start-column="35" selection-end-line="47" selection-end-column="35" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/MessagePreview.jsx">
+    <entry file="file://$PROJECT_DIR$/server/client/src/Components/routeConstants.js">
       <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-        <state relative-caret-position="630">
-          <caret line="35" column="103" selection-start-line="35" selection-start-column="103" selection-end-line="35" selection-end-column="103" />
-=======
-        <state relative-caret-position="-709">
-          <caret line="30" column="78" selection-start-line="30" selection-start-column="78" selection-end-line="30" selection-end-column="78" />
+        <state relative-caret-position="161">
+          <caret line="1" column="31" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="31" />
+          <caret line="2" column="35" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="35" />
+          <caret line="3" column="41" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="41" />
+          <caret line="4" column="31" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="31" />
+          <caret line="5" column="29" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="29" />
+          <caret line="6" column="30" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="30" />
+          <caret line="7" column="28" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/App.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="6" column="36" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/Components/Link.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="13" column="43" selection-start-line="13" selection-start-column="43" selection-end-line="13" selection-end-column="43" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Views/MessageUIContainer.jsx">
+    <entry file="file://$PROJECT_DIR$/server/client/src/ActionsAndReducers/dbWargames/wargames_ActionCreators.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-161">
-          <caret line="44" column="24" lean-forward="true" selection-start-line="44" selection-start-column="24" selection-end-line="44" selection-end-column="24" />
+        <state relative-caret-position="-1928">
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/ActionsAndReducers/dbWargames/wargames_Reducer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1725">
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/app_player_ui/src/ActionsAndReducers/ActionConstants.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" selection-start-line="1" selection-end-line="8" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/ActionsAndReducers/ActionConstants.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="602">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/app_player_ui/src/ActionsAndReducers/playerUi/playerUi_Reducer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="552">
+          <caret line="24" column="24" lean-forward="true" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/app_player_ui/src/Components/MessagePreview.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-345">
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/JsonCreator.jsx">
+    <entry file="file://$PROJECT_DIR$/server/app_player_ui/src/scss/_input.scss">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/app_player_ui/src/scss/_typography.scss">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/Views/ChooseInterface.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="33" column="36" lean-forward="true" selection-start-line="33" selection-start-column="36" selection-end-line="33" selection-end-column="36" />
->>>>>>> 742e962b8fcf720214cdb0bfdee1207febe5f7be
+        <state relative-caret-position="460">
+          <caret line="20" column="38" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="38" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
-            <element signature="e#386#412#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/app_player_ui/src/api/wargames_api.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="35" selection-start-line="35" selection-end-line="53" selection-end-column="2" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/Views/MessagesList.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/Views/MessageFeeds.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="68" column="4" selection-start-line="68" selection-start-column="4" selection-end-line="68" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/app_player_ui/src/scss/_flex-layout.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="27" column="4" selection-start-line="27" selection-start-column="4" selection-end-line="30" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/scss/_flex-layout.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="18" column="12" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/ActionsAndReducers/Notification/Notification_Reducer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/ActionsAndReducers/playerUi/playerUi_Reducer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="24" column="50" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/pouchDB/consts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/Databases/wargameDbs.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="79" column="6" selection-start-line="79" selection-start-column="6" selection-end-line="79" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/Controllers/WargamesController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="69" selection-start-line="69" selection-end-line="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/app_player_ui/src/ActionsAndReducers/playerUi/playerUi_ActionCreators.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="453">
+          <caret line="41" column="59" selection-start-line="41" selection-start-column="59" selection-end-line="41" selection-end-column="59" />
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/app_player_ui/src/Views/PlayerUi.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-138">
+          <caret line="25" column="25" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/api/wargames_api.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="90" column="23" selection-start-line="90" selection-start-column="13" selection-end-line="90" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/ActionsAndReducers/playerUi/playerUi_ActionCreators.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="44" column="40" selection-start-line="44" selection-start-column="40" selection-end-line="44" selection-end-column="40" />
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/Store/Store.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="8" column="69" selection-start-line="8" selection-start-column="69" selection-end-line="8" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="207">
+            <caret line="9" column="170" lean-forward="true" selection-start-line="9" selection-start-column="170" selection-end-line="9" selection-end-column="170" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/Components/WargameSearchList.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="354">
+          <caret line="54" column="68" lean-forward="true" selection-start-line="54" selection-start-column="68" selection-end-line="54" selection-end-column="68" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="16" column="55" selection-start-line="16" selection-start-column="55" selection-end-line="16" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/Views/EditMessage.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1035">
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/Views/CreateMessage.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/Views/GameSetup.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-345">
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/Views/PlayerUi.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="765">
+          <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/Views/ChildWrapper.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/Components/MessageCreator.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="7" selection-start-column="7" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/Views/UmpireMenu.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="483">
+          <caret line="30" column="62" lean-forward="true" selection-start-line="30" selection-start-column="62" selection-end-line="30" selection-end-column="62" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/Components/Router.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="690">
+          <caret line="30" column="53" selection-start-line="30" selection-start-column="53" selection-end-line="30" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/client/src/Views/GameDesignerInterface.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="26" column="25" selection-start-line="26" selection-start-column="25" selection-end-line="26" selection-end-column="25" />
         </state>
       </provider>
     </entry>
