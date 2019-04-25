@@ -1,6 +1,6 @@
 import uniqid from "uniqid";
 
-export const apiPath = 'http://localhost:5000/api';
+export const apiPath = process.env.NODE_ENV === 'development' ? 'http://localhost:5000/api' : 'https://serge-dev.herokuapp.com/api';
 
 export const headers = {
   'Content-Type': 'application/json',
