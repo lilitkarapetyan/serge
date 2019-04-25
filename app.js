@@ -3,9 +3,6 @@ var app = express();
 var path = require('path');
 var cors = require('cors');
 
-const apiUrl = '/http://localhost:5000';
-const siteUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : '';
-
 app.use(cors());
 
 app.use('/client', express.static(path.join(__dirname, '/client/build')));
