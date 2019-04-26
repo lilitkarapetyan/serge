@@ -2,83 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4475b6b2-0b2d-4e9b-ae80-f36ccda70c0a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/scss/_playerUi.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/MessageTypesController.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/MessagesController.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/WargamesController.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Databases/messageTypesDbs.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Databases/messagesDbs.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Databases/wargameDbs.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Schemas/machinery_failure.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Schemas/weather_forecase.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/messageTypes.test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/build/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/build/asset-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/build/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/build/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/build/precache-manifest.1fd57d3b39b609c3b33a68d8259c9739.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/build/service-worker.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/build/service-worker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/build/static/css/main.209b3a47.chunk.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/build/static/css/main.209b3a47.chunk.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/build/static/js/2.37b8ea15.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/build/static/js/2.37b8ea15.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/build/static/js/main.24aeae16.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/build/static/js/main.24aeae16.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/ActionsAndReducers/dbMessages/messages_ActionCreators.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/ActionsAndReducers/dbMessages/messages_ActionCreators.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/ActionsAndReducers/dbWargames/wargames_ActionCreators.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/ActionsAndReducers/dbWargames/wargames_ActionCreators.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/ActionsAndReducers/dbWargames/wargames_Reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/ActionsAndReducers/dbWargames/wargames_Reducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/ActionsAndReducers/playerUi/playerUi_ActionCreators.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/ActionsAndReducers/playerUi/playerUi_ActionCreators.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Components/Inputs/DropdownInput.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Components/Inputs/DropdownInput.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Components/Inputs/TextArea.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Components/Inputs/TextArea.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Components/Inputs/TextInput.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Components/Inputs/TextInput.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Components/JsonCreator.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Components/JsonCreator.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Components/Layout/ChannelsTable.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Components/Layout/ChannelsTable.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Components/Layout/RemovableGroupItem.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Components/Layout/RemovableGroupItem.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Components/Layout/Row.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Components/Layout/Row.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Components/MessageCreator.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Components/MessageCreator.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Components/MessagePreview.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Components/MessagePreview.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Components/Modals/ModalSwitch.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Components/Modals/ModalSwitch.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Components/NewMessage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Components/NewMessage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Components/Notification.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Components/Notification.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Components/ProgressBar/ProgressBar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Components/ProgressBar/ProgressBar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Components/SearchList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Components/SearchList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Components/TabsSearchList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Components/TabsSearchList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Components/ValidationNotification.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Components/ValidationNotification.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Components/WargameSearchList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Components/WargameSearchList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Views/ChooseInterface.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Views/ChooseInterface.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Views/CreateTemplate.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Views/CreateTemplate.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Views/GameDesignerInterface.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Views/GameDesignerInterface.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Views/GameSetup.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Views/GameSetup.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Views/MessageFeeds.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Views/MessageFeeds.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Views/MessagesList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Views/MessagesList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Views/PlayerUi.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Views/PlayerUi.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Views/TabViews/ChannelsTab.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Views/TabViews/ChannelsTab.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Views/TabViews/ForcesTab.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Views/TabViews/ForcesTab.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Views/TabViews/SettingsTab.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Views/TabViews/SettingsTab.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Views/TabbedView.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Views/TabbedView.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Views/UmpireMenu.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Views/UmpireMenu.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/api/consts.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/api/consts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/api/messageTypes_api.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/api/messageTypes_api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/api/messages_api.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/api/messages_api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/api/wargames_api.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/api/wargames_api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pouchDB/localMessageTypesDb.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/scss/App.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/scss/App.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/scss/_message-preview.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/scss/_message-preview.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/scss/_modal.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/scss/_modal.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/scss/_notification.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/scss/_notification.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/scss/dependencies/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/scss/dependencies/_variables.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consts.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/message_types/LOCK" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/messages/LOCK" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/database_api/node_modules/" />
     <ignored path="$PROJECT_DIR$/umpire_ui/node_modules/" />
@@ -93,11 +18,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/api/consts.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="23">
-              <caret line="1" column="61" lean-forward="true" selection-start-line="1" selection-start-column="61" selection-end-line="1" selection-end-column="61" />
+              <caret line="1" column="27" selection-start-line="1" selection-start-column="27" selection-end-line="1" selection-end-column="59" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="736">
+              <caret line="32" column="47" selection-start-line="32" selection-start-column="47" selection-end-line="32" selection-end-column="47" />
             </state>
           </provider>
         </entry>
@@ -150,7 +84,6 @@
         <option value="$PROJECT_DIR$/src/api/messageTypes_api.js" />
         <option value="$PROJECT_DIR$/src/api/wargames_api.js" />
         <option value="$PROJECT_DIR$/src/api/consts.js" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/client/package.json" />
         <option value="$PROJECT_DIR$/client/src/Components/JsonCreator.jsx" />
         <option value="$PROJECT_DIR$/client/src/api/messageTypes_api.js" />
@@ -195,6 +128,7 @@
         <option value="$PROJECT_DIR$/client/src/Components/SearchList.jsx" />
         <option value="$PROJECT_DIR$/client/src/ActionsAndReducers/dbWargames/wargames_Reducer.js" />
         <option value="$PROJECT_DIR$/client/src/api/consts.js" />
+        <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
@@ -283,12 +217,12 @@
       <updated>1556117241308</updated>
       <workItem from="1556117242526" duration="2332000" />
       <workItem from="1556119641221" duration="52616000" />
-      <workItem from="1556295602785" duration="1390000" />
+      <workItem from="1556295602785" duration="1723000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56338000" />
+    <option name="totallyTimeSpent" value="56671000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="0" width="1920" height="1080" extended-state="6" />
@@ -319,20 +253,6 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/api/consts.js" />
-    <entry file="file://$PROJECT_DIR$/client/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-65">
-          <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/node_modules/pouchdb/lib/index.es.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="591">
@@ -735,10 +655,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/client/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/api/consts.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
-          <caret line="1" column="61" lean-forward="true" selection-start-line="1" selection-start-column="61" selection-end-line="1" selection-end-column="61" />
+          <caret line="1" column="27" selection-start-line="1" selection-start-column="27" selection-end-line="1" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="736">
+          <caret line="32" column="47" selection-start-line="32" selection-start-column="47" selection-end-line="32" selection-end-column="47" />
         </state>
       </provider>
     </entry>
