@@ -4,10 +4,6 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class RemovableGroupItem extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <span className="group-item" key={this.props.children}>

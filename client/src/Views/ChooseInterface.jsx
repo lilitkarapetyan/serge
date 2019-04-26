@@ -4,13 +4,12 @@ import { connect } from 'react-redux';
 import Link from "../Components/Link";
 
 import '../scss/App.scss';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import {populateWargameStore} from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
 class UmpireMenu extends Component {
 
-  constructor(props) {
-    super(props);
+  componentWillMount() {
+    this.props.dispatch(populateWargameStore());
   }
 
   render() {
@@ -25,8 +24,6 @@ class UmpireMenu extends Component {
   }
 }
 
-const mapStateToProps = ({  }) => ({
-
-});
+const mapStateToProps = () => ({});
 
 export default connect(mapStateToProps)(UmpireMenu);

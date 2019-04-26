@@ -7,25 +7,20 @@ import '../scss/App.scss';
 // import SearchList from "../Components/SearchList";
 
 import {
-  populateWargameStore,
   createNewWargameDB,
+  clearWargames,
 } from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
 import WargameSearchList from "../Components/WargameSearchList";
 
 class GameDesignerInterface extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
-
-  componentWillMount() {
-    this.props.dispatch(populateWargameStore());
-  }
-
   createWargame = () => {
     this.props.dispatch(createNewWargameDB());
+  };
+
+  clearWargames = () => {
+    this.props.dispatch(clearWargames());
   };
 
   render() {
@@ -42,6 +37,11 @@ class GameDesignerInterface extends Component {
             class="link link--noIcon"
             onClickMethod={this.createWargame}
           >Create</Link>
+          <Link
+            href="/client/umpireMenu"
+            class="link link--noIcon link--secondary"
+            onClickMethod={this.clearWargames}
+          >Clear wargames</Link>
           <WargameSearchList key="searchlist"
                              listData={this.props.wargame.wargameList}
           />

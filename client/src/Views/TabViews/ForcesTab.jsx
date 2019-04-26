@@ -12,10 +12,6 @@ import RemovableGroupItem from "../../Components/Layout/RemovableGroupItem";
 
 class ForcesTab extends Component {
 
-  constructor(props) {
-    super(props);
-  };
-
   openModal = () => {
     this.props.dispatch(modalAction.open("addForce"));
   };

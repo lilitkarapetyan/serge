@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import { connect } from "react-redux";
-import _ from "lodash";
 
 import JSONEditor from '@json-editor/json-editor';
 import '../scss/App.scss';
@@ -10,10 +9,6 @@ import {
   saveMessage,
   getAllMessages,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
-
-// import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-// import {faSave} from "@fortawesome/free-solid-svg-icons";
-
 
 class JsonCreator extends Component {
 
@@ -29,10 +24,6 @@ class JsonCreator extends Component {
   }
 
   sendMessage = () => {
-
-    // let forces = this.props.playerUi.allChannels[this.props.playerUi.selectedChannel];
-    // let templates = _.uniqBy(_.flatMap(forces, (force) => force.templates), _.isEqual);
-    // templates = templates.map((item) => item.value);
 
     let messageDetails = {
       channel: this.props.playerUi.selectedChannel,

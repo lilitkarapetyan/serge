@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import classNames from "classnames";
 
 import {
   addRecipientToChannel,
@@ -85,14 +84,16 @@ class ChannelsTable extends Component {
 
       var value = '';
       if (typeof data[prop] !== "string") {
-        data[prop].forEach((item, i) => {
+
+        for (var j=0 ; j<data[prop].length ; j++) {
+          let item = data[prop][j];
           value += item.label;
-          if (i !== data[prop].length-1) value+=', ';
-        });
+          if (j !== data[prop].length-1) value+=', ';
+        }
       } else {
         value = data[prop];
       }
-      row.push(<td key={`${value}i`}>{value}</td>)
+      row.push(<td key={`${value}${i}`}>{value}</td>)
     }
     row.push(
       <td key={`edit-delete${i}`}>

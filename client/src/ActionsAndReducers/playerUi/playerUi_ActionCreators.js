@@ -39,7 +39,7 @@ export const setWargameMessages = (messages) => ({
 export const getWargame = () => {
   return async (dispatch) => {
 
-    var wargameNames = await wargamesApi.populateWargame();
+    await wargamesApi.populateWargame();
 
     // will get active wargame during later stages
     let wargame = await wargamesApi.getWargame();
@@ -50,7 +50,7 @@ export const getWargame = () => {
 export const saveMessage = (dbName, details, message) => {
   return async (dispatch) => {
 
-    let response = await wargamesApi.postNewMessage(dbName, details, message);
+    await wargamesApi.postNewMessage(dbName, details, message);
 
     let wargame = await wargamesApi.getWargame();
     let messages = await wargamesApi.getAllMessages(wargame.name);

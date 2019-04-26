@@ -8,6 +8,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
 import {
+  getAllMessages,
   setChannel,
   setMessageSchema,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
@@ -46,6 +47,10 @@ class MessageFeeds extends Component {
     }
   }
 
+  componentWillMount() {
+    this.props.dispatch(getAllMessages());
+  }
+
   handleChange = (event, value) => {
 
     let channel = Object.keys(this.props.playerUi.channels)[value];
@@ -71,27 +76,6 @@ class MessageFeeds extends Component {
   createMessageList = (tab) => {
 
     let curChannel= this.props.playerUi.selectedChannel;
-
-    let contents;
-
-    // switch (tab) {
-    //
-    //   case 0:
-    //     contents = (
-    //       <>
-    //         <MessagesList/>
-    //
-    //         <NewMessage
-    //           templates={this.props.tabs[this.props.curChannel].templates}
-    //         />
-    //       </>
-    //     );
-    //     break;
-    //
-    //   default:
-    //     contents = false;
-    //     break;
-    // }
 
     return (
       <TabContainer>

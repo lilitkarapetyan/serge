@@ -1,31 +1,13 @@
-import {fetch} from "whatwg-fetch";
-import {apiPath, headers} from "./consts";
+import uniqid from "uniqid";
 
-import PouchDB from "pouchdb-core";
+import PouchDB from "pouchdb";
 import { databasePath,
-         MSG_STORE,
          MSG_TYPE_STORE } from "./consts";
-
-import idb from "pouchdb-adapter-idb";
-import replication from "pouchdb-replication";
-import http from "pouchdb-adapter-http";
 
 import machineryFailure from '../Schemas/machinery_failure.json';
 import weatherForecast from '../Schemas/weather_forecase.json';
 
-// import allDbs from 'pouchdb-all-dbs';
-//
-// allDbs(PouchDB);
-
-PouchDB.plugin(idb);
-PouchDB.plugin(replication);
-PouchDB.plugin(http);
-
-
-var db = new PouchDB(MSG_TYPE_STORE, {adapter: 'idb'});
-
-PouchDB.sync(databasePath+MSG_TYPE_STORE, db, {live: true, retry: true});
-
+var db = new PouchDB(databasePath+MSG_TYPE_STORE);
 
 var populateDb = function () {
   var machine = {
@@ -63,71 +45,139 @@ db.allDocs().then(entries => {
 export const postNewMessage = (schema) => {
 
   return new Promise((resolve, reject) => {
-    fetch(`${apiPath}/messageTypes/create`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(schema)
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        resolve(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    (async() => {
+
+      const allMessages = await getAllMessagesFromDb();
+
+      const matchedName = allMessages.find((messageType) => messageType.title.toLowerCase() === schema.title.toLowerCase());
+
+      if (matchedName) {
+        reject("Message title already used");
+        return;
+      }
+
+      let time = new Date().toISOString();
+
+      var schemaObj = {
+        _id: time,
+        lastUpdated: time,
+        title: schema.title,
+        details: schema,
+        completed: false
+      };
+
+      return db.put(schemaObj)
+        .then(function (result) {
+          resolve(result);
+        })
+        .catch(function (err) {
+          console.log(err);
+          reject(false);
+        });
+
+    })();
   });
 };
 
 export const duplicateMessageInDb = (id) => {
+
+  let time = new Date().toISOString();
+
   return new Promise((resolve, reject) => {
-    fetch(`${apiPath}/messageTypes/duplicate`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({id})
-    })
-      .then((response) => {
-        resolve(response.json());
+    db.get(id)
+      .then(function (doc) {
+
+        // var updatedMessage = doc.details;
+
+        doc.details.title = `${doc.details.title} Copy-${uniqid.time()}`;
+
+        return db.put({
+          _id: time,
+          lastUpdated: time,
+          title: doc.details.title,
+          details: doc.details,
+        });
       })
-      .catch((err) => reject(err));
-  })
+      .then(function () {
+        resolve(true);
+      })
+      .catch(function (err) {
+        console.log(err);
+        reject(false);
+      })
+  });
 };
 
 export const updateMessageInDb = (schema, id) => {
   return new Promise((resolve, reject) => {
-    fetch(`${apiPath}/messageTypes/update`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({id, schema})
-    })
-      .then((response) => {
-        resolve(response.json());
-      })
-      .catch((err) => reject(err));
-  })
+    (async() => {
+
+      const allMessages = await getAllMessagesFromDb();
+
+      const matchedName = allMessages.find((messageType) => messageType.title.toLowerCase() === schema.title.toLowerCase());
+
+      if (matchedName) {
+        reject("Message title already used");
+        return;
+      }
+
+      db.get(id)
+        .then(function (doc) {
+          return db.put({
+            _id: doc._id,
+            lastUpdated: new Date().toISOString(),
+            _rev: doc._rev,
+            title: schema.title,
+            details: schema
+          });
+        })
+        .then(function (result) {
+          resolve(result);
+        })
+        .catch(function (err) {
+          console.log(err);
+          reject(false);
+        })
+
+    })();
+  });
 };
 
 export const deleteMessageFromDb = (id) => {
   return new Promise((resolve, reject) => {
-    fetch(`${apiPath}/messageTypes/delete`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({id})
-    })
-      .then((response) => {
-        resolve(response.json());
+    db.get(id)
+      .then(function (doc) {
+        return db.remove(doc);
       })
-      .catch((err) => reject(err));
-  })
+      .then(function (result) {
+        resolve(result);
+      })
+      .catch(function (err) {
+        console.log(err);
+        reject(false);
+      })
+  });
 };
 
 export const getAllMessagesFromDb = () => {
+
   return new Promise((resolve, reject) => {
-    fetch(`${apiPath}/messageTypes/getAll`)
-      .then((response) => {
-        resolve(response.json());
+    return db.changes({
+      since: 1,
+      include_docs: true,
+      descending: true,
+    })
+      .then(function (changes) {
+
+        let results = changes.results.map((a) => a.doc);
+        results = results.filter((a) => !a.hasOwnProperty('_deleted') && a.hasOwnProperty('details'));
+
+        resolve(results);
       })
-      .catch((err) => reject(err));
-  })
+      .catch(function (err) {
+        // handle errors
+        reject(err);
+        console.log(err);
+      });
+  });
 };

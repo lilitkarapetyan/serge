@@ -36,14 +36,14 @@ class NewMessage extends Component {
 
   render() {
     return (
-      <>
+      <div className="">
         <Select
           value={this.state.template}
           options={this.props.templates}
           onChange={this.setTemplate}
         />
         <MessageCreator schema={this.props.schema} />
-      </>
+      </div>
     );
   }
 }
@@ -52,7 +52,7 @@ NewMessage.propTypes = {
   templates: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = ({  }) => ({
+const mapStateToProps = () => ({
 
 });
 

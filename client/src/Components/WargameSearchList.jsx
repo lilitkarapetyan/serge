@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 
 import '../scss/App.scss';
-import {setSelectedSchema} from "../ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators";
-import {getSingleMessage} from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
-
-import moment from "moment";
 import _ from "lodash";
+
 import {
   editWargame,
   duplicateWargame,
 } from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
+
 import {setCurrentViewFromURI} from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
 
 import {faClone, faPencilAlt} from "@fortawesome/free-solid-svg-icons";
@@ -117,8 +115,7 @@ class WargameSearchList extends Component {
 }
 
 // empty mapStateToProps is here for react-redux to wire up the dispatch function to props so firing actions is possible.
-const mapStateToProps = ({  }) => ({
-});
+const mapStateToProps = () => ({});
 
 
 export default connect(mapStateToProps)(WargameSearchList);

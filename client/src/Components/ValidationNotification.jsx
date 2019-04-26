@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
 
 import '../scss/App.scss';
 
 class ValidationNotification extends Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (
@@ -17,9 +12,4 @@ class ValidationNotification extends Component {
     );
   }
 }
-
-const mapStateToProps = ({}) => ({
-
-});
-
-export default connect(mapStateToProps)(ValidationNotification);
+export default ValidationNotification;

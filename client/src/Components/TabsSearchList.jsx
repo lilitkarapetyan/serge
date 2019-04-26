@@ -5,10 +5,6 @@ import {PropTypes} from "prop-types";
 
 class TabsSearchList extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   setSelected = (item) => {
     this.props.setSelected(item);
   };
@@ -25,9 +21,6 @@ class TabsSearchList extends Component {
   }
 
   render() {
-
-    var that = this;
-
     return (
       <div className="list">
         {this.props.filter ?

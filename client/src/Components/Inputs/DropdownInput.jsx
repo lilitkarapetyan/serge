@@ -5,10 +5,6 @@ import '../../scss/App.scss';
 
 class DropdownInput extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   onChange = (e) => {
     this.props.updateStore(e.target.value);
   };

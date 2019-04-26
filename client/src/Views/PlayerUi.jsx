@@ -18,10 +18,6 @@ import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 
 class PlayerUi extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   componentWillMount() {
     this.props.dispatch(getWargame());
     this.props.dispatch(getAllMessages());
@@ -63,8 +59,10 @@ class PlayerUi extends Component {
           }
 
           {this.props.playerUi.selectedForce && this.props.playerUi.selectedRole ?
-            <MessageFeeds
-            />
+
+            <div className="message-feeds">
+              <MessageFeeds />
+            </div>
             : false
           }
         </div>

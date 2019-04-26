@@ -5,10 +5,6 @@ import '../../scss/App.scss';
 
 class TextArea extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   onChange = (e) => {
     this.props.updateStore(e.target.value);
   };

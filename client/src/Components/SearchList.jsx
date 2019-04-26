@@ -6,14 +6,8 @@ import '../scss/App.scss';
 import moment from "moment";
 import classNames from "classnames";
 import {PropTypes} from "prop-types";
-import TextInput from "./Inputs/TextInput";
 
 class SearchList extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
 
   setSelected = (item) => {
     this.props.setSelected(item);

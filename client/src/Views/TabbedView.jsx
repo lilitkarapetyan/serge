@@ -11,7 +11,6 @@ import SettingsTab from "./TabViews/SettingsTab";
 import ForcesTab from "./TabViews/ForcesTab";
 import ChannelsTab from "./TabViews/ChannelsTab";
 import ValidationNotification from "../Components/ValidationNotification";
-import {getAllMessageTypes} from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
 
 function TabContainer(props) {
   return (

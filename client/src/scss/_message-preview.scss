@@ -1,19 +1,25 @@
 @import 'dependencies/variables';
 
+.message-preview,
 #message-preview {
 
   padding-top: 16px;
 
   h3 {
     font-size: 1.4em;
-    padding: .75em 0 .5em;
+    padding: .75em 0 .25em;
   }
 
   .group-section {
-    margin-top: $umpireMenuMargin ;
+    margin-top: $umpireMenuMargin;
   }
 
   span {
     display: block;
   }
+
+  &:nth-of-type(even) {
+    background: $lightGrey;
+  }
 }
+

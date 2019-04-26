@@ -1,12 +1,9 @@
 import ActionConstant from '../ActionConstants';
 import 'whatwg-fetch';
-import check from 'check-types';
 import _ from "lodash";
 
 import * as wargamesApi from "../../api/wargames_api";
-
-import { apiPath, headers } from "../../api/consts";
-
+import { showNotification } from "../Notification/Notification_ActionCreators";
 
 export const setCurrentTab = (tab) => ({
   type: ActionConstant.SET_CURRENT_GAME_SETUP_TAB,
@@ -88,7 +85,7 @@ export const removeRecipient = (id) => ({
 export const populateWargameStore = () => {
   return async (dispatch) => {
 
-    var wargameNames = await wargamesApi.populateWargame();
+    var wargameNames = await wargamesApi.populateWargame(dispatch);
 
     dispatch(saveAllWargameNames(wargameNames));
   }
@@ -101,10 +98,26 @@ export const createNewWargameDB = () => {
 
     var wargame = await wargamesApi.createWargame();
 
+    let wargames = await wargamesApi.getAllWargames();
+
+    dispatch(saveAllWargameNames(wargames));
+
     dispatch(setCurrentWargame(_.omit(wargame, ['_id', '_rev'])));
   }
 };
 
+
+export const clearWargames = () => {
+
+  return async (dispatch) => {
+
+    await wargamesApi.clearWargames();
+
+    let wargames = await wargamesApi.getAllWargames();
+    dispatch(saveAllWargameNames(wargames));
+
+  }
+};
 
 
 export const editWargame = (name) => {
@@ -123,7 +136,14 @@ export const updateWargame = (dbName, data, title) => {
   return async (dispatch) => {
 
     let localDoc = await wargamesApi.updateWargame(dbName, data, title);
+
+    let wargames = await wargamesApi.getAllWargames();
+
+    dispatch(saveAllWargameNames(wargames));
+
     dispatch(setCurrentWargame(localDoc));
+
+    dispatch(showNotification("wargame saved."));
 
   }
 };
@@ -133,8 +153,6 @@ export const duplicateWargame = (dbName) => {
   return async (dispatch) => {
 
     var games = await wargamesApi.duplicateWargame(dbName);
-
-    console.log(games);
 
     dispatch(saveAllWargameNames(games));
   }

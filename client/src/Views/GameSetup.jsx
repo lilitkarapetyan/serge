@@ -5,8 +5,6 @@ import {
   setCurrentTab,
   setWargameTitle,
   updateWargame,
-  renameWargame,
-  validateWargameData,
 } from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
 import TabbedView from "./TabbedView";
@@ -18,15 +16,9 @@ import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 
 import classNames from "classnames";
 import TextInput from "../Components/Inputs/TextInput";
-import {modalAction} from "../ActionsAndReducers/Modal/Modal_ActionCreators";
-import ValidationNotification from "../Components/ValidationNotification";
 import {getAllMessageTypes} from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
 
 class GameSetup extends Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   componentWillMount() {
     this.props.dispatch(getAllMessageTypes());

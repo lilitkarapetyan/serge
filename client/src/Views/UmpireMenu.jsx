@@ -93,7 +93,7 @@ class UmpireMenu extends Component {
         console.log('error');
         break;
     }
-  }
+  };
 
 
   // event listener functions from the DOM will lose scope of this to the React Class unless stated as an arrow function

@@ -1,6 +1,10 @@
-import uniqid from "uniqid";
 
-export const apiPath = process.env.NODE_ENV === 'development' ? 'http://localhost:5000/api' : 'https://serge-dev.herokuapp.com/api';
+export const serverPath = 'https://serge-dev.herokuapp.com/';
+export const databasePath = 'https://serge-dev.herokuapp.com/db/';
+// export const serverPath = 'http://localhost:8080/';
+// export const databasePath = 'http://localhost:8080/db/';
+export const MSG_STORE = "messages";
+export const MSG_TYPE_STORE = "message_types";
 
 export const headers = {
   'Content-Type': 'application/json',
@@ -17,9 +21,38 @@ export const forceTemplate = {
 export const channelTemplate = [];
 
 
-export const databasePath = 'http://localhost:5000/';
-export const MSG_STORE = "messages";
-export const MSG_TYPE_STORE = "message_types";
+export const dbDefaultSettings = {
+  _id: '_local/settings',
+  wargameTitle: 'wargame',
+  tabs: {
+    0: {
+      name: "Overview - settings",
+      data: {
+        gameDescription: '',
+        spatialRepresentation: '',
+        planningInterval: null,
+        replayInterval: null,
+        turnStrategy: '',
+      }
+    },
+    1: {
+      name: "Forces",
+      data: {
+        forces: {},
+        roles: ['General'],
+        selectedForce: '',
+      },
+    },
+    2: {
+      name: "Channels",
+      data: {
+        channels: {},
+        selectedChannel: '',
+      },
+    }
+  }
+};
+
 
 // export const channelTemplate = [{
 //   force: 'white',

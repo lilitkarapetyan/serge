@@ -4,13 +4,8 @@ import { connect } from 'react-redux';
 import AddForceModal from "./AddForceModal";
 import DeleteModal from './DeleteModal';
 import AddChannelModal from "./AddChannelModal";
-// import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
 
 class ModalSwitch extends Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   render() {
 

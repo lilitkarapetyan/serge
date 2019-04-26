@@ -6,10 +6,6 @@ import {
   setForceOverview
 } from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
-import {
-  getAllMessageTypes,
-} from "../../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
-
 import '../../scss/App.scss';
 
 import TabsSearchList from "../../Components/TabsSearchList";

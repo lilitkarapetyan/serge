@@ -9,11 +9,6 @@ import TextArea from "../../Components/Inputs/TextArea";
 
 class SettingsTab extends Component {
 
-  constructor(props) {
-    super(props);
-  };
-
-
   updateDescription = (value) => {
     this.props.dispatch(setGameData({gameDescription: value}));
   };

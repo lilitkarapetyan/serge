@@ -73,6 +73,9 @@ export const wargamesReducer = (state = initialState, action) => {
 
   let tab = newState.currentTab;
 
+  let curChannel;
+  let recipientIndex;
+
   switch (action.type) {
 
     case ActionConstant.ALL_WARGAME_NAMES_SAVED:
@@ -129,20 +132,20 @@ export const wargamesReducer = (state = initialState, action) => {
       break;
 
     case ActionConstant.ADD_NEW_RECIPIENT:
-      var curChannel = newState.tabs[tab].data.selectedChannel;
+      curChannel = newState.tabs[tab].data.selectedChannel;
       let newParticipant = {...action.payload, subscriptionId: uniqId.time()};
       newState.tabs[tab].data.channels[curChannel].push(newParticipant);
       break;
 
     case ActionConstant.UPDATE_RECIPIENT:
-      var curChannel = newState.tabs[tab].data.selectedChannel;
-      var recipientIndex = newState.tabs[tab].data.channels[curChannel].findIndex((recipient) => recipient.subscriptionId === action.payload.id);
+      curChannel = newState.tabs[tab].data.selectedChannel;
+      recipientIndex = newState.tabs[tab].data.channels[curChannel].findIndex((recipient) => recipient.subscriptionId === action.payload.id);
       newState.tabs[tab].data.channels[curChannel].splice(recipientIndex, 1, {...action.payload.data, subscriptionId: action.payload.id});
       break;
 
     case ActionConstant.REMOVE_RECIPIENT:
-      var curChannel = newState.tabs[tab].data.selectedChannel;
-      var recipientIndex = newState.tabs[tab].data.channels[curChannel].findIndex((recipient) => recipient.subscriptionId === action.payload);
+      curChannel = newState.tabs[tab].data.selectedChannel;
+      recipientIndex = newState.tabs[tab].data.channels[curChannel].findIndex((recipient) => recipient.subscriptionId === action.payload);
       newState.tabs[tab].data.channels[curChannel].splice(recipientIndex, 1);
       break;
 
