@@ -11,6 +11,11 @@ import Store from './Store/Store';
 
 
 class App extends Component {
+
+  componentDidMount() {
+    document.title = "Serge";
+  }
+
   render() {
     return (
         <Provider store={Store}>

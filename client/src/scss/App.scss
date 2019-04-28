@@ -27,6 +27,10 @@
   min-height: 100vh;
   padding: $paddingHeight 1vw $paddingHeight calc(#{$paddingWidth} + 1vw);
   background-color: #fafcff; // ??
+
+  &-gamesetup {
+    padding: 0 0 $paddingHeight $paddingWidth;
+  }
 }
 
 #umpire {

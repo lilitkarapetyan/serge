@@ -57,11 +57,11 @@ class GameSetup extends Component {
   render() {
     return (
       <>
-        <div className="view-wrapper">
+        <div className="view-wrapper view-wrapper-gamesetup">
           <div id="sidebar">
             <Link href="/client/umpireMenu" id="home-btn"><FontAwesomeIcon icon={faArrowLeft} size="2x" /></Link>
           </div>
-          <div className="flex-content-wrapper flex-content-wrapper--distribute">
+          <div className="flex-content-wrapper flex-content-wrapper--distribute" id="game-setup-head">
             <TextInput
               id="title-editable"
               updateStore={this.updateWargameTitle}

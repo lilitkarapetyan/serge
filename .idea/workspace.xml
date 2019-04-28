@@ -3,7 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="4475b6b2-0b2d-4e9b-ae80-f36ccda70c0a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/Components/Notification.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Components/Notification.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/Views/GameSetup.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Views/GameSetup.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/scss/App.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/scss/App.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/scss/_gameSetup.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/scss/_gameSetup.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/scss/_input.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/scss/_input.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/scss/_notification.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/scss/_notification.scss" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/database_api/node_modules/" />
     <ignored path="$PROJECT_DIR$/umpire_ui/node_modules/" />
@@ -27,7 +35,19 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/Views/GameSetup.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="253">
+              <caret line="59" column="30" lean-forward="true" selection-start-line="59" selection-start-column="30" selection-end-line="59" selection-end-column="30" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="736">
@@ -36,20 +56,67 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="575">
+              <caret line="25" column="20" selection-start-line="25" selection-start-column="20" selection-end-line="25" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/scss/_notification.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="253">
+              <caret line="11" column="20" lean-forward="true" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/scss/App.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="542">
+              <caret line="32" column="3" lean-forward="true" selection-start-line="32" selection-start-column="3" selection-end-line="32" selection-end-column="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/client/src/scss/_gameSetup.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="115">
+              <caret line="5" column="25" lean-forward="true" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/Components/Notification.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="480">
+              <caret line="25" column="29" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/scss/dependencies/_variables.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="250">
+              <caret line="21" column="18" selection-start-line="21" selection-end-line="21" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>createMess</find>
-      <find>createMessage(</find>
-      <find>getActiveWargame</find>
-      <find>PouchDB.sync(databasePath+name, db, {live: true, retry: true});</find>
-      <find>PouchDB.sync(databasePath+name, db, {live: true, retry: true});new</find>
-      <find>new Pouch</find>
-      <find>apiPath</find>
-      <find>localMessage</find>
-      <find>pouchdb</find>
-      <find>pouchdb-browser</find>
       <find>populateWargame</find>
       <find>getAllMessages</find>
       <find>console.log</find>
@@ -70,7 +137,20 @@
       <find>Save&lt;</find>
       <find>material</find>
       <find>theme.spac</find>
+      <find>do</find>
+      <find>window.</find>
+      <find>@material-ui/st</find>
+      <find>withStyles</find>
+      <find>snackbar</find>
+      <find>withSty</find>
+      <find>#notific</find>
+      <find>#notification</find>
+      <find>border-ra</find>
+      <find>view-wra</find>
     </findStrings>
+    <replaceStrings>
+      <replace />
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -78,9 +158,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Databases/wargameDbs.js" />
-        <option value="$PROJECT_DIR$/client/src/ActionsAndReducers/dbMessages/messages_ActionCreators.js" />
-        <option value="$PROJECT_DIR$/src/api/messages_api.js" />
         <option value="$PROJECT_DIR$/src/api/messageTypes_api.js" />
         <option value="$PROJECT_DIR$/src/api/wargames_api.js" />
         <option value="$PROJECT_DIR$/src/api/consts.js" />
@@ -93,12 +170,9 @@
         <option value="$PROJECT_DIR$/client/src/api/messages_api.js" />
         <option value="$PROJECT_DIR$/client/src/Components/MessagePreview.jsx" />
         <option value="$PROJECT_DIR$/client/src/scss/_playerUi.scss" />
-        <option value="$PROJECT_DIR$/client/src/scss/App.scss" />
         <option value="$PROJECT_DIR$/client/src/scss/_message-preview.scss" />
         <option value="$PROJECT_DIR$/client/src/api/wargames_api.js" />
         <option value="$PROJECT_DIR$/client/src/scss/dependencies/_variables.scss" />
-        <option value="$PROJECT_DIR$/client/src/scss/_notification.scss" />
-        <option value="$PROJECT_DIR$/client/src/Components/Notification.jsx" />
         <option value="$PROJECT_DIR$/client/src/Views/TabViews/ChannelsTab.jsx" />
         <option value="$PROJECT_DIR$/client/src/Components/Modals/ModalSwitch.jsx" />
         <option value="$PROJECT_DIR$/client/src/Views/TabViews/SettingsTab.jsx" />
@@ -118,17 +192,23 @@
         <option value="$PROJECT_DIR$/client/src/Components/Layout/ChannelsTable.jsx" />
         <option value="$PROJECT_DIR$/client/src/Components/Inputs/TextInput.jsx" />
         <option value="$PROJECT_DIR$/client/src/Components/TabsSearchList.jsx" />
-        <option value="$PROJECT_DIR$/client/src/Views/GameSetup.jsx" />
         <option value="$PROJECT_DIR$/client/src/Views/MessagesList.jsx" />
         <option value="$PROJECT_DIR$/client/src/Views/PlayerUi.jsx" />
         <option value="$PROJECT_DIR$/client/src/Views/GameDesignerInterface.jsx" />
         <option value="$PROJECT_DIR$/client/src/Views/CreateTemplate.jsx" />
         <option value="$PROJECT_DIR$/client/src/Views/TabViews/ForcesTab.jsx" />
-        <option value="$PROJECT_DIR$/client/src/Views/TabbedView.jsx" />
         <option value="$PROJECT_DIR$/client/src/Components/SearchList.jsx" />
         <option value="$PROJECT_DIR$/client/src/ActionsAndReducers/dbWargames/wargames_Reducer.js" />
         <option value="$PROJECT_DIR$/client/src/api/consts.js" />
         <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/client/src/App.jsx" />
+        <option value="$PROJECT_DIR$/client/src/Views/TabbedView.jsx" />
+        <option value="$PROJECT_DIR$/client/src/Components/Notification.jsx" />
+        <option value="$PROJECT_DIR$/client/src/scss/_input.scss" />
+        <option value="$PROJECT_DIR$/client/src/scss/_notification.scss" />
+        <option value="$PROJECT_DIR$/client/src/Views/GameSetup.jsx" />
+        <option value="$PROJECT_DIR$/client/src/scss/App.scss" />
+        <option value="$PROJECT_DIR$/client/src/scss/_gameSetup.scss" />
       </list>
     </option>
   </component>
@@ -168,6 +248,27 @@
               <item name="client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="api" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="serge" type="b2602c69:ProjectViewProjectNode" />
+              <item name="serge" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="serge" type="b2602c69:ProjectViewProjectNode" />
+              <item name="serge" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="scss" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="serge" type="b2602c69:ProjectViewProjectNode" />
+              <item name="serge" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Views" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -217,12 +318,12 @@
       <updated>1556117241308</updated>
       <workItem from="1556117242526" duration="2332000" />
       <workItem from="1556119641221" duration="52616000" />
-      <workItem from="1556295602785" duration="1723000" />
+      <workItem from="1556295602785" duration="8953000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56671000" />
+    <option name="totallyTimeSpent" value="63901000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="0" width="1920" height="1080" extended-state="6" />
@@ -241,7 +342,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="TypeScript" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" weight="0.030181086" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.030181086" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -252,41 +353,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/api/consts.js" />
-    <entry file="file://$PROJECT_DIR$/client/node_modules/pouchdb/lib/index.es.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="591">
-          <caret line="2608" column="9" selection-start-line="2608" selection-start-column="9" selection-end-line="2608" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/api/messageTypes_api.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/Views/UmpireMenu.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="224" column="25" selection-start-line="224" selection-start-column="25" selection-end-line="224" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/scss/_gameSetup.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/Components/Router.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="368">
@@ -302,13 +368,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_Reducer.js">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
-          <caret line="29" column="36" lean-forward="true" selection-start-line="29" selection-start-column="36" selection-end-line="29" selection-end-column="36" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/scss/_modal.scss">
       <provider selected="true" editor-type-id="text-editor">
@@ -334,13 +393,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/scss/App.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/ActionsAndReducers/Notification/Notification_ActionCreators.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="46">
@@ -355,13 +407,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/scss/_notification.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/api/wargames_api.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5428">
@@ -372,27 +417,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/scss/dependencies/_variables.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="21" column="18" selection-start-line="21" selection-end-line="21" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/scss/_playerUi.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="92">
           <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/Components/Notification.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="20" column="27" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -565,16 +593,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/Views/GameSetup.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="20" column="35" selection-start-line="20" selection-start-column="35" selection-end-line="20" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/Views/MessagesList.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="506">
@@ -635,16 +653,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/Views/TabbedView.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="12" column="74" selection-start-line="12" selection-start-column="74" selection-end-line="12" selection-end-column="74" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/ActionsAndReducers/dbWargames/wargames_Reducer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="276">
@@ -673,6 +681,118 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="736">
           <caret line="32" column="47" selection-start-line="32" selection-start-column="47" selection-end-line="32" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/App.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="14" column="23" lean-forward="true" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/Views/TabbedView.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-709">
+          <caret line="29" selection-start-line="29" selection-end-line="30" selection-end-column="52" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/node_modules/@material-ui/core/styles/withStyles.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1200">
+          <caret line="58" column="24" selection-start-line="58" selection-start-column="24" selection-end-line="58" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="575">
+          <caret line="25" column="20" selection-start-line="25" selection-start-column="20" selection-end-line="25" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/scss/_input.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/Components/Notification.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="25" column="29" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/scss/dependencies/_variables.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="21" column="18" selection-start-line="21" selection-end-line="21" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/scss/_notification.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="11" column="20" lean-forward="true" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/build/static/css/main.7f4e2761.chunk.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="305">
+          <caret line="7" column="155448" selection-start-line="7" selection-start-column="155448" selection-end-line="7" selection-end-column="155448" />
+          <folding>
+            <element signature="e#25962#26210#2" expanded="true" />
+            <element signature="e#27001#27168#1" expanded="true" />
+            <element signature="e#27208#27456#1" expanded="true" />
+            <element signature="e#30419#30709#2" expanded="true" />
+            <element signature="e#31528#31695#1" expanded="true" />
+            <element signature="e#31735#32025#1" expanded="true" />
+            <element signature="e#61190#61391#2" expanded="true" />
+            <element signature="e#61618#61768#2" expanded="true" />
+            <element signature="e#62167#62314#2" expanded="true" />
+            <element signature="e#63790#63957#1" expanded="true" />
+            <element signature="e#75801#76045#2" expanded="true" />
+            <element signature="e#76870#77120#2" expanded="true" />
+            <element signature="e#106627#106816#2" expanded="true" />
+            <element signature="e#106862#107052#2" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/scss/App.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="542">
+          <caret line="32" column="3" lean-forward="true" selection-start-line="32" selection-start-column="3" selection-end-line="32" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/Views/GameSetup.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="59" column="30" lean-forward="true" selection-start-line="59" selection-start-column="30" selection-end-line="59" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/scss/_gameSetup.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="5" column="25" lean-forward="true" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
         </state>
       </provider>
     </entry>

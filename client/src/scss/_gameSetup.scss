@@ -1,5 +1,11 @@
 @import "dependencies/variables";
 
+#game-setup-head {
+  background: #f5f5f5;
+  z-index: 2;
+  padding: 6vh 1vw 0 1vw;
+}
+
 .channelsTab,
 .forcesTab {
 

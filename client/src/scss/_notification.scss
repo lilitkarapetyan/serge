@@ -1,6 +1,15 @@
 @import "dependencies/variables";
 
 #notification {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  padding: 5px 15px;
+  background: $primaryTriadColor;
+  color: white;
+  border-radius: 2px;
+
+  @include shadow();
 
   svg {
     margin-left: 10px;
