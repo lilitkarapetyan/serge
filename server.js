@@ -10,6 +10,8 @@ const PouchDB = require('pouchdb-core')
     adapter: 'websql'
   });
 
+const fs = require('fs');
+
 require('pouchdb-all-dbs')(PouchDB);
 
 const cors = require('cors');
@@ -17,6 +19,12 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors());
+
+let dir = './db';
+
+if (!fs.existsSync(dir)) {
+  fs.mkdirSync(dir);
+}
 
 app.use('/db', require('express-pouchdb')(PouchDB));
 
@@ -41,7 +49,7 @@ app.get('/clearAll', (req, res) => {
 
 app.use(express.static(path.join(__dirname, '/client/build')));
 
-app.get('/client/*', (req, res) => {
+app.get('/client/**', (req, res) => {
   res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
 

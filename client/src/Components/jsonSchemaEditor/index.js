@@ -29,7 +29,7 @@ class SchemaEditor extends Component {
         },
         "Date": {
           "type": "string",
-          "format": "datetime-local"
+          "format": "datetime-local",
         },
         "Status": {
           "type": "string",
@@ -41,7 +41,7 @@ class SchemaEditor extends Component {
         },
         "Description": {
           "type": "string",
-          "format": "textarea"
+          "format": "textarea",
         }
       },
       "title": "Machinery Failure",

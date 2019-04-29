@@ -232,7 +232,7 @@ class UmpireMenu extends Component {
                            previewForm={true}
               />
             :
-              <div id="message-preview">
+              <div className="message-preview">
                 <MessagePreview detail={this.props.messages.messagePreview.details} />
               </div>
             }

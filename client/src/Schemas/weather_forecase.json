@@ -33,11 +33,25 @@
     },
     "Valid from": {
       "type": "string",
-      "format": "datetime-local"
+      "format": "datetime-local",
+      "options": {
+        "flatpickr": {
+          "wrap": true,
+          "time_24hr": true,
+          "allowInput": true
+        }
+      }
     },
     "Valid until": {
       "type": "string",
-      "format": "datetime-local"
+      "format": "datetime-local",
+      "options": {
+        "flatpickr": {
+          "wrap": true,
+          "time_24hr": true,
+          "allowInput": true
+        }
+      }
     },
     "Forecast": {
       "type": "string",

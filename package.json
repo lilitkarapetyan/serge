@@ -1,9 +1,10 @@
 {
-  "name": "express_pouchdb_backend",
+  "name": "serge_express",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "dependencies": {
+    "adm-zip": "^0.4.13",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-pouchdb": "^4.1.0",
@@ -13,11 +14,13 @@
     "pouchdb-adapter-node-websql": "^7.0.0",
     "pouchdb-core": "^7.0.0",
     "pouchdb-mapreduce": "^7.0.0",
-    "pouchdb-replication": "^7.0.0"
+    "pouchdb-replication": "^7.0.0",
+    "walk": "^2.3.14"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "offline-install": "cd ./offline && node install-modules &&  cd../client && npm run build",
+    "save-modules": "npm install && cd ./client && npm install && cd ../offline && node save-modules",
     "dev": "nodemon server.js",
     "start": "node server.js"
   },

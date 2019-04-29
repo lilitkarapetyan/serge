@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 
-import MessagePreview from "../Components/MessagePreview";
+import Collapsible from "react-collapsible";
+import MessagePreview from "../Components/MessagePreviewPlayerUi";
 
 import '../scss/App.scss';
 
@@ -13,7 +14,16 @@ class MessagesList extends Component {
     return (
       <>
         {messages.map((item, i) => {
-          return (<div className="message-preview"><MessagePreview key={i} detail={item.message} /></div>);
+          return (
+            <Collapsible
+              trigger={item.message.title}
+              transitionTime={200}
+              easing={'ease-in-out'}
+              open={i===0}
+            >
+              <div className="message-preview-player"><MessagePreview key={i} detail={item.message} from={item.details.from.force} /></div>
+            </Collapsible>
+          );
         })}
       </>
     );

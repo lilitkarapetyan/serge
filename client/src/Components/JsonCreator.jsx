@@ -7,13 +7,9 @@ import {
 } from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
 
 import JSONEditor from '@json-editor/json-editor';
-// import flatpickr from "flatpickr";
-// for json.. datetime-local
-// "flatpickr": {
-//   "wrap": true,
-//     "time_24hr": true,
-//     "allowInput": true
-// }
+// necessary import for date
+import flatpickr from "flatpickr";
+
 import '../scss/App.scss';
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";

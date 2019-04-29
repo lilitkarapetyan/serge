@@ -67,7 +67,7 @@ class EditMessage extends Component {
         <div className="flex-content-wrapper">
           <div id="preview" className="flex-content flex-content--solo-item">
             <JsonEditor id="preview"
-                         disabled={ false }
+                        disabled={ false }
             />
           </div>
         </div>

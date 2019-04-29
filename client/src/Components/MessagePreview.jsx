@@ -77,9 +77,15 @@ class MessagePreview extends Component {
     const that = this;
     const keyPropPairs = Object.entries(this.props.detail);
 
+
     return keyPropPairs.map((pair, i) => {
 
-      if (i===0) return <h2 key={`title-${pair[1]}`}>{pair[1]}</h2>;
+      if (i===0) return (
+        <>
+          <h2 key={`title-${pair[1]}`}>{pair[1]}</h2>
+          { this.props.from ? <span key={'from'}>From: {this.props.from}</span> : false }
+        </>
+      );
 
       if (check.object(pair[1])) return that.createObjItem(pair);
       if (check.array.of.object(pair[1])) return that.deconstructArr(pair);
@@ -92,7 +98,6 @@ class MessagePreview extends Component {
           <span key={`${pair[0]}-${pair[1]}`}>{pair[1]}</span>
         </>
       )
-
     });
   }
 }

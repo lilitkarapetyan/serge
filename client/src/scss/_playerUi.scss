@@ -1,6 +1,36 @@
 @import 'dependencies/variables';
 
+.message-preview-player {
+  padding-top: 16px;
+  margin-bottom: 12px;
+
+  h3 {
+    font-size: 1.4em;
+    padding-bottom: .25em;
+  }
+
+  .group-section {
+    margin-top: $umpireMenuMargin;
+  }
+
+  span {
+    display: block;
+  }
+}
 
 .message-feeds {
+  height: 100vh;
+  max-height: 100vh;
+  overflow-y: scroll;
   max-width: 33%;
+
+  .Collapsible__trigger {
+    font-size: 1.4em;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .Collapsible:nth-of-type(even) {
+    background: $lightGrey;
+  }
 }

@@ -8,6 +8,7 @@
   background: $primaryTriadColor;
   color: white;
   border-radius: 2px;
+  z-index: 3;
 
   @include shadow();
 

@@ -1,9 +1,8 @@
 @import 'dependencies/variables';
 
-.message-preview,
-#message-preview {
-
-  padding-top: 16px;
+.message-preview {
+  padding: 16px 8px 0 8px;
+  margin-bottom: 12px;
 
   h3 {
     font-size: 1.4em;
@@ -22,4 +21,3 @@
     background: $lightGrey;
   }
 }
-
