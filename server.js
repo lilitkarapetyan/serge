@@ -47,9 +47,9 @@ app.get('/clearAll', (req, res) => {
     })
 });
 
-app.use(express.static(path.join(__dirname, '/client/build')));
+app.use(express.static(path.join(__dirname)));
 
-app.get('/client/**', (req, res) => {
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
 
