@@ -59,6 +59,6 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "proxy": "http://localhost:8080",
-  "homepage": "localhost:8080/client/build"
+  "proxy": "https://serge-dev.herokuapp.com/",
+  "homepage": "https://serge-dev.herokuapp.com/client/build"
 }
