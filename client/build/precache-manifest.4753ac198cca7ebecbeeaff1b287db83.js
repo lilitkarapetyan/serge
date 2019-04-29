@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/client/build/static/media/fa-solid-900.418dad87.woff2"
   },
   {
-    "revision": "8ee2c4ee5ddf8ec8cce3",
+    "revision": "58749d6a8322f62049e7",
     "url": "/client/build/static/css/main.3844d7d8.chunk.css"
   },
   {
@@ -28,20 +28,20 @@ self.__precacheManifest = [
     "url": "/client/build/static/media/fa-regular-400.427d721b.woff"
   },
   {
-    "revision": "65b9977aa23185e8964b36eddbce7a20",
-    "url": "/client/build/static/media/fa-regular-400.65b9977a.ttf"
-  },
-  {
     "revision": "dcce4b7fbd5e895561e18af4668265af",
     "url": "/client/build/static/media/fa-regular-400.dcce4b7f.eot"
+  },
+  {
+    "revision": "65b9977aa23185e8964b36eddbce7a20",
+    "url": "/client/build/static/media/fa-regular-400.65b9977a.ttf"
   },
   {
     "revision": "5e2f92123d241cabecf0b289b9b08d4a",
     "url": "/client/build/static/media/fa-brands-400.5e2f9212.woff2"
   },
   {
-    "revision": "8ee2c4ee5ddf8ec8cce3",
-    "url": "/client/build/static/js/main.8ee2c4ee.chunk.js"
+    "revision": "58749d6a8322f62049e7",
+    "url": "/client/build/static/js/main.58749d6a.chunk.js"
   },
   {
     "revision": "2ef8ba3410dcc71578a880e7064acd7a",
@@ -80,7 +80,7 @@ self.__precacheManifest = [
     "url": "/client/build/static/css/2.f76bfe2a.chunk.css"
   },
   {
-    "revision": "13c234833e3fc107b4882beac0215b99",
+    "revision": "2a643905d903687b44a08af71d218dcf",
     "url": "/client/build/index.html"
   }
 ];
