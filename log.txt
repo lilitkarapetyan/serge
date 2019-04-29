@@ -11753,3 +11753,10 @@
 [Fri, 26 Apr 2019 16:26:58 GMT] [info] [<0.000.0>] ::1 - - GET /wargame-juy9t4gb/_local/settings? 200
 [Fri, 26 Apr 2019 16:26:58 GMT] [info] [<0.000.0>] ::1 - - GET /wargame-juy9t4gb/_local/settings? 304
 [Fri, 26 Apr 2019 16:28:51 GMT] [info] [<0.000.0>] ::1 - - GET /wargame-juy9t4gb/_changes?feed=longpoll&heartbeat=10000&since=1&limit=25 200
+[Mon, 29 Apr 2019 09:01:52 GMT] [info] [<0.000.0>] ::1 - - GET /message_types/ 404
+[Mon, 29 Apr 2019 09:01:52 GMT] [info] [<0.000.0>] ::1 - - PUT /message_types/ 201
+[Mon, 29 Apr 2019 09:01:52 GMT] [info] [<0.000.0>] ::1 - - GET /message_types/_all_docs? 200
+[Mon, 29 Apr 2019 09:01:52 GMT] [info] [<0.000.0>] ::1 - - PUT /message_types/2019-04-29T09%3A01%3A52.408Z 201
+[Mon, 29 Apr 2019 09:01:54 GMT] [info] [<0.000.0>] ::1 - - PUT /message_types/2019-04-29T09%3A01%3A54.409Z 201
+[Mon, 29 Apr 2019 09:01:56 GMT] [info] [<0.000.0>] ::1 - - GET /message_types/ 200
+[Mon, 29 Apr 2019 09:01:56 GMT] [info] [<0.000.0>] ::1 - - GET /message_types/_all_docs? 200
