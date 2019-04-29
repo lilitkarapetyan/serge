@@ -12835,3 +12835,10 @@
 [Mon, 29 Apr 2019 19:43:25 GMT] [info] [<0.000.0>] ::1 - - GET /message_types/_all_docs? 200
 [Mon, 29 Apr 2019 19:43:25 GMT] [info] [<0.000.0>] ::1 - - PUT /message_types/2019-04-29T19%3A43%3A25.116Z 201
 [Mon, 29 Apr 2019 19:43:27 GMT] [info] [<0.000.0>] ::1 - - PUT /message_types/2019-04-29T19%3A43%3A27.119Z 201
+[Mon, 29 Apr 2019 20:06:16 GMT] [info] [<0.000.0>] ::1 - - GET /message_types/ 404
+[Mon, 29 Apr 2019 20:06:16 GMT] [info] [<0.000.0>] ::1 - - PUT /message_types/ 201
+[Mon, 29 Apr 2019 20:06:16 GMT] [info] [<0.000.0>] ::1 - - GET /message_types/_all_docs? 304
+[Mon, 29 Apr 2019 20:06:16 GMT] [info] [<0.000.0>] ::1 - - PUT /message_types/2019-04-29T20%3A06%3A16.867Z 201
+[Mon, 29 Apr 2019 20:06:18 GMT] [info] [<0.000.0>] ::1 - - PUT /message_types/2019-04-29T20%3A06%3A18.868Z 201
+[Mon, 29 Apr 2019 20:06:24 GMT] [info] [<0.000.0>] ::1 - - GET /message_types/ 200
+[Mon, 29 Apr 2019 20:06:24 GMT] [info] [<0.000.0>] ::1 - - GET /message_types/_all_docs? 200
