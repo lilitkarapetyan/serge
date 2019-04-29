@@ -17,3 +17,6 @@ ensure line 3&4 commented in `client/src/api/consts.js`
 
 `npm i start`
 
+#### to run locally
+`localhost:8080`
+
