@@ -2,6 +2,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Serge
 
+### Zip packages 
+`npm run save-modules`
+
 ### Install packages 
 `npm run offline-install`
 
@@ -16,6 +19,8 @@ ensure line 3&4 uncommented in `client/src/api/consts.js`
 ensure line 3&4 commented in `client/src/api/consts.js`
 
 change "proxy" & "homepage" to `https://serge-dev.herokuapp.com/` from `localhost:8080` in package.json
+
+`npm run build` at `/client`
 
 `npm i start`
 
