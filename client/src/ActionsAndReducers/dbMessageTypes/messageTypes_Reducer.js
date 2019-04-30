@@ -2,6 +2,7 @@ import ActionConstant from '../ActionConstants';
 import copyState from "../copyStateHelper.js";
 
 var initialState = {
+  loadingDb: false,
   isLoading: false,
   messages: [],
 };

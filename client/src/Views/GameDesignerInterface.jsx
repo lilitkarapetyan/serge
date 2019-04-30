@@ -31,7 +31,7 @@ class GameDesignerInterface extends Component {
           <Link href="/client/umpireMenu/library" class="link link--secondary link--large">Message Library</Link>
         </div>
         <div className="flex-content flex-content--big">
-          <span>Games</span>
+          <h2>Games</h2>
           <Link
             href="/client/gameSetup"
             class="link link--noIcon"

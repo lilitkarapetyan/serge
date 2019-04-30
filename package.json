@@ -19,7 +19,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "offline-install": "cd ./offline && node install-modules &&  cd../client && npm run build",
+    "offline-install": "cd ./offline && node install-modules &&  cd ../client && npm run build",
     "save-modules": "npm install && cd ./client && npm install && cd ../offline && node save-modules",
     "dev": "nodemon server.js",
     "start": "node server.js"

@@ -81,13 +81,22 @@ export const removeRecipient = (id) => ({
   payload: id
 });
 
+const populatingDb = (isLoading) => ({
+  type: ActionConstant.POPULATE_WARGAMES_DB,
+  isLoading
+});
+
 
 export const populateWargameStore = () => {
   return async (dispatch) => {
 
+    dispatch(populatingDb(true));
+
     var wargameNames = await wargamesApi.populateWargame(dispatch);
 
     dispatch(saveAllWargameNames(wargameNames));
+
+    dispatch(populatingDb(false));
   }
 };
 

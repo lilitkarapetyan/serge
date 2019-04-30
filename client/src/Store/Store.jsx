@@ -7,6 +7,7 @@ import { umpireMenuReducer } from "../ActionsAndReducers/UmpireMenu/umpireMenu_R
 import { wargamesReducer } from "../ActionsAndReducers/dbWargames/wargames_Reducer";
 import { notificationReducer } from "../ActionsAndReducers/Notification/Notification_Reducer";
 import { playerUiReducer } from "../ActionsAndReducers/playerUi/playerUi_Reducer";
+import { loadingDbReducer } from "../ActionsAndReducers/loadingDb_Reducer";
 
 import thunk from 'redux-thunk';
 
@@ -26,4 +27,5 @@ export default createStore(combineReducers({
   notification: notificationReducer,
   wargame: wargamesReducer,
   playerUi: playerUiReducer,
+  dbLoading: loadingDbReducer,
 }), applyMiddleware(...middlewares));

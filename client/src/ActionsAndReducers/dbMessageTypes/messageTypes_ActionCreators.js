@@ -27,6 +27,23 @@ const loadingDBMessageGet = (isLoading) => ({
   isLoading
 });
 
+const populatingDb = (isLoading) => ({
+  type: ActionConstant.POPULATE_MESSAGE_TYPES_DB,
+  isLoading
+});
+
+
+export const populateMessageTypesDb = () => {
+
+  return async (dispatch) => {
+    dispatch(populatingDb(true));
+
+    await messageTypesApi.populateDb();
+
+    dispatch(populatingDb(false));
+  }
+};
+
 
 export const createMessageType = (schema) => {
 

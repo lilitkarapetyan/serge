@@ -9,35 +9,40 @@ import weatherForecast from '../Schemas/weather_forecase.json';
 
 var db = new PouchDB(databasePath+MSG_TYPE_STORE);
 
-var populateDb = function () {
-  var machine = {
-    _id: new Date().toISOString(),
-    lastUpdated: new Date().toISOString(),
-    title: 'machinery failure',
-    details: machineryFailure,
-    completed: false
-  };
-  db.put(machine);
 
-  setTimeout(function () {
-    var weather = {
-      _id: new Date().toISOString(),
-      lastUpdated: new Date().toISOString(),
-      title: 'weather forecast',
-      details: weatherForecast,
-      completed: false
-    };
-    db.put(weather).then(() => {
-      console.log('DATA BASE COMPLETE');
+export const populateDb = () => {
+
+  return new Promise((resolve, reject) => {
+
+    db.allDocs().then(entries => {
+      if (entries.rows.length === 0) {
+        var machine = {
+          _id: new Date().toISOString(),
+          lastUpdated: new Date().toISOString(),
+          title: 'machinery failure',
+          details: machineryFailure,
+          completed: false
+        };
+        db.put(machine);
+
+        setTimeout(function () {
+          var weather = {
+            _id: new Date().toISOString(),
+            lastUpdated: new Date().toISOString(),
+            title: 'weather forecast',
+            details: weatherForecast,
+            completed: false
+          };
+          db.put(weather).then(() => {
+            resolve(true);
+          });
+        }, 2000);
+      } else {
+        resolve(true);
+      }
     });
-  },2000);
+  });
 };
-
-db.allDocs().then(entries => {
-  if (entries.rows.length === 0) {
-    populateDb();
-  }
-});
 
 
 

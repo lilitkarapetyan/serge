@@ -6,16 +6,32 @@ import classNames from "classnames";
 
 import '../scss/App.scss';
 import {populateWargameStore} from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
+import {populateMessageTypesDb} from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
 
 class UmpireMenu extends Component {
 
   componentWillMount() {
+    this.props.dispatch(populateMessageTypesDb());
     this.props.dispatch(populateWargameStore());
   }
 
   render() {
 
     let activeGames = this.props.wargame.wargameList.length > 0;
+
+    let loading = Object.keys(this.props.dbLoading).every((k) => this.props.dbLoading[k] );
+
+    // check connection
+
+    if (loading) {
+      return (
+        <div id="loading">
+          <div>
+            <div id="loader"></div>
+          </div>
+        </div>
+      )
+    }
 
     return (
       <div id="umpire" className="flex-content-wrapper">
@@ -29,8 +45,9 @@ class UmpireMenu extends Component {
   }
 }
 
-const mapStateToProps = ({wargame}) => ({
+const mapStateToProps = ({wargame, dbLoading}) => ({
   wargame,
+  dbLoading,
 });
 
 export default connect(mapStateToProps)(UmpireMenu);
