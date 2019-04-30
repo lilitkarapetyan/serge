@@ -36,13 +36,16 @@ export const setWargameMessages = (messages) => ({
   payload: messages,
 });
 
-export const getWargame = () => {
+export const getWargame = (gamePath) => {
   return async (dispatch) => {
 
-    await wargamesApi.populateWargame();
+    // await wargamesApi.populateWargame();
 
     // will get active wargame during later stages
-    let wargame = await wargamesApi.getWargame();
+    let wargame = await wargamesApi.getWargame(gamePath);
+
+    console.log(wargame);
+
     dispatch(setCurrentWargame(wargame));
   }
 };
@@ -52,8 +55,8 @@ export const saveMessage = (dbName, details, message) => {
 
     await wargamesApi.postNewMessage(dbName, details, message);
 
-    let wargame = await wargamesApi.getWargame();
-    let messages = await wargamesApi.getAllMessages(wargame.name);
+    console.log(dbName);
+    let messages = await wargamesApi.getAllMessages(dbName);
 
     dispatch(setWargameMessages(messages));
   }
@@ -69,12 +72,10 @@ export const getMessageTemplate = (id) => {
   }
 };
 
-export const getAllMessages = () => {
+export const getAllWargameMessages = (name) => {
   return async (dispatch) => {
 
-    var wargame = await wargamesApi.getWargame();
-
-    var messages = await wargamesApi.getAllMessages(wargame.name);
+    var messages = await wargamesApi.getAllMessages(name);
 
     dispatch(setWargameMessages(messages));
   }

@@ -25,21 +25,28 @@ class MessagePreview extends Component {
 
     return (
       <>
-        <span><b>{pair[0]}</b></span>
-        <span key={`dateTime-${pair[1]}`}>{moment(pair[1]).format('Do MMMM YYYY, HH:mm')}</span>
+        <span className="detail">{pair[0]}:</span>
+        <span key={`dateTime-${pair[1]}`} className="data">{moment(pair[1]).format('DD/MM/YY,HH:mm')}</span>
       </>
     )
   }
 
   createStrItem(pair, withoutName) {
-    return <span key={`strItem-${pair[0]}-${pair[1]}`}><b>{pair[0]}: </b>{pair[1]}</span>
+    return <>
+      <span key={`strItem-${pair[0]}`} className="detail">
+        {pair[0]}:
+      </span>
+      <span className="data">
+        {pair[1]}
+      </span>
+      </>
   }
 
   deconstructArr(pair) {
     const that = this;
     return (
       <>
-        <h3>{pair[0]}</h3>
+        <span  className="detail">{pair[0]}</span>
         {pair[1].map((item) => {
           // CHECK NAME PROP ON EVERY OBJ
           return (
@@ -82,7 +89,14 @@ class MessagePreview extends Component {
 
       if (i===0) return (
         <>
-          { this.props.from ? <h3 key={'from'}>From: {this.props.from}</h3> : false }
+          { this.props.from ? <>
+            <span key={'from'} className="detail">
+              From:
+            </span>
+            <span className="data">
+              {this.props.from}
+            </span></>
+          : false }
         </>
       );
 
@@ -93,8 +107,8 @@ class MessagePreview extends Component {
 
       return (
         <>
-          <span><b>{pair[0]}</b></span>
-          <span key={`${pair[0]}-${pair[1]}`}>{pair[1]}</span>
+          <span className="detail">{pair[0]}: </span>
+          <span key={`${pair[0]}-${pair[1]}`} className="data">{pair[1]}</span>
         </>
       )
     });

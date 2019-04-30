@@ -31,6 +31,9 @@ class SettingsTab extends Component {
 
   render() {
 
+    let spatialRepresentationOptions = [{value: "opt1", option: "opt1"}, {value: "opt2", option: "opt2"}, {value: "opt3", option: "opt3"}]
+    let turnStrategyOptions = [{value: "opt1", option: "opt1"}, {value: "opt2", option: "opt2"}, {value: "opt3", option: "opt3"}]
+
     return (
       <div className="flex-content-wrapper">
 
@@ -51,7 +54,7 @@ class SettingsTab extends Component {
             <div className="flex-content flex-content--fill">
               <DropdownInput
                 updateStore={this.updateSpatialRepresentation}
-                selectOptions={["opt1", "opt2", "opt3"]}
+                selectOptions={spatialRepresentationOptions}
                 placeholder="Select spatial representation"
                 data={this.props.wargame.tabs[this.props.wargame.currentTab].data.spatialRepresentation}
               />
@@ -99,7 +102,7 @@ class SettingsTab extends Component {
             <div className="flex-content flex-content--fill">
               <DropdownInput
                 updateStore={this.updateTurnStrategy}
-                selectOptions={["opt1", "opt2", "opt3"]}
+                selectOptions={turnStrategyOptions}
                 placeholder="Not implemented yet"
                 data={this.props.wargame.tabs[this.props.wargame.currentTab].data.turnStrategy}
                 // disabled={true}

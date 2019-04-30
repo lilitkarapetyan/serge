@@ -8,7 +8,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
 import {
-  getAllMessages,
+  getAllWargameMessages,
   setChannel,
   setMessageSchema,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
@@ -48,7 +48,7 @@ class MessageFeeds extends Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(getAllMessages());
+    this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
   }
 
   handleChange = (event, value) => {

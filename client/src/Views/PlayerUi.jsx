@@ -18,10 +18,13 @@ import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 
 class PlayerUi extends Component {
 
-  componentWillMount() {
-    this.props.dispatch(getWargame());
-    this.props.dispatch(getAllMessages());
-  }
+  // componentWillMount() {
+  //   this.props.dispatch(getAllMessages());
+  // }
+
+  updateSelectedWargame = (wargamePath) => {
+    this.props.dispatch(getWargame(wargamePath));
+  };
 
   updateSelectedForce = (force) => {
     this.props.dispatch(setForce(force));
@@ -37,14 +40,30 @@ class PlayerUi extends Component {
   };
 
   render() {
+
     return (
       <div className="flex-content-wrapper">
 
         <div className="flex-content flex-content--fill">
-          {!this.props.playerUi.selectedForce ?
+
+          {!this.props.playerUi.currentWargame ?
+            <div className="flex-content--center">
+              <h1>Set wargame</h1>
+              <DropdownInput
+                updateStore={this.updateSelectedWargame}
+                selectOptions={this.props.wargame.wargameList.map((wargame) => ({option: wargame.title, value: wargame.name}))}
+              />
+            </div>
+            : false
+          }
+
+          {this.props.playerUi.currentWargame && !this.props.playerUi.selectedForce ?
             <div className="flex-content--center">
               <h1>Set force</h1>
-              <DropdownInput updateStore={this.updateSelectedForce} selectOptions={Object.keys(this.props.playerUi.allForces)}/>
+              <DropdownInput
+                updateStore={this.updateSelectedForce}
+                selectOptions={Object.keys(this.props.playerUi.allForces).map((force) => ({option: force, value: force}))}
+              />
             </div>
             : false
           }
@@ -53,7 +72,10 @@ class PlayerUi extends Component {
             <div className="flex-content--center">
               <h1>Set role</h1>
               <FontAwesomeIcon icon={faArrowLeft} size="2x" style={{cursor: 'pointer'}} onClick={this.goBack} />
-              <DropdownInput updateStore={this.updateSelectedRole} selectOptions={this.props.playerUi.allForces[this.props.playerUi.selectedForce].roles}/>
+              <DropdownInput
+                updateStore={this.updateSelectedRole}
+                selectOptions={this.props.playerUi.allForces[this.props.playerUi.selectedForce].roles.map((role) => ({option: role, value: role}))}
+              />
             </div>
             : false
           }
@@ -71,8 +93,9 @@ class PlayerUi extends Component {
   }
 }
 
-const mapStateToProps = ({ playerUi }) => ({
+const mapStateToProps = ({ playerUi, wargame }) => ({
   playerUi,
+  wargame,
 });
 
 export default connect(mapStateToProps)(PlayerUi);

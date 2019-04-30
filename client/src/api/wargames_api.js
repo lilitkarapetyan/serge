@@ -14,6 +14,21 @@ import {setWargameMessages} from "../ActionsAndReducers/playerUi/playerUi_Action
 
 var wargameDbStore = [];
 
+
+const changesListener = (db, name, dispatch) => {
+  db.changes({since: 'now', live: true, timeout: false, heartbeat: false})
+    .on('change', function () {
+      (async () => {
+        let messages = await getAllMessages(name);
+        dispatch(setWargameMessages(messages));
+      })();
+    })
+    .on('error', function (err) {
+      console.log(err);
+      changesListener(db, name, dispatch);
+    });
+};
+
 export const populateWargame = (dispatch) => {
   return fetch(serverPath+'allDbs')
     .then((response) => {
@@ -26,14 +41,9 @@ export const populateWargame = (dispatch) => {
 
       toCreate.forEach((name) => {
         var db = new PouchDB(databasePath+name);
+            db.setMaxListeners(11);
 
-        db.changes({since: 'now', live: true})
-          .on('change', function () {
-            (async () => {
-              let messages = await getAllMessages(name);
-              dispatch(setWargameMessages(messages));
-            })();
-          });
+            changesListener(db, name, dispatch);
 
         wargameDbStore.unshift({name, db});
       });
@@ -98,7 +108,6 @@ export const editWargame = (dbPath) => {
         });
     } catch (err) {
       reject(err);
-      return;
     }
   });
 };
@@ -157,9 +166,16 @@ export const duplicateWargame = (dbPath) => {
   });
 };
 
-export const getWargame = () => {
+export const getWargame = (gamePath) => {
+
+  let name = getNameFromPath(gamePath);
+
+  let game = wargameDbStore.find((wargame) => name === wargame.name);
+
+  console.log(game);
+
   return new Promise((resolve, reject) => {
-    wargameDbStore[0].db.get(dbDefaultSettings._id)
+    game.db.get(dbDefaultSettings._id)
       .then((res) => {
         resolve(res);
       })
@@ -172,12 +188,11 @@ export const getWargame = () => {
 export const postNewMessage = (dbName, details, message) => {
 
   let db = wargameDbStore.find((db) => db.name === dbName).db;
-  let uniqId = uniqid.time();
 
   return new Promise((resolve, reject) => {
 
     db.put({
-      _id: uniqId,
+      _id: new Date().toISOString(),
       details,
       message,
     })
@@ -191,25 +206,18 @@ export const postNewMessage = (dbName, details, message) => {
   });
 };
 
-export const getAllMessages = (dbId) => {
+export const getAllMessages = (dbName) => {
 
-  let db = wargameDbStore.find((db) => db.name === dbId).db;
+  let db = wargameDbStore.find((db) => db.name === dbName).db;
 
   return new Promise((resolve, reject) => {
-    return db.changes({
-      since: 1,
-      include_docs: true,
-      descending: true,
-    })
-      .then(function (changes) {
 
-        let results = changes.results.map((a) => a.doc);
-        resolve(results);
+    db.allDocs({include_docs: true, descending: true})
+      .then((res) => {
+        resolve(res.rows.map((a) => a.doc));
       })
-      .catch(function (err) {
-        // handle errors
+      .catch((err) => {
         reject(err);
-        console.log(err);
       });
   });
 };

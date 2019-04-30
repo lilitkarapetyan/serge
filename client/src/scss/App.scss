@@ -38,12 +38,7 @@
   height: 100vh;
   padding: 15vh 12vw;
 
-  a {
+  a, span {
     margin-bottom: 1.15em;
-  }
-
-  span {
-    font-size: $titleSize;
-    line-height: $titleLine;
   }
 }

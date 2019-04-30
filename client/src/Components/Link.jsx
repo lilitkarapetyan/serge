@@ -9,7 +9,7 @@ class Link extends Component {
 
   onClickHandler = (e) => {
 
-    if (this.props.onClickMethod) this.props.onClickMethod();
+    if (this.props.onClickHandler) this.props.onClickHandler();
 
     const aNewTab = e.metaKey || e.ctrlKey;
     const anExternalLink = this.props.href.startsWith('http');
@@ -21,10 +21,15 @@ class Link extends Component {
   };
 
   render() {
+
     return (
-      <a href={this.props.href} onClick={this.onClickHandler} id={this.props.id ? this.props.id : null} className={this.props.class ? this.props.class : null}>
+      <span href={this.props.href}
+            onClick={!this.props.disabled ? this.onClickHandler : () => false}
+            id={this.props.id ? this.props.id : null}
+            className={this.props.class ? this.props.class : null}>
+
         {this.props.children}
-      </a>
+      </span>
     );
   }
 }

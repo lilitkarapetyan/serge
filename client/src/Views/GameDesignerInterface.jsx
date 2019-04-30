@@ -35,12 +35,12 @@ class GameDesignerInterface extends Component {
           <Link
             href="/client/gameSetup"
             class="link link--noIcon"
-            onClickMethod={this.createWargame}
+            onClickHandler={this.createWargame}
           >Create</Link>
           <Link
             href="/client/umpireMenu"
             class="link link--noIcon link--secondary"
-            onClickMethod={this.clearWargames}
+            onClickHandler={this.clearWargames}
           >Clear wargames</Link>
           <WargameSearchList key="searchlist"
                              listData={this.props.wargame.wargameList}

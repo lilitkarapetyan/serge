@@ -7,7 +7,7 @@ import '../scss/App.scss';
 
 import {
   saveMessage,
-  getAllMessages,
+  getAllWargameMessages,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 class JsonCreator extends Component {
@@ -34,7 +34,7 @@ class JsonCreator extends Component {
     };
 
     this.props.dispatch(saveMessage(this.props.playerUi.currentWargame, messageDetails, this.editor.getValue()));
-    this.props.dispatch(getAllMessages());
+    this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
   };
 
   componentWillReceiveProps(nextProps, nextContext) {

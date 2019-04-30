@@ -125,6 +125,8 @@ export const editWargame = (name) => {
 
     let wargame = await wargamesApi.editWargame(name);
 
+    console.log(wargame);
+
     dispatch(setCurrentWargame(wargame));
   }
 };
