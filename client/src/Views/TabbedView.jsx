@@ -11,6 +11,7 @@ import SettingsTab from "./TabViews/SettingsTab";
 import ForcesTab from "./TabViews/ForcesTab";
 import ChannelsTab from "./TabViews/ChannelsTab";
 import ValidationNotification from "../Components/ValidationNotification";
+import classNames from "classnames";
 
 function TabContainer(props) {
   return (
@@ -42,6 +43,7 @@ class TabbedView extends Component {
 
     this.state = {
       value: 0,
+      activeTab: 0,
       tabs: Object.values(this.props.tabs).map((item) => item.name),
       invalidFields: [],
     };
@@ -57,6 +59,10 @@ class TabbedView extends Component {
     this.props.setCurrentTab(value);
   };
 
+  changeTab = (value) => {
+    this.setState({ activeTab: value });
+  };
+
   render() {
 
     const { value } = this.state;
@@ -64,6 +70,22 @@ class TabbedView extends Component {
 
     return (
       <>
+        <ul className="tab-nav">
+          { this.state.tabs.map((tabName, i) => (
+                <li key={tabName}
+                    onClick={this.changeTab.bind(this, i)}
+                    className={classNames({ "active-tab": i === this.state.activeTab })}
+                >{tabName}</li>
+              )
+            )
+          }
+        </ul>
+
+        <div>
+          {this.state.activeTab === 0 && <SettingsTab />}
+          {this.state.activeTab === 1 && <ForcesTab />}
+          {this.state.activeTab === 2 && <ChannelsTab />}
+        </div>
         <div className={classes.root}>
           <AppBar position="static" color="default">
             <Tabs

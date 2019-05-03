@@ -8,6 +8,9 @@ import {
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 import MessageCreator from "../Components/MessageCreator.jsx";
+import Collapsible from "react-collapsible";
+import classNames from "classnames";
+import DropdownInput from "../Components/Inputs/DropdownInput";
 
 class NewMessage extends Component {
 
@@ -15,34 +18,52 @@ class NewMessage extends Component {
     super(props);
 
     this.state = {
-      template: {value: '', label: ''},
+      dropdownValue: '',
     };
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
     if (this.props.curChannel !== nextProps.curChannel) {
       this.setState({
-        template: {value: '', label: ''},
-      });
+        dropdownValue: '',
+      })
     }
   }
 
   setTemplate = (val) => {
-    this.props.dispatch(getMessageTemplate(val.value));
+    this.props.dispatch(getMessageTemplate(val));
     this.setState({
-      template: val,
-    })
+      dropdownValue: val,
+    });
   };
 
+
   render() {
+
+    const templates = this.props.templates.map((item) => ({value: item.value, option: item.label }));
+
     return (
-      <div className="">
-        <Select
-          value={this.state.template}
-          options={this.props.templates}
-          onChange={this.setTemplate}
-        />
-        <MessageCreator schema={this.props.schema} />
+      <div className="new-message-creator wrap">
+        <Collapsible
+          trigger={"New Message"}
+          transitionTime={200}
+          easing={'ease-in-out'}
+        >
+          {/*<Select*/}
+            {/*value={{val: '', label: ''}}*/}
+            {/*options={this.props.templates}*/}
+            {/*onChange={this.setTemplate}*/}
+            {/*className="message-input"*/}
+          {/*/>*/}
+          <DropdownInput
+            updateStore={this.setTemplate}
+            data={this.state.dropdownValue}
+            selectOptions={templates}
+            placeholder="Select message"
+            className="message-input"
+          />
+          <MessageCreator schema={this.props.schema} />
+        </Collapsible>
       </div>
     );
   }

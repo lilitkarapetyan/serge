@@ -1,7 +1,7 @@
-export const serverPath = 'https://serge-dev.herokuapp.com/';
-export const databasePath = 'https://serge-dev.herokuapp.com/db/';
-// export const serverPath = 'http://localhost:8080/';
-// export const databasePath = 'http://localhost:8080/db/';
+// export const serverPath = 'https://serge-dev.herokuapp.com/';
+// export const databasePath = 'https://serge-dev.herokuapp.com/db/';
+export const serverPath = 'http://localhost:8080/';
+export const databasePath = 'http://localhost:8080/db/';
 
 export const MSG_STORE = "messages";
 export const MSG_TYPE_STORE = "message_types";
@@ -14,18 +14,27 @@ export const headers = {
 };
 
 export const forceTemplate = {
+  forceName: '',
   overview: 'An overview written here..',
   roles: ['General']
 };
 
 export const channelTemplate = [];
 
+// export const channelTemplate = {
+//   channelName: '',
+//   participants: [],
+// };
+
+export const overviewTab = 0;
+export const forcesTab = 1;
+export const channelsTab = 2;
 
 export const dbDefaultSettings = {
   _id: '_local/settings',
   wargameTitle: 'wargame',
   tabs: {
-    0: {
+    [overviewTab]: {
       name: "Overview - settings",
       data: {
         gameDescription: '',
@@ -35,7 +44,7 @@ export const dbDefaultSettings = {
         turnStrategy: '',
       }
     },
-    1: {
+    [forcesTab]: {
       name: "Forces",
       data: {
         forces: {},
@@ -43,7 +52,7 @@ export const dbDefaultSettings = {
         selectedForce: '',
       },
     },
-    2: {
+    [channelsTab]: {
       name: "Channels",
       data: {
         channels: {},
@@ -52,6 +61,32 @@ export const dbDefaultSettings = {
     }
   }
 };
+
+// export const dbDefaultSettings = {
+//   _id: '_local/settings',
+//   wargameTitle: 'wargame',
+//   data: [
+//     {
+//       name: "Overview - settings",
+//       gameDescription: '',
+//       spatialRepresentation: '',
+//       planningInterval: null,
+//       replayInterval: null,
+//       turnStrategy: '',
+//     },
+//     {
+//       name: "Forces",
+//       forces: [],
+//       roles: ['General'],
+//       selectedForce: '',
+//     },
+//     {
+//       name: "Channels",
+//       channels: [],
+//       selectedChannel: '',
+//     }
+//   ]
+// };
 
 
 // export const channelTemplate = [{

@@ -11,8 +11,14 @@ import {
 
 import {setCurrentViewFromURI} from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
 
-import {faClone, faPencilAlt} from "@fortawesome/free-solid-svg-icons";
+import {
+  faClone,
+  faPencilAlt,
+  faTrash
+} from "@fortawesome/free-solid-svg-icons";
+
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {modalAction} from "../ActionsAndReducers/Modal/Modal_ActionCreators";
 
 class WargameSearchList extends Component {
 
@@ -55,6 +61,10 @@ class WargameSearchList extends Component {
 
   duplicateWargame(name) {
     this.props.dispatch(duplicateWargame(name));
+  }
+
+  deleteWargame(name) {
+    this.props.dispatch(modalAction.open("deleteWargame", name));
   }
 
   filterMessages = (input) => {
@@ -102,6 +112,7 @@ class WargameSearchList extends Component {
                   <>
                     <FontAwesomeIcon icon={faPencilAlt} onClick={that.setSelectedWargame.bind(that, db.name)} />
                     <FontAwesomeIcon icon={faClone} onClick={that.duplicateWargame.bind(that, db.name)} />
+                    <FontAwesomeIcon icon={faTrash} onClick={that.deleteWargame.bind(that, db.name)} />
                   </>
                   : null
                 }

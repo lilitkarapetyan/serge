@@ -17,12 +17,23 @@ import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 import TextInput from "../Components/Inputs/TextInput";
 import {getAllMessageTypes} from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
+import {addNotification} from "../ActionsAndReducers/Notification/Notification_ActionCreators";
 
 class GameSetup extends Component {
 
   componentWillMount() {
     this.props.dispatch(getAllMessageTypes());
   }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (nextProps.wargame.unsavedState && !this.props.wargame.unsavedState) {
+      this.showUnsavedNotification();
+    }
+  }
+
+  showUnsavedNotification = () => {
+    this.props.dispatch(addNotification("Remember to save"));
+  };
 
   setCurrentTab = (tab) => {
     this.props.dispatch(setCurrentTab(tab));
@@ -51,7 +62,7 @@ class GameSetup extends Component {
   };
 
   checkAllValid = () => {
-    return Object.values(this.props.wargame.validation).reduce((entry) => entry === true);
+    return Object.values(this.props.wargame.validation).every((entry) => entry === true);
   };
 
   render() {

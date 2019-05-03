@@ -21,7 +21,7 @@ class Router extends Component {
     super(props);
 
     this.routes = [
-      { path: '/client/', action: () => <ChooseInterface /> },
+      { path: '/client', action: () => <ChooseInterface /> },
       { path: '/client/umpireMenu', action: () => <GameDesignerInterface/> },
       { path: '/client/umpireMenu/:creatorType', action: () => <UmpireMenu /> },
       { path: '/client/messageCreator', children: [

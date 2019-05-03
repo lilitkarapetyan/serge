@@ -3,7 +3,7 @@ import 'whatwg-fetch';
 import _ from "lodash";
 
 import * as wargamesApi from "../../api/wargames_api";
-import { showNotification } from "../Notification/Notification_ActionCreators";
+import { addNotification } from "../Notification/Notification_ActionCreators";
 
 export const setCurrentTab = (tab) => ({
   type: ActionConstant.SET_CURRENT_GAME_SETUP_TAB,
@@ -41,9 +41,18 @@ export const addNewChannel = (data) => ({
   payload: data,
 });
 
+export const updateChannelName = (name) => ({
+  type: ActionConstant.UPDATE_CHANNEL_NAME,
+  name,
+});
 
 export const setSelectedChannel = (payload) => ({
   type: ActionConstant.SET_SELECTED_CHANNEL,
+  payload
+});
+
+export const deleteSelectedChannel = (payload) => ({
+  type: ActionConstant.DELETE_SELECTED_CHANNEL,
   payload
 });
 
@@ -84,6 +93,11 @@ export const removeRecipient = (id) => ({
 const populatingDb = (isLoading) => ({
   type: ActionConstant.POPULATE_WARGAMES_DB,
   isLoading
+});
+
+export const unsavedState = (unsaved) => ({
+  type: ActionConstant.SET_UNSAVED_STATE,
+  unsaved
 });
 
 
@@ -129,13 +143,24 @@ export const clearWargames = () => {
 };
 
 
+export const deleteWargame = (name) => {
+  return async (dispatch) => {
+
+    await wargamesApi.deleteWargame(name);
+
+    let wargames = await wargamesApi.getAllWargames();
+    dispatch(saveAllWargameNames(wargames));
+
+  }
+};
+
+
 export const editWargame = (name) => {
   return async (dispatch) => {
 
     let wargame = await wargamesApi.editWargame(name);
 
-    console.log(wargame);
-
+    dispatch(unsavedState(false));
     dispatch(setCurrentWargame(wargame));
   }
 };
@@ -154,7 +179,21 @@ export const updateWargame = (dbName, data, title) => {
 
     dispatch(setCurrentWargame(localDoc));
 
-    dispatch(showNotification("wargame saved."));
+    dispatch(unsavedState(false));
+    dispatch(addNotification("wargame saved."));
+
+  }
+};
+
+export const saveChannel = (wargameName, newName, newData, oldName) => {
+  return async (dispatch) => {
+
+    let localDoc = await wargamesApi.saveChannel(wargameName, newName, newData, oldName);
+
+    dispatch(setCurrentWargame(localDoc));
+    dispatch(setSelectedChannel(newName));
+
+    dispatch(addNotification("channel saved."));
 
   }
 };

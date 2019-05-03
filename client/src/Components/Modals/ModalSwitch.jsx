@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import AddForceModal from "./AddForceModal";
 import DeleteModal from './DeleteModal';
 import AddChannelModal from "./AddChannelModal";
+import DeleteWargameModal from "./DeleteWargameModal";
 
 class ModalSwitch extends Component {
 
@@ -23,6 +24,10 @@ class ModalSwitch extends Component {
 
       case "addChannel":
         modal = <AddChannelModal />;
+        break;
+
+      case "deleteWargame":
+        modal = <DeleteWargameModal />;
         break;
 
       default:

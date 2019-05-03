@@ -20,7 +20,7 @@ import '../scss/App.scss';
 
 function TabContainer(props) {
   return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
+    <Typography component="div" style={{ display: "flex", flexDirection: "column", height: "calc(100% - 48px)" }}>
       {props.children}
     </Typography>
   );
@@ -44,7 +44,8 @@ class MessageFeeds extends Component {
 
     this.state = {
       value: 0,
-    }
+    };
+
   }
 
   componentWillMount() {
@@ -72,6 +73,7 @@ class MessageFeeds extends Component {
 
     return tabs;
   };
+
 
   createMessageList = (tab) => {
 

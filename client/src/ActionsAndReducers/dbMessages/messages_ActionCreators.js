@@ -4,7 +4,7 @@ import check from 'check-types';
 
 import * as messagesApi from "../../api/messages_api";
 
-import { showNotification } from "../Notification/Notification_ActionCreators";
+import { addNotification } from "../Notification/Notification_ActionCreators";
 import {setCurrentViewFromURI} from "../setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
 
 const DBMessageSaveStatus = (status) => ({
@@ -48,7 +48,7 @@ export const createMessage = (message, schema) => {
       var result = await messagesApi.addMessage(message, schema);
 
       if (result.err) {
-        dispatch(showNotification(result.err));
+        dispatch(addNotification(result.err));
       }
 
       if (result.ok) {
@@ -97,7 +97,7 @@ export const updateMessage = (message, id) => {
       const result = await messagesApi.updateMessageInDb(id, message);
 
       if (result.err) {
-        dispatch(showNotification(result.err));
+        dispatch(addNotification(result.err));
       }
 
       if (result.ok) {

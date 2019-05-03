@@ -6,13 +6,14 @@ import '../../scss/App.scss';
 class DropdownInput extends Component {
 
   onChange = (e) => {
+    console.log(e.target.value);
     this.props.updateStore(e.target.value);
   };
 
   render() {
     return (
-      <select disabled={this.props.disabled} value={this.props.data ? this.props.data : "placeholder"} onChange={this.onChange}>
-        <option value="placeholder">{this.props.placeholder}</option>
+      <select disabled={this.props.disabled} value={this.props.data ? this.props.data : "placeholder"} onChange={this.onChange} className={this.props.className || null}>
+        <option value="placeholder" disabled={true}>{this.props.placeholder}</option>
         { this.props.selectOptions.map((item, i) => {
           return (<option key={`${item.value}${item.option}`} value={item.value}>{item.option}</option>)
         })}

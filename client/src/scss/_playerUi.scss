@@ -15,24 +15,82 @@
 }
 
 .message-feeds {
+  position: relative;
+  display: flex;
   height: 100vh;
   max-height: 100vh;
-  overflow-y: scroll;
   max-width: 33%;
+  overflow: hidden;
 
-  //h3, span {
-  //  font-family: "Courier New", sans-serif;
-  //}
+  .message-list {
+    flex-grow: 1;
+    max-height: calc(100vh - 100px);
+    overflow-y: scroll;
 
-
-  .Collapsible__trigger {
-    font-size: 1.4em;
-    font-weight: 500;
-    cursor: pointer;
+    .wrap {
+      padding: 16px;
+    }
   }
 
-  .Collapsible:nth-of-type(even) {
-    background: $lightGrey;
+  .Collapsible {
+    position: relative;
+
+    &__trigger {
+      font-size: 1.4em;
+      font-weight: 500;
+      cursor: pointer;
+
+      .badge {
+        font-size: 50%;
+        font-weight: 200;
+        position: absolute;
+        margin-top: 8px;
+        margin-left: 8px;
+      }
+    }
+
+    &:nth-of-type(even) {
+      background: $lightGrey;
+    }
+  }
+
+  .new-message-creator {
+    left: 0;
+    bottom: 0;
+    background: white;
+    padding: 16px;
+    border-top: 5px solid $primaryTriadColor;
+
+    @include drawerShadow();
+
+    .message-input {
+      margin: 18px 0;
+    }
+
+    .btn {
+      float: right;
+    }
+
+    #message-creator {
+      font-family: "Segoe UI", sans-serif;
+      font-weight: bold;
+      color: $secondaryColor;
+
+      h3 {
+        display: none;
+      }
+
+      .bg-light {
+        background-color: white !important;
+      }
+      .card {
+        border: none;
+
+        &-body {
+          padding: 0;
+        }
+      }
+    }
   }
 
   .detail {
@@ -40,5 +98,6 @@
   }
   .data {
     padding: 0 6px 0 2px;
+    word-break: break-word;
   }
 }

@@ -24,7 +24,7 @@ export default createStore(combineReducers({
   umpireMenu: umpireMenuReducer,
   currentViewURI: currentViewURIReducer,
   currentModal,
-  notification: notificationReducer,
+  notifications: notificationReducer,
   wargame: wargamesReducer,
   playerUi: playerUiReducer,
   dbLoading: loadingDbReducer,

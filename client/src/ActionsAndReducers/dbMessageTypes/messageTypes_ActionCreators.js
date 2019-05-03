@@ -5,7 +5,7 @@ import check from 'check-types';
 import * as messageTypesApi from "../../api/messageTypes_api";
 
 import {setCurrentViewFromURI} from "../setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
-import {showNotification} from "../Notification/Notification_ActionCreators";
+import {addNotification} from "../Notification/Notification_ActionCreators";
 
 const DBMessageSaveStatus = (status) => ({
   type: ActionConstant.DB_MESSAGE_STATUS,
@@ -58,7 +58,7 @@ export const createMessageType = (schema) => {
       var result = await messageTypesApi.postNewMessage(schema);
 
       if (result.err) {
-        dispatch(showNotification(result.err));
+        dispatch(addNotification(result.err));
         dispatch(loadingDBMessageCreate(false));
       }
 
@@ -107,7 +107,7 @@ export const updateMessageType = (schema, id) => {
       const result = await messageTypesApi.updateMessageInDb(schema, id);
 
       if (result.err) {
-        dispatch(showNotification(result.err));
+        dispatch(addNotification(result.err));
         dispatch(loadingDBMessageCreate(false));
       }
 

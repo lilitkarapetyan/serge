@@ -31,6 +31,7 @@ class JsonCreator extends Component {
         force: this.props.playerUi.selectedForce,
         role: this.props.selectedRole,
       },
+      messageType: this.props.playerUi.messageSchema.title,
     };
 
     this.props.dispatch(saveMessage(this.props.playerUi.currentWargame, messageDetails, this.editor.getValue()));
@@ -46,10 +47,13 @@ class JsonCreator extends Component {
     if (nextProps.schema && nextProps.schema.type) {
         if (this.editor) return;
 
-        this.editor = new JSONEditor(this.editorPreviewRef.current, {
-          schema: nextProps.schema,
-          theme: 'bootstrap4'
-        });
+      this.editor = new JSONEditor(this.editorPreviewRef.current, {
+        schema: nextProps.schema,
+        theme: 'bootstrap4',
+        disable_collapse: true,
+        disable_edit_json: true,
+        disable_properties: true,
+      });
     }
   }
 
@@ -57,7 +61,7 @@ class JsonCreator extends Component {
   render() {
     return (
       <>
-        <div id="preview-editor" ref={this.editorPreviewRef}></div>
+        <div id="message-creator" ref={this.editorPreviewRef}></div>
         <button name="send" className="btn btn-action btn-action--primary" onClick={this.sendMessage}>Send</button>
       </>
     );

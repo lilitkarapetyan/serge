@@ -2,18 +2,39 @@
 
 #notification {
   position: absolute;
-  top: 15px;
-  right: 25px;
-  padding: 5px 15px;
-  background: $primaryTriadColor;
-  color: white;
-  border-radius: 2px;
+  top: 5%;
+  right: 2%;
+  background: #333;
+  padding: 10px 15px 12px 15px;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 3px;
+  transform: translateY(-50%);
+  box-sizing: border-box;
+  opacity: 0;
   z-index: 3;
+  @include snackbarShadow();
 
-  @include shadow();
+  &.active {
+    opacity: 1;
+    animation: 0.2s down ease 1;
+    display: block;
+  }
 
   svg {
+    padding-top: 1px;
     margin-left: 10px;
     cursor: pointer;
+  }
+}
+
+@keyframes down{
+  0% {
+    top: -10%;
+    opacity: 0;
+  }
+  100% {
+    top: 5%;
+    opacity: 1;
   }
 }

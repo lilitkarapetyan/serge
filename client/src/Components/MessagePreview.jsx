@@ -4,17 +4,13 @@ import {connect} from 'react-redux';
 import '../scss/App.scss';
 import check from "check-types";
 import moment from "moment";
+const Fragment = React.Fragment;
 
 class MessagePreview extends Component {
 
   createObjItem(pair) {
     const that = this;
-    return (
-      <>
-        {/*<h3>{pair[0]}</h3>*/}
-        <span key={`objItem--${pair[0]}-${pair[1]}`} className="group-section">{ that.deconstructObj(pair[1]) }</span>
-      </>
-    )
+    return <span key={`objItem--${pair[0]}-${pair[1]}`} className="group-section">{ that.deconstructObj(pair[1]) }</span>;
   }
 
   createBoolItem(pair) {
@@ -24,10 +20,10 @@ class MessagePreview extends Component {
   createTimeItem(pair) {
 
     return (
-      <>
+      <Fragment key={`dateTime-${pair[1]}`}>
         <h3>{pair[0]}</h3>
-        <span key={`dateTime-${pair[1]}`}>{moment(pair[1]).format('Do MMMM YYYY, HH:mm')}</span>
-      </>
+        <span>{moment(pair[1]).format('Do MMMM YYYY, HH:mm')}</span>
+      </Fragment>
     )
   }
 
@@ -38,7 +34,7 @@ class MessagePreview extends Component {
   deconstructArr(pair) {
     const that = this;
     return (
-      <>
+      <Fragment key={`${pair[0]}`}>
         <h3>{pair[0]}</h3>
         {pair[1].map((item) => {
           // CHECK NAME PROP ON EVERY OBJ
@@ -46,7 +42,7 @@ class MessagePreview extends Component {
               <span key={`section-${item.name}`}>{ that.deconstructObj(item) }</span>
           );
         })}
-      </>
+      </Fragment>
     );
   }
 
@@ -81,10 +77,10 @@ class MessagePreview extends Component {
     return keyPropPairs.map((pair, i) => {
 
       if (i===0) return (
-        <>
-          <h2 key={`title-${pair[1]}`}>{pair[1]}</h2>
+        <Fragment key={`from-${pair[1]}`}>
+          <h2>{pair[1]}</h2>
           { this.props.from ? <span key={'from'}>From: {this.props.from}</span> : false }
-        </>
+        </Fragment>
       );
 
       if (check.object(pair[1])) return that.createObjItem(pair);
@@ -93,10 +89,10 @@ class MessagePreview extends Component {
       if (moment(pair[1], moment.ISO_8601, true).isValid()) return that.createTimeItem(pair);
 
       return (
-        <>
+        <Fragment key={`${pair[0]}-${pair[1]}`}>
           <h3>{pair[0]}</h3>
-          <span key={`${pair[0]}-${pair[1]}`}>{pair[1]}</span>
-        </>
+          <span>{pair[1]}</span>
+        </Fragment>
       )
     });
   }

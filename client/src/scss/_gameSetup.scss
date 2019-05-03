@@ -1,9 +1,35 @@
 @import "dependencies/variables";
 
 #game-setup-head {
-  background: #f5f5f5;
+  background: $greyBg;
   z-index: 2;
   padding: 6vh 1vw 0 1vw;
+}
+
+.tab-nav {
+  display: flex;
+  flex-wrap: wrap-reverse;
+  justify-content: center;
+  list-style: none;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 14px;
+  color: $darkGrey;
+  background: $greyBg;
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+
+  li {
+    flex-basis: fit-content;
+    //flex-grow: 1;
+    text-align: center;
+    min-width: 160px;
+    min-height: 48px;
+    padding: 6px 12px;
+
+    &.active-tab {
+      border-bottom: 2px solid $primaryColor;
+    }
+  }
 }
 
 .channelsTab,
@@ -13,9 +39,8 @@
 
   h3 {
     display: inline-flex;
-    width: 33%;
+    max-width: 33%;
     text-overflow: ellipsis;
-    margin-bottom: 35px;
   }
 
   .heading--sml {
@@ -23,7 +48,7 @@
   }
 
   .link {
-    display: inline-flex;
+    float: right;
   }
 
   textarea {
@@ -33,6 +58,17 @@
 }
 
 .channelsTab {
+
+  #channel-editable {
+    font-family: "Segoe UI", sans-serif;
+    font-size: 1.85em;
+    font-weight: 500;
+    color: $secondaryColor;
+    border: none;
+    margin-bottom: 24px;
+    background: transparent;
+    text-overflow: ellipsis;
+  }
 
   table {
 

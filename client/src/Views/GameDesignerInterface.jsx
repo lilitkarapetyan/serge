@@ -12,6 +12,8 @@ import {
 } from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
 import WargameSearchList from "../Components/WargameSearchList";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 
 class GameDesignerInterface extends Component {
 
@@ -26,11 +28,14 @@ class GameDesignerInterface extends Component {
   render() {
     return (
       <div id="umpire" className="flex-content-wrapper">
-        <div className="flex-content flex-content--big">
+        <div id="sidebar">
+          <Link href="/client" id="home-btn"><FontAwesomeIcon icon={faArrowLeft} size="2x" /></Link>
+        </div>
+        <div className="flex-content flex-content--big flex-content--first">
           <Link href="/client/umpireMenu/templates" class="link link--secondary link--large">Message Templates</Link>
           <Link href="/client/umpireMenu/library" class="link link--secondary link--large">Message Library</Link>
         </div>
-        <div className="flex-content flex-content--big">
+        <div className="flex-content flex-content--big flex-content--last">
           <h2>Games</h2>
           <Link
             href="/client/gameSetup"

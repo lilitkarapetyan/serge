@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Provider } from 'react-redux';
 import ModalSwitch from "./Components/Modals/ModalSwitch";
-import Notification from "./Components/Notification";
+import Notifications from "./Components/Notifications";
 
 import Router from "./Components/Router";
 
@@ -21,7 +21,7 @@ class App extends Component {
         <Provider store={Store}>
           <Router />
           <ModalSwitch />
-          <Notification />
+          <Notifications />
         </Provider>
     );
   }

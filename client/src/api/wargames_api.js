@@ -2,12 +2,15 @@ import uniqid from "uniqid";
 import _ from "lodash";
 import {fetch} from "whatwg-fetch";
 
+import deepCopy from "../Helpers/copyStateHelper";
+
 import PouchDB from "pouchdb";
 import {  databasePath,
           serverPath,
           dbDefaultSettings,
           MSG_STORE,
-          MSG_TYPE_STORE } from "./consts";
+          MSG_TYPE_STORE,
+          channelsTab } from "./consts";
 
 import {setWargameMessages} from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
@@ -74,6 +77,16 @@ export const clearWargames = () => {
     });
 };
 
+export const deleteWargame = (wargamePath) => {
+
+  let name = getNameFromPath(wargamePath);
+
+  let wargame = wargameDbStore.find((item) => item.name === name);
+  wargame.db.destroy();
+  let index = wargameDbStore.findIndex((item) => item.name === name);
+  wargameDbStore.splice(index, 1);
+};
+
 export const createWargame = () => {
   let uniqId = uniqid.time();
 
@@ -124,6 +137,45 @@ export const updateWargame = (dbName, data, title) => {
     });
 };
 
+export const saveChannel = (dbName, newName, newData, oldName) => {
+
+  let db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
+
+  console.log(db);
+
+  return getWargameLocalFromName(dbName)
+    .then(function (localDoc) {
+
+      let newDoc = deepCopy(localDoc);
+
+      delete newDoc.tabs[channelsTab].data.channels[oldName];
+
+      newDoc.tabs[channelsTab].data.channels[newName] = newData;
+
+      return new Promise((resolve, reject) => {
+
+        db.get(dbDefaultSettings._id)
+          .then((res) => {
+            db.put({
+              _id: dbDefaultSettings._id,
+              _rev: res._rev,
+              name: res.name,
+              wargameTitle: res.wargameTitle,
+              tabs: newDoc.tabs,
+            })
+              .then(() => {
+                resolve(db.get(dbDefaultSettings._id));
+              })
+              .catch((err) => {
+                reject(err);
+              })
+          });
+      });
+      // localDoc
+      // return updateLocalDoc(dbName, data, title);
+    })
+};
+
 export const duplicateWargame = (dbPath) => {
 
   let dbName = getNameFromPath(dbPath);
@@ -162,6 +214,21 @@ export const duplicateWargame = (dbPath) => {
       .catch((err) => {
         reject(err);
         console.log(err);
+      })
+  });
+};
+
+export const getWargameLocalFromName = (dbName) => {
+
+  let game = wargameDbStore.find((wargame) => dbName === wargame.name);
+
+  return new Promise((resolve, reject) => {
+    game.db.get(dbDefaultSettings._id)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((err) => {
+        reject(err);
       })
   });
 };

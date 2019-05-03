@@ -20,7 +20,7 @@ class EditMessage extends Component {
 
     this.state = {
       messageList: this.props.messageTypes.messages, // set to state for filter, without filter don't set props to state to avoid bugs
-      searchInput: '',
+      searchQuery: '',
     };
   }
 

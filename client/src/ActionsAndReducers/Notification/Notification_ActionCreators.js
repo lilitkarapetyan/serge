@@ -1,17 +1,26 @@
 import ActionConstant from '../ActionConstants.js';
+import uniqid from "uniqid";
+import {unsavedState} from "../dbWargames/wargames_ActionCreators";
 
-export const showNotification = (payload) => ({
-  type: ActionConstant.SHOW_NOTIFICATION,
+export const addNotification = (payload) => ({
+  type: ActionConstant.ADD_NOTIFICATION,
   payload: {
-    open: true,
     message: payload,
+    id: uniqid.time(),
   },
 });
 
-export const hideNotification = () => ({
+export const hide = (id) => ({
   type: ActionConstant.HIDE_NOTIFICATION,
-  payload: {
-    open: false,
-    message: '',
-  },
+  id
 });
+
+
+export const hideNotification = (id) => {
+  return (dispatch) => {
+
+    dispatch(hide(id));
+    dispatch(unsavedState(false));
+
+  };
+};

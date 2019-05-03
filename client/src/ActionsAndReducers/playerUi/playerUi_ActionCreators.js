@@ -55,7 +55,6 @@ export const saveMessage = (dbName, details, message) => {
 
     await wargamesApi.postNewMessage(dbName, details, message);
 
-    console.log(dbName);
     let messages = await wargamesApi.getAllMessages(dbName);
 
     dispatch(setWargameMessages(messages));
