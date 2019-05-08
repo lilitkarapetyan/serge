@@ -22,7 +22,6 @@
     "offline-install": "cd ./offline && node install-modules &&  cd ../client && npm run build",
     "save-modules": "npm install && cd ./client && npm install && cd ../offline && node save-modules",
     "dev": "nodemon server.js",
-    "prestart": "cd ./client && npm i && npm run build",
     "start": "node server.js",
     "test": "cd ./client && npm run test"
   },

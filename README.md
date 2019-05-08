@@ -25,3 +25,12 @@ change "homepage" to `https://serge-dev.herokuapp.com/client/build` from `http:/
 #### to run locally
 `localhost:3000` or `localhost:8080`
 
+
+
+##### notes
+****
+    https://devcenter.heroku.com/articles/error-codes#r10-boot-timeout
+    
+    "prestart": "cd ./client && npm i && npm run build",
+    "start": "node server.js",
+    "test": "cd ./client && npm run test"
