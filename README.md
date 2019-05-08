@@ -20,7 +20,10 @@ ensure line 3&4 commented in `client/src/api/consts.js`
 
 change "homepage" to `https://serge-dev.herokuapp.com/client/build` from `http://localhost:8080/client/build` in `client/package.json`
 
+`npm run build` at `/client`
 `npm run start` from `/` 
+
+push to heroku
 
 #### to run locally
 `localhost:3000` or `localhost:8080`
