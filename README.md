@@ -29,6 +29,8 @@ change "homepage" to `https://serge-dev.herokuapp.com/client/build` from `http:/
 
 ##### notes
 ****
+    timing out when trying to install packages neccessary for build on server
+
     https://devcenter.heroku.com/articles/error-codes#r10-boot-timeout
     
     "prestart": "cd ./client && npm i && npm run build",
