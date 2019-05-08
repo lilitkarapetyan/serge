@@ -44,10 +44,7 @@ class SettingsTab extends Component {
     let turnStrategyOptions = [{value: "opt1", option: "opt1"}, {value: "opt2", option: "opt2"}, {value: "opt3", option: "opt3"}]
 
     return (
-      <div className="flex-content-wrapper">
-
-        <span className="link link--noIcon" onClick={this.saveSettings}>save</span>
-
+      <div className="flex-content-wrapper settingsTab">
         <div className="flex-content flex-content--left50">
           <p className="heading--sml">Game description &amp; objectives</p>
           <TextArea
@@ -57,7 +54,9 @@ class SettingsTab extends Component {
         </div>
 
         <div className="flex-content flex-content--right50">
-
+          <Row className="flex-content--rowend">
+            <span className="link link--noIcon" onClick={this.saveSettings}>save Overview</span>
+          </Row>
           <Row>
             <div className="flex-content flex-content--sml">
               <p className="heading--sml">Spatial Representation</p>

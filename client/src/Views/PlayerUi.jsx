@@ -62,7 +62,7 @@ class PlayerUi extends Component {
               <h1>Set force</h1>
               <DropdownInput
                 updateStore={this.updateSelectedForce}
-                selectOptions={Object.keys(this.props.playerUi.allForces).map((force) => ({option: force, value: force}))}
+                selectOptions={this.props.playerUi.allForces.map((force) => ({option: force.forceName, value: force.forceName}))}
               />
             </div>
             : false
@@ -74,7 +74,7 @@ class PlayerUi extends Component {
               <FontAwesomeIcon icon={faArrowLeft} size="2x" style={{cursor: 'pointer'}} onClick={this.goBack} />
               <DropdownInput
                 updateStore={this.updateSelectedRole}
-                selectOptions={this.props.playerUi.allForces[this.props.playerUi.selectedForce].roles.map((role) => ({option: role, value: role}))}
+                selectOptions={this.props.playerUi.allForces.find((f) => f.forceName === this.props.playerUi.selectedForce).roles.map((role) => ({option: role, value: role}))}
               />
             </div>
             : false

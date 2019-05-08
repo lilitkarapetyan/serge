@@ -9,6 +9,7 @@ export const notificationReducer = (state = initialState, action) => {
 
     switch (action.type) {
       case ActionConstant.ADD_NOTIFICATION:
+        console.log(action.payload);
         newState.push(action.payload);
         return newState;
 

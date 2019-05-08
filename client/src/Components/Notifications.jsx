@@ -20,7 +20,7 @@ class Notifications extends Component {
       <>
         {this.props.notifications.map((data) => {
           return (
-            <Snackbar data={data} onClickHandler={this.onClickHandler} />
+            <Snackbar key={data.message}  data={data} onClickHandler={this.onClickHandler} />
           );
         })
         }

@@ -3,8 +3,7 @@ import {connect} from "react-redux";
 
 import {
   setCurrentTab,
-  setWargameTitle,
-  updateWargame,
+  saveWargameTitle, saveForce,
 } from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
 import TabbedView from "./TabbedView";
@@ -12,13 +11,25 @@ import ProgressBar from "../Components/ProgressBar/ProgressBar";
 
 import Link from "../Components/Link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
+import {faArrowLeft, faSave} from "@fortawesome/free-solid-svg-icons";
+
+ import _ from "lodash";
+import checkUnique from "../Helpers/checkUnique";
 
 import classNames from "classnames";
 import TextInput from "../Components/Inputs/TextInput";
 import {getAllMessageTypes} from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
+import {addNotification} from "../ActionsAndReducers/Notification/Notification_ActionCreators";
 
 class GameSetup extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      newWargameName: null,
+    };
+  }
 
   componentWillMount() {
     this.props.dispatch(getAllMessageTypes());
@@ -32,7 +43,6 @@ class GameSetup extends Component {
     const that = this;
 
     return Object.entries(this.props.wargame.data).map(function (entry) {
-
       let active = that.props.wargame.currentTab === parseInt(entry[0]);
       let completed = entry[1].complete;
       return (<div key={entry[0]} className={classNames("progress-indicator", {"progress-indicator--active": active, "progress-indicator--complete": completed})}></div>);
@@ -40,14 +50,40 @@ class GameSetup extends Component {
   }
 
   updateWargameTitle = (name) => {
-    this.props.dispatch(setWargameTitle(name));
+    this.setState({
+      newWargameName: name,
+    });
   };
 
 
   saveWargame = () => {
-    if (this.checkAllValid()) {
-      this.props.dispatch(updateWargame(this.props.wargame.currentWargame, this.props.wargame.tabs, this.props.wargame.wargameTitle));
+
+    let wargameNames = this.props.wargame.wargameList.map((game) => game.title);
+        wargameNames = _.pull(wargameNames, this.props.wargame.wargameTitle);
+
+    if (!checkUnique(this.state.newWargameName, wargameNames)) {
+      this.props.dispatch(addNotification("Wargame name is not unique.", "warning"));
+      return;
     }
+
+    if (!this.checkWargameNameSaveable()) return;
+
+    if (this.checkAllValid()) {
+      if (typeof this.state.newWargameName === 'string' && this.state.newWargameName.length > 0) {
+        this.props.dispatch(saveWargameTitle(this.props.wargame.currentWargame, this.state.newWargameName));
+      }
+
+      if (this.state.newWargameName === null || this.state.newWargameName.length === 0) {
+        alert('no channel name');
+      }
+    }
+  };
+
+  checkWargameNameSaveable = () => {
+
+    if (this.state.newWargameName === this.props.wargame.wargameTitle) return false;
+    if (this.state.newWargameName === null || this.state.newWargameName.length === 0) return false;
+    return true;
   };
 
   checkAllValid = () => {
@@ -55,6 +91,9 @@ class GameSetup extends Component {
   };
 
   render() {
+
+    let wargameTitle = typeof this.state.newWargameName === 'string' ? this.state.newWargameName : this.props.wargame.wargameTitle;
+
     return (
       <>
         <div className="view-wrapper view-wrapper-gamesetup">
@@ -62,14 +101,19 @@ class GameSetup extends Component {
             <Link href="/client/umpireMenu" id="home-btn"><FontAwesomeIcon icon={faArrowLeft} size="2x" /></Link>
           </div>
           <div className="flex-content-wrapper flex-content-wrapper--distribute" id="game-setup-head">
-            <TextInput
-              id="title-editable"
-              updateStore={this.updateWargameTitle}
-              options={{numInput: false}}
-              data={this.props.wargame.wargameTitle}
-              validInput={this.props.wargame.validation.validWargameName}
-            />
-            <span className={classNames({"link": true, "link--noIcon": true, "link--disabled": !this.checkAllValid()})} onClick={this.saveWargame}>save</span>
+            <div className="flex-content flex-content--row">
+              <TextInput
+                id="title-editable"
+                updateStore={this.updateWargameTitle}
+                options={{numInput: false}}
+                data={wargameTitle}
+                validInput={this.props.wargame.validation.validWargameName}
+              />
+              {this.checkWargameNameSaveable() ?
+                <FontAwesomeIcon className="savewargame-icon" icon={faSave} onClick={this.saveWargame } size="2x" />
+                : false
+              }
+            </div>
             <ProgressBar>
               {this.createIndicators()}
             </ProgressBar>

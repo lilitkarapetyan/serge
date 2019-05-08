@@ -6,6 +6,7 @@ import {
   setForceOverview,
   saveForce,
   addNewForce,
+  deleteSelectedForce,
 } from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 import '../../scss/App.scss';
 import TextArea from "../../Components/Inputs/TextArea";
@@ -14,6 +15,11 @@ import TextInput from "../../Components/Inputs/TextInput";
 import uniqid from "uniqid";
 
 import {forceTemplate} from "../../api/consts";
+import _ from "lodash";
+import checkUnique from "../../Helpers/checkUnique";
+import {addNotification} from "../../ActionsAndReducers/Notification/Notification_ActionCreators";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faTrash} from "@fortawesome/free-solid-svg-icons";
 
 class ForcesTab extends Component {
 
@@ -40,7 +46,7 @@ class ForcesTab extends Component {
 
     if (curSelected !== nextSelected) {
       this.setState({
-        newChannelName: null,
+        newForceName: null,
       });
     }
   }
@@ -68,6 +74,20 @@ class ForcesTab extends Component {
     this.props.dispatch(setForceOverview(overview));
   };
 
+  checkUnique() {
+    const curTab = this.props.wargame.currentTab;
+    let selectedForce = this.props.wargame.data[curTab].selectedForce;
+
+    let forceNames = this.props.wargame.data[curTab].forces.map((force) => force.forceName);
+    forceNames = _.pull(forceNames, selectedForce);
+
+    if (!checkUnique(this.state.newForceName, forceNames)) {
+      this.props.dispatch(addNotification("Force name is not unique.", "warning"));
+      return false;
+    }
+    return true;
+  }
+
   saveForce = () => {
 
     const curTab = this.props.wargame.currentTab;
@@ -76,6 +96,9 @@ class ForcesTab extends Component {
     let newForceData = this.props.wargame.data[curTab].forces.find((f) => f.forceName === selectedForce);
 
     if (typeof this.state.newForceName === 'string' && this.state.newForceName.length > 0) {
+
+      if (!this.checkUnique()) return;
+
       this.props.dispatch(saveForce(this.props.wargame.currentWargame, this.state.newForceName, newForceData, selectedForce));
     }
 
@@ -84,6 +107,12 @@ class ForcesTab extends Component {
     } else if (this.state.newForceName.length === 0) {
       alert('no channel name');
     }
+  };
+
+  deleteForce = () => {
+    let curTab = this.props.wargame.currentTab;
+    let selectedForce = this.props.wargame.data[curTab].selectedForce;
+    this.props.dispatch(deleteSelectedForce(this.props.wargame.currentWargame, selectedForce));
   };
 
   updateForceName = (name) => {
@@ -111,6 +140,7 @@ class ForcesTab extends Component {
         />
 
         <span className="link link--noIcon" onClick={this.saveForce}>save force</span>
+        <span className="link link--secondary" onClick={this.deleteForce}><FontAwesomeIcon icon={faTrash} />Delete</span>
 
         <span className="link link--secondary link--noIcon link--disabled">Change icon</span>
 

@@ -14,6 +14,24 @@
   }
 }
 
+#title-editable {
+  font-family: "Segoe UI", sans-serif;
+  font-size: 1.85em;
+  font-weight: 500;
+  color: $secondaryColor;
+  border: none;
+  background: transparent;
+  text-overflow: ellipsis;
+  display: inline-block;
+  width: 300px;
+}
+
+.savewargame-icon {
+  align-self: center;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
 .message-feeds {
   position: relative;
   display: flex;

@@ -27,11 +27,9 @@ export const playerUiReducer = (state = initialState, action) => {
       newState.currentWargame = action.payload.name;
       newState.wargameTitle = action.payload.wargameTitle;
 
-      let channelsTab = Object.values(action.payload.tabs).find((obj) => obj.name === "Channels");
-      newState.allChannels = channelsTab.data.channels;
+      newState.allChannels = action.payload.data.channels.channels;
+      newState.allForces = action.payload.data.forces.forces;
 
-      let forcesTab = Object.values(action.payload.tabs).find((obj) => obj.name === "Forces");
-      newState.allForces = forcesTab.data.forces;
       break;
 
     case ActionConstant.SET_FORCE:
@@ -45,23 +43,26 @@ export const playerUiReducer = (state = initialState, action) => {
     case ActionConstant.SET_FILTERED_CHANNELS:
 
       let channels = {};
-      for (let channel in newState.allChannels) {
 
-        let channelParticipants = newState.allChannels[channel].filter((recipient) => recipient.force === newState.selectedForce && recipient.role === newState.selectedRole);
-        let channelActive = newState.allChannels[channel].some((recipient) => recipient.force === newState.selectedForce && recipient.role === newState.selectedRole);
+      newState.allChannels.forEach((channel) => {
 
-        // only allow unique participants in gameSetup but check here also
-        channelParticipants = _.uniqWith(channelParticipants, _.isEqual);
+        let participants = channel.participants.filter((p) => p.force === newState.selectedForce && p.role === newState.selectedRole);
+        let channelActive = channel.participants.some((p) => p.force === newState.selectedForce && p.role === newState.selectedRole);
+
+        participants = _.uniqWith(participants, _.isEqual);
 
         if (channelActive) {
-          channels[channel] = {
-            templates: _.flatMap(channelParticipants, (participant) => participant.templates),
+          channels[channel.channelName] = {
+            templates: _.flatMap(participants, (participant) => participant.templates),
             messages: []
           };
         }
-      }
-      newState.selectedChannel = Object.keys(channels)[0];
-      newState.channels = channels;
+
+        newState.selectedChannel = Object.keys(channels)[0];
+        newState.channels = channels;
+
+      });
+
       break;
 
     case ActionConstant.SET_CHANNEL:

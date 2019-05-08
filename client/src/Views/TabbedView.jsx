@@ -49,7 +49,6 @@ class TabbedView extends Component {
   }
 
   changeTab = (value) => {
-    console.log(value);
     this.setState({ activeTab: value });
     this.props.setCurrentTab(value);
   };
@@ -67,9 +66,11 @@ class TabbedView extends Component {
             )
           }
         </ul>
-        {this.state.activeTab === this.state.tabs[0] && <SettingsTab />}
-        {this.state.activeTab === this.state.tabs[1] && <ForcesTab />}
-        {this.state.activeTab === this.state.tabs[2] && <ChannelsTab />}
+        <div className="flex-content-margin">
+          {this.state.activeTab === this.state.tabs[0] && <SettingsTab />}
+          {this.state.activeTab === this.state.tabs[1] && <ForcesTab />}
+          {this.state.activeTab === this.state.tabs[2] && <ChannelsTab />}
+        </div>
       </>
     );
   }

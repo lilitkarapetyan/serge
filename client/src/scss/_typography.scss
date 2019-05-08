@@ -48,17 +48,6 @@ a {
   }
 }
 
-#title-editable {
-  font-family: "Segoe UI", sans-serif;
-  font-size: 1.85em;
-  font-weight: 500;
-  color: $secondaryColor;
-  border: none;
-  margin-bottom: 24px;
-  background: transparent;
-  text-overflow: ellipsis;
-}
-
 .group-item {
   display: inline-flex;
   width: fit-content;

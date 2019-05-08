@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import {connect} from "react-redux";
 import {
   setSelectedChannel,
-  setForceOverview,
   deleteSelectedChannel,
-  // updateChannelName,
   saveChannel,
   addNewChannel,
 } from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
@@ -19,6 +17,9 @@ import ChannelsTable from "../../Components/Layout/ChannelsTable";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import uniqid from "uniqid";
+import _ from "lodash";
+import checkUnique from "../../Helpers/checkUnique";
+import {addNotification} from "../../ActionsAndReducers/Notification/Notification_ActionCreators";
 
 class ForcesTab extends Component {
 
@@ -74,13 +75,8 @@ class ForcesTab extends Component {
 
     let list = this.props.wargame.data[this.props.wargame.currentTab].channels;
 
-    let newState = {};
-    for (let prop in list) {
-      if (prop.toLowerCase().indexOf(value.toLowerCase()) > -1) newState[prop] = list[prop];
-    }
-
     this.setState({
-      channelList: newState,
+      channelList: list.filter((item) => item.channelName.toLowerCase().indexOf(value.toLowerCase()) > -1),
       searchQuery: value
     });
   };
@@ -97,15 +93,30 @@ class ForcesTab extends Component {
     })
   };
 
+  checkUnique() {
+    const curTab = this.props.wargame.currentTab;
+    let selectedChannel = this.props.wargame.data[curTab].selectedChannel;
+
+    let channelNames = this.props.wargame.data[curTab].channels.map((force) => force.channelName);
+        channelNames = _.pull(channelNames, selectedChannel);
+
+    if (!checkUnique(this.state.newChannelName, channelNames)) {
+      this.props.dispatch(addNotification("Channel name is not unique.", "warning"));
+      return false;
+    }
+    return true;
+  }
+
   saveChannel = () => {
     const curTab = this.props.wargame.currentTab;
     let selectedChannel = this.props.wargame.data[curTab].selectedChannel;
 
     let newChannelData = this.props.wargame.data[curTab].channels.find((c) => c.channelName === selectedChannel);
 
-    console.log(newChannelData);
-
     if (typeof this.state.newChannelName === 'string' && this.state.newChannelName.length > 0) {
+
+      if (!this.checkUnique()) return;
+
       this.props.dispatch(saveChannel(this.props.wargame.currentWargame, this.state.newChannelName, newChannelData, selectedChannel));
     }
 

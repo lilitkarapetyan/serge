@@ -41,21 +41,10 @@ export const addNewForce = (data) => ({
   payload: data,
 });
 
-export const updateChannelName = (name) => ({
-  type: ActionConstant.UPDATE_CHANNEL_NAME,
-  name,
-});
-
 export const setSelectedChannel = (payload) => ({
   type: ActionConstant.SET_SELECTED_CHANNEL,
   payload
 });
-
-// export const deleteSelectedChannel = (payload) => ({
-//   type: ActionConstant.DELETE_SELECTED_CHANNEL,
-//   payload
-// });
-
 
 export const setForceOverview = (payload) => ({
   type: ActionConstant.SET_FORCE_OVERVIEW,
@@ -93,11 +82,6 @@ export const removeRecipient = (id) => ({
 const populatingDb = (isLoading) => ({
   type: ActionConstant.POPULATE_WARGAMES_DB,
   isLoading
-});
-
-export const unsavedState = (unsaved) => ({
-  type: ActionConstant.SET_UNSAVED_STATE,
-  unsaved
 });
 
 
@@ -162,30 +146,30 @@ export const editWargame = (name) => {
 
     console.log(wargame);
 
-    dispatch(unsavedState(false));
     dispatch(setCurrentWargame(wargame));
   }
 };
 
 
-
-export const updateWargame = (dbName, data, title) => {
+export const saveWargameTitle = (dbName, title) => {
 
   return async (dispatch) => {
 
-    let localDoc = await wargamesApi.updateWargame(dbName, data, title);
+    let localDoc = await wargamesApi.updateWargameTitle(dbName, title);
 
     let wargames = await wargamesApi.getAllWargames();
+
+    console.log(wargames);
 
     dispatch(saveAllWargameNames(wargames));
 
     dispatch(setCurrentWargame(localDoc));
 
-    dispatch(unsavedState(false));
-    dispatch(addNotification("wargame saved."));
+    dispatch(addNotification("Wargame name updated.", "success"));
 
   }
 };
+
 
 export const saveSettings = (wargame, data) => {
   return async (dispatch) => {
@@ -193,6 +177,8 @@ export const saveSettings = (wargame, data) => {
     let localDoc = await wargamesApi.saveSettings(wargame, data);
 
     dispatch(setCurrentWargame(localDoc));
+
+    dispatch(addNotification("Overview saved.", "success"));
   }
 };
 
@@ -206,7 +192,7 @@ export const saveForce = (wargameName, newName, newData, oldName) => {
     dispatch(setCurrentWargame(localDoc));
     dispatch(setSelectedForce(newName));
 
-    dispatch(addNotification("force saved."));
+    dispatch(addNotification("Force saved.", "success"));
   }
 };
 
@@ -218,7 +204,7 @@ export const saveChannel = (wargameName, newName, newData, oldName) => {
     dispatch(setCurrentWargame(localDoc));
     dispatch(setSelectedChannel(newName));
 
-    dispatch(addNotification("channel saved."));
+    dispatch(addNotification("channel saved.", "success"));
   }
 };
 
@@ -229,7 +215,18 @@ export const deleteSelectedChannel = (wargameName, channel) => {
 
     dispatch(setCurrentWargame(localDoc));
 
-    dispatch(addNotification("channel deleted."));
+    dispatch(addNotification("channel deleted.", "success"));
+  }
+};
+
+export const deleteSelectedForce = (wargameName, force) => {
+  return async (dispatch) => {
+
+    let localDoc = await wargamesApi.deleteForce(wargameName, force);
+
+    dispatch(setCurrentWargame(localDoc));
+
+    dispatch(addNotification("channel deleted.", "success"));
   }
 };
 
