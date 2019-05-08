@@ -9,18 +9,8 @@ class TabsSearchList extends Component {
     this.props.setSelected(item);
   };
 
-  createList() {
-    var data = this.props.listData;
-
-    var list = [];
-    for (var prop in data) {
-      let active = prop === this.props.selected ? 'active' : '';
-      list.unshift(<span href="#" onClick={this.setSelected.bind(this, prop)} key={prop} className={classNames({"list-title": true, active})}>{prop}</span>);
-    }
-    return list;
-  }
-
   render() {
+    let that = this;
     return (
       <div className="list">
         {this.props.filter ?
@@ -28,7 +18,19 @@ class TabsSearchList extends Component {
           : false
         }
         <div className="list-list">
-          { this.createList() }
+          {this.props.listData.map(function(name) {
+              let active = name === that.props.selected ? 'active' : '';
+
+              return (
+                <span
+                  href="#"
+                  onClick={that.setSelected.bind(that, name)}
+                  key={name}
+                  className={classNames({"list-title": true, active})}>{name}
+                </span>
+              )
+            })
+          }
         </div>
       </div>
     );
@@ -36,7 +38,7 @@ class TabsSearchList extends Component {
 }
 
 TabsSearchList.propTypes = {
-  listData: PropTypes.object.isRequired,
+  listData: PropTypes.array.isRequired,
   filter: PropTypes.func,
   selected: PropTypes.string.isRequired,
   setSelected: PropTypes.func.isRequired,

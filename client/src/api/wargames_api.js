@@ -6,11 +6,11 @@ import deepCopy from "../Helpers/copyStateHelper";
 
 import PouchDB from "pouchdb";
 import {  databasePath,
-          serverPath,
-          dbDefaultSettings,
-          MSG_STORE,
-          MSG_TYPE_STORE,
-          channelsTab } from "./consts";
+  serverPath,
+  dbDefaultSettings,
+  MSG_STORE,
+  MSG_TYPE_STORE
+} from "./consts";
 
 import {setWargameMessages} from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
@@ -44,9 +44,9 @@ export const populateWargame = (dispatch) => {
 
       toCreate.forEach((name) => {
         var db = new PouchDB(databasePath+name);
-            db.setMaxListeners(11);
+        db.setMaxListeners(15);
 
-            changesListener(db, name, dispatch);
+        changesListener(db, name, dispatch);
 
         wargameDbStore.unshift({name, db});
       });
@@ -94,17 +94,26 @@ export const createWargame = () => {
 
   return new Promise((resolve, reject) => {
 
-    var db = new PouchDB(databasePath+name);
+    let db = new PouchDB(databasePath+name);
 
     wargameDbStore.unshift({name, db});
 
     let settings = {...dbDefaultSettings, name: name};
-    settings.wargameTitle = `${settings.wargameTitle}-${uniqId}`;
+
+    settings.wargameTitle = name;
 
     db.put(settings)
       .then(() => {
-        resolve(db.get(settings._id));
-      });
+        return db.get(settings._id);
+      })
+      .then((res) => {
+        console.log(res);
+        resolve(res);
+      })
+      .catch((err) => {
+        reject(err);
+        console.log(err);
+      })
   });
 };
 
@@ -114,6 +123,7 @@ export const editWargame = (dbPath) => {
 
   return new Promise((resolve, reject) => {
     try {
+      console.log(dbName);
       var db = wargameDbStore.find((db) => db.name === dbName).db;
       db.get(dbDefaultSettings._id)
         .then((res) => {
@@ -137,20 +147,61 @@ export const updateWargame = (dbName, data, title) => {
     });
 };
 
-export const saveChannel = (dbName, newName, newData, oldName) => {
+export const saveSettings = (dbName, data) => {
 
   let db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
 
-  console.log(db);
+  return new Promise((resolve, reject) => {
+
+    getWargameLocalFromName(dbName)
+      .then(function (localDoc) {
+        let newDoc = deepCopy(localDoc);
+        newDoc.data.overview = data;
+        return newDoc;
+      })
+      .then((res) => {
+        console.log(res);
+        return db.put({
+          _id: res._id,
+          _rev: res._rev,
+          name: res.name,
+          wargameTitle: res.wargameTitle,
+          data: res.data,
+        })
+      })
+      .then(() => {
+        resolve(db.get(dbDefaultSettings._id));
+      })
+      .catch((err) => {
+        reject(err);
+      })
+  });
+};
+
+export const saveForce = (dbName, newName, newData, oldName) => {
+
+  let db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
 
   return getWargameLocalFromName(dbName)
     .then(function (localDoc) {
 
       let newDoc = deepCopy(localDoc);
 
-      delete newDoc.tabs[channelsTab].data.channels[oldName];
+      let updatedData = newDoc.data;
 
-      newDoc.tabs[channelsTab].data.channels[newName] = newData;
+      let forces = updatedData.forces.forces;
+
+      let forceNew = forces.every((force) => force.forceName !== oldName);
+
+      if (forceNew) {
+        forces.push({...newData, forceName: newName});
+      } else {
+        let forceIndex = forces.findIndex((force) => force.forceName === oldName);
+        // forces.forceName = newName;
+        forces.splice(forceIndex, 1, {...newData, forceName: newName});
+      }
+
+      updatedData.forces.forces = forces;
 
       return new Promise((resolve, reject) => {
 
@@ -161,7 +212,7 @@ export const saveChannel = (dbName, newName, newData, oldName) => {
               _rev: res._rev,
               name: res.name,
               wargameTitle: res.wargameTitle,
-              tabs: newDoc.tabs,
+              data: updatedData,
             })
               .then(() => {
                 resolve(db.get(dbDefaultSettings._id));
@@ -171,10 +222,102 @@ export const saveChannel = (dbName, newName, newData, oldName) => {
               })
           });
       });
-      // localDoc
-      // return updateLocalDoc(dbName, data, title);
+    });
+};
+
+
+
+export const saveChannel = (dbName, newName, newData, oldName) => {
+
+  let db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
+  //
+  return getWargameLocalFromName(dbName)
+    .then(function (localDoc) {
+
+      let newDoc = deepCopy(localDoc);
+
+      let updatedData = newDoc.data;
+
+      let channels = updatedData.channels.channels;
+
+      let channelNew = channels.every((channel) => channel.channelName !== oldName);
+
+      if (channelNew) {
+        channels.push({...newData, channelName: newName});
+      } else {
+        let channelIndex = channels.findIndex((channel) => channel.channelName === oldName);
+        // channels.channelName = newName;
+        channels.splice(channelIndex, 1, {...newData, channelName: newName});
+      }
+
+      updatedData.channels.channels = channels;
+
+      return new Promise((resolve, reject) => {
+
+        db.get(dbDefaultSettings._id)
+          .then((res) => {
+            db.put({
+              _id: dbDefaultSettings._id,
+              _rev: res._rev,
+              name: res.name,
+              wargameTitle: res.wargameTitle,
+              data: updatedData,
+            })
+              .then(() => {
+                resolve(db.get(dbDefaultSettings._id));
+              })
+              .catch((err) => {
+                reject(err);
+              })
+          });
+      });
     })
 };
+
+
+export const deleteChannel = (dbName, channelName) => {
+
+  let db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
+  //
+  return getWargameLocalFromName(dbName)
+    .then(function (localDoc) {
+
+      let newDoc = deepCopy(localDoc);
+
+      let updatedData = newDoc.data;
+
+      let channels = updatedData.channels.channels;
+
+      let channelIndex = channels.findIndex((channel) => channel.channelName === channelName);
+
+      console.log(channelIndex);
+
+        channels.splice(channelIndex, 1);
+
+      updatedData.channels.channels = channels;
+
+      return new Promise((resolve, reject) => {
+
+        db.get(dbDefaultSettings._id)
+          .then((res) => {
+            db.put({
+              _id: dbDefaultSettings._id,
+              _rev: res._rev,
+              name: res.name,
+              wargameTitle: res.wargameTitle,
+              data: updatedData,
+            })
+              .then(() => {
+                resolve(db.get(dbDefaultSettings._id));
+              })
+              .catch((err) => {
+                reject(err);
+              })
+          });
+      });
+    })
+};
+
 
 export const duplicateWargame = (dbPath) => {
 

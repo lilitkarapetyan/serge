@@ -17,23 +17,12 @@ import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 import TextInput from "../Components/Inputs/TextInput";
 import {getAllMessageTypes} from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
-import {addNotification} from "../ActionsAndReducers/Notification/Notification_ActionCreators";
 
 class GameSetup extends Component {
 
   componentWillMount() {
     this.props.dispatch(getAllMessageTypes());
   }
-
-  componentWillReceiveProps(nextProps, nextContext) {
-    if (nextProps.wargame.unsavedState && !this.props.wargame.unsavedState) {
-      this.showUnsavedNotification();
-    }
-  }
-
-  showUnsavedNotification = () => {
-    this.props.dispatch(addNotification("Remember to save"));
-  };
 
   setCurrentTab = (tab) => {
     this.props.dispatch(setCurrentTab(tab));
@@ -42,7 +31,7 @@ class GameSetup extends Component {
   createIndicators() {
     const that = this;
 
-    return Object.entries(this.props.wargame.tabs).map(function (entry) {
+    return Object.entries(this.props.wargame.data).map(function (entry) {
 
       let active = that.props.wargame.currentTab === parseInt(entry[0]);
       let completed = entry[1].complete;
@@ -86,7 +75,7 @@ class GameSetup extends Component {
             </ProgressBar>
           </div>
           <TabbedView
-            tabs={this.props.wargame.tabs}
+            tabs={this.props.wargame.data}
             setCurrentTab={this.setCurrentTab}
           />
         </div>

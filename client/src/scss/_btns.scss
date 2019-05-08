@@ -157,5 +157,6 @@ button {
 }
 
 .btn--disabled {
-  cursor: not-allowed;
+  color: $grey2;
+  cursor: not-allowed !important;
 }

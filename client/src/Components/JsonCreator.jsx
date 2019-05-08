@@ -8,7 +8,7 @@ import {
 
 import JSONEditor from '@json-editor/json-editor';
 // necessary import for date
-import flatpickr from "flatpickr";
+// import flatpickr from "flatpickr";
 
 import '../scss/App.scss';
 

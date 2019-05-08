@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
-import Select from "react-select";
 import '../scss/App.scss';
 import {connect} from "react-redux";
 import {
@@ -9,7 +8,6 @@ import {
 
 import MessageCreator from "../Components/MessageCreator.jsx";
 import Collapsible from "react-collapsible";
-import classNames from "classnames";
 import DropdownInput from "../Components/Inputs/DropdownInput";
 
 class NewMessage extends Component {
@@ -49,12 +47,6 @@ class NewMessage extends Component {
           transitionTime={200}
           easing={'ease-in-out'}
         >
-          {/*<Select*/}
-            {/*value={{val: '', label: ''}}*/}
-            {/*options={this.props.templates}*/}
-            {/*onChange={this.setTemplate}*/}
-            {/*className="message-input"*/}
-          {/*/>*/}
           <DropdownInput
             updateStore={this.setTemplate}
             data={this.state.dropdownValue}

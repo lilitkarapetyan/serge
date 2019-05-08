@@ -1,19 +1,63 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
 import TabsSearchList from "../../Components/TabsSearchList";
-import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
 import {
   setSelectedForce,
-  setForceOverview
+  setForceOverview,
+  saveForce,
+  addNewForce,
 } from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 import '../../scss/App.scss';
 import TextArea from "../../Components/Inputs/TextArea";
 import RemovableGroupItem from "../../Components/Layout/RemovableGroupItem";
+import TextInput from "../../Components/Inputs/TextInput";
+import uniqid from "uniqid";
+
+import {forceTemplate} from "../../api/consts";
 
 class ForcesTab extends Component {
 
-  openModal = () => {
-    this.props.dispatch(modalAction.open("addForce"));
+  constructor(props) {
+    super(props);
+    this.state = {
+      newForceName: null,
+      forcesList: this.props.wargame.data[this.props.wargame.currentTab].forces,
+    }
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+
+    const curSelected = this.props.wargame.data[this.props.wargame.currentTab].selectedForce;
+    const nextSelected = nextProps.wargame.data[nextProps.wargame.currentTab].selectedForce;
+    const curPropsState = this.props.wargame.data[this.props.wargame.currentTab].forces;
+    const nextPropsState = nextProps.wargame.data[nextProps.wargame.currentTab].forces;
+
+    if (curPropsState.length !== nextPropsState.length || curSelected !== nextSelected) {
+      this.setState({
+        forcesList: nextProps.wargame.data[nextProps.wargame.currentTab].forces
+      });
+    }
+
+    if (curSelected !== nextSelected) {
+      this.setState({
+        newChannelName: null,
+      });
+    }
+  }
+
+  createForce = () => {
+    let name = 'force-' + uniqid.time();
+    this.props.dispatch(addNewForce(name));
+    this.props.dispatch(setSelectedForce(name));
+
+    let template = forceTemplate;
+    template.forceName = name;
+
+    this.props.dispatch(saveForce(this.props.wargame.currentWargame, name, template, name));
+
+    this.setState({
+      newForceName: null,
+    });
   };
 
   setSelected = (force) => {
@@ -24,29 +68,63 @@ class ForcesTab extends Component {
     this.props.dispatch(setForceOverview(overview));
   };
 
+  saveForce = () => {
+
+    const curTab = this.props.wargame.currentTab;
+    let selectedForce = this.props.wargame.data[curTab].selectedForce;
+
+    let newForceData = this.props.wargame.data[curTab].forces.find((f) => f.forceName === selectedForce);
+
+    if (typeof this.state.newForceName === 'string' && this.state.newForceName.length > 0) {
+      this.props.dispatch(saveForce(this.props.wargame.currentWargame, this.state.newForceName, newForceData, selectedForce));
+    }
+
+    if (this.state.newForceName === null) {
+      this.props.dispatch(saveForce(this.props.wargame.currentWargame, selectedForce, newForceData, selectedForce));
+    } else if (this.state.newForceName.length === 0) {
+      alert('no channel name');
+    }
+  };
+
+  updateForceName = (name) => {
+    this.setState({
+      newForceName: name,
+    })
+  };
+
   createForceEditor() {
 
     let curTab = this.props.wargame.currentTab;
-    let selectedForce = this.props.wargame.tabs[curTab].data.selectedForce;
+    let selectedForce = this.props.wargame.data[curTab].selectedForce;
+
+    let forceName = typeof this.state.newForceName === 'string' ? this.state.newForceName : selectedForce;
 
     return (
       <div className="flex-content--fill forcesTab">
 
-        <h3>{selectedForce}</h3>
+        <TextInput
+          id="channel-editable"
+          updateStore={this.updateForceName}
+          options={{numInput: false}}
+          data={forceName}
+          validInput={this.props.wargame.validation.validForceName}
+        />
+
+        <span className="link link--noIcon" onClick={this.saveForce}>save force</span>
 
         <span className="link link--secondary link--noIcon link--disabled">Change icon</span>
 
         <p className="heading--sml">Overview &amp; Objectives</p>
         <TextArea
           updateStore={this.updateOverview}
-          data={this.props.wargame.tabs[curTab].data.forces[selectedForce].overview}
+          data={this.props.wargame.data[curTab].forces.find((force) => force.forceName === selectedForce).overview}
         />
 
         <p className="heading--sml">Roles</p>
         <span className="link link--secondary link--noIcon link--disabled">Add a new role</span>
 
         <div className="flex-content">
-          {this.props.wargame.tabs[curTab].data.forces[selectedForce].roles.map((role) => {
+          {this.props.wargame.data[curTab].forces.find((force) => force.forceName === selectedForce).roles.map((role) => {
             return (<RemovableGroupItem key={role}>{role}</RemovableGroupItem>)
           })}
         </div>
@@ -57,13 +135,13 @@ class ForcesTab extends Component {
   render() {
 
     let curTab = this.props.wargame.currentTab;
-    let selectedForce = this.props.wargame.tabs[curTab].data.selectedForce;
+    let selectedForce = this.props.wargame.data[curTab].selectedForce;
 
     return (
       <div className="flex-content-wrapper">
         <div className="flex-content">
-          <span className="link link--noIcon" onClick={this.openModal}>Add a new force</span>
-          <TabsSearchList listData={this.props.wargame.tabs[curTab].data.forces}
+          <span className="link link--noIcon" onClick={this.createForce}>Add a new force</span>
+          <TabsSearchList listData={this.state.forcesList.map((force) => force.forceName)}
                           setSelected={this.setSelected}
                           selected={selectedForce}
           />

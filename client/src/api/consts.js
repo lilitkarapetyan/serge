@@ -19,74 +19,77 @@ export const forceTemplate = {
   roles: ['General']
 };
 
-export const channelTemplate = [];
+// export const channelTemplate = [];
 
-// export const channelTemplate = {
-//   channelName: '',
-//   participants: [],
-// };
-
-export const overviewTab = 0;
-export const forcesTab = 1;
-export const channelsTab = 2;
-
-export const dbDefaultSettings = {
-  _id: '_local/settings',
-  wargameTitle: 'wargame',
-  tabs: {
-    [overviewTab]: {
-      name: "Overview - settings",
-      data: {
-        gameDescription: '',
-        spatialRepresentation: '',
-        planningInterval: null,
-        replayInterval: null,
-        turnStrategy: '',
-      }
-    },
-    [forcesTab]: {
-      name: "Forces",
-      data: {
-        forces: {},
-        roles: ['General'],
-        selectedForce: '',
-      },
-    },
-    [channelsTab]: {
-      name: "Channels",
-      data: {
-        channels: {},
-        selectedChannel: '',
-      },
-    }
-  }
+export const channelTemplate = {
+  channelName: '',
+  participants: [],
 };
+
+// export const overviewTab = 0;
+// export const forcesTab = 1;
+// export const channelsTab = 2;
 
 // export const dbDefaultSettings = {
 //   _id: '_local/settings',
 //   wargameTitle: 'wargame',
-//   data: [
-//     {
+//   tabs: {
+//     [overviewTab]: {
 //       name: "Overview - settings",
-//       gameDescription: '',
-//       spatialRepresentation: '',
-//       planningInterval: null,
-//       replayInterval: null,
-//       turnStrategy: '',
+//       data: {
+//         gameDescription: '',
+//         spatialRepresentation: '',
+//         planningInterval: null,
+//         replayInterval: null,
+//         turnStrategy: '',
+//       }
 //     },
-//     {
+//     [forcesTab]: {
 //       name: "Forces",
-//       forces: [],
-//       roles: ['General'],
-//       selectedForce: '',
+//       data: {
+//         forces: {},
+//         roles: ['General'],
+//         selectedForce: '',
+//       },
 //     },
-//     {
+//     [channelsTab]: {
 //       name: "Channels",
-//       channels: [],
-//       selectedChannel: '',
+//       data: {
+//         channels: {},
+//         selectedChannel: '',
+//       },
 //     }
-//   ]
+//   }
 // };
+
+export const dbDefaultSettings = {
+  _id: '_local/settings',
+  wargameTitle: '',
+  data: {
+    overview: {
+      name: "Overview - settings",
+      gameDescription: '',
+      spatialRepresentation: '',
+      planningInterval: null,
+      replayInterval: null,
+      turnStrategy: '',
+      complete: false,
+    },
+    forces: {
+      name: "Forces",
+      forces: [],
+      roles: ['General'],
+      selectedForce: '',
+      complete: false,
+    },
+    channels: {
+      name: "Channels",
+      channels: [],
+      selectedChannel: '',
+      complete: false,
+    }
+  }
+};
 
 
 // export const channelTemplate = [{

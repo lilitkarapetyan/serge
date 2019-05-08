@@ -6,8 +6,6 @@ import Badge from "react-bootstrap/Badge";
 import Collapsible from "react-collapsible";
 import MessagePreview from "../Components/MessagePreviewPlayerUi";
 
-import _ from "lodash";
-
 import '../scss/App.scss';
 
 class MessagesList extends Component {

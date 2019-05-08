@@ -3,14 +3,11 @@ import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import SettingsTab from "./TabViews/SettingsTab";
 import ForcesTab from "./TabViews/ForcesTab";
 import ChannelsTab from "./TabViews/ChannelsTab";
-import ValidationNotification from "../Components/ValidationNotification";
+// import ValidationNotification from "../Components/ValidationNotification";
 import classNames from "classnames";
 
 function TabContainer(props) {
@@ -39,74 +36,40 @@ class TabbedView extends Component {
   constructor(props) {
     super(props);
 
-    console.log(this.props.tabs);
-
     this.state = {
       value: 0,
-      activeTab: 0,
-      tabs: Object.values(this.props.tabs).map((item) => item.name),
+      activeTab: Object.keys(this.props.tabs)[0],
+      tabs: Object.keys(this.props.tabs),
       invalidFields: [],
     };
   }
 
   componentDidMount() {
-    this.props.setCurrentTab(0);
+    this.props.setCurrentTab(Object.keys(this.props.tabs)[0]);
   }
 
-
-  handleChange = (event, value) => {
-    this.setState({ value });
+  changeTab = (value) => {
+    console.log(value);
+    this.setState({ activeTab: value });
     this.props.setCurrentTab(value);
   };
 
-  changeTab = (value) => {
-    this.setState({ activeTab: value });
-  };
-
   render() {
-
-    const { value } = this.state;
-    const { classes } = this.props;
-
     return (
       <>
         <ul className="tab-nav">
           { this.state.tabs.map((tabName, i) => (
                 <li key={tabName}
-                    onClick={this.changeTab.bind(this, i)}
-                    className={classNames({ "active-tab": i === this.state.activeTab })}
+                    onClick={this.changeTab.bind(this, this.state.tabs[i])}
+                    className={classNames({ "active-tab": tabName === this.state.activeTab })}
                 >{tabName}</li>
               )
             )
           }
         </ul>
-
-        <div>
-          {this.state.activeTab === 0 && <SettingsTab />}
-          {this.state.activeTab === 1 && <ForcesTab />}
-          {this.state.activeTab === 2 && <ChannelsTab />}
-        </div>
-        <div className={classes.root}>
-          <AppBar position="static" color="default">
-            <Tabs
-              value={value}
-              onChange={this.handleChange}
-              indicatorColor="primary"
-              textColor="primary"
-              centered
-            >
-              { this.state.tabs.map((tabName, i) => <Tab key={tabName + i} label={tabName} />) }
-            </Tabs>
-          </AppBar>
-          {value === 0 && <TabContainer><SettingsTab /></TabContainer>}
-          {/*{value === 1 && <TabContainer>PlatformTypes.jsx</TabContainer>}*/}
-          {value === 1 && <TabContainer><ForcesTab /></TabContainer>}
-          {/*{value === 3 && <TabContainer>BackHistory.jsx</TabContainer>}*/}
-          {/*{value === 4 && <TabContainer>Positions.jsx</TabContainer>}*/}
-          {value === 2 && <TabContainer><ChannelsTab /></TabContainer>}
-          {/*{value === 6 && <TabContainer>PlayControl.jsx</TabContainer>}*/}
-        </div>
-        <ValidationNotification validation={ this.props.wargame.validation } />
+        {this.state.activeTab === this.state.tabs[0] && <SettingsTab />}
+        {this.state.activeTab === this.state.tabs[1] && <ForcesTab />}
+        {this.state.activeTab === this.state.tabs[2] && <ChannelsTab />}
       </>
     );
   }

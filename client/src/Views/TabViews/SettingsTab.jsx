@@ -4,7 +4,10 @@ import TextInput from "../../Components/Inputs/TextInput";
 import DropdownInput from "../../Components/Inputs/DropdownInput";
 import Row from "../../Components/Layout/Row";
 
-import { setGameData } from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
+import {
+  setGameData,
+  saveSettings,
+} from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 import TextArea from "../../Components/Inputs/TextArea";
 
 class SettingsTab extends Component {
@@ -29,7 +32,13 @@ class SettingsTab extends Component {
     this.props.dispatch(setGameData({turnStrategy: value}));
   };
 
+  saveSettings = () => {
+    let curTab = this.props.wargame.currentTab;
+    this.props.dispatch(saveSettings(this.props.wargame.currentWargame, this.props.wargame.data[curTab]));
+  };
+
   render() {
+
 
     let spatialRepresentationOptions = [{value: "opt1", option: "opt1"}, {value: "opt2", option: "opt2"}, {value: "opt3", option: "opt3"}]
     let turnStrategyOptions = [{value: "opt1", option: "opt1"}, {value: "opt2", option: "opt2"}, {value: "opt3", option: "opt3"}]
@@ -37,11 +46,13 @@ class SettingsTab extends Component {
     return (
       <div className="flex-content-wrapper">
 
+        <span className="link link--noIcon" onClick={this.saveSettings}>save</span>
+
         <div className="flex-content flex-content--left50">
           <p className="heading--sml">Game description &amp; objectives</p>
           <TextArea
             updateStore={this.updateDescription}
-            data={this.props.wargame.tabs[this.props.wargame.currentTab].data.gameDescription}
+            data={this.props.wargame.data[this.props.wargame.currentTab].gameDescription}
           />
         </div>
 
@@ -56,7 +67,7 @@ class SettingsTab extends Component {
                 updateStore={this.updateSpatialRepresentation}
                 selectOptions={spatialRepresentationOptions}
                 placeholder="Select spatial representation"
-                data={this.props.wargame.tabs[this.props.wargame.currentTab].data.spatialRepresentation}
+                data={this.props.wargame.data[this.props.wargame.currentTab].spatialRepresentation}
               />
             </div>
           </Row>
@@ -69,7 +80,7 @@ class SettingsTab extends Component {
               <TextInput
                 updateStore={this.updatePlanningInterval}
                 options={{ numInput: true }}
-                data={this.props.wargame.tabs[this.props.wargame.currentTab].data.planningInterval}
+                data={this.props.wargame.data[this.props.wargame.currentTab].planningInterval}
                 validInput={true}
               />
             </div>
@@ -86,7 +97,7 @@ class SettingsTab extends Component {
               <TextInput
                 updateStore={this.updateReplayInterval}
                 options={{ numInput: true }}
-                data={this.props.wargame.tabs[this.props.wargame.currentTab].data.replayInterval}
+                data={this.props.wargame.data[this.props.wargame.currentTab].replayInterval}
                 validInput={true}
               />
             </div>
@@ -104,7 +115,7 @@ class SettingsTab extends Component {
                 updateStore={this.updateTurnStrategy}
                 selectOptions={turnStrategyOptions}
                 placeholder="Not implemented yet"
-                data={this.props.wargame.tabs[this.props.wargame.currentTab].data.turnStrategy}
+                data={this.props.wargame.data[this.props.wargame.currentTab].turnStrategy}
                 // disabled={true}
               />
             </div>

@@ -26,10 +26,10 @@ class AddForceModal extends Component {
 
 
   setNewForceName = (e) => {
-
+    console.log(e.target.value);
     this.setState({
       forceName: e.target.value,
-      sameName: this.props.wargame.tabs[this.props.wargame.currentTab].data.forces[e.target.value]
+      sameName: this.props.wargame.data[this.props.wargame.currentTab].forces.some((force) => force === e.target.value)
     });
   };
 

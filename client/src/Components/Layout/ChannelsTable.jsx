@@ -13,23 +13,18 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   faTrash,
   faPencilAlt,
+  faUndoAlt,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
+
+import classNames from "classnames";
 
 class ChannelsTable extends Component {
 
   constructor(props) {
     super(props);
 
-    var tabs = Object.values(this.props.wargame.tabs);
-    let forces = tabs.find((d) => d.name === "Forces").data.forces;
-
-    let forceOptions = [];
-    for (let prop in forces) {
-      forceOptions.push({
-        value: prop,
-        label: prop,
-      });
-    }
+    let forceOptions = this.props.wargame.data.forces.forces.map((f) => ({ value: f.forceName, label: f.forceName }));
 
     let templateOptions = this.props.messageTypes.messages.map((messageType) => {
       return {
@@ -58,10 +53,9 @@ class ChannelsTable extends Component {
 
     if (this.state.selectedForce.value !== nextState.selectedForce.value) {
 
-      var tabs = Object.values(this.props.wargame.tabs);
-
       let roleOptions = [];
-      var roles = tabs.find((d) => d.name === "Forces").data.forces[nextState.selectedForce.value].roles;
+
+      let roles = this.props.wargame.data.forces.forces.find((f) => f.forceName === nextState.selectedForce.value).roles;
 
       roles.forEach((role) => {
 
@@ -74,6 +68,16 @@ class ChannelsTable extends Component {
       this.setState({
         roleOptions,
       });
+    }
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (this.props.wargame.data.channels.selectedChannel !== nextProps.wargame.data.channels.selectedChannel) {
+      this.setState({
+        selectedForce: {value: null, label: null},
+        selectedRole:  {value: null, label: null},
+        selectedTemplates: [],
+      })
     }
   }
 
@@ -144,6 +148,10 @@ class ChannelsTable extends Component {
 
   addToChannel = () => {
 
+    let rowComplete = this.state.selectedTemplates.length > 0;
+
+    if (!rowComplete) return;
+
     let channelData = {
       force: this.state.selectedForce.value,
       role: this.state.selectedRole.value,
@@ -158,7 +166,17 @@ class ChannelsTable extends Component {
     });
   };
 
+  clearChannelData = () => {
+    this.setState({
+      selectedForce: {value: null, label: null},
+      selectedRole: {value: null, label: null},
+      selectedTemplates: [],
+    });
+  };
+
   render() {
+
+    let rowComplete = this.state.selectedTemplates.length > 0;
 
     return (
       <div className="flex-content">
@@ -208,11 +226,8 @@ class ChannelsTable extends Component {
                 />
               </td>
               <td>
-                <button
-                  className="btn btn-action btn-action--secondary"
-                  onClick={this.addToChannel}
-                  disabled={!this.state.selectedTemplates.length > 0}>
-                  Save</button>
+                <FontAwesomeIcon icon={faUndoAlt} onClick={this.clearChannelData} />
+                <FontAwesomeIcon icon={faPlus} className={classNames({"btn--disabled": !rowComplete})} onClick={this.addToChannel} />
               </td>
             </tr>
           </tbody>

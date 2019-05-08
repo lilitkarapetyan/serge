@@ -1,11 +1,12 @@
 import ActionConstant from '../ActionConstants';
 import copyState from "../copyStateHelper.js";
-import _ from "lodash";
+// import _ from "lodash";
 import uniqId from "uniqid";
 
 import {
   forceTemplate,
   channelTemplate,
+  dbDefaultSettings,
 } from "../../api/consts";
 
 var initialState = {
@@ -15,57 +16,11 @@ var initialState = {
   wargameTitle: '',
   validation: {
     validWargameName: true,
+    validForceName: true,
     validChannelName: true,
   },
-  tabs: {
-    0: {
-      name: "Overview - settings",
-      data: {
-        gameDescription: '',
-        spatialRepresentation: '',
-        planningInterval: null,
-        replayInterval: null,
-        turnStrategy: '',
-      },
-      complete: false,
-    },
-    // 1: {
-    //   name: "Platform Types",
-    //   complete: false,
-    // },
-    1: {
-      name: "Forces",
-      data: {
-        // forces: {'white': forceTemplate},
-        forces: {},
-        selectedForce: '',
-        roles: [],
-      },
-      complete: false,
-    },
-    // 3: {
-    //   name: "Back history",
-    //   complete: false,
-    // },
-    // 4: {
-    //   name: "Positions",
-    //   complete: false,
-    // },
-    2: {
-      name: "Channels",
-      data: {
-        // channels: {'white weather': channelTemplate},
-        channels: {},
-        selectedChannel: '',
-      },
-      complete: false,
-    },
-    // 6: {
-    //   name: "Play control",
-    //   complete: false,
-    // },
-  },
-  currentTab: 0,
+  data: {...dbDefaultSettings.data},
+  currentTab: Object.keys(dbDefaultSettings.data)[0],
   unsavedState: false,
 };
 
@@ -82,7 +37,7 @@ export const wargamesReducer = (state = initialState, action) => {
   let tab = newState.currentTab;
 
   let curChannel;
-  let recipientIndex;
+  let participantIndex;
   let listWithoutThis;
   let uniqueName;
 
@@ -93,9 +48,10 @@ export const wargamesReducer = (state = initialState, action) => {
       return newState;
 
     case ActionConstant.SET_CURRENT_WARGAME:
+
       newState.currentWargame = action.payload.name;
       newState.wargameTitle = action.payload.wargameTitle;
-      newState.tabs = action.payload.tabs;
+      newState.data = action.payload.data;
       return newState;
 
     case ActionConstant.SET_WARGAME_NAME:
@@ -118,22 +74,29 @@ export const wargamesReducer = (state = initialState, action) => {
       break;
 
     case ActionConstant.SET_GAME_SETUP_DATA:
-      newState.tabs[tab].data = {...newState.tabs[tab].data, ...action.payload};
+      newState.data[tab] = {...newState.data[tab], ...action.payload};
       newState.unsavedState = true;
       break;
 
     case ActionConstant.ADD_NEW_FORCE:
-      newState.tabs[tab].data.forces[action.payload] = forceTemplate;
+
+      let newForce = forceTemplate;
+      newForce.forceName = action.payload;
+
+      newState.data[tab].forces.push(newForce);
       newState.unsavedState = true;
       break;
 
     case ActionConstant.SET_SELECTED_FORCE:
-      newState.tabs[tab].data.selectedForce = action.payload;
+      newState.data[tab].selectedForce = action.payload;
       newState.unsavedState = true;
       break;
 
     case ActionConstant.ADD_NEW_CHANNEL:
-      newState.tabs[tab].data.channels[action.payload] = channelTemplate;
+
+      let newChannel = channelTemplate;
+      newChannel.channelName = action.payload;
+      newState.data[tab].channels.push(newChannel);
       newState.unsavedState = true;
       break;
 
@@ -141,7 +104,7 @@ export const wargamesReducer = (state = initialState, action) => {
 
       listWithoutThis = [];
 
-      let selectedChannel = newState.tabs[tab].data.selectedChannel;
+      let selectedChannel = newState.data[tab].data.selectedChannel;
       let channels = Object.keys(newState.tabs[tab].data.channels);
 
       channels.forEach((channel) => {
@@ -161,38 +124,45 @@ export const wargamesReducer = (state = initialState, action) => {
       break;
 
     case ActionConstant.SET_SELECTED_CHANNEL:
-      newState.tabs[tab].data.selectedChannel = action.payload;
+      newState.data[tab].selectedChannel = action.payload;
       break;
 
     case ActionConstant.DELETE_SELECTED_CHANNEL:
-      delete newState.tabs[tab].data.channels[action.payload];
-      newState.tabs[tab].data.selectedChannel = '';
+
+      let channelIndex = newState.data[tab].channels.findIndex((channel) => channel.channelName === action.payload);
+
+      console.log(channelIndex);
+      console.log(newState.data[tab].channels);
+
+      newState.data[tab].channels.splice(channelIndex, 1);
+      newState.data[tab].selectedChannel = '';
       break;
 
     case ActionConstant.SET_FORCE_OVERVIEW:
-      let selected = newState.tabs[tab].data.selectedForce;
-      newState.tabs[tab].data.forces[selected].overview = action.payload;
+      let selected = newState.data[tab].selectedForce;
+      newState.data[tab].forces.find((f) => f.forceName === selected).overview = action.payload;
       newState.unsavedState = true;
       break;
 
     case ActionConstant.ADD_NEW_RECIPIENT:
-      curChannel = newState.tabs[tab].data.selectedChannel;
+      curChannel = newState.data[tab].selectedChannel;
       let newParticipant = {...action.payload, subscriptionId: uniqId.time()};
-      newState.tabs[tab].data.channels[curChannel].push(newParticipant);
+      newState.data[tab].channels.find((c) => c.channelName === curChannel).participants.push(newParticipant);
       newState.unsavedState = true;
       break;
 
     case ActionConstant.UPDATE_RECIPIENT:
-      curChannel = newState.tabs[tab].data.selectedChannel;
-      recipientIndex = newState.tabs[tab].data.channels[curChannel].findIndex((recipient) => recipient.subscriptionId === action.payload.id);
-      newState.tabs[tab].data.channels[curChannel].splice(recipientIndex, 1, {...action.payload.data, subscriptionId: action.payload.id});
+      curChannel = newState.data[tab].selectedChannel;
+      participantIndex = newState.data[tab].channels.find((c) => c.channelName === curChannel).participants.findIndex((participant) => participant.subscriptionId === action.payload.id);
+      newState.data[tab].channels.find((c) => c.channelName === curChannel).participants.splice(participantIndex, 1, {...action.payload.data, subscriptionId: action.payload.id});
       newState.unsavedState = true;
       break;
 
     case ActionConstant.REMOVE_RECIPIENT:
-      curChannel = newState.tabs[tab].data.selectedChannel;
-      recipientIndex = newState.tabs[tab].data.channels[curChannel].findIndex((recipient) => recipient.subscriptionId === action.payload);
-      newState.tabs[tab].data.channels[curChannel].splice(recipientIndex, 1);
+      curChannel = newState.data[tab].selectedChannel;
+      participantIndex = newState.data[tab].channels.find((c) => c.channelName === curChannel).participants.findIndex((participant) => participant.subscriptionId === action.payload);
+      console.log(participantIndex);
+      newState.data[tab].channels.find((c) => c.channelName === curChannel).participants.splice(participantIndex, 1);
       newState.unsavedState = true;
       break;
 
@@ -204,15 +174,15 @@ export const wargamesReducer = (state = initialState, action) => {
       return newState;
   }
 
-  // pagination completion bar at top of gameDesigner page
-  let flatten = (n) => {
-    if (_.isEmpty(n)) return null; // force show empty array
-    return (_.isArray(n) || _.isObject(n)) ? _.flatMapDeep(n, flatten) : n;
-  };
-
-  let inputResults = _.flatMapDeep(newState.tabs[tab].data, flatten);
-
-  newState.tabs[tab].complete = inputResults.every((item) => item !== null && item.length > 0);
+  // // pagination completion bar at top of gameDesigner page
+  // let flatten = (n) => {
+  //   if (_.isEmpty(n)) return null; // force show empty array
+  //   return (_.isArray(n) || _.isObject(n)) ? _.flatMapDeep(n, flatten) : n;
+  // };
+  //
+  // let inputResults = _.flatMapDeep(newState.tabs[tab].data, flatten);
+  //
+  // newState.tabs[tab].complete = inputResults.every((item) => item !== null && item.length > 0);
 
   return newState;
 };
