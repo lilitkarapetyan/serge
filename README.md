@@ -18,7 +18,7 @@ ensure line 3&4 uncommented in `client/src/api/consts.js`
 ### for heroku
 ensure line 3&4 commented in `client/src/api/consts.js`
 
-change "proxy" & "homepage" to `https://serge-dev.herokuapp.com/` from `http://localhost:8080` in package.json
+change "proxy" to `https://serge-dev.herokuapp.com/` from `http://localhost:8080` in package.json
 
 `npm run build` at `/client`
 
