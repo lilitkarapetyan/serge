@@ -6,7 +6,6 @@ import * as messageTypesApi from "../../../api/messageTypes_api";
 import { messageTypesReducer } from "../../../ActionsAndReducers/dbMessageTypes/messageTypes_Reducer";
 import machineryFailure from "../../../Schemas/machinery_failure.json";
 import ActionConstant from "../../../ActionsAndReducers/ActionConstants";
-import {wargamesReducer} from "../../../ActionsAndReducers/dbWargames/wargames_Reducer";
 
 const mockStore = configureStore([thunk]);
 

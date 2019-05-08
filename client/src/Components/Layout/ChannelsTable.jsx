@@ -14,7 +14,7 @@ import {
   faTrash,
   faPencilAlt,
   faUndoAlt,
-  faPlus,
+  faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 
 import classNames from "classnames";
@@ -227,7 +227,7 @@ class ChannelsTable extends Component {
               </td>
               <td>
                 <FontAwesomeIcon icon={faUndoAlt} onClick={this.clearChannelData} />
-                <FontAwesomeIcon icon={faPlus} className={classNames({"btn--disabled": !rowComplete})} onClick={this.addToChannel} />
+                <FontAwesomeIcon icon={faCheck} className={classNames({"btn--disabled": !rowComplete})} onClick={this.addToChannel} />
               </td>
             </tr>
           </tbody>
