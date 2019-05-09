@@ -21,13 +21,10 @@ class MessagesList extends Component {
   componentWillReceiveProps(nextProps, nextContext) {
     if (this.props.messages.length !== 0 && nextProps.messages.length !== this.props.messages.length) {
 
-      let newMessage = {
-        message: nextProps.messages[0],
-        open: false,
-      };
+      let newMessages = nextProps.messages.map((item) => ({ message: item, open: false })).filter((item) => item.message.details.channel === nextProps.curChannel);
 
       let messages = this.state.messages;
-      messages.unshift(newMessage);
+      messages.unshift(newMessages[0]);
 
       this.setState({
         messages,
