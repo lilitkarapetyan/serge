@@ -1,35 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import PropTypes from 'prop-types';
 
-import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import {faAsterisk} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+
 import SettingsTab from "./TabViews/SettingsTab";
 import ForcesTab from "./TabViews/ForcesTab";
 import ChannelsTab from "./TabViews/ChannelsTab";
-// import ValidationNotification from "../Components/ValidationNotification";
 import classNames from "classnames";
-
-function TabContainer(props) {
-  return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      {props.children}
-    </Typography>
-  );
-}
-
-TabContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
-});
-
+import {modalAction} from "../ActionsAndReducers/Modal/Modal_ActionCreators";
+import {addNotification} from "../ActionsAndReducers/Notification/Notification_ActionCreators";
 
 class TabbedView extends Component {
 
@@ -48,22 +28,36 @@ class TabbedView extends Component {
     this.props.setCurrentTab(Object.keys(this.props.tabs)[0]);
   }
 
+  checkAllSaved() {
+    return Object.values(this.props.wargame.data).every((item) => !item.dirty);
+  }
+
   changeTab = (value) => {
-    this.setState({ activeTab: value });
-    this.props.setCurrentTab(value);
+
+    if (this.checkAllSaved()) {
+      this.setState({ activeTab: value });
+      this.props.setCurrentTab(value);
+    } else {
+      this.props.dispatch(addNotification("Unsaved changes", "warning"));
+    }
   };
 
   render() {
+
     return (
       <>
         <ul className="tab-nav">
           { this.state.tabs.map((tabName, i) => (
-                <li key={tabName}
-                    onClick={this.changeTab.bind(this, this.state.tabs[i])}
-                    className={classNames({ "active-tab": tabName === this.state.activeTab })}
-                >{tabName}</li>
-              )
-            )
+              <li key={tabName}
+                  onClick={this.changeTab.bind(this, this.state.tabs[i])}
+                  className={classNames({ "active-tab": tabName === this.state.activeTab })}
+              >
+                {tabName}
+                { this.props.wargame.data[tabName].dirty ?
+                  <FontAwesomeIcon icon={faAsterisk} size="1x" className="dirty-flag" />
+                : false }
+              </li>
+            ))
           }
         </ul>
         <div className="flex-content-margin">
@@ -80,4 +74,4 @@ const mapStateToProps = ({ wargame }) => ({
   wargame
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(TabbedView));
+export default connect(mapStateToProps)(TabbedView);

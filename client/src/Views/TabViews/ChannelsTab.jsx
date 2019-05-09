@@ -5,6 +5,8 @@ import {
   deleteSelectedChannel,
   saveChannel,
   addNewChannel,
+  setTabUnsaved,
+  setTabSaved, setSelectedForce,
 } from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
 import {channelTemplate} from "../../api/consts";
@@ -20,6 +22,7 @@ import uniqid from "uniqid";
 import _ from "lodash";
 import checkUnique from "../../Helpers/checkUnique";
 import {addNotification} from "../../ActionsAndReducers/Notification/Notification_ActionCreators";
+import {modalAction} from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
 
 class ForcesTab extends Component {
 
@@ -66,7 +69,15 @@ class ForcesTab extends Component {
   };
 
   setSelected = (channel) => {
-    this.props.dispatch(setSelectedChannel(channel));
+
+    const curTab = this.props.wargame.currentTab;
+
+    if (this.props.wargame.data[curTab].dirty) {
+      this.props.dispatch(modalAction.open("unsavedChannel", channel));
+    } else {
+      this.props.dispatch(setTabSaved());
+      this.props.dispatch(setSelectedChannel(channel));
+    }
   };
 
   filterChannels = (input) => {
@@ -88,6 +99,7 @@ class ForcesTab extends Component {
   };
 
   updateChannelName = (name) => {
+    this.props.dispatch(setTabUnsaved());
     this.setState({
       newChannelName: name,
     })
@@ -116,6 +128,8 @@ class ForcesTab extends Component {
     if (typeof this.state.newChannelName === 'string' && this.state.newChannelName.length > 0) {
 
       if (!this.checkUnique()) return;
+
+      this.props.dispatch(setTabSaved());
 
       this.props.dispatch(saveChannel(this.props.wargame.currentWargame, this.state.newChannelName, newChannelData, selectedChannel));
     }

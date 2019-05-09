@@ -17,7 +17,7 @@
 
   &.active {
     opacity: 1;
-    animation: 0.2s down ease 1;
+    animation: 2.5s down ease 1; // same timeout as client/src/Components/Snackbar.jsx
     display: block;
   }
 
@@ -45,8 +45,15 @@
     top: -10%;
     opacity: 0;
   }
-  100% {
+  10% {
     top: 5%;
     opacity: 1;
+  }
+  90% {
+    top: 5%;
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }

@@ -74,6 +74,14 @@ export const wargamesReducer = (state = initialState, action) => {
       newState.data[tab] = {...newState.data[tab], ...action.payload};
       break;
 
+    case ActionConstant.SET_TAB_SAVED:
+      newState.data[tab].dirty = false;
+      break;
+
+    case ActionConstant.SET_TAB_UNSAVED:
+      newState.data[tab].dirty = true;
+      break;
+
     case ActionConstant.ADD_NEW_FORCE:
 
       let newForce = forceTemplate;

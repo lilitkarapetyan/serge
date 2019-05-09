@@ -18,6 +18,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import classNames from "classnames";
+import {setTabUnsaved} from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
 class ChannelsTable extends Component {
 
@@ -109,6 +110,7 @@ class ChannelsTable extends Component {
   }
 
   removeSubscription(subscriptionId) {
+    this.props.dispatch(setTabUnsaved());
     this.props.dispatch(removeRecipient(subscriptionId))
   };
 
@@ -125,6 +127,7 @@ class ChannelsTable extends Component {
   };
 
   updateRecipient = (id, data) => {
+    this.props.dispatch(setTabUnsaved());
     this.props.dispatch(updateRecipient(id, data));
   };
 
@@ -157,6 +160,7 @@ class ChannelsTable extends Component {
       role: this.state.selectedRole.value,
       templates: this.state.selectedTemplates,
     };
+    this.props.dispatch(setTabUnsaved());
     this.props.dispatch(addRecipientToChannel(channelData));
 
     this.setState({

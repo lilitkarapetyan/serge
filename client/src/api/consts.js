@@ -16,7 +16,8 @@ export const headers = {
 export const forceTemplate = {
   forceName: '',
   overview: 'An overview written here..',
-  roles: ['General']
+  roles: ['General'],
+  dirty: false,
 };
 
 // export const channelTemplate = [];
@@ -25,42 +26,6 @@ export const channelTemplate = {
   channelName: '',
   participants: [],
 };
-
-// export const overviewTab = 0;
-// export const forcesTab = 1;
-// export const channelsTab = 2;
-
-// export const dbDefaultSettings = {
-//   _id: '_local/settings',
-//   wargameTitle: 'wargame',
-//   tabs: {
-//     [overviewTab]: {
-//       name: "Overview - settings",
-//       data: {
-//         gameDescription: '',
-//         spatialRepresentation: '',
-//         planningInterval: null,
-//         replayInterval: null,
-//         turnStrategy: '',
-//       }
-//     },
-//     [forcesTab]: {
-//       name: "Forces",
-//       data: {
-//         forces: {},
-//         roles: ['General'],
-//         selectedForce: '',
-//       },
-//     },
-//     [channelsTab]: {
-//       name: "Channels",
-//       data: {
-//         channels: {},
-//         selectedChannel: '',
-//       },
-//     }
-//   }
-// };
 
 export const dbDefaultSettings = {
   _id: '_local/settings',
@@ -74,6 +39,7 @@ export const dbDefaultSettings = {
       replayInterval: null,
       turnStrategy: '',
       complete: false,
+      dirty: false,
     },
     forces: {
       name: "Forces",
@@ -81,12 +47,14 @@ export const dbDefaultSettings = {
       roles: ['General'],
       selectedForce: '',
       complete: false,
+      dirty: false,
     },
     channels: {
       name: "Channels",
       channels: [],
       selectedChannel: '',
       complete: false,
+      dirty: false,
     }
   }
 };

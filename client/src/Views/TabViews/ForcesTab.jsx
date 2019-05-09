@@ -3,10 +3,11 @@ import {connect} from "react-redux";
 import TabsSearchList from "../../Components/TabsSearchList";
 import {
   setSelectedForce,
-  setForceOverview,
   saveForce,
   addNewForce,
   deleteSelectedForce,
+  setTabUnsaved,
+  setTabSaved,
 } from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 import '../../scss/App.scss';
 import TextArea from "../../Components/Inputs/TextArea";
@@ -20,6 +21,7 @@ import checkUnique from "../../Helpers/checkUnique";
 import {addNotification} from "../../ActionsAndReducers/Notification/Notification_ActionCreators";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
+import {modalAction} from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
 
 class ForcesTab extends Component {
 
@@ -27,6 +29,7 @@ class ForcesTab extends Component {
     super(props);
     this.state = {
       newForceName: null,
+      newForceOverview: null,
       forcesList: this.props.wargame.data[this.props.wargame.currentTab].forces,
     }
   }
@@ -47,6 +50,7 @@ class ForcesTab extends Component {
     if (curSelected !== nextSelected) {
       this.setState({
         newForceName: null,
+        newForceOverview: null,
       });
     }
   }
@@ -67,11 +71,14 @@ class ForcesTab extends Component {
   };
 
   setSelected = (force) => {
-    this.props.dispatch(setSelectedForce(force));
-  };
+    const curTab = this.props.wargame.currentTab;
 
-  updateOverview = (overview) => {
-    this.props.dispatch(setForceOverview(overview));
+    if (this.props.wargame.data[curTab].dirty) {
+      this.props.dispatch(modalAction.open("unsavedForce", force));
+    } else {
+      this.props.dispatch(setTabSaved());
+      this.props.dispatch(setSelectedForce(force));
+    }
   };
 
   checkUnique() {
@@ -94,11 +101,12 @@ class ForcesTab extends Component {
     let selectedForce = this.props.wargame.data[curTab].selectedForce;
 
     let newForceData = this.props.wargame.data[curTab].forces.find((f) => f.forceName === selectedForce);
+    let forceOverview = typeof this.state.newForceOverview === 'string' ? this.state.newForceOverview : this.props.wargame.data[curTab].forces.find((force) => force.forceName === selectedForce).overview;
+
+    newForceData.overview = forceOverview;
 
     if (typeof this.state.newForceName === 'string' && this.state.newForceName.length > 0) {
-
       if (!this.checkUnique()) return;
-
       this.props.dispatch(saveForce(this.props.wargame.currentWargame, this.state.newForceName, newForceData, selectedForce));
     }
 
@@ -116,8 +124,16 @@ class ForcesTab extends Component {
   };
 
   updateForceName = (name) => {
+    this.props.dispatch(setTabUnsaved());
     this.setState({
       newForceName: name,
+    })
+  };
+
+  updateForceOverview = (desc) => {
+    this.props.dispatch(setTabUnsaved());
+    this.setState({
+      newForceOverview: desc,
     })
   };
 
@@ -127,6 +143,7 @@ class ForcesTab extends Component {
     let selectedForce = this.props.wargame.data[curTab].selectedForce;
 
     let forceName = typeof this.state.newForceName === 'string' ? this.state.newForceName : selectedForce;
+    let forceOverview = typeof this.state.newForceOverview === 'string' ? this.state.newForceOverview : this.props.wargame.data[curTab].forces.find((force) => force.forceName === selectedForce).overview;
 
     return (
       <div className="flex-content--fill forcesTab">
@@ -146,8 +163,8 @@ class ForcesTab extends Component {
 
         <p className="heading--sml">Overview &amp; Objectives</p>
         <TextArea
-          updateStore={this.updateOverview}
-          data={this.props.wargame.data[curTab].forces.find((force) => force.forceName === selectedForce).overview}
+          updateStore={this.updateForceOverview}
+          data={forceOverview}
         />
 
         <p className="heading--sml">Roles</p>

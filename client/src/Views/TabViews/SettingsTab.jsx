@@ -13,28 +13,30 @@ import TextArea from "../../Components/Inputs/TextArea";
 class SettingsTab extends Component {
 
   updateDescription = (value) => {
-    this.props.dispatch(setGameData({gameDescription: value}));
+    this.props.dispatch(setGameData({gameDescription: value, dirty: true}));
   };
 
   updateSpatialRepresentation = (value) => {
-    this.props.dispatch(setGameData({spatialRepresentation: value}));
+    this.props.dispatch(setGameData({spatialRepresentation: value, dirty: true}));
   };
 
   updatePlanningInterval = (value) => {
-    this.props.dispatch(setGameData({planningInterval: value}));
+    this.props.dispatch(setGameData({planningInterval: value, dirty: true}));
   };
 
   updateReplayInterval = (value) => {
-    this.props.dispatch(setGameData({replayInterval: value}));
+    this.props.dispatch(setGameData({replayInterval: value, dirty: true}));
   };
 
   updateTurnStrategy = (value) => {
-    this.props.dispatch(setGameData({turnStrategy: value}));
+    this.props.dispatch(setGameData({turnStrategy: value, dirty: true}));
   };
 
   saveSettings = () => {
     let curTab = this.props.wargame.currentTab;
-    this.props.dispatch(saveSettings(this.props.wargame.currentWargame, this.props.wargame.data[curTab]));
+    let tabData = this.props.wargame.data[curTab];
+    tabData.dirty = false;
+    this.props.dispatch(saveSettings(this.props.wargame.currentWargame, tabData));
   };
 
   render() {
