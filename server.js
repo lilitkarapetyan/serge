@@ -36,13 +36,13 @@ app.get('/allDbs', (req, res) => {
 });
 
 app.get('/clearAll', (req, res) => {
-  PouchDB.allDbs()
-    .then((dbs) => {
-      dbs.forEach((db) => {
-        new PouchDB(db).destroy();
-      })
-    })
-    .then(() => {
+      PouchDB.allDbs()
+        .then((dbs) => {
+          dbs.forEach((db) => {
+            new PouchDB(db).destroy();
+          })
+        })
+        .then(() => {
       res.send();
     })
 });

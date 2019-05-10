@@ -7,6 +7,7 @@ import Collapsible from "react-collapsible";
 import MessagePreview from "../Components/MessagePreviewPlayerUi";
 
 import '../scss/App.scss';
+import MessageListItem from "../Components/MessageListItem";
 
 class MessagesList extends Component {
 
@@ -41,6 +42,8 @@ class MessagesList extends Component {
     }
   }
 
+
+
   openSection = (el) => {
 
     el.open = true;
@@ -73,17 +76,12 @@ class MessagesList extends Component {
       <div className="message-list">
         {this.state.messages.map((item, i) => {
           return (
-              <Collapsible
-                key={`${i}-title`}
-                trigger={<div className="wrap">{item.message.message.title} <Badge pill variant="secondary">{item.message.details.messageType}</Badge></div>}
-                transitionTime={200}
-                easing={'ease-in-out'}
-                open={item.open}
-                onOpening={this.openSection.bind(this, item)}
-                onClosing={this.closeSection.bind(this, item)}
-              >
-                <div key={i} className="message-preview-player wrap"><MessagePreview detail={item.message.message} from={item.message.details.from.force} /></div>
-              </Collapsible>
+            <MessageListItem
+              detail={item}
+              key={`${i}-messageitem`}
+              openSection={this.openSection.bind(this, item)}
+              closeSection={this.closeSection.bind(this, item)}
+            />
           );
         })}
       </div>
