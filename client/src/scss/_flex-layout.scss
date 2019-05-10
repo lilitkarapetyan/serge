@@ -28,6 +28,10 @@
       flex-direction: row;
       margin-bottom: 2.75em;
 
+      .link {
+        float: right;
+      }
+
       .column {
         flex-direction: column;
       }

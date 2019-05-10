@@ -61,8 +61,8 @@ class ChannelsTable extends Component {
       roles.forEach((role) => {
 
         roleOptions.push({
-          value: role,
-          label: role,
+          value: role.name,
+          label: role.name,
         });
       });
 

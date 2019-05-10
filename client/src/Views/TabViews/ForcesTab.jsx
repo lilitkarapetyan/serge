@@ -137,6 +137,10 @@ class ForcesTab extends Component {
     })
   };
 
+  addNewRoleModal = () => {
+    this.props.dispatch(modalAction.open("newRole"));
+  };
+
   createForceEditor() {
 
     let curTab = this.props.wargame.currentTab;
@@ -148,17 +152,19 @@ class ForcesTab extends Component {
     return (
       <div className="flex-content--fill forcesTab">
 
-        <TextInput
-          id="channel-editable"
-          updateStore={this.updateForceName}
-          options={{numInput: false}}
-          data={forceName}
-        />
+        <div className="flex-content--row">
+          <TextInput
+            id="channel-editable"
+            updateStore={this.updateForceName}
+            options={{numInput: false}}
+            data={forceName}
+          />
 
-        <span className="link link--noIcon" onClick={this.saveForce}>save force</span>
-        <span className="link link--secondary" onClick={this.deleteForce}><FontAwesomeIcon icon={faTrash} />Delete</span>
+          <span className="link link--noIcon" onClick={this.saveForce}>save force</span>
+          <span className="link link--secondary" onClick={this.deleteForce}><FontAwesomeIcon icon={faTrash} />Delete</span>
 
-        <span className="link link--secondary link--noIcon link--disabled">Change icon</span>
+          <span className="link link--secondary link--noIcon link--disabled">Change icon</span>
+        </div>
 
         <p className="heading--sml">Overview &amp; Objectives</p>
         <TextArea
@@ -167,12 +173,14 @@ class ForcesTab extends Component {
         />
 
         <p className="heading--sml">Roles</p>
-        <span className="link link--secondary link--noIcon link--disabled">Add a new role</span>
+        <span className="link link--secondary link--noIcon" onClick={this.addNewRoleModal}>Add a new role</span>
 
         <div className="flex-content">
-          {this.props.wargame.data[curTab].forces.find((force) => force.forceName === selectedForce).roles.map((role) => {
-            return (<RemovableGroupItem key={role}>{role}</RemovableGroupItem>)
-          })}
+          <div className="roles">
+            {this.props.wargame.data[curTab].forces.find((force) => force.forceName === selectedForce).roles.map((role) => {
+              return (<RemovableGroupItem key={role.name}>{role.name}</RemovableGroupItem>)
+            })}
+          </div>
         </div>
       </div>
     );

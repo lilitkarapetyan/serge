@@ -74,7 +74,7 @@ class PlayerUi extends Component {
               <FontAwesomeIcon icon={faArrowLeft} size="2x" style={{cursor: 'pointer'}} onClick={this.goBack} />
               <DropdownInput
                 updateStore={this.updateSelectedRole}
-                selectOptions={this.props.playerUi.allForces.find((f) => f.forceName === this.props.playerUi.selectedForce).roles.map((role) => ({option: role, value: role}))}
+                selectOptions={this.props.playerUi.allForces.find((f) => f.forceName === this.props.playerUi.selectedForce).roles.map((role) => ({option: role.name, value: role.name}))}
               />
             </div>
             : false

@@ -56,10 +56,6 @@
     margin-bottom: 6px;
   }
 
-  .link {
-    float: right;
-  }
-
   textarea {
     width: 100%;
     height: 200px;
@@ -76,6 +72,19 @@
     margin-bottom: 24px;
     background: transparent;
     text-overflow: ellipsis;
+  }
+
+  .roles {
+    display: flex;
+    flex-direction: row;
+    margin-top: 12px;
+
+    .group-item {
+      margin: 0 5px;
+      svg {
+        cursor: pointer;
+      }
+    }
   }
 }
 

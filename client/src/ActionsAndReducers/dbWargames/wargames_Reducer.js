@@ -30,7 +30,7 @@ export const wargamesReducer = (state = initialState, action) => {
   let tab = newState.currentTab;
 
   let curChannel;
-  let participantIndex;
+  let index;
   let listWithoutThis;
   let uniqueName;
 
@@ -142,16 +142,25 @@ export const wargamesReducer = (state = initialState, action) => {
 
     case ActionConstant.UPDATE_RECIPIENT:
       curChannel = newState.data[tab].selectedChannel;
-      participantIndex = newState.data[tab].channels.find((c) => c.channelName === curChannel).participants.findIndex((participant) => participant.subscriptionId === action.payload.id);
-      newState.data[tab].channels.find((c) => c.channelName === curChannel).participants.splice(participantIndex, 1, {...action.payload.data, subscriptionId: action.payload.id});
+      index = newState.data[tab].channels.find((c) => c.channelName === curChannel).participants.findIndex((participant) => participant.subscriptionId === action.payload.id);
+      newState.data[tab].channels.find((c) => c.channelName === curChannel).participants.splice(index, 1, {...action.payload.data, subscriptionId: action.payload.id});
       break;
 
     case ActionConstant.REMOVE_RECIPIENT:
       curChannel = newState.data[tab].selectedChannel;
-      participantIndex = newState.data[tab].channels.find((c) => c.channelName === curChannel).participants.findIndex((participant) => participant.subscriptionId === action.payload);
-      newState.data[tab].channels.find((c) => c.channelName === curChannel).participants.splice(participantIndex, 1);
+      index = newState.data[tab].channels.find((c) => c.channelName === curChannel).participants.findIndex((participant) => participant.subscriptionId === action.payload);
+      newState.data[tab].channels.find((c) => c.channelName === curChannel).participants.splice(index, 1);
       break;
 
+    case ActionConstant.ADD_ROLE_TO_FORCE:
+      newState.data[tab].forces.find((force) => force.forceName === action.payload.force).roles.push(action.payload.role);
+      break;
+
+    case ActionConstant.REMOVE_ROLE:
+      index = newState.data[tab].forces.find((force) => force.forceName === newState.data[tab].selectedForce).roles.findIndex((role) => role.name === action.role);
+      newState.data[tab].forces.find((f) => f.forceName === newState.data[tab].selectedForce).roles.splice(index, 1);
+      break;
+      
     default:
       return newState;
   }

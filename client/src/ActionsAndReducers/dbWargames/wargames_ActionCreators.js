@@ -74,6 +74,19 @@ const populatingDb = (isLoading) => ({
   isLoading
 });
 
+export const addRole = (force, role) => ({
+  type: ActionConstant.ADD_ROLE_TO_FORCE,
+  payload: {
+    force,
+    role,
+  }
+});
+
+export const removeRole = (role) => ({
+  type: ActionConstant.REMOVE_ROLE,
+  role,
+});
+
 
 export const populateWargameStore = () => {
   return async (dispatch) => {
