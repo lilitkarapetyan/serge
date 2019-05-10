@@ -14,11 +14,16 @@ import GameSetup from "../Views/GameSetup";
 import PlayerUi from "../Views/PlayerUi";
 
 import '../scss/App.scss';
+// import {setCurrentViewFromURI} from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
 
 class Router extends Component {
 
   constructor(props) {
     super(props);
+    //
+    // let path = new URL(window.location.href).pathname;
+    //
+    // this.props.dispatch(setCurrentViewFromURI(path));
 
     this.routes = [
       { path: '/client', action: () => <ChooseInterface /> },

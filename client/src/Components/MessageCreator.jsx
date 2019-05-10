@@ -29,7 +29,7 @@ class JsonCreator extends Component {
       channel: this.props.playerUi.selectedChannel,
       from: {
         force: this.props.playerUi.selectedForce,
-        role: this.props.selectedRole,
+        role: this.props.playerUi.selectedRole,
       },
       messageType: this.props.playerUi.messageSchema.title,
     };

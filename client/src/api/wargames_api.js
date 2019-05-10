@@ -84,7 +84,18 @@ export const deleteWargame = (wargamePath) => {
   let name = getNameFromPath(wargamePath);
 
   let wargame = wargameDbStore.find((item) => item.name === name);
-  wargame.db.destroy();
+      wargame.db.destroy();
+        // .then(() => {
+        //   return fetch(serverPath+'deleteDb?db='+name);
+        // })
+        // .then((res) => {
+        //   console.log(res);
+        // })
+        // .catch((err) => {
+        //   console.log(err);
+        // });
+
+
   let index = wargameDbStore.findIndex((item) => item.name === name);
   wargameDbStore.splice(index, 1);
 };

@@ -82,7 +82,6 @@ class SettingsTab extends Component {
                 updateStore={this.updatePlanningInterval}
                 options={{ numInput: true }}
                 data={this.props.wargame.data[this.props.wargame.currentTab].planningInterval}
-                validInput={true}
               />
             </div>
             <div className="flex-content flex-content--sml">
@@ -99,7 +98,6 @@ class SettingsTab extends Component {
                 updateStore={this.updateReplayInterval}
                 options={{ numInput: true }}
                 data={this.props.wargame.data[this.props.wargame.currentTab].replayInterval}
-                validInput={true}
               />
             </div>
             <div className="flex-content flex-content--sml">

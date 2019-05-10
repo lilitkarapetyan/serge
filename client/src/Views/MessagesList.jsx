@@ -20,6 +20,7 @@ class MessagesList extends Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
+
     if (this.props.messages.length !== 0 && nextProps.messages.length !== this.props.messages.length) {
 
       let newMessages = nextProps.messages.map((item) => ({ message: item, open: false })).filter((item) => item.message.details.channel === nextProps.curChannel);

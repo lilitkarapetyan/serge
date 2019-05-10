@@ -84,17 +84,18 @@ class MessagePreview extends Component {
     const that = this;
     const keyPropPairs = Object.entries(this.props.detail);
 
+    console.log(this.props.from);
 
     return keyPropPairs.map((pair, i) => {
 
       if (i===0) return (
         <Fragment key={'from-force'}>
-          { this.props.from ? <>
+          { this.props.from.force && this.props.from.role ? <>
             <span className="detail">
               From:
             </span>
             <span className="data">
-              {this.props.from}
+              {`${this.props.from.force} ${this.props.from.role}`}
             </span></>
           : false }
         </Fragment>

@@ -157,7 +157,6 @@ class ForcesTab extends Component {
             updateStore={this.updateChannelName}
             options={{numInput: false}}
             data={channelName}
-            validInput={this.props.wargame.validation.validChannelName}
           />
           <span className="link link--noIcon" onClick={this.saveChannel}>save channel</span>
           <span className="link link--secondary" onClick={this.deleteChannel}><FontAwesomeIcon icon={faTrash} />Delete</span>

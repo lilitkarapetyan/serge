@@ -33,7 +33,6 @@ class TabbedView extends Component {
   }
 
   changeTab = (value) => {
-
     if (this.checkAllSaved()) {
       this.setState({ activeTab: value });
       this.props.setCurrentTab(value);

@@ -11,6 +11,8 @@ class Link extends Component {
 
     if (this.props.onClickHandler) this.props.onClickHandler();
 
+    if (this.props.disable) return;
+
     const aNewTab = e.metaKey || e.ctrlKey;
     const anExternalLink = this.props.href.startsWith('http');
 

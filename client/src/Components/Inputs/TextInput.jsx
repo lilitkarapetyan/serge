@@ -18,12 +18,9 @@ class TextInput extends Component {
   };
 
   render() {
-
-    let invalid = !this.props.validInput ? 'invalid-input' : '';
-
     return (
       <>
-        <input className={invalid} id={this.props.id ? this.props.id : null} type={this.state.type} onChange={this.onChange} value={this.props.data ? this.props.data : ""} />
+        <input id={this.props.id ? this.props.id : null} type={this.state.type} onChange={this.onChange} value={this.props.data ? this.props.data : ""} />
       </>
     );
   }

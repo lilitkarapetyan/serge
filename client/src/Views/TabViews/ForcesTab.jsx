@@ -153,7 +153,6 @@ class ForcesTab extends Component {
           updateStore={this.updateForceName}
           options={{numInput: false}}
           data={forceName}
-          validInput={this.props.wargame.validation.validForceName}
         />
 
         <span className="link link--noIcon" onClick={this.saveForce}>save force</span>

@@ -3,6 +3,9 @@ import {connect} from 'react-redux';
 
 import '../../scss/App.scss';
 import Select from "react-select";
+import {faCheck} from "@fortawesome/free-solid-svg-icons";
+import classNames from "classnames";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class EditSubscriptionRow extends Component {
 
@@ -71,12 +74,7 @@ class EditSubscriptionRow extends Component {
           />
         </td>
         <td>
-          <button
-            className="btn btn-action btn-action--secondary"
-            onClick={this.updateChannel}
-            // disabled={!this.state.selectedTemplates.length > 0}
-          >
-            Save</button>
+          <FontAwesomeIcon icon={faCheck} onClick={this.updateChannel} />
         </td>
       </tr>
     )

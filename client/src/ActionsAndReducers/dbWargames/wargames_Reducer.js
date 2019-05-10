@@ -13,11 +13,6 @@ var initialState = {
   wargameList: [],
   currentWargame: '',
   wargameTitle: '',
-  validation: {
-    validWargameName: true,
-    validForceName: true,
-    validChannelName: true,
-  },
   data: {...dbDefaultSettings.data},
   currentTab: Object.keys(dbDefaultSettings.data)[0],
 };
@@ -62,7 +57,6 @@ export const wargamesReducer = (state = initialState, action) => {
 
       uniqueName = listWithoutThis.every((wargame) => wargame.title !== action.payload );
 
-      newState.validation.validWargameName = uniqueName;
       newState.wargameTitle = action.payload;
       return newState;
 
@@ -114,8 +108,6 @@ export const wargamesReducer = (state = initialState, action) => {
       });
 
       uniqueName = listWithoutThis.every((channel) => channel !== action.name );
-
-      newState.validation.validChannelName = uniqueName;
 
       if (uniqueName && action.name !== '') {
         newState.tabs[tab].data.channels[action.name] = newState.tabs[tab].data.channels[selectedChannel];

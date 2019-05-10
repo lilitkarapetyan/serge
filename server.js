@@ -36,15 +36,26 @@ app.get('/allDbs', (req, res) => {
 });
 
 app.get('/clearAll', (req, res) => {
-      PouchDB.allDbs()
-        .then((dbs) => {
-          dbs.forEach((db) => {
-            new PouchDB(db).destroy();
-          })
-        })
-        .then(() => {
+  PouchDB.allDbs()
+    .then((dbs) => {
+      dbs.forEach((db) => {
+        new PouchDB(db).destroy();
+      })
+    })
+    .then(() => {
       res.send();
     })
+});
+
+app.get('/deleteDb', (req, res) => {
+  fs.unlink('db/'+req.query.db, (err) => {
+    console.log(err);
+    if (err) {
+      res.status(500).send();
+    } else {
+      res.status(200).send();
+    }
+  });
 });
 
 app.use(express.static(path.join(__dirname)));

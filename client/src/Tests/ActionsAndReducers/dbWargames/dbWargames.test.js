@@ -191,11 +191,8 @@ describe('wargames reducer', () => {
       payload: 'New wargame name'
     };
 
-    expect(wargamesReducer({wargameList, validation: {validWargameName: null}}, setWargameList)).toEqual({
+    expect(wargamesReducer({wargameList}, setWargameList)).toEqual({
       wargameList,
-      validation: {
-        validWargameName: true,
-      },
       wargameTitle: setWargameList.payload,
     });
   });
@@ -207,11 +204,8 @@ describe('wargames reducer', () => {
       payload: wargameList[0].title
     };
 
-    expect(wargamesReducer({wargameList, validation: {validWargameName: null}}, setWargameList)).toEqual({
+    expect(wargamesReducer({wargameList}, setWargameList)).toEqual({
       wargameList,
-      validation: {
-        validWargameName: false,
-      },
       wargameTitle: setWargameList.payload,
     });
   });

@@ -68,14 +68,12 @@ class GameSetup extends Component {
 
     if (!this.checkWargameNameSaveable()) return;
 
-    if (this.checkAllValid()) {
-      if (typeof this.state.newWargameName === 'string' && this.state.newWargameName.length > 0) {
-        this.props.dispatch(saveWargameTitle(this.props.wargame.currentWargame, this.state.newWargameName));
-      }
+    if (typeof this.state.newWargameName === 'string' && this.state.newWargameName.length > 0) {
+      this.props.dispatch(saveWargameTitle(this.props.wargame.currentWargame, this.state.newWargameName));
+    }
 
-      if (this.state.newWargameName === null || this.state.newWargameName.length === 0) {
-        alert('no channel name');
-      }
+    if (this.state.newWargameName === null || this.state.newWargameName.length === 0) {
+      alert('no channel name');
     }
   };
 
@@ -86,8 +84,14 @@ class GameSetup extends Component {
     return true;
   };
 
-  checkAllValid = () => {
-    return Object.values(this.props.wargame.validation).every((entry) => entry === true);
+  checkAllSaved() {
+    return Object.values(this.props.wargame.data).every((item) => !item.dirty);
+  }
+
+  notSavedNotification = () => {
+    if (!this.checkAllSaved()) {
+      this.props.dispatch(addNotification("Unsaved changes", "warning"));
+    }
   };
 
   render() {
@@ -98,7 +102,10 @@ class GameSetup extends Component {
       <>
         <div className="view-wrapper view-wrapper-gamesetup">
           <div id="sidebar">
-            <Link href="/client/umpireMenu" id="home-btn"><FontAwesomeIcon icon={faArrowLeft} size="2x" /></Link>
+            <Link
+              disable={!this.checkAllSaved()}
+              class={classNames({"link--disabled": !this.checkAllSaved()})}
+              onClickHandler={this.notSavedNotification} href="/client/umpireMenu" id="home-btn"><FontAwesomeIcon icon={faArrowLeft} size="2x" /></Link>
           </div>
           <div className="flex-content-wrapper flex-content-wrapper--distribute" id="game-setup-head">
             <div className="flex-content flex-content--row">
@@ -107,7 +114,6 @@ class GameSetup extends Component {
                 updateStore={this.updateWargameTitle}
                 options={{numInput: false}}
                 data={wargameTitle}
-                validInput={this.props.wargame.validation.validWargameName}
               />
               {this.checkWargameNameSaveable() ?
                 <FontAwesomeIcon className="savewargame-icon" icon={faSave} onClick={this.saveWargame } size="2x" />
