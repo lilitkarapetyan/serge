@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 
 import {
   setCurrentTab,
-  saveWargameTitle, saveForce,
+  saveWargameTitle,
 } from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
 import TabbedView from "./TabbedView";

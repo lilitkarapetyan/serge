@@ -1,4 +1,4 @@
-var AdmZip = require('./adm-zip');
+// var AdmZip = require('./adm-zip');
 var Walk = require('./walk');
 
 console.log('-------------------------------------------------------------');

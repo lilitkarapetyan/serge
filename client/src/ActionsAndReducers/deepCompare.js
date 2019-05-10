@@ -11,17 +11,17 @@ export default function deepCompare(obj1, obj2) {
         break;
       //Compare function code
       case 'function':
-        if (typeof (obj2[p]) == 'undefined' || (p != 'compare' && obj1[p].toString() != obj2[p].toString())) return false;
+        if (typeof (obj2[p]) == 'undefined' || (p !== 'compare' && obj1[p].toString() !== obj2[p].toString())) return false;
         break;
       //Compare values
       default:
-        if (obj1[p] != obj2[p]) return false;
+        if (obj1[p] !== obj2[p]) return false;
     }
   }
 
   //Check object 2 for any extra properties
-  for (var p in obj2) {
-    if (typeof (obj1[p]) == 'undefined') return false;
+  for (var prop in obj2) {
+    if (typeof (obj1[prop]) === 'undefined') return false;
   }
   return true;
 };

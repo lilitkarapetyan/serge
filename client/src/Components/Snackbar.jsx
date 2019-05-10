@@ -25,7 +25,7 @@ class Snackbar extends Component {
   render() {
 
     let type = this.props.type ? this.props.type : '';
-    let classes = "active" + " " + type;
+    let classes = `active ${type}`;
 
     return (
       <>

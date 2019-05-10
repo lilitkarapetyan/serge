@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-
-import Badge from "react-bootstrap/Badge";
-
-import Collapsible from "react-collapsible";
-import MessagePreview from "../Components/MessagePreviewPlayerUi";
-
 import '../scss/App.scss';
 import MessageListItem from "../Components/MessageListItem";
 

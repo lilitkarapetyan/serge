@@ -8,7 +8,6 @@ import SettingsTab from "./TabViews/SettingsTab";
 import ForcesTab from "./TabViews/ForcesTab";
 import ChannelsTab from "./TabViews/ChannelsTab";
 import classNames from "classnames";
-import {modalAction} from "../ActionsAndReducers/Modal/Modal_ActionCreators";
 import {addNotification} from "../ActionsAndReducers/Notification/Notification_ActionCreators";
 
 class TabbedView extends Component {

@@ -5,15 +5,10 @@ import { connect } from 'react-redux';
 import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
 import {
   refreshChannel,
-  setSelectedChannel,
   setTabSaved
 } from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
 class UnsavedChannelModal extends Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   dontSave = () => {
 

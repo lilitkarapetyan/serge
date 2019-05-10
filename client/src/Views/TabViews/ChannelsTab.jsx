@@ -6,7 +6,7 @@ import {
   saveChannel,
   addNewChannel,
   setTabUnsaved,
-  setTabSaved, setSelectedForce,
+  setTabSaved,
 } from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
 import {channelTemplate} from "../../api/consts";

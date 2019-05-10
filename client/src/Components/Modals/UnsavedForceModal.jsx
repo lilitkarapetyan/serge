@@ -7,10 +7,6 @@ import {setSelectedForce, setTabSaved} from "../../ActionsAndReducers/dbWargames
 
 class UnsavedForceModal extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   dontSave = () => {
     this.props.dispatch(setSelectedForce(this.props.currentModal.data));
     this.props.dispatch(setTabSaved());

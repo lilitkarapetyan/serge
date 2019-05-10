@@ -523,31 +523,6 @@ export var getAllWargames = function () {
   return Promise.all(promises);
 };
 
-var updateLocalDoc = function(dbName, data, title) {
-
-  var db = wargameDbStore.find((db) => db.name === dbName).db;
-
-  return new Promise((resolve, reject) => {
-
-    db.get(dbDefaultSettings._id)
-      .then((res) => {
-        db.put({
-          _id: dbDefaultSettings._id,
-          _rev: res._rev,
-          name: dbName,
-          wargameTitle: title,
-          data: data,
-        })
-          .then(() => {
-            resolve(db.get(dbDefaultSettings._id));
-          })
-          .catch((err) => {
-            reject(err);
-          })
-      });
-  });
-};
-
 var getNameFromPath = function (dbPath) {
   let path = new URL(dbPath).pathname;
   let index = path.lastIndexOf('/');
