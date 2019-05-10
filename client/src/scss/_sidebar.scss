@@ -1,0 +1,12 @@
+@import 'dependencies/variables';
+
+#sidebar {
+  position: fixed;
+  width: 6vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  padding-top: 6vh;
+
+  background-color: $primaryColor;
+}
