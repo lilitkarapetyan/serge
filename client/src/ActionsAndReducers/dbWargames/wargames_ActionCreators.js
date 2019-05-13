@@ -106,7 +106,7 @@ export const createNewWargameDB = () => {
 
   return async (dispatch) => {
 
-    var wargame = await wargamesApi.createWargame();
+    var wargame = await wargamesApi.createWargame(dispatch);
 
     let wargames = await wargamesApi.getAllWargames();
 

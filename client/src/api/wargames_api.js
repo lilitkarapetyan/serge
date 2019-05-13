@@ -100,7 +100,7 @@ export const deleteWargame = (wargamePath) => {
   wargameDbStore.splice(index, 1);
 };
 
-export const createWargame = () => {
+export const createWargame = (dispatch) => {
   let uniqId = uniqid.time();
 
   var name = `wargame-${uniqId}`;
@@ -108,6 +108,9 @@ export const createWargame = () => {
   return new Promise((resolve, reject) => {
 
     let db = new PouchDB(databasePath+name);
+
+    db.setMaxListeners(15);
+    changesListener(db, name, dispatch);
 
     wargameDbStore.unshift({name, db});
 
