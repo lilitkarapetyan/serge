@@ -21,13 +21,20 @@ class MessageListItem extends Component {
 
   render() {
 
+    let itemTitle;
+    if (this.props.detail.message.message.title) {
+      itemTitle = this.props.detail.message.message.title;
+    } else {
+      itemTitle = this.props.detail.message.message.content;
+    }
+
     return (
       <Collapsible
         key={this.props.key}
         trigger={
           <>
             <FontAwesomeIcon icon={this.props.detail.open ? faMinus : faPlus} size="1x" />
-            {this.props.detail.message.message.title}
+            <div className="message-title">{itemTitle}</div>
             <Badge pill variant="secondary">{this.props.detail.message.details.messageType}</Badge>
           </>
         }
