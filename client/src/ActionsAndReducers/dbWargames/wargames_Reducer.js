@@ -96,27 +96,6 @@ export const wargamesReducer = (state = initialState, action) => {
       newState.data[tab].channels.push(newChannel);
       break;
 
-    case ActionConstant.UPDATE_CHANNEL_NAME:
-
-      listWithoutThis = [];
-
-      let selectedChannel = newState.data[tab].data.selectedChannel;
-      let channels = Object.keys(newState.tabs[tab].data.channels);
-
-      channels.forEach((channel) => {
-        if (channel !== selectedChannel) listWithoutThis.push(channel);
-      });
-
-      uniqueName = listWithoutThis.every((channel) => channel !== action.name );
-
-      if (uniqueName && action.name !== '') {
-        newState.tabs[tab].data.channels[action.name] = newState.tabs[tab].data.channels[selectedChannel];
-        newState.tabs[tab].data.selectedChannel = action.name;
-        delete newState.tabs[tab].data.channels[selectedChannel];
-
-      }
-      break;
-
     case ActionConstant.SET_SELECTED_CHANNEL:
       newState.data[tab].selectedChannel = action.payload;
       break;

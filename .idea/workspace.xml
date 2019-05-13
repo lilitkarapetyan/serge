@@ -2,8 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4475b6b2-0b2d-4e9b-ae80-f36ccda70c0a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/client/src/ActionsAndReducers/dbWargames/wargames_ActionCreators.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/ActionsAndReducers/dbWargames/wargames_ActionCreators.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/ActionsAndReducers/dbWargames/wargames_Reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/ActionsAndReducers/dbWargames/wargames_Reducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/Helpers/calcComplete.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Helpers/calcComplete.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/Views/GameSetup.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Views/GameSetup.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/api/wargames_api.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/api/wargames_api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/scss/_progress.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/scss/_progress.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/log.txt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/database_api/node_modules/" />
     <ignored path="$PROJECT_DIR$/umpire_ui/node_modules/" />
@@ -19,28 +25,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/ActionsAndReducers/dbWargames/wargames_ActionCreators.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="433">
-              <caret line="108" column="60" lean-forward="true" selection-start-line="108" selection-start-column="60" selection-end-line="108" selection-end-column="60" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/package.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="733">
-              <caret line="63" column="47" selection-start-line="63" selection-start-column="47" selection-end-line="63" selection-end-column="47" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/ActionsAndReducers/dbWargames/wargames_Reducer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="142" column="41" selection-start-line="142" selection-start-column="41" selection-end-line="142" selection-end-column="41" />
+            <state relative-caret-position="318">
+              <caret line="98" column="45" selection-start-line="98" selection-start-column="45" selection-end-line="98" selection-end-column="45" />
               <folding>
                 <element signature="e#0#48#0" expanded="true" />
               </folding>
@@ -49,10 +37,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/Views/TabViews/ForcesTab.jsx">
+        <entry file="file://$PROJECT_DIR$/client/src/Views/GameSetup.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="621">
-              <caret line="180" column="32" selection-start-line="180" selection-start-column="32" selection-end-line="180" selection-end-column="32" />
+            <state relative-caret-position="230">
+              <caret line="48" column="80" selection-start-line="48" selection-start-column="80" selection-end-line="48" selection-end-column="106" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -61,40 +49,37 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/Components/Layout/RemovableGroupItem.jsx">
+        <entry file="file://$PROJECT_DIR$/client/src/scss/_progress.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="69">
-              <caret line="3" column="63" selection-start-line="3" selection-start-column="63" selection-end-line="3" selection-end-column="63" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/scss/_flex-layout.scss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="736">
-              <caret line="32" column="7" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="7" />
+            <state relative-caret-position="365">
+              <caret line="51" column="38" selection-start-line="51" selection-start-column="38" selection-end-line="51" selection-end-column="38" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/client/src/api/wargames_api.js">
+        <entry file="file://$PROJECT_DIR$/client/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="413">
-              <caret line="112" column="24" lean-forward="true" selection-start-line="112" selection-start-column="24" selection-end-line="112" selection-end-column="24" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="733">
+              <caret line="63" column="60" lean-forward="true" selection-start-line="63" selection-start-column="60" selection-end-line="63" selection-end-column="60" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/scss/_gameSetup.scss">
+        <entry file="file://$PROJECT_DIR$/client/src/scss/dependencies/_variables.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="575">
-              <caret line="79" column="21" selection-start-line="79" selection-start-column="21" selection-end-line="79" selection-end-column="21" />
+            <state relative-caret-position="397">
+              <caret line="20" column="13" selection-start-line="20" selection-end-line="20" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/api/consts.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="27" lean-forward="true" selection-start-column="27" selection-end-column="58" />
             </state>
           </provider>
         </entry>
@@ -103,16 +88,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>modalaction.open</find>
-      <find>unsavedforcem</find>
-      <find>setForceOver</find>
-      <find>setWargameTitle</find>
-      <find>setSettingsSaved</find>
-      <find>setForcesUnsaved</find>
-      <find>setForcesSaved</find>
-      <find>force</find>
-      <find>saveFor</find>
-      <find>channel</find>
       <find>saveChann</find>
       <find>ge</find>
       <find>this.props.</find>
@@ -133,6 +108,16 @@
       <find>.roles</find>
       <find>addforce</find>
       <find>addRole</find>
+      <find>channel</find>
+      <find>UPDATE_CHANNEL_NAME</find>
+      <find>channe</find>
+      <find>progress</find>
+      <find>comp</find>
+      <find>.COMPLETE</find>
+      <find>complete</find>
+      <find>.complete</find>
+      <find>omitDeep</find>
+      <find>--active</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -148,8 +133,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/client/src/Helpers/calcComplete.js" />
-        <option value="$PROJECT_DIR$/client/src/Helpers/deepCompare.js" />
         <option value="$PROJECT_DIR$/client/src/Tests/ActionsAndReducers/dbMessageTypes/dbMessageTypes.test.js" />
         <option value="$PROJECT_DIR$/client/src/scss/App.scss" />
         <option value="$PROJECT_DIR$/client/src/Tests/setupTests.js" />
@@ -176,7 +159,6 @@
         <option value="$PROJECT_DIR$/client/src/Views/TabbedView.jsx" />
         <option value="$PROJECT_DIR$/client/src/Components/Snackbar.jsx" />
         <option value="$PROJECT_DIR$/client/src/Views/MessagesList.jsx" />
-        <option value="$PROJECT_DIR$/client/src/Views/GameSetup.jsx" />
         <option value="$PROJECT_DIR$/client/src/Components/Layout/Row.jsx" />
         <option value="$PROJECT_DIR$/client/src/Components/Layout/EditSubscriptionRow.jsx" />
         <option value="$PROJECT_DIR$/client/src/Components/Modals/UnsavedChannelModal.jsx" />
@@ -194,11 +176,14 @@
         <option value="$PROJECT_DIR$/client/src/scss/_gameSetup.scss" />
         <option value="$PROJECT_DIR$/client/src/ActionsAndReducers/ActionConstants.js" />
         <option value="$PROJECT_DIR$/client/src/Components/Layout/RemovableGroupItem.jsx" />
+        <option value="$PROJECT_DIR$/client/src/ActionsAndReducers/dbWargames/wargames_ActionCreators.js" />
         <option value="$PROJECT_DIR$/client/src/ActionsAndReducers/dbWargames/wargames_Reducer.js" />
+        <option value="$PROJECT_DIR$/client/src/Helpers/calcComplete.js" />
+        <option value="$PROJECT_DIR$/client/src/api/wargames_api.js" />
+        <option value="$PROJECT_DIR$/client/src/Views/GameSetup.jsx" />
+        <option value="$PROJECT_DIR$/client/src/scss/_progress.scss" />
         <option value="$PROJECT_DIR$/client/src/api/consts.js" />
         <option value="$PROJECT_DIR$/client/package.json" />
-        <option value="$PROJECT_DIR$/client/src/ActionsAndReducers/dbWargames/wargames_ActionCreators.js" />
-        <option value="$PROJECT_DIR$/client/src/api/wargames_api.js" />
       </list>
     </option>
   </component>
@@ -244,60 +229,7 @@
               <item name="serge" type="462c0819:PsiDirectoryNode" />
               <item name="client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="ActionsAndReducers" type="462c0819:PsiDirectoryNode" />
-              <item name="dbWargames" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="serge" type="b2602c69:ProjectViewProjectNode" />
-              <item name="serge" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="ActionsAndReducers" type="462c0819:PsiDirectoryNode" />
-              <item name="playerUi" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="serge" type="b2602c69:ProjectViewProjectNode" />
-              <item name="serge" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="api" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="serge" type="b2602c69:ProjectViewProjectNode" />
-              <item name="serge" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="serge" type="b2602c69:ProjectViewProjectNode" />
-              <item name="serge" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Components" type="462c0819:PsiDirectoryNode" />
-              <item name="Modals" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="serge" type="b2602c69:ProjectViewProjectNode" />
-              <item name="serge" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="scss" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="serge" type="b2602c69:ProjectViewProjectNode" />
-              <item name="serge" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="serge" type="b2602c69:ProjectViewProjectNode" />
-              <item name="serge" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Views" type="462c0819:PsiDirectoryNode" />
-              <item name="TabViews" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -359,7 +291,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="286171000" />
+    <option name="totallyTimeSpent" value="289248000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="0" width="1920" height="1080" extended-state="6" />
@@ -390,26 +322,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/client/src/Components/Modals/DeleteWargameModal.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="9" column="2" selection-start-line="9" selection-start-column="2" selection-end-line="11" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/ActionsAndReducers/Modal/Modal_ActionCreators.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/Components/MessagePreviewPlayerUi.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="86" column="33" selection-start-line="86" selection-start-column="33" selection-end-line="86" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/Components/MessageCreator.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="505">
@@ -543,13 +455,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/Views/GameSetup.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="5" column="18" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/Components/Layout/Row.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="138">
@@ -634,13 +539,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/scss/dependencies/_variables.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="38" column="2" selection-start-line="38" selection-start-column="4" selection-end-line="38" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/Views/TabViews/ChannelsTab.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
@@ -648,26 +546,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/ActionsAndReducers/playerUi/playerUi_Reducer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators.js">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/ActionsAndReducers/playerUi/playerUi_ActionCreators.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/Views/MessageFeeds.jsx">
       <provider selected="true" editor-type-id="text-editor">
@@ -731,36 +611,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/ActionsAndReducers/dbWargames/wargames_Reducer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="142" column="41" selection-start-line="142" selection-start-column="41" selection-end-line="142" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../../portfolio/package.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/../../../portfolio/scss/styles.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-11093" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="733">
-          <caret line="63" column="47" selection-start-line="63" selection-start-column="47" selection-end-line="63" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/api/consts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="27" lean-forward="true" selection-start-column="27" selection-end-column="59" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/Components/Layout/RemovableGroupItem.jsx">
@@ -770,20 +626,102 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/ActionsAndReducers/playerUi/playerUi_ActionCreators.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1107">
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/ActionsAndReducers/playerUi/playerUi_Reducer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-992">
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/ActionsAndReducers/UmpireMenu/umpireMenu_Reducer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/ActionsAndReducers/dbWargames/wargames_ActionCreators.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="433">
-          <caret line="108" column="60" lean-forward="true" selection-start-line="108" selection-start-column="60" selection-end-line="108" selection-end-column="60" />
+        <state relative-caret-position="203">
+          <caret line="104" column="41" selection-start-line="104" selection-start-column="41" selection-end-line="104" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/Helpers/calcComplete.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="2" column="24" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/api/wargames_api.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="413">
-          <caret line="112" column="24" lean-forward="true" selection-start-line="112" selection-start-column="24" selection-end-line="112" selection-end-column="24" />
+        <state relative-caret-position="272">
+          <caret line="240" column="42" selection-start-line="240" selection-start-column="42" selection-end-line="240" selection-end-column="42" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/ActionsAndReducers/dbWargames/wargames_Reducer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="318">
+          <caret line="98" column="45" selection-start-line="98" selection-start-column="45" selection-end-line="98" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/Views/GameSetup.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="48" column="80" selection-start-line="48" selection-start-column="80" selection-end-line="48" selection-end-column="106" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/scss/dependencies/_variables.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="397">
+          <caret line="20" column="13" selection-start-line="20" selection-end-line="20" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/scss/_progress.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="51" column="38" selection-start-line="51" selection-start-column="38" selection-end-line="51" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/api/consts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="27" lean-forward="true" selection-start-column="27" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="733">
+          <caret line="63" column="60" lean-forward="true" selection-start-line="63" selection-start-column="60" selection-end-line="63" selection-end-column="60" />
         </state>
       </provider>
     </entry>

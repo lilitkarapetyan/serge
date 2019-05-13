@@ -1,7 +1,6 @@
 import uniqid from "uniqid";
 import _ from "lodash";
 import {fetch} from "whatwg-fetch";
-
 import deepCopy from "../Helpers/copyStateHelper";
 
 import calcComplete from "../Helpers/calcComplete";
