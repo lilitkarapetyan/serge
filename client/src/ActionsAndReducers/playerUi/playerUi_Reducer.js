@@ -5,6 +5,8 @@ import _ from "lodash";
 const initialState = {
   selectedForce: '',
   selectedRole: '',
+  controlUi: false,
+  currentTurn: 0,
   selectedChannel: '',
   currentWargame: '',
   wargameTitle: '',
@@ -14,6 +16,7 @@ const initialState = {
   allForces: {},
   messageSchema: {},
   messages: [],
+  wargameInitiated: false,
 };
 
 export const playerUiReducer = (state = initialState, action) => {
@@ -26,6 +29,8 @@ export const playerUiReducer = (state = initialState, action) => {
 
       newState.currentWargame = action.payload.name;
       newState.wargameTitle = action.payload.wargameTitle;
+      newState.currentTurn = action.payload.gameTurn;
+      newState.wargameInitiated = action.payload.wargameInitiated;
 
       newState.allChannels = action.payload.data.channels.channels;
       newState.allForces = action.payload.data.forces.forces;
@@ -37,7 +42,8 @@ export const playerUiReducer = (state = initialState, action) => {
       break;
 
     case ActionConstant.SET_ROLE:
-      newState.selectedRole = action.payload;
+      newState.selectedRole = action.payload.name;
+      newState.controlUi = action.payload.control;
       break;
 
     case ActionConstant.SET_FILTERED_CHANNELS:
@@ -58,7 +64,8 @@ export const playerUiReducer = (state = initialState, action) => {
           };
         }
 
-        newState.selectedChannel = Object.keys(channels)[0];
+        if (!action.ignoreSetSelected) newState.selectedChannel = Object.keys(channels)[0]; // this needs to be ignored
+
         newState.channels = channels;
 
       });

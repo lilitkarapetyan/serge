@@ -7,11 +7,14 @@ import {
   setForce,
   setRole,
   setFilteredChannels,
+  initiateGame,
   // getAllMessages,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 import MessageFeeds from "./MessageFeeds";
 import DropdownInput from "../Components/Inputs/DropdownInput";
+import GameControls from "../Components/GameControls";
+import AwaitingStart from "../Components/AwaitingStart";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
@@ -30,13 +33,20 @@ class PlayerUi extends Component {
     this.props.dispatch(setForce(force));
   };
 
-  updateSelectedRole = (role) => {
+  updateSelectedRole = (selectedRole) => {
+
+    let role = this.props.playerUi.allForces.find((f) => f.forceName === this.props.playerUi.selectedForce).roles.find((role) => role.name === selectedRole);
+
     this.props.dispatch(setRole(role));
     this.props.dispatch(setFilteredChannels());
   };
 
   goBack = () => {
     this.props.dispatch(setForce(""));
+  };
+
+  initiateGameplay = () => {
+    this.props.dispatch(initiateGame(this.props.playerUi.currentWargame));
   };
 
   render() {
@@ -80,13 +90,25 @@ class PlayerUi extends Component {
             : false
           }
 
-          {this.props.playerUi.selectedForce && this.props.playerUi.selectedRole ?
-
-            <div className="message-feeds">
-              <MessageFeeds />
+          {this.props.playerUi.selectedForce && this.props.playerUi.selectedRole && this.props.playerUi.wargameInitiated ?
+            <div className="flex-content flex-content--row">
+              <div className="message-feeds">
+                <MessageFeeds />
+              </div>
+              {this.props.playerUi.controlUi ? <GameControls /> : false}
             </div>
             : false
           }
+
+          {this.props.playerUi.selectedForce && this.props.playerUi.selectedRole && !this.props.playerUi.wargameInitiated ?
+
+            <div className="pre-start-screen">
+              {this.props.playerUi.controlUi ?
+                <button name="delete" className="btn btn-action btn-action--primary" onClick={this.initiateGameplay}>Start Game</button>
+              : <AwaitingStart />}
+            </div>
+          : false }
+
         </div>
       </div>
     );

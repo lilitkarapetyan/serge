@@ -19,10 +19,6 @@ class UmpireMenu extends Component {
 
     let loading = Object.values(this.props.dbLoading).some((loading) => loading );
 
-    console.log(loading);
-
-    // check connection
-
     if (loading) {
       return (
         <div id="loading">

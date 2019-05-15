@@ -1,5 +1,5 @@
 import ActionConstant from '../ActionConstants.js';
-import copyState from "../copyStateHelper.js";
+import copyState from "../../Helpers/copyStateHelper.js";
 
 export const currentModal = (state = {}, action) => {
 

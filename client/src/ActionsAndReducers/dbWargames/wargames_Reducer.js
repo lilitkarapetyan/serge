@@ -15,6 +15,7 @@ var initialState = {
   wargameTitle: '',
   data: {...dbDefaultSettings.data},
   currentTab: Object.keys(dbDefaultSettings.data)[0],
+  wargameInitiated: false,
 };
 
 var getNameFromPath = function (dbPath) {
@@ -45,6 +46,8 @@ export const wargamesReducer = (state = initialState, action) => {
       newState.currentWargame = action.payload.name;
       newState.wargameTitle = action.payload.wargameTitle;
       newState.data = action.payload.data;
+      newState.wargameInitiated = action.payload.wargameInitiated || false;
+
       return newState;
 
     case ActionConstant.SET_WARGAME_NAME:
@@ -133,6 +136,11 @@ export const wargamesReducer = (state = initialState, action) => {
 
     case ActionConstant.ADD_ROLE_TO_FORCE:
       newState.data[tab].forces.find((force) => force.forceName === action.payload.force).roles.push(action.payload.role);
+      break;
+
+    case ActionConstant.UPDATE_ROLE_NAME:
+      index = newState.data[tab].forces.find((force) => force.forceName === action.payload.force).roles.findIndex((role) => role.name === action.payload.oldName)
+      newState.data[tab].forces.find((force) => force.forceName === action.payload.force).roles.splice(index, 1, action.payload.role);
       break;
 
     case ActionConstant.REMOVE_ROLE:

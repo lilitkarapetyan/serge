@@ -1,7 +1,7 @@
-export const serverPath = 'https://serge-dev.herokuapp.com/';
-export const databasePath = 'https://serge-dev.herokuapp.com/db/';
-// export const serverPath = 'http://localhost:8080/';
-// export const databasePath = 'http://localhost:8080/db/';
+// export const serverPath = 'https://serge-dev.herokuapp.com/';
+// export const databasePath = 'https://serge-dev.herokuapp.com/db/';
+export const serverPath = 'http://localhost:8080/';
+export const databasePath = 'http://localhost:8080/db/';
 
 export const MSG_STORE = "messages";
 export const MSG_TYPE_STORE = "message_types";
@@ -20,6 +20,18 @@ export const forceTemplate = {
     name: 'General',
     control: false,
   }],
+  umpire: false,
+  dirty: false,
+};
+
+export const umpireForceTemplate = {
+  forceName: 'White',
+  overview: 'Umpire force.',
+  roles: [{
+    name: 'Game Control',
+    control: true,
+  }],
+  umpire: true,
   dirty: false,
 };
 
@@ -46,11 +58,7 @@ export const dbDefaultSettings = {
     },
     forces: {
       name: "Forces",
-      forces: [],
-      // roles: [{
-      //   name: 'General',
-      //   control: false,
-      // }],
+      forces: [umpireForceTemplate],
       selectedForce: '',
       complete: false,
       dirty: false,
@@ -62,5 +70,8 @@ export const dbDefaultSettings = {
       complete: false,
       dirty: false,
     }
-  }
+  },
+  wargameInitiated: false,
+  gameTurn: 0,
+  gameTime: null,
 };

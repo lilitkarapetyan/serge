@@ -11,7 +11,7 @@ import {
 
 import ActionConstant from "../../../ActionsAndReducers/ActionConstants";
 import _ from "lodash";
-import deepCopy from "../../../ActionsAndReducers/copyStateHelper";
+import deepCopy from "../../../Helpers/copyStateHelper";
 
 const mockStore = configureStore([thunk]);
 

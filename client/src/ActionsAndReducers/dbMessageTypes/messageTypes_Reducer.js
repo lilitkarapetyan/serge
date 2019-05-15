@@ -1,5 +1,5 @@
 import ActionConstant from '../ActionConstants';
-import copyState from "../copyStateHelper.js";
+import copyState from "../../Helpers/copyStateHelper";
 
 var initialState = {
   loadingDb: false,

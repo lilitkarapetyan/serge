@@ -10,11 +10,7 @@ export default function calcComplete(data) {
 
   let omittedData = _.omit(data, ['complete', 'selectedForce', 'selectedChannel']);
 
-  console.log(omittedData);
-
   let inputResults = _.flatMapDeep(omittedData, flatten);
-
-  console.log(inputResults);
 
   return inputResults.every((item) => item !== null && item.length > 0 || item);
 }

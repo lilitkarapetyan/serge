@@ -35,6 +35,8 @@
 .message-feeds {
   position: relative;
   display: flex;
+  flex-direction: column;
+  flex-grow: 1;
   height: 100vh;
   max-height: 100vh;
   max-width: 33%;
@@ -134,5 +136,15 @@
   .data {
     padding: 0 6px 0 2px;
     word-break: break-word;
+  }
+}
+
+.pre-start-screen {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+
+  button {
+    align-self: center;
   }
 }

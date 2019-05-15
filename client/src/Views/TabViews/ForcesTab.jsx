@@ -113,7 +113,7 @@ class ForcesTab extends Component {
     if (this.state.newForceName === null) {
       this.props.dispatch(saveForce(this.props.wargame.currentWargame, selectedForce, newForceData, selectedForce));
     } else if (this.state.newForceName.length === 0) {
-      alert('no channel name');
+      this.props.dispatch(addNotification("No Force Name", "warning"));
     }
   };
 
@@ -139,6 +139,19 @@ class ForcesTab extends Component {
 
   addNewRoleModal = () => {
     this.props.dispatch(modalAction.open("newRole"));
+  };
+
+  checkWargameHasGameController = () => {
+
+    let forces = this.props.wargame.data.forces.forces;
+
+    let doesHave = false;
+    for (let i=0 ; i<forces.length ; i++) {
+      let force = forces[i];
+      doesHave = force.roles.some((role) => role.control === true);
+      if (doesHave) break;
+    }
+    return doesHave;
   };
 
   createForceEditor() {
@@ -176,9 +189,12 @@ class ForcesTab extends Component {
         <span className="link link--secondary link--noIcon" onClick={this.addNewRoleModal}>Add a new role</span>
 
         <div className="flex-content">
+          {!this.checkWargameHasGameController() ?
+            <p>At least one force needs role with game control</p> : false
+          }
           <div className="roles">
             {this.props.wargame.data[curTab].forces.find((force) => force.forceName === selectedForce).roles.map((role) => {
-              return (<RemovableGroupItem key={role.name}>{role.name}</RemovableGroupItem>)
+              return (<RemovableGroupItem key={role.name} isControl={role.control}>{role.name}</RemovableGroupItem>)
             })}
           </div>
         </div>

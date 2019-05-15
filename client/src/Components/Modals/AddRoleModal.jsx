@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
 import {
   addRole,
+  updateRole,
   setTabUnsaved,
 } from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
@@ -14,8 +15,7 @@ class AddRoleModal extends Component {
     super(props);
 
     this.state = {
-      roleName: '',
-      control: false,
+      roleName: this.props.currentModal.data ? this.props.currentModal.data.name : '',
     };
   }
 
@@ -43,16 +43,16 @@ class AddRoleModal extends Component {
 
     let newRole = {
       name: this.state.roleName,
-      control: this.state.control,
+      control: this.props.currentModal.data ? this.props.currentModal.data.control : false,
     };
-    this.props.dispatch(setTabUnsaved());
-    this.props.dispatch(addRole(selectedForce, newRole));
-  };
 
-  setControlType = (e) => {
-    this.setState({
-      control: e.target.checked
-    })
+    this.props.dispatch(setTabUnsaved());
+
+    if (this.props.currentModal.data) {
+      this.props.dispatch(updateRole(selectedForce, this.props.currentModal.data.name, newRole));
+    } else {
+      this.props.dispatch(addRole(selectedForce, newRole));
+    }
   };
 
   render() {
@@ -66,8 +66,7 @@ class AddRoleModal extends Component {
         <div className="display-text-wrapper">
           <h3>Add a role</h3>
           {this.state.sameName ? <p className="notification">Already exists</p> : false}
-          <input autoFocus className="modal-input" type="text" onChange={this.setNewRoleName} />
-          <input id="check" type="checkbox" onChange={this.setControlType}/><label htmlFor="check">Has game control.</label>
+          <input autoFocus className="modal-input" type="text" onChange={this.setNewRoleName} value={this.state.roleName || ''} />
           <div className="buttons">
             <button disabled={disable} name="add" className="btn btn-action btn-action--primary" onClick={this.addRole}>Add</button>
             <button name="cancel" className="btn btn-action btn-action--secondary" onClick={this.hideModal}>Cancel</button>
