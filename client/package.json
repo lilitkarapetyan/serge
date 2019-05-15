@@ -62,5 +62,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "homepage": "http://localhost:8080/client/build"
+  "homepage": "https://serge-dev.herokuapp.com/client/build"
 }

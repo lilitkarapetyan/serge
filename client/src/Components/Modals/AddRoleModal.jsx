@@ -55,6 +55,10 @@ class AddRoleModal extends Component {
     }
   };
 
+  handleKeyDown = (e) => {
+    if (e.key === 'Enter' && this.state.roleName.length > 0 && !this.state.sameName) this.addRole();
+  };
+
   render() {
 
     if (!this.props.currentModal.open) return false;
@@ -66,7 +70,14 @@ class AddRoleModal extends Component {
         <div className="display-text-wrapper">
           <h3>Add a role</h3>
           {this.state.sameName ? <p className="notification">Already exists</p> : false}
-          <input autoFocus className="modal-input" type="text" onChange={this.setNewRoleName} value={this.state.roleName || ''} />
+          <input
+            autoFocus
+            className="modal-input"
+            type="text"
+            onChange={this.setNewRoleName}
+            value={this.state.roleName || ''}
+            onKeyDown={this.handleKeyDown}
+          />
           <div className="buttons">
             <button disabled={disable} name="add" className="btn btn-action btn-action--primary" onClick={this.addRole}>Add</button>
             <button name="cancel" className="btn btn-action btn-action--secondary" onClick={this.hideModal}>Cancel</button>

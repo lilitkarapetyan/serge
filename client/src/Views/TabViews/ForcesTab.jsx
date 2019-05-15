@@ -22,6 +22,7 @@ import {addNotification} from "../../ActionsAndReducers/Notification/Notificatio
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import {modalAction} from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
+import classNames from "classnames";
 
 class ForcesTab extends Component {
 
@@ -56,18 +57,27 @@ class ForcesTab extends Component {
   }
 
   createForce = () => {
-    let name = 'force-' + uniqid.time();
-    this.props.dispatch(addNewForce(name));
-    this.props.dispatch(setSelectedForce(name));
 
-    let template = forceTemplate;
-    template.forceName = name;
+    const curTab = this.props.wargame.currentTab;
 
-    this.props.dispatch(saveForce(this.props.wargame.currentWargame, name, template, name));
+    if (this.props.wargame.data[curTab].dirty) {
+      this.props.dispatch(modalAction.open("unsavedForce", "create-new"));
+    } else {
 
-    this.setState({
-      newForceName: null,
-    });
+      let name = 'force-' + uniqid.time();
+      this.props.dispatch(addNewForce(name));
+      this.props.dispatch(setSelectedForce(name));
+
+      let template = forceTemplate;
+      template.forceName = name;
+
+      this.props.dispatch(saveForce(this.props.wargame.currentWargame, name, template, name));
+
+      this.setState({
+        newForceName: null,
+      });
+
+    }
   };
 
   setSelected = (force) => {
@@ -118,8 +128,13 @@ class ForcesTab extends Component {
   };
 
   deleteForce = () => {
+
     let curTab = this.props.wargame.currentTab;
     let selectedForce = this.props.wargame.data[curTab].selectedForce;
+    let isUmpire = this.props.wargame.data[curTab].forces.find((f) => f.forceName === selectedForce).umpire;
+
+    if (isUmpire) return;
+
     this.props.dispatch(deleteSelectedForce(this.props.wargame.currentWargame, selectedForce));
   };
 
@@ -159,6 +174,8 @@ class ForcesTab extends Component {
     let curTab = this.props.wargame.currentTab;
     let selectedForce = this.props.wargame.data[curTab].selectedForce;
 
+    let isUmpire = this.props.wargame.data[curTab].forces.find((f) => f.forceName === selectedForce).umpire;
+
     let forceName = typeof this.state.newForceName === 'string' ? this.state.newForceName : selectedForce;
     let forceOverview = typeof this.state.newForceOverview === 'string' ? this.state.newForceOverview : this.props.wargame.data[curTab].forces.find((force) => force.forceName === selectedForce).overview;
 
@@ -174,7 +191,7 @@ class ForcesTab extends Component {
           />
 
           <span className="link link--noIcon" onClick={this.saveForce}>save force</span>
-          <span className="link link--secondary" onClick={this.deleteForce}><FontAwesomeIcon icon={faTrash} />Delete</span>
+          <span className={classNames({"link": true, "link--secondary": true, "link--disabled": isUmpire})} onClick={this.deleteForce}><FontAwesomeIcon icon={faTrash} />Delete</span>
 
           <span className="link link--secondary link--noIcon link--disabled">Change icon</span>
         </div>

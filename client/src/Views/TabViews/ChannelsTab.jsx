@@ -58,14 +58,21 @@ class ForcesTab extends Component {
   }
 
   createChannel = () => {
-    let name = 'channel-' + uniqid.time();
-    this.props.dispatch(addNewChannel(name));
-    this.props.dispatch(setSelectedChannel(name));
 
-    let template = channelTemplate;
-    template.channelName = name;
+    const curTab = this.props.wargame.currentTab;
 
-    this.props.dispatch(saveChannel(this.props.wargame.currentWargame, name, template, name));
+    if (this.props.wargame.data[curTab].dirty) {
+      this.props.dispatch(modalAction.open("unsavedChannel", "create-new"));
+    } else {
+      let name = 'channel-' + uniqid.time();
+      this.props.dispatch(addNewChannel(name));
+      this.props.dispatch(setSelectedChannel(name));
+
+      let template = channelTemplate;
+      template.channelName = name;
+
+      this.props.dispatch(saveChannel(this.props.wargame.currentWargame, name, template, name));
+    }
   };
 
   setSelected = (channel) => {

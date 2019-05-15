@@ -3,14 +3,26 @@ import ModalWrapper from './ModalWrapper';
 import "../../scss/App.scss";
 import { connect } from 'react-redux';
 import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
-import {setSelectedForce, setTabSaved} from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
+import {
+  setSelectedForce,
+  setTabSaved,
+  addNewForce,
+} from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
+import uniqid from "uniqid";
 
 class UnsavedForceModal extends Component {
 
   dontSave = () => {
-    this.props.dispatch(setSelectedForce(this.props.currentModal.data));
-    this.props.dispatch(setTabSaved());
-    this.props.dispatch(modalAction.close());
+
+    if (this.props.currentModal.data === "create-new") {
+      let name = `channel-${uniqid.time()}`;
+      this.props.dispatch(addNewForce(name));
+      this.props.dispatch(setSelectedForce(name));
+    } else {
+      this.props.dispatch(setSelectedForce(this.props.currentModal.data));
+    }
+      this.props.dispatch(setTabSaved());
+      this.props.dispatch(modalAction.close());
   };
 
   hideModal = () => {
