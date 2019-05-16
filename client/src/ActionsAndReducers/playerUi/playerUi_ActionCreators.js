@@ -44,8 +44,6 @@ export const getWargame = (gamePath) => {
 
     let wargame = await wargamesApi.getWargame(gamePath);
 
-    console.log(wargame);
-
     dispatch(setCurrentWargame(wargame));
   }
 };
@@ -53,9 +51,11 @@ export const getWargame = (gamePath) => {
 export const nextGameTurn = (dbName) => {
   return async (dispatch) => {
 
-    // let wargame = await wargamesApi.nextGameTurn(dbName);
+    let wargame = await wargamesApi.nextGameTurn(dbName);
 
-    // dispatch(setCurrentWargame(wargame));
+    console.log(wargame);
+
+    dispatch(setCurrentWargame(wargame));
   }
 };
 

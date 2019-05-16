@@ -76,6 +76,11 @@ class MessagePreview extends Component {
     });
   }
 
+  capitalize = (s) => {
+    if (typeof s !== 'string') return '';
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  };
+
 
   render() {
 
@@ -115,7 +120,7 @@ class MessagePreview extends Component {
             : false }
 
             <span className="detail">
-              {`${pair[0]}:`}
+              {`${this.capitalize(pair[0])}:`}
             </span>
             <span className="data">
               {pair[1]}
@@ -130,7 +135,7 @@ class MessagePreview extends Component {
 
       return (
         <Fragment key={`${pair[0]}-${pair[1]}`}>
-          <span className="detail">{pair[0]}: </span>
+          <span className="detail">{this.capitalize(pair[0])}: </span>
           <span className="data">{pair[1]}</span>
         </Fragment>
       )

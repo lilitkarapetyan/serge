@@ -105,7 +105,7 @@ class PlayerUi extends Component {
             <div className="pre-start-screen">
               {this.props.playerUi.controlUi ?
                 <button name="delete" className="btn btn-action btn-action--primary" onClick={this.initiateGameplay}>Start Game</button>
-              : <AwaitingStart />}
+              : <AwaitingStart description={this.props.playerUi.gameDescription} />}
             </div>
           : false }
 

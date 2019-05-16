@@ -53,6 +53,7 @@ export const dbDefaultSettings = {
       planningInterval: null,
       replayInterval: null,
       turnStrategy: '',
+      startTime: new Date().toISOString(),
       complete: false,
       dirty: false,
     },

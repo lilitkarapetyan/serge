@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import '../scss/App.scss';
-import {connect} from "react-redux";
-
 
 class AwaitingStart extends Component {
 
-
   render() {
+
+    console.log(this.props.description);
 
     return (
       <>
@@ -15,6 +14,7 @@ class AwaitingStart extends Component {
             <div id="loader"></div>
           </div>
           <h1>Awaiting game start</h1>
+          <p>{this.props.description}</p>
         </div>
       </>
     );

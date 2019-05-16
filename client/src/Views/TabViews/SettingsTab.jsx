@@ -10,6 +10,9 @@ import {
 } from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 import TextArea from "../../Components/Inputs/TextArea";
 
+import 'flatpickr/dist/themes/material_blue.css';
+import Flatpickr from "react-flatpickr";
+
 class SettingsTab extends Component {
 
   updateDescription = (value) => {
@@ -39,6 +42,10 @@ class SettingsTab extends Component {
     this.props.dispatch(saveSettings(this.props.wargame.currentWargame, tabData));
   };
 
+  updateStartDate = (value) => {
+    this.props.dispatch(setGameData({startTime: value[0].toISOString(), dirty: true}));
+  };
+
   render() {
 
 
@@ -50,6 +57,7 @@ class SettingsTab extends Component {
         <div className="flex-content flex-content--left50">
           <p className="heading--sml">Game description &amp; objectives</p>
           <TextArea
+            className="description"
             updateStore={this.updateDescription}
             data={this.props.wargame.data[this.props.wargame.currentTab].gameDescription}
           />
@@ -75,7 +83,7 @@ class SettingsTab extends Component {
 
           <Row>
             <div className="flex-content flex-content--sml">
-              <p className="heading--sml">Planning Interval</p>
+              <p className="heading--sml">War Game turn time</p>
             </div>
             <div className="flex-content flex-content--sml">
               <TextInput
@@ -85,13 +93,13 @@ class SettingsTab extends Component {
               />
             </div>
             <div className="flex-content flex-content--sml">
-              <p className="heading--sml heading--mleft">min.</p>
+              <p className="heading--sml heading--mleft">hrs.</p>
             </div>
           </Row>
 
           <Row>
             <div className="flex-content flex-content--sml">
-              <p className="heading--sml">Replay interval</p>
+              <p className="heading--sml">Real time planning allowance.</p>
             </div>
             <div className="flex-content flex-content--sml">
               <TextInput
@@ -101,7 +109,7 @@ class SettingsTab extends Component {
               />
             </div>
             <div className="flex-content flex-content--sml">
-              <p className="heading--sml heading--mleft">min.</p>
+              <p className="heading--sml heading--mleft">mins.</p>
             </div>
           </Row>
 
@@ -117,6 +125,18 @@ class SettingsTab extends Component {
                 data={this.props.wargame.data[this.props.wargame.currentTab].turnStrategy}
                 // disabled={true}
               />
+            </div>
+          </Row>
+
+          <Row>
+            <div className="flex-content flex-content--sml">
+              <p className="heading--sml">Start time</p>
+            </div>
+            <div className="flex-content flex-content--fill">
+              <Flatpickr
+                value={this.props.wargame.data[this.props.wargame.currentTab].startTime}
+                onChange={this.updateStartDate}
+                />
             </div>
           </Row>
 

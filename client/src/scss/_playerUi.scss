@@ -9,6 +9,11 @@
     padding-bottom: .25em;
   }
 
+  span {
+    font-size: 1.25em;
+    font-family: monospace;
+  }
+
   .group-section {
     margin-top: $umpireMenuMargin;
   }
@@ -59,7 +64,8 @@
       display: flex;
       align-items: center;
       padding: 16px;
-      font-size: 1.4em;
+      font-size: 1.8em;
+      font-family: monospace;
       line-height: 1.75em;
       font-weight: 500;
       cursor: pointer;
@@ -79,6 +85,7 @@
       .badge {
         font-size: 50%;
         font-weight: 200;
+        font-family: monospace;
         height: fit-content;
         margin-left: 10px;
         line-height: 1.5em;

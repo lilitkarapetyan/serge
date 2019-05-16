@@ -31,6 +31,7 @@ export const playerUiReducer = (state = initialState, action) => {
       newState.wargameTitle = action.payload.wargameTitle;
       newState.currentTurn = action.payload.gameTurn;
       newState.wargameInitiated = action.payload.wargameInitiated;
+      newState.gameDescription = action.payload.data.overview.gameDescription;
 
       newState.allChannels = action.payload.data.channels.channels;
       newState.allForces = action.payload.data.forces.forces;

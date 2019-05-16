@@ -278,19 +278,13 @@ export const saveForce = (dbName, newName, newData, oldName) => {
 
       updatedData.forces.forces = forces;
 
-      let hasController = () => {
-        let forces = updatedData.forces.forces;
+      // remove default before calc
 
-        let doesHave = false;
-        for (let i=0 ; i<forces.length ; i++) {
-          let force = forces[i];
-          doesHave = force.roles.some((role) => role.control === true);
-          if (doesHave) break;
-        }
-        return doesHave;
-      };
+      let forceCheck = deepCopy(forces);
+      let umpireIndex = forceCheck.findIndex((force) => force.umpire);
+      forceCheck.splice(umpireIndex, 1);
 
-      updatedData.forces.complete = calcComplete(forces) && hasController();
+      updatedData.forces.complete = calcComplete(forceCheck);
 
       return new Promise((resolve, reject) => {
 
@@ -601,7 +595,7 @@ export const createLatestWargameRevision = (dbName, wargameData) => {
       ...wargameData,
     })
       .then((res) => {
-        resolve(true);
+        resolve(getLatestWargameRevision(dbName));
       })
       .catch((err) => {
         reject(err);
@@ -624,31 +618,23 @@ export const getAllWargameRevisions = (dbName) => {
   });
 };
 
-// export const nextGameTurn = (dbName) => {
-//
-//   let game = wargameDbStore.find((wargame) => dbName === wargame.name);
-//
-//   return new Promise((resolve, reject) => {
-//     game.db.get(dbDefaultSettings._id)
-//       .then((res) => {
-//         return game.db.put({
-//           _id: res._id,
-//           _rev: res._rev,
-//           name: res.name,
-//           wargameTitle: res.wargameTitle,
-//           data: res.data,
-//           gameTurn: res.gameTurn,
-//         })
-//           .then(() => {
-//             resolve(res);
-//           })
-//           .catch((err) => {
-//             console.log(err);
-//             reject(err);
-//           })
-//       })
-//   });
-// };
+export const nextGameTurn = (dbName) => {
+
+  return new Promise((resolve, reject) => {
+    getLatestWargameRevision(dbName)
+      .then((res) => {
+        res.gameTurn += 1;
+        return createLatestWargameRevision(dbName, res);
+      })
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
+      })
+  });
+};
 
 export const postNewMessage = (dbName, details, message) => {
 
