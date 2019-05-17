@@ -119,21 +119,21 @@ export const wargamesReducer = (state = initialState, action) => {
       break;
 
     case ActionConstant.ADD_NEW_RECIPIENT:
-      curChannel = newState.data[tab].selectedChannel;
+      curChannel = newState.data[tab].selectedChannel.uniqid;
       let newParticipant = {...action.payload, subscriptionId: uniqId.time()};
-      newState.data[tab].channels.find((c) => c.name === curChannel).participants.push(newParticipant);
+      newState.data[tab].channels.find((c) => c.uniqid === curChannel).participants.push(newParticipant);
       break;
 
     case ActionConstant.UPDATE_RECIPIENT:
-      curChannel = newState.data[tab].selectedChannel;
-      index = newState.data[tab].channels.find((c) => c.name === curChannel).participants.findIndex((participant) => participant.subscriptionId === action.payload.id);
-      newState.data[tab].channels.find((c) => c.name === curChannel).participants.splice(index, 1, {...action.payload.data, subscriptionId: action.payload.id});
+      curChannel = newState.data[tab].selectedChannel.uniqid;
+      index = newState.data[tab].channels.find((c) => c.uniqid === curChannel).participants.findIndex((participant) => participant.subscriptionId === action.payload.id);
+      newState.data[tab].channels.find((c) => c.uniqid === curChannel).participants.splice(index, 1, {...action.payload.data, subscriptionId: action.payload.id});
       break;
 
     case ActionConstant.REMOVE_RECIPIENT:
-      curChannel = newState.data[tab].selectedChannel;
-      index = newState.data[tab].channels.find((c) => c.name === curChannel).participants.findIndex((participant) => participant.subscriptionId === action.payload);
-      newState.data[tab].channels.find((c) => c.name === curChannel).participants.splice(index, 1);
+      curChannel = newState.data[tab].selectedChannel.uniqid;
+      index = newState.data[tab].channels.find((c) => c.uniqid === curChannel).participants.findIndex((participant) => participant.subscriptionId === action.payload);
+      newState.data[tab].channels.find((c) => c.uniqid === curChannel).participants.splice(index, 1);
       break;
 
     case ActionConstant.ADD_ROLE_TO_FORCE:

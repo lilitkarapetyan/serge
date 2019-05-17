@@ -160,6 +160,23 @@ export const editWargame = (name) => {
   }
 };
 
+export const refreshForce = (dbName, selectedForce) => {
+  return async (dispatch) => {
+
+    let wargame = await wargamesApi.getWargameLocalFromName(dbName);
+
+    let wargameIsInProgress = await wargamesApi.checkIfWargameStarted(dbName);
+
+    if (wargameIsInProgress) {
+      await wargamesApi.createLatestWargameRevision(dbName, wargame);
+    }
+
+    wargame.data.forces.selectedForce = selectedForce;
+
+    dispatch(setCurrentWargame(wargame));
+  }
+};
+
 export const refreshChannel = (dbName, selectedChannel) => {
   return async (dispatch) => {
 
@@ -254,7 +271,7 @@ export const saveChannel = (dbName, newName, newData, oldName) => {
     }
 
     dispatch(setCurrentWargame(wargame));
-    dispatch(setSelectedChannel(newData.uniqid));
+    dispatch(setSelectedChannel({name: newName, uniqid: newData.uniqid}));
 
     dispatch(addNotification("channel saved.", "success"));
   }

@@ -1,7 +1,13 @@
 import ActionConstant from '../ActionConstants.js';
 import copyState from "../../Helpers/copyStateHelper.js";
 
-export const currentModal = (state = {}, action) => {
+const initialState = {
+  open: false,
+  modal: "",
+  data: null,
+};
+
+export const currentModal = (state = initialState, action) => {
 
     let newState = copyState(state);
 
@@ -13,7 +19,6 @@ export const currentModal = (state = {}, action) => {
           newState = action.payload;
           return newState;
         default:
-          newState = {};
           return newState;
     }
 };

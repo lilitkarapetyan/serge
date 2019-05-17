@@ -7,8 +7,11 @@ import {
   setSelectedForce,
   setTabSaved,
   addNewForce,
+  saveForce,
+  refreshForce,
 } from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 import uniqid from "uniqid";
+import {forceTemplate} from "../../api/consts";
 
 class UnsavedForceModal extends Component {
 
@@ -18,8 +21,15 @@ class UnsavedForceModal extends Component {
       let id = 'force-' + uniqid.time();
       this.props.dispatch(addNewForce({name: id, uniqid: id}));
       this.props.dispatch(setSelectedForce({name: id, uniqid: id}));
+
+      let template = forceTemplate;
+      template.name = id;
+      template.uniqid = id;
+
+      this.props.dispatch(saveForce(this.props.wargame.currentWargame, id, template, id));
+
     } else {
-      this.props.dispatch(setSelectedForce(this.props.currentModal.data));
+      this.props.dispatch(refreshForce(this.props.wargame.currentWargame, this.props.currentModal.data));
     }
       this.props.dispatch(setTabSaved());
       this.props.dispatch(modalAction.close());
@@ -48,8 +58,9 @@ class UnsavedForceModal extends Component {
   }
 }
 
-const mapStateToProps = ({ currentModal }) => ({
-  currentModal
+const mapStateToProps = ({ currentModal, wargame }) => ({
+  currentModal,
+  wargame,
 });
 
 export default connect(mapStateToProps)(UnsavedForceModal);

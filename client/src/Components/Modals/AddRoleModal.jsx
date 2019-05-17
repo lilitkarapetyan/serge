@@ -52,6 +52,7 @@ class AddRoleModal extends Component {
       this.props.dispatch(updateRole(selectedForce, this.props.currentModal.data.name, newRole));
     } else {
       this.props.dispatch(addRole(selectedForce, newRole));
+      this.props.dispatch(modalAction.close());
     }
   };
 

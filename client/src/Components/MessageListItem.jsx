@@ -15,10 +15,6 @@ import Collapsible from "react-collapsible";
 import MessagePreview from "../Components/MessagePreviewPlayerUi";
 class MessageListItem extends Component {
 
-  shouldComponentUpdate(nextProps, nextState, nextContext) {
-    return this.props.detail.open === nextProps.detail.open;
-  }
-
   render() {
 
     let itemTitle;

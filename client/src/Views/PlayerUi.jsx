@@ -35,7 +35,7 @@ class PlayerUi extends Component {
 
   updateSelectedRole = (selectedRole) => {
 
-    let role = this.props.playerUi.allForces.find((f) => f.name === this.props.playerUi.selectedForce.name).roles.find((role) => role.name === selectedRole);
+    let role = this.props.playerUi.allForces.find((f) => f.uniqid === this.props.playerUi.selectedForce).roles.find((role) => role.name === selectedRole);
 
     this.props.dispatch(setRole(role));
     this.props.dispatch(setFilteredChannels());
@@ -72,7 +72,7 @@ class PlayerUi extends Component {
               <h1>Set force</h1>
               <DropdownInput
                 updateStore={this.updateSelectedForce}
-                selectOptions={this.props.playerUi.allForces.map((force) => ({option: force.name, value: force.name}))}
+                selectOptions={this.props.playerUi.allForces.map((force) => ({option: force.name, value: force.uniqid}))}
               />
             </div>
             : false
@@ -84,7 +84,7 @@ class PlayerUi extends Component {
               <FontAwesomeIcon icon={faArrowLeft} size="2x" style={{cursor: 'pointer'}} onClick={this.goBack} />
               <DropdownInput
                 updateStore={this.updateSelectedRole}
-                selectOptions={this.props.playerUi.allForces.find((f) => f.name === this.props.playerUi.selectedForce).roles.map((role) => ({option: role.name, value: role.name}))}
+                selectOptions={this.props.playerUi.allForces.find((f) => f.uniqid === this.props.playerUi.selectedForce).roles.map((role) => ({option: role.name, value: role.name}))}
               />
             </div>
             : false

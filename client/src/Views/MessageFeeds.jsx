@@ -30,6 +30,10 @@ class MessageFeeds extends Component {
     let nextChannelLength = Object.keys(nextProps.playerUi.channels).length;
 
     if (channelLength !== nextChannelLength) this.forceUpdate();
+
+    if (!nextProps.playerUi.channels[nextProps.playerUi.selectedChannel]) {
+      this.changeTab(Object.keys(nextProps.playerUi.channels)[0]);
+    }
   }
 
   componentWillMount() {
@@ -46,7 +50,6 @@ class MessageFeeds extends Component {
           curChannel={curChannel}
           messages={this.props.playerUi.messages}
         />
-
         <NewMessage
           curChannel={curChannel}
           schema={this.props.playerUi.messageSchema}
@@ -57,7 +60,6 @@ class MessageFeeds extends Component {
   };
 
   changeTab = (channel) => {
-    console.log(channel);
     this.setState({ activeTab: channel });
     this.props.dispatch(setChannel(channel));
     this.props.dispatch(setMessageSchema({}));
@@ -73,7 +75,7 @@ class MessageFeeds extends Component {
         <li key={channel}
             onClick={this.changeTab.bind(this, channel)}
             className={classNames({ "active-tab": channel === this.state.activeTab })}
-        >{channel}</li>
+        >{channels[channel].name}</li>
       );
     }
     return tabs;

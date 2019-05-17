@@ -17,6 +17,8 @@ import {
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 
+import deepCopy from "../../Helpers/copyStateHelper";
+
 import classNames from "classnames";
 import {setTabUnsaved} from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
@@ -25,7 +27,7 @@ class ChannelsTable extends Component {
   constructor(props) {
     super(props);
 
-    let forceOptions = this.props.wargame.data.forces.forces.map((f) => ({ value: f.name, label: f.name }));
+    let forceOptions = this.props.wargame.data.forces.forces.map((f) => ({ value: f.uniqid, label: f.name }));
 
     let templateOptions = this.props.messageTypes.messages.map((messageType) => {
       return {
@@ -56,7 +58,7 @@ class ChannelsTable extends Component {
 
       let roleOptions = [];
 
-      let roles = this.props.wargame.data.forces.forces.find((f) => f.name === nextState.selectedForce.value).roles;
+      let roles = this.props.wargame.data.forces.forces.find((f) => f.uniqid === nextState.selectedForce.value).roles;
 
       roles.forEach((role) => {
 
@@ -73,7 +75,7 @@ class ChannelsTable extends Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    if (this.props.wargame.data.channels.selectedChannel !== nextProps.wargame.data.channels.selectedChannel) {
+    if (this.props.wargame.data.channels.selectedChannel.uniqid !== nextProps.wargame.data.channels.selectedChannel.uniqid) {
       this.setState({
         selectedForce: {value: null, label: null},
         selectedRole:  {value: null, label: null},
@@ -82,7 +84,12 @@ class ChannelsTable extends Component {
     }
   }
 
-  createRow(data, i) {
+  createRow(rowData, i) {
+
+    let data = deepCopy(rowData);
+
+    delete data.forceUniqid;
+
     var row = [];
     for (var prop in data) {
       if (prop === "subscriptionId") continue;
@@ -156,7 +163,8 @@ class ChannelsTable extends Component {
     if (!rowComplete) return;
 
     let channelData = {
-      force: this.state.selectedForce.value,
+      force: this.props.wargame.data.forces.forces.find((f) => f.uniqid === this.state.selectedForce.value).name,
+      forceUniqid: this.props.wargame.data.forces.forces.find((f) => f.uniqid === this.state.selectedForce.value).uniqid,
       role: this.state.selectedRole.value,
       templates: this.state.selectedTemplates,
     };
@@ -179,6 +187,8 @@ class ChannelsTable extends Component {
   };
 
   render() {
+
+    console.log('rerender');
 
     let rowComplete = this.state.selectedTemplates.length > 0;
 

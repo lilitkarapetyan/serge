@@ -13,9 +13,14 @@ class MessagesList extends Component {
     };
   }
 
+
   componentWillReceiveProps(nextProps, nextContext) {
 
-    if (this.props.messages.length !== 0 && nextProps.messages.length !== this.props.messages.length) {
+    if (
+      this.props.messages.length !== 0 &&
+      this.props.messages.length !== nextProps.messages.length &&
+      this.props.curChannel === nextProps.curChannel
+    ) {
 
       let newMessages = nextProps.messages.map((item) => ({ message: item, open: false })).filter((item) => item.message.details.channel === nextProps.curChannel);
 
@@ -73,6 +78,7 @@ class MessagesList extends Component {
           return (
             <MessageListItem
               detail={item}
+              curChannel={this.props.curChannel}
               key={`${i}-messageitem`}
               openSection={this.openSection.bind(this, item)}
               closeSection={this.closeSection.bind(this, item)}

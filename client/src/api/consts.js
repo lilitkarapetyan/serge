@@ -40,7 +40,7 @@ export const umpireForceTemplate = {
 // export const channelTemplate = [];
 
 export const channelTemplate = {
-  channelName: '',
+  name: '',
   uniqid: '',
   participants: [],
 };

@@ -25,6 +25,7 @@ class DeleteModal extends Component {
     } else {
       this.props.dispatch(deleteMessage(this.props.messages.messagePreviewId));
     }
+    this.props.dispatch(modalAction.close());
   };
 
   render() {

@@ -365,7 +365,7 @@ export const saveChannel = (dbName, newName, newData, oldName) => {
 };
 
 
-export const deleteChannel = (dbName, channelName) => {
+export const deleteChannel = (dbName, channelUniqid) => {
 
   let db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
   //
@@ -378,12 +378,12 @@ export const deleteChannel = (dbName, channelName) => {
 
       let channels = updatedData.channels.channels;
 
-      let channelIndex = channels.findIndex((channel) => channel.name === channelName);
+      let channelIndex = channels.findIndex((channel) => channel.uniqid === channelUniqid);
 
         channels.splice(channelIndex, 1);
 
       updatedData.channels.channels = channels;
-      updatedData.channels.complete = calcComplete(channels);
+      updatedData.channels.complete = calcComplete(channels) && channels.length !== 0;
 
       return new Promise((resolve, reject) => {
 
