@@ -1,7 +1,7 @@
-export const serverPath = 'https://serge-dev.herokuapp.com/';
-export const databasePath = 'https://serge-dev.herokuapp.com/db/';
-// export const serverPath = 'http://localhost:8080/';
-// export const databasePath = 'http://localhost:8080/db/';
+// export const serverPath = 'https://serge-dev.herokuapp.com/';
+// export const databasePath = 'https://serge-dev.herokuapp.com/db/';
+export const serverPath = 'http://localhost:8080/';
+export const databasePath = 'http://localhost:8080/db/';
 
 export const MSG_STORE = "messages";
 export const MSG_TYPE_STORE = "message_types";
@@ -14,7 +14,8 @@ export const headers = {
 };
 
 export const forceTemplate = {
-  forceName: '',
+  name: '',
+  uniqid: null,
   overview: 'An overview written here..',
   roles: [{
     name: 'General',
@@ -25,7 +26,8 @@ export const forceTemplate = {
 };
 
 export const umpireForceTemplate = {
-  forceName: 'White',
+  name: 'White',
+  uniqid: 'umpire',
   overview: 'Umpire force.',
   roles: [{
     name: 'Game Control',
@@ -39,6 +41,7 @@ export const umpireForceTemplate = {
 
 export const channelTemplate = {
   channelName: '',
+  uniqid: '',
   participants: [],
 };
 

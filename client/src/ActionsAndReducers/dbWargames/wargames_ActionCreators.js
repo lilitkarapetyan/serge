@@ -232,9 +232,11 @@ export const saveForce = (dbName, newName, newData, oldName) => {
       await wargamesApi.createLatestWargameRevision(dbName, wargame);
     }
 
+    console.log(newData);
+
     dispatch(setCurrentWargame(wargame));
     dispatch(setTabSaved());
-    dispatch(setSelectedForce(newName));
+    dispatch(setSelectedForce({name: newName, uniqid: newData.uniqid}));
 
     dispatch(addNotification("Force saved.", "success"));
   }
@@ -252,7 +254,7 @@ export const saveChannel = (dbName, newName, newData, oldName) => {
     }
 
     dispatch(setCurrentWargame(wargame));
-    dispatch(setSelectedChannel(newName));
+    dispatch(setSelectedChannel(newData.uniqid));
 
     dispatch(addNotification("channel saved.", "success"));
   }

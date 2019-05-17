@@ -16,9 +16,9 @@ class UnsavedChannelModal extends Component {
   dontSave = () => {
 
     if (this.props.currentModal.data === "create-new") {
-      let name = `channel-${uniqid.time()}`;
-      this.props.dispatch(addNewChannel(name));
-      this.props.dispatch(setSelectedChannel(name));
+      let id = `channel-${uniqid.time()}`;
+      this.props.dispatch(addNewChannel({name: id, uniqid: id}));
+      this.props.dispatch(setSelectedChannel(id));
     } else {
       this.props.dispatch(refreshChannel(this.props.wargame.currentWargame, this.props.currentModal.data));
     }

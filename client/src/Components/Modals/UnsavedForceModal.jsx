@@ -15,9 +15,9 @@ class UnsavedForceModal extends Component {
   dontSave = () => {
 
     if (this.props.currentModal.data === "create-new") {
-      let name = `channel-${uniqid.time()}`;
-      this.props.dispatch(addNewForce(name));
-      this.props.dispatch(setSelectedForce(name));
+      let id = 'force-' + uniqid.time();
+      this.props.dispatch(addNewForce({name: id, uniqid: id}));
+      this.props.dispatch(setSelectedForce({name: id, uniqid: id}));
     } else {
       this.props.dispatch(setSelectedForce(this.props.currentModal.data));
     }

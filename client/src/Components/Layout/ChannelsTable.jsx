@@ -25,7 +25,7 @@ class ChannelsTable extends Component {
   constructor(props) {
     super(props);
 
-    let forceOptions = this.props.wargame.data.forces.forces.map((f) => ({ value: f.forceName, label: f.forceName }));
+    let forceOptions = this.props.wargame.data.forces.forces.map((f) => ({ value: f.name, label: f.name }));
 
     let templateOptions = this.props.messageTypes.messages.map((messageType) => {
       return {
@@ -56,7 +56,7 @@ class ChannelsTable extends Component {
 
       let roleOptions = [];
 
-      let roles = this.props.wargame.data.forces.forces.find((f) => f.forceName === nextState.selectedForce.value).roles;
+      let roles = this.props.wargame.data.forces.forces.find((f) => f.name === nextState.selectedForce.value).roles;
 
       roles.forEach((role) => {
 

@@ -82,7 +82,8 @@ export const wargamesReducer = (state = initialState, action) => {
     case ActionConstant.ADD_NEW_FORCE:
 
       let newForce = forceTemplate;
-      newForce.forceName = action.payload;
+      newForce.name = action.payload.name;
+      newForce.uniqid = action.payload.uniqid;
 
       newState.data[tab].forces.push(newForce);
 
@@ -95,7 +96,8 @@ export const wargamesReducer = (state = initialState, action) => {
     case ActionConstant.ADD_NEW_CHANNEL:
 
       let newChannel = channelTemplate;
-      newChannel.channelName = action.payload;
+      newChannel.name = action.payload.name;
+      newChannel.uniqid = action.payload.uniqid;
       newState.data[tab].channels.push(newChannel);
       break;
 
@@ -105,47 +107,47 @@ export const wargamesReducer = (state = initialState, action) => {
 
     case ActionConstant.DELETE_SELECTED_CHANNEL:
 
-      let channelIndex = newState.data[tab].channels.findIndex((channel) => channel.channelName === action.payload);
+      let channelIndex = newState.data[tab].channels.findIndex((channel) => channel.name === action.payload);
 
       newState.data[tab].channels.splice(channelIndex, 1);
       newState.data[tab].selectedChannel = '';
       break;
 
     case ActionConstant.SET_FORCE_OVERVIEW:
-      let selected = newState.data[tab].selectedForce;
-      newState.data[tab].forces.find((f) => f.forceName === selected).overview = action.payload;
+      let selected = newState.data[tab].selectedForce.name;
+      newState.data[tab].forces.find((f) => f.name === selected).overview = action.payload;
       break;
 
     case ActionConstant.ADD_NEW_RECIPIENT:
       curChannel = newState.data[tab].selectedChannel;
       let newParticipant = {...action.payload, subscriptionId: uniqId.time()};
-      newState.data[tab].channels.find((c) => c.channelName === curChannel).participants.push(newParticipant);
+      newState.data[tab].channels.find((c) => c.name === curChannel).participants.push(newParticipant);
       break;
 
     case ActionConstant.UPDATE_RECIPIENT:
       curChannel = newState.data[tab].selectedChannel;
-      index = newState.data[tab].channels.find((c) => c.channelName === curChannel).participants.findIndex((participant) => participant.subscriptionId === action.payload.id);
-      newState.data[tab].channels.find((c) => c.channelName === curChannel).participants.splice(index, 1, {...action.payload.data, subscriptionId: action.payload.id});
+      index = newState.data[tab].channels.find((c) => c.name === curChannel).participants.findIndex((participant) => participant.subscriptionId === action.payload.id);
+      newState.data[tab].channels.find((c) => c.name === curChannel).participants.splice(index, 1, {...action.payload.data, subscriptionId: action.payload.id});
       break;
 
     case ActionConstant.REMOVE_RECIPIENT:
       curChannel = newState.data[tab].selectedChannel;
-      index = newState.data[tab].channels.find((c) => c.channelName === curChannel).participants.findIndex((participant) => participant.subscriptionId === action.payload);
-      newState.data[tab].channels.find((c) => c.channelName === curChannel).participants.splice(index, 1);
+      index = newState.data[tab].channels.find((c) => c.name === curChannel).participants.findIndex((participant) => participant.subscriptionId === action.payload);
+      newState.data[tab].channels.find((c) => c.name === curChannel).participants.splice(index, 1);
       break;
 
     case ActionConstant.ADD_ROLE_TO_FORCE:
-      newState.data[tab].forces.find((force) => force.forceName === action.payload.force).roles.push(action.payload.role);
+      newState.data[tab].forces.find((force) => force.name === action.payload.force).roles.push(action.payload.role);
       break;
 
     case ActionConstant.UPDATE_ROLE_NAME:
-      index = newState.data[tab].forces.find((force) => force.forceName === action.payload.force).roles.findIndex((role) => role.name === action.payload.oldName)
-      newState.data[tab].forces.find((force) => force.forceName === action.payload.force).roles.splice(index, 1, action.payload.role);
+      index = newState.data[tab].forces.find((force) => force.name === action.payload.force).roles.findIndex((role) => role.name === action.payload.oldName)
+      newState.data[tab].forces.find((force) => force.name === action.payload.force).roles.splice(index, 1, action.payload.role);
       break;
 
     case ActionConstant.REMOVE_ROLE:
-      index = newState.data[tab].forces.find((force) => force.forceName === newState.data[tab].selectedForce).roles.findIndex((role) => role.name === action.role);
-      newState.data[tab].forces.find((f) => f.forceName === newState.data[tab].selectedForce).roles.splice(index, 1);
+      index = newState.data[tab].forces.find((force) => force.name === newState.data[tab].selectedForce.name).roles.findIndex((role) => role.name === action.role);
+      newState.data[tab].forces.find((f) => f.name === newState.data[tab].selectedForce.name).roles.splice(index, 1);
       break;
 
     default:

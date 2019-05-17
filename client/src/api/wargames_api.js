@@ -266,14 +266,14 @@ export const saveForce = (dbName, newName, newData, oldName) => {
 
       let forces = updatedData.forces.forces;
 
-      let forceNew = forces.every((force) => force.forceName !== oldName);
+      let forceNew = forces.every((force) => force.name !== oldName);
 
       if (forceNew) {
-        forces.push({...newData, forceName: newName});
+        forces.push({...newData, name: newName});
       } else {
-        let forceIndex = forces.findIndex((force) => force.forceName === oldName);
+        let forceIndex = forces.findIndex((force) => force.name === oldName);
         // forces.forceName = newName;
-        forces.splice(forceIndex, 1, {...newData, forceName: newName});
+        forces.splice(forceIndex, 1, {...newData, name: newName});
       }
 
       updatedData.forces.forces = forces;
@@ -326,14 +326,14 @@ export const saveChannel = (dbName, newName, newData, oldName) => {
 
       let channels = updatedData.channels.channels;
 
-      let channelNew = channels.every((channel) => channel.channelName !== oldName);
+      let channelNew = channels.every((channel) => channel.name !== oldName);
 
       if (channelNew) {
-        channels.push({...newData, channelName: newName});
+        channels.push({...newData, name: newName});
       } else {
-        let channelIndex = channels.findIndex((channel) => channel.channelName === oldName);
+        let channelIndex = channels.findIndex((channel) => channel.name === oldName);
         // channels.channelName = newName;
-        channels.splice(channelIndex, 1, {...newData, channelName: newName});
+        channels.splice(channelIndex, 1, {...newData, name: newName});
       }
 
       updatedData.channels.channels = channels;
@@ -378,7 +378,7 @@ export const deleteChannel = (dbName, channelName) => {
 
       let channels = updatedData.channels.channels;
 
-      let channelIndex = channels.findIndex((channel) => channel.channelName === channelName);
+      let channelIndex = channels.findIndex((channel) => channel.name === channelName);
 
         channels.splice(channelIndex, 1);
 
@@ -423,7 +423,7 @@ export const deleteForce = (dbName, forceName) => {
 
       let forces = updatedData.forces.forces;
 
-      let forceIndex = forces.findIndex((force) => force.forceName === forceName);
+      let forceIndex = forces.findIndex((force) => force.name === forceName);
 
       forces.splice(forceIndex, 1);
 

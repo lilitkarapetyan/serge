@@ -20,7 +20,7 @@ class Notifications extends Component {
       <>
         {this.props.notifications.map((data) => {
           return (
-            <Snackbar key={data.message}
+            <Snackbar key={data.message+data.id}
                       type={data.type}
                       message={data.message}
                       id={data.id}

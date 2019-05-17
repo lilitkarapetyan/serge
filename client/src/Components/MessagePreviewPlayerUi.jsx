@@ -89,8 +89,6 @@ class MessagePreview extends Component {
     const that = this;
     const keyPropPairs = Object.entries(this.props.detail);
 
-    console.log(keyPropPairs);
-
     return keyPropPairs.map((pair, i) => {
 
       if (i===0 && keyPropPairs.length > 1) return (

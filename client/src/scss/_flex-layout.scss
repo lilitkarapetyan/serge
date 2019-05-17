@@ -37,6 +37,10 @@
       }
     }
 
+    &--row-wrap {
+      flex-direction: row;
+    }
+
     &--center {
       width: 25%;
       align-self: center;

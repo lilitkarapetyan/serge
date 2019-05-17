@@ -31,15 +31,15 @@ class AddRoleModal extends Component {
 
   setNewRoleName = (e) => {
     let curTab = this.props.wargame.currentTab;
-    let selectedForce = this.props.wargame.data.forces.selectedForce;
+    let selectedForce = this.props.wargame.data.forces.selectedForce.name;
     this.setState({
       roleName: e.target.value,
-      sameName: this.props.wargame.data[curTab].forces.find((force) => force.forceName === selectedForce).roles.some((role) => role.name === e.target.value)
+      sameName: this.props.wargame.data[curTab].forces.find((force) => force.name === selectedForce).roles.some((role) => role.name === e.target.value)
     });
   };
 
   addRole = () => {
-    let selectedForce = this.props.wargame.data.forces.selectedForce;
+    let selectedForce = this.props.wargame.data.forces.selectedForce.name;
 
     let newRole = {
       name: this.state.roleName,
