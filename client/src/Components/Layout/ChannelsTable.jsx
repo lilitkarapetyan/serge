@@ -39,7 +39,7 @@ class ChannelsTable extends Component {
     this.state = {
       selectedForce: {value: null, label: null},
       forceOptions: forceOptions,
-      selectedRole:  {value: null, label: null},
+      selectedRoles:  [],
       roleOptions: [],
       selectedTemplates:  [],
       templateOptions: templateOptions,
@@ -61,7 +61,6 @@ class ChannelsTable extends Component {
       let roles = this.props.wargame.data.forces.forces.find((f) => f.uniqid === nextState.selectedForce.value).roles;
 
       roles.forEach((role) => {
-
         roleOptions.push({
           value: role.name,
           label: role.name,
@@ -78,7 +77,7 @@ class ChannelsTable extends Component {
     if (this.props.wargame.data.channels.selectedChannel.uniqid !== nextProps.wargame.data.channels.selectedChannel.uniqid) {
       this.setState({
         selectedForce: {value: null, label: null},
-        selectedRole:  {value: null, label: null},
+        selectedRoles: [],
         selectedTemplates: [],
       })
     }
@@ -88,11 +87,14 @@ class ChannelsTable extends Component {
 
     let data = deepCopy(rowData);
 
-    delete data.forceUniqid;
-
     var row = [];
     for (var prop in data) {
+
       if (prop === "subscriptionId") continue;
+      if (prop === "forceUniqid") continue;
+
+      console.log(prop);
+      console.log(data[prop]);
 
       var value = '';
       if (typeof data[prop] !== "string") {
@@ -122,8 +124,18 @@ class ChannelsTable extends Component {
   };
 
   editSubscription(subscriptionId) {
+
+    console.log(this.state.forceOptions);
+    console.log(this.props.data);
+
+    let forceUniqId = this.props.data.find((force) => force.subscriptionId === subscriptionId).forceUniqid;
+    console.log(forceUniqId);
+    let selectedForce = this.state.forceOptions.find((opt) => opt.value === forceUniqId);
+    console.log(selectedForce);
+
     this.setState({
       subscriptionToEdit: subscriptionId,
+      selectedForce,
     });
   }
 
@@ -146,8 +158,10 @@ class ChannelsTable extends Component {
 
   setSelectedRole = (option) => {
     this.setState({
-      selectedRole: option,
+      selectedRoles: option,
     });
+
+    console.log(option);
   };
 
   setSelectedTemplate = (option) => {
@@ -165,7 +179,7 @@ class ChannelsTable extends Component {
     let channelData = {
       force: this.props.wargame.data.forces.forces.find((f) => f.uniqid === this.state.selectedForce.value).name,
       forceUniqid: this.props.wargame.data.forces.forces.find((f) => f.uniqid === this.state.selectedForce.value).uniqid,
-      role: this.state.selectedRole.value,
+      roles: this.state.selectedRoles,
       templates: this.state.selectedTemplates,
     };
     this.props.dispatch(setTabUnsaved());
@@ -173,7 +187,7 @@ class ChannelsTable extends Component {
 
     this.setState({
       selectedForce: {value: null, label: null},
-      selectedRole: {value: null, label: null},
+      selectedRoles: [],
       selectedTemplates: [],
     });
   };
@@ -181,14 +195,12 @@ class ChannelsTable extends Component {
   clearChannelData = () => {
     this.setState({
       selectedForce: {value: null, label: null},
-      selectedRole: {value: null, label: null},
+      selectedRoles: [],
       selectedTemplates: [],
     });
   };
 
   render() {
-
-    console.log('rerender');
 
     let rowComplete = this.state.selectedTemplates.length > 0;
 
@@ -224,10 +236,11 @@ class ChannelsTable extends Component {
               </td>
               <td>
                 <Select
-                  value={this.state.selectedRole}
+                  value={this.state.selectedRoles}
                   options={this.state.roleOptions}
                   onChange={this.setSelectedRole}
                   isDisabled={!this.state.selectedForce.value}
+                  isMulti
                 />
               </td>
               <td>
@@ -235,7 +248,7 @@ class ChannelsTable extends Component {
                   value={this.state.selectedTemplates}
                   options={this.state.templateOptions}
                   onChange={this.setSelectedTemplate}
-                  isDisabled={!this.state.selectedRole.value}
+                  isDisabled={this.state.selectedRoles.length === 0}
                   isMulti
                 />
               </td>

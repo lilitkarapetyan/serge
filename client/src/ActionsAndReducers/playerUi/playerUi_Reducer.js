@@ -53,8 +53,8 @@ export const playerUiReducer = (state = initialState, action) => {
 
       newState.allChannels.forEach((channel) => {
 
-        let participants = channel.participants.filter((p) => p.forceUniqid === newState.selectedForce && p.role === newState.selectedRole);
-        let channelActive = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.role === newState.selectedRole);
+        let participants = channel.participants.filter((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
+        let channelActive = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
 
         participants = _.uniqWith(participants, _.isEqual);
 

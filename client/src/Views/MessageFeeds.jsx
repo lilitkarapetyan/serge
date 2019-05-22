@@ -26,10 +26,10 @@ class MessageFeeds extends Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    let channelLength = Object.keys(this.props.playerUi.channels).length;
-    let nextChannelLength = Object.keys(nextProps.playerUi.channels).length;
+    // let channelLength = Object.keys(this.props.playerUi.channels).length;
+    // let nextChannelLength = Object.keys(nextProps.playerUi.channels).length;
 
-    if (channelLength !== nextChannelLength) this.forceUpdate();
+    // if (channelLength !== nextChannelLength) this.forceUpdate();
 
     if (!nextProps.playerUi.channels[nextProps.playerUi.selectedChannel]) {
       this.changeTab(Object.keys(nextProps.playerUi.channels)[0]);
@@ -40,24 +40,6 @@ class MessageFeeds extends Component {
     this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
   }
 
-  createMessageList = () => {
-
-    let curChannel= this.props.playerUi.selectedChannel;
-
-    return (
-      <>
-        <MessagesList
-          curChannel={curChannel}
-          messages={this.props.playerUi.messages}
-        />
-        <NewMessage
-          curChannel={curChannel}
-          schema={this.props.playerUi.messageSchema}
-          templates={this.props.playerUi.channels[curChannel].templates}
-        />
-      </>
-    )
-  };
 
   changeTab = (channel) => {
     this.setState({ activeTab: channel });
@@ -83,12 +65,22 @@ class MessageFeeds extends Component {
 
   render() {
 
+    let curChannel= this.props.playerUi.selectedChannel;
+
     return (
       <>
         <ul className="tab-nav">
           {this.createTabs()}
         </ul>
-        {this.createMessageList()}
+        <MessagesList
+          curChannel={curChannel}
+          messages={this.props.playerUi.messages}
+        />
+        <NewMessage
+          curChannel={curChannel}
+          schema={this.props.playerUi.messageSchema}
+          templates={this.props.playerUi.channels[curChannel].templates}
+        />
       </>
     );
   }

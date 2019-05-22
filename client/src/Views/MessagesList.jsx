@@ -16,13 +16,16 @@ class MessagesList extends Component {
 
   componentWillReceiveProps(nextProps, nextContext) {
 
+    let nextMessagesInChannel = nextProps.messages.map((item) => ({ message: item, open: false })).filter((item) => item.message.details.channel === nextProps.curChannel);
+    let messagesInChannel = this.props.messages.map((item) => ({ message: item, open: false })).filter((item) => item.message.details.channel === this.props.curChannel);
+
     if (
       this.props.messages.length !== 0 &&
-      this.props.messages.length !== nextProps.messages.length &&
+      messagesInChannel.length !== nextMessagesInChannel.length &&
       this.props.curChannel === nextProps.curChannel
     ) {
 
-      let newMessages = nextProps.messages.map((item) => ({ message: item, open: false })).filter((item) => item.message.details.channel === nextProps.curChannel);
+      let newMessages = nextMessagesInChannel;
 
       let messages = this.state.messages;
       messages.unshift(newMessages[0]);
