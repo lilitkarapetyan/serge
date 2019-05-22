@@ -9,7 +9,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 `npm run offline-install`
 
 ### For development
-ensure line 3&4 uncommented in `client/src/api/consts.js`
+ensure line 6&7 uncommented in `client/src/api/consts.js`
 
 change "homepage" to `http://localhost:8080/client/build` from `https://serge-dev.herokuapp.com/client/build` in `client/package.json`
 
@@ -21,7 +21,7 @@ change "homepage" to `http://localhost:8080/client/build` from `https://serge-de
 `localhost:3000` or `localhost:8080` (heroku env)
 
 ### for heroku
-ensure line 3&4 commented in `client/src/api/consts.js`
+ensure line 6&7 commented in `client/src/api/consts.js`
 
 change "homepage" to `https://serge-dev.herokuapp.com/client/build` from `http://localhost:8080/client/build` in `client/package.json` 
 
