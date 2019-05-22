@@ -63,15 +63,35 @@
 }
 
 .forcesTab {
-  #channel-editable {
+  #forces-editable {
     font-family: "Segoe UI", sans-serif;
     font-size: 1.85em;
     font-weight: 500;
     color: $secondaryColor;
     border: none;
-    margin-bottom: 24px;
     background: transparent;
     text-overflow: ellipsis;
+  }
+
+  .force-icon {
+    width: 32px;
+    height: 32px;
+    margin: 0 20px;
+    border-radius: 100%;
+  }
+
+  .force-button-wrap {
+    flex-grow: 2;
+
+    span {
+      float: right;
+      margin-left: 20px;
+    }
+
+    span:last-child {
+      float: left;
+      margin-left: 0;
+    }
   }
 
   .roles {

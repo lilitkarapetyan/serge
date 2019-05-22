@@ -26,11 +26,8 @@
 
     &--row {
       flex-direction: row;
+      align-items: center;
       margin-bottom: 2.75em;
-
-      .link {
-        float: right;
-      }
 
       .column {
         flex-direction: column;

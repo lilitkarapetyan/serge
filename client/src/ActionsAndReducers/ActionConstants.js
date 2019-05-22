@@ -52,4 +52,5 @@ export default Object.freeze({
   REMOVE_ROLE: 'REMOVE_ROLE',
   NEXT_GAME_TURN: 'NEXT_GAME_TURN',
   UPDATE_ROLE_NAME: 'UPDATE_ROLE_NAME',
+  ADD_ICON: 'ADD_ICON',
 });

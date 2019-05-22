@@ -96,6 +96,11 @@ export const removeRole = (role) => ({
   role,
 });
 
+export const addIcon = (icon) => ({
+  type: ActionConstant.ADD_ICON,
+  icon,
+});
+
 
 export const populateWargameStore = () => {
   return async (dispatch) => {

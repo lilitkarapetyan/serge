@@ -1,3 +1,6 @@
+import umpireIcon from "../icons/umpireIcon";
+import defaultIcon from "../icons/default";
+
 // export const serverPath = 'https://serge-dev.herokuapp.com/';
 // export const databasePath = 'https://serge-dev.herokuapp.com/db/';
 export const serverPath = 'http://localhost:8080/';
@@ -21,6 +24,7 @@ export const forceTemplate = {
     name: 'General',
     control: false,
   }],
+  icon: defaultIcon.icon,
   umpire: false,
   dirty: false,
 };
@@ -33,6 +37,7 @@ export const umpireForceTemplate = {
     name: 'Game Control',
     control: true,
   }],
+  icon: umpireIcon.icon,
   umpire: true,
   dirty: false,
 };

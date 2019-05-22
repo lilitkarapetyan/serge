@@ -16,7 +16,6 @@ export const notificationReducer = (state = initialState, action) => {
 
         let index = newState.findIndex((item) => item.id === action.id);
         newState.splice(index, 1);
-
         return newState;
 
       default:

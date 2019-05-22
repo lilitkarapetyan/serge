@@ -6,6 +6,7 @@ import DeleteModal from './DeleteModal';
 import DeleteWargameModal from "./DeleteWargameModal";
 import UnsavedForceModal from "./UnsavedForceModal";
 import UnsavedChannelModal from "./UnsavedChannelModal";
+import AddIconModal from "./AddIconModal";
 
 class ModalSwitch extends Component {
 
@@ -33,6 +34,10 @@ class ModalSwitch extends Component {
 
       case "newRole":
         modal = <AddRoleModal />;
+        break;
+
+      case "addIcon":
+        modal = <AddIconModal />;
         break;
 
       default:

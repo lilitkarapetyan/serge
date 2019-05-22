@@ -30,6 +30,7 @@ export const wargamesReducer = (state = initialState, action) => {
 
   let tab = newState.currentTab;
 
+  let selected;
   let curChannel;
   let index;
   let listWithoutThis;
@@ -114,7 +115,7 @@ export const wargamesReducer = (state = initialState, action) => {
       break;
 
     case ActionConstant.SET_FORCE_OVERVIEW:
-      let selected = newState.data[tab].selectedForce.name;
+      selected = newState.data[tab].selectedForce.name;
       newState.data[tab].forces.find((f) => f.name === selected).overview = action.payload;
       break;
 
@@ -148,6 +149,12 @@ export const wargamesReducer = (state = initialState, action) => {
     case ActionConstant.REMOVE_ROLE:
       index = newState.data[tab].forces.find((force) => force.name === newState.data[tab].selectedForce.name).roles.findIndex((role) => role.name === action.role);
       newState.data[tab].forces.find((f) => f.name === newState.data[tab].selectedForce.name).roles.splice(index, 1);
+      break;
+
+    case ActionConstant.ADD_ICON:
+
+      selected = newState.data[tab].selectedForce.name;
+      newState.data[tab].forces.find((f) => f.name === selected).icon = action.icon;
       break;
 
     default:

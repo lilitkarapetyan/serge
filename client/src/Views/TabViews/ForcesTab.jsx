@@ -159,6 +159,10 @@ class ForcesTab extends Component {
     this.props.dispatch(modalAction.open("newRole"));
   };
 
+  openIconModal = () => {
+    this.props.dispatch(modalAction.open("addIcon"));
+  };
+
 
   createForceEditor() {
 
@@ -169,22 +173,26 @@ class ForcesTab extends Component {
 
     let forceName = typeof this.state.newForceName === 'string' ? this.state.newForceName : selectedForce;
     let forceOverview = typeof this.state.newForceOverview === 'string' ? this.state.newForceOverview : this.props.wargame.data[curTab].forces.find((force) => force.name === selectedForce).overview;
+    let forceIcon = this.props.wargame.data[curTab].forces.find((force) => force.name === selectedForce).icon;
 
     return (
       <div className="flex-content--fill forcesTab">
 
-        <div className="flex-content--row">
+        <div className="flex-content flex-content--row">
           <TextInput
-            id="channel-editable"
+            id="forces-editable"
             updateStore={this.updateForceName}
             options={{numInput: false}}
             data={forceName}
           />
 
-          <span className="link link--noIcon" onClick={this.saveForce}>save force</span>
-          <span className={classNames({"link": true, "link--secondary": true, "link--disabled": isUmpire})} onClick={this.deleteForce}><FontAwesomeIcon icon={faTrash} />Delete</span>
+          <img className="force-icon" src={forceIcon} />
 
-          <span className="link link--secondary link--noIcon link--disabled">Change icon</span>
+          <div className="force-button-wrap">
+            <span className="link link--noIcon" onClick={this.saveForce}>save force</span>
+            <span className={classNames({"link": true, "link--secondary": true, "link--disabled": isUmpire})} onClick={this.deleteForce}><FontAwesomeIcon icon={faTrash} />Delete</span>
+            <span className="link link--secondary link--noIcon" onClick={this.openIconModal}>Change icon</span>
+          </div>
         </div>
 
         <p className="heading--sml">Overview &amp; Objectives</p>
