@@ -47,10 +47,15 @@
   max-width: 33%;
   overflow: hidden;
 
-  .force-indicator {
-    width: 24px;
-    height: 24px;
-    margin-left: 10px;
+  .forces-in-channel {
+    display: flex;
+    flex-direction: row;
+
+    .force-indicator {
+      width: 24px;
+      height: 24px;
+      margin-left: 10px;
+    }
   }
 
   .message-list {

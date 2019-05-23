@@ -53,21 +53,19 @@ export const playerUiReducer = (state = initialState, action) => {
 
       newState.allChannels.forEach((channel) => {
 
+        if (action.setSelectedChannel) newState.selectedChannel = newState.allChannels[0].uniqid;
+
+
         let participants = channel.participants.filter((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
         let channelActive = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
-
-        participants = _.uniqWith(participants, _.isEqual);
 
         if (channelActive) {
           channels[channel.uniqid] = {
             name: channel.name,
             templates: _.flatMap(participants, (participant) => participant.templates),
-            forceIcons: _.flatMap(participants, (participant) => participant.icon)
-            // messages: []
+            forceIcons: channel.participants.map((participant) => participant.icon),
           };
         }
-
-        if (action.setSelectedChannel) newState.selectedChannel = Object.keys(channels)[0]; // this needs to be ignored
 
         newState.channels = channels;
 

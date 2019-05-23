@@ -72,7 +72,9 @@ class MessageFeeds extends Component {
         <ul className="tab-nav">
           {this.createTabs()}
         </ul>
-        {this.props.playerUi.channels[curChannel].forceIcons.map((base64) => <img className="force-indicator" src={base64} />)}
+        <div className="forces-in-channel">
+          {this.props.playerUi.channels[curChannel].forceIcons.map((base64, i) => <img key={`indicator${i}`} className="force-indicator" src={base64} />)}
+        </div>
         <MessagesList
           curChannel={curChannel}
           messages={this.props.playerUi.messages}
