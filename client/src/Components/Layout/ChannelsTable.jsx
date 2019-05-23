@@ -92,6 +92,7 @@ class ChannelsTable extends Component {
 
       if (prop === "subscriptionId") continue;
       if (prop === "forceUniqid") continue;
+      if (prop === "icon") continue;
 
       var value = '';
       if (typeof data[prop] !== "string") {
@@ -166,14 +167,15 @@ class ChannelsTable extends Component {
 
     if (!rowComplete) return;
 
-    let channelData = {
+    let recipient = {
       force: this.props.wargame.data.forces.forces.find((f) => f.uniqid === this.state.selectedForce.value).name,
       forceUniqid: this.props.wargame.data.forces.forces.find((f) => f.uniqid === this.state.selectedForce.value).uniqid,
       roles: this.state.selectedRoles,
       templates: this.state.selectedTemplates,
+      icon: this.props.wargame.data.forces.forces.find((f) => f.uniqid === this.state.selectedForce.value).icon,
     };
     this.props.dispatch(setTabUnsaved());
-    this.props.dispatch(addRecipientToChannel(channelData));
+    this.props.dispatch(addRecipientToChannel(recipient));
 
     this.setState({
       selectedForce: {value: null, label: null},

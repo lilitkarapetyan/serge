@@ -62,6 +62,7 @@ export const playerUiReducer = (state = initialState, action) => {
           channels[channel.uniqid] = {
             name: channel.name,
             templates: _.flatMap(participants, (participant) => participant.templates),
+            forceIcons: _.flatMap(participants, (participant) => participant.icon)
             // messages: []
           };
         }

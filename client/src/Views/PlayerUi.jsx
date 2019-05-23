@@ -95,7 +95,9 @@ class PlayerUi extends Component {
               <div className="message-feeds">
                 <MessageFeeds />
               </div>
-              {this.props.playerUi.controlUi ? <GameControls /> : false}
+              <div className="message-feeds">
+                {this.props.playerUi.controlUi ? <GameControls /> : false}
+              </div>
             </div>
             : false
           }

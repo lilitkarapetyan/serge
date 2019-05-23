@@ -47,6 +47,12 @@
   max-width: 33%;
   overflow: hidden;
 
+  .force-indicator {
+    width: 24px;
+    height: 24px;
+    margin-left: 10px;
+  }
+
   .message-list {
     flex-grow: 1;
     max-height: calc(100vh - 100px);
