@@ -26,10 +26,10 @@ class MessageFeeds extends Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    // let channelLength = Object.keys(this.props.playerUi.channels).length;
-    // let nextChannelLength = Object.keys(nextProps.playerUi.channels).length;
+    let channelLength = Object.keys(this.props.playerUi.channels).length;
+    let nextChannelLength = Object.keys(nextProps.playerUi.channels).length;
 
-    // if (channelLength !== nextChannelLength) this.forceUpdate();
+    if (channelLength !== nextChannelLength) this.forceUpdate();
 
     if (!nextProps.playerUi.channels[nextProps.playerUi.selectedChannel]) {
       this.changeTab(Object.keys(nextProps.playerUi.channels)[0]);

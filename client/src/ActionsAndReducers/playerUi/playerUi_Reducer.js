@@ -6,7 +6,7 @@ const initialState = {
   selectedForce: '',
   selectedRole: '',
   controlUi: false,
-  currentTurn: 0,
+  currentTurn: 1,
   selectedChannel: '',
   currentWargame: '',
   wargameTitle: '',
