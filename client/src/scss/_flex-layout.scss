@@ -18,7 +18,7 @@
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: flex-start;
-    min-width: 26%;
+    min-width: 25%;
 
     &--rowend {
       flex-direction: row-reverse !important;
@@ -26,7 +26,6 @@
 
     &--row {
       flex-direction: row;
-      align-items: center;
       margin-bottom: 2.75em;
 
       .column {
@@ -45,9 +44,8 @@
 
     &--sml {
       //flex-grow: 1;
-      min-width: 32%;
+      //min-width: 32%;
       justify-content: center;
-
     }
 
     &--fill {

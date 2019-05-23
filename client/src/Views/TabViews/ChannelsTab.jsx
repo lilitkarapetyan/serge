@@ -173,13 +173,15 @@ class ForcesTab extends Component {
           <div className="flex-content--fill channelsTab">
             <div className="flex-content--row">
               <TextInput
-                id="channel-editable"
+                id="editable-title"
                 updateStore={this.updateChannelName}
                 options={{numInput: false}}
                 data={channelName}
               />
-              <span className="link link--noIcon" onClick={this.saveChannel}>save channel</span>
-              <span className="link link--secondary" onClick={this.deleteChannel}><FontAwesomeIcon icon={faTrash} />Delete</span>
+              <div className="button-wrap-tab">
+                <span className="link link--noIcon" onClick={this.saveChannel}>save channel</span>
+                <span className="link link--secondary" onClick={this.deleteChannel}><FontAwesomeIcon icon={faTrash} />Delete</span>
+              </div>
             </div>
             <p className="heading--sml">Participants and messages</p>
 

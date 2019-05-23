@@ -93,9 +93,6 @@ class ChannelsTable extends Component {
       if (prop === "subscriptionId") continue;
       if (prop === "forceUniqid") continue;
 
-      console.log(prop);
-      console.log(data[prop]);
-
       var value = '';
       if (typeof data[prop] !== "string") {
 
@@ -125,13 +122,8 @@ class ChannelsTable extends Component {
 
   editSubscription(subscriptionId) {
 
-    console.log(this.state.forceOptions);
-    console.log(this.props.data);
-
     let forceUniqId = this.props.data.find((force) => force.subscriptionId === subscriptionId).forceUniqid;
-    console.log(forceUniqId);
     let selectedForce = this.state.forceOptions.find((opt) => opt.value === forceUniqId);
-    console.log(selectedForce);
 
     this.setState({
       subscriptionToEdit: subscriptionId,
@@ -160,8 +152,6 @@ class ChannelsTable extends Component {
     this.setState({
       selectedRoles: option,
     });
-
-    console.log(option);
   };
 
   setSelectedTemplate = (option) => {

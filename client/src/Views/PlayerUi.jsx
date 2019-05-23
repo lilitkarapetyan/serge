@@ -38,7 +38,7 @@ class PlayerUi extends Component {
     let role = this.props.playerUi.allForces.find((f) => f.uniqid === this.props.playerUi.selectedForce).roles.find((role) => role.name === selectedRole);
 
     this.props.dispatch(setRole(role));
-    this.props.dispatch(setFilteredChannels());
+    this.props.dispatch(setFilteredChannels(true));
   };
 
   goBack = () => {

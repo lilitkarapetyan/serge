@@ -66,7 +66,7 @@ export const playerUiReducer = (state = initialState, action) => {
           };
         }
 
-        if (!action.ignoreSetSelected) newState.selectedChannel = Object.keys(channels)[0]; // this needs to be ignored
+        if (action.setSelectedChannel) newState.selectedChannel = Object.keys(channels)[0]; // this needs to be ignored
 
         newState.channels = channels;
 

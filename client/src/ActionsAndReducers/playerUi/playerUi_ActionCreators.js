@@ -17,9 +17,9 @@ export const setRole = (data) => ({
   payload: data
 });
 
-export const setFilteredChannels = (ignoreSetSelected) => ({
+export const setFilteredChannels = (setSelectedChannel) => ({
   type: ActionConstant.SET_FILTERED_CHANNELS,
-  ignoreSetSelected
+  setSelectedChannel
 });
 
 export const setChannel = (data) => ({

@@ -30,7 +30,7 @@ const changesListener = (db, name, dispatch) => {
         let messages = await getAllMessages(name);
         let latestWargame = messages.find((message) => message.infoType);
         dispatch(setCurrentWargame(latestWargame));
-        dispatch(setFilteredChannels(true));
+        dispatch(setFilteredChannels(false));
 
         messages = messages.filter((message) => !message.hasOwnProperty('infoType'));
         dispatch(setWargameMessages(messages));

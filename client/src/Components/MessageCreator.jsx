@@ -28,8 +28,9 @@ class JsonCreator extends Component {
     let messageDetails = {
       channel: this.props.playerUi.selectedChannel,
       from: {
-        force: this.props.playerUi.selectedForce.name,
+        force: this.props.playerUi.selectedForce,
         role: this.props.playerUi.selectedRole,
+        icon: this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).icon,
       },
       messageType: this.props.playerUi.messageSchema.title,
     };

@@ -180,7 +180,7 @@ class ForcesTab extends Component {
 
         <div className="flex-content flex-content--row">
           <TextInput
-            id="forces-editable"
+            id="editable-title"
             updateStore={this.updateForceName}
             options={{numInput: false}}
             data={forceName}

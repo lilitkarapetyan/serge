@@ -31,7 +31,9 @@ class MessageListItem extends Component {
           <>
             <FontAwesomeIcon icon={this.props.detail.open ? faMinus : faPlus} size="1x" />
             <div className="message-title">{itemTitle}</div>
+            <Badge pill variant="primary">{this.props.detail.message.details.from.role}</Badge>
             <Badge pill variant="secondary">{this.props.detail.message.details.messageType}</Badge>
+            <img src={this.props.detail.message.details.from.icon} />
           </>
         }
         transitionTime={200}

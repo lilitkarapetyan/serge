@@ -24,6 +24,16 @@
   }
 }
 
+.button-wrap-tab {
+  display: flex;
+  float: right;
+  flex-direction: row-reverse;
+
+  span {
+    margin-left: 20px;
+  }
+}
+
 .btn-secondary {
   // override bootstrap specificity
   margin-bottom: 0;

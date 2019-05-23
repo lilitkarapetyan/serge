@@ -68,7 +68,7 @@ class SettingsTab extends Component {
             <span className="link link--noIcon" onClick={this.saveSettings}>save Overview</span>
           </Row>
           <Row>
-            <div className="flex-content flex-content--sml">
+            <div className="flex-content settings-title">
               <p className="heading--sml">Spatial Representation</p>
             </div>
             <div className="flex-content flex-content--fill">
@@ -82,7 +82,7 @@ class SettingsTab extends Component {
           </Row>
 
           <Row>
-            <div className="flex-content flex-content--sml">
+            <div className="flex-content settings-title">
               <p className="heading--sml">War Game turn time</p>
             </div>
             <div className="flex-content flex-content--sml">
@@ -93,12 +93,12 @@ class SettingsTab extends Component {
               />
             </div>
             <div className="flex-content flex-content--sml">
-              <p className="heading--sml heading--mleft">hrs.</p>
+              <p className="heading--sml heading--mleft">(hrs)</p>
             </div>
           </Row>
 
           <Row>
-            <div className="flex-content flex-content--sml">
+            <div className="flex-content settings-title">
               <p className="heading--sml">Real time planning allowance.</p>
             </div>
             <div className="flex-content flex-content--sml">
@@ -109,12 +109,12 @@ class SettingsTab extends Component {
               />
             </div>
             <div className="flex-content flex-content--sml">
-              <p className="heading--sml heading--mleft">mins.</p>
+              <p className="heading--sml heading--mleft">(mins)</p>
             </div>
           </Row>
 
           <Row>
-            <div className="flex-content flex-content--sml">
+            <div className="flex-content settings-title">
               <p className="heading--sml">Turn Strategy</p>
             </div>
             <div className="flex-content flex-content--fill">
@@ -129,7 +129,7 @@ class SettingsTab extends Component {
           </Row>
 
           <Row>
-            <div className="flex-content flex-content--sml">
+            <div className="flex-content settings-title">
               <p className="heading--sml">Start time</p>
             </div>
             <div className="flex-content flex-content--fill">

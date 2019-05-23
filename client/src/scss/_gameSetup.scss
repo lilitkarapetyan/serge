@@ -42,11 +42,12 @@
   }
 }
 
-.settingsTab,
-.channelsTab,
-.forcesTab {
+.forcesTab,
+.channelsTab {
+  padding-left: 25px;
+}
 
-  padding: 0 2%;
+.settingsTab {
 
   h3 {
     display: inline-flex;
@@ -60,17 +61,25 @@
     padding: 8px 12px;
     margin-top: 6px;
   }
+
+  .settings-title {
+    min-width: 35%;
+  }
 }
 
 .forcesTab {
-  #forces-editable {
-    font-family: "Segoe UI", sans-serif;
-    font-size: 1.85em;
-    font-weight: 500;
-    color: $secondaryColor;
-    border: none;
-    background: transparent;
+
+  h3 {
+    display: inline-flex;
+    max-width: 33%;
     text-overflow: ellipsis;
+  }
+
+  textarea {
+    width: 100%;
+    height: 200px;
+    padding: 8px 12px;
+    margin-top: 6px;
   }
 
   .force-icon {
@@ -78,6 +87,7 @@
     height: 32px;
     margin: 0 20px;
     border-radius: 100%;
+    align-self: center;
   }
 
   .force-button-wrap {
@@ -115,16 +125,24 @@
   }
 }
 
+input#editable-title {
+  font-family: "Segoe UI", sans-serif;
+  font-size: 1.85em;
+  font-weight: 500;
+  color: $secondaryColor;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  background: transparent;
+  text-overflow: ellipsis;
+  padding: 0;
+}
+
+
 .channelsTab {
 
-  #channel-editable {
-    font-family: "Segoe UI", sans-serif;
-    font-size: 1.85em;
-    font-weight: 500;
-    color: $secondaryColor;
-    border: none;
-    margin-bottom: 24px;
-    background: transparent;
+  h3 {
+    display: inline-flex;
+    max-width: 33%;
     text-overflow: ellipsis;
   }
 

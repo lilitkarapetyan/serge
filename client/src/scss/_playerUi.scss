@@ -91,6 +91,13 @@
         line-height: 1.5em;
         padding: 0 6px;
       }
+
+      img {
+        margin-left: 10px;
+        width: 32px;
+        height: 32px;
+        border-radius: 100%;
+      }
     }
 
     &:nth-of-type(even) {
