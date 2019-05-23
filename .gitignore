@@ -6,3 +6,5 @@
 /client/build
 /.idea/*
 /db
+
+/log.txt
