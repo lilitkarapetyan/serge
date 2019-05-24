@@ -8,7 +8,7 @@ import {
   setMessageSchema,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
-import MessagesList from "./MessagesList";
+import MessagesListChannel from "./MessagesListChannel";
 import NewMessage from "../Components/NewMessage";
 
 import '../scss/App.scss';
@@ -81,7 +81,7 @@ class MessageFeeds extends Component {
           curChannel={curChannel}
           messages={this.props.playerUi.messages}
           render={(messages, actions) => (
-            <MessagesList
+            <MessagesListChannel
               messages={messages}
               openSection={actions.openSection}
               closeSection={actions.closeSection}

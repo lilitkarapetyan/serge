@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../scss/App.scss';
 import MessageListItem from "../Components/MessageListItem";
 
-class MessagesList extends Component {
+class MessagesListChannel extends Component {
 
   constructor(props) {
     super(props);
@@ -29,4 +29,4 @@ class MessagesList extends Component {
   }
 }
 
-export default MessagesList;
+export default MessagesListChannel;
