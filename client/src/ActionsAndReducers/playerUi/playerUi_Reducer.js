@@ -1,4 +1,5 @@
 import ActionConstant from '../ActionConstants';
+import chat from "../../Schemas/chat.json";
 import copyState from "../../Helpers/copyStateHelper";
 import _ from "lodash";
 
@@ -10,6 +11,10 @@ const initialState = {
   selectedChannel: '',
   currentWargame: '',
   wargameTitle: '',
+  chatChannel: {
+    name: "chat-channel",
+    template: chat,
+  },
   channels: {},
   allChannels: {},
   forces: {},

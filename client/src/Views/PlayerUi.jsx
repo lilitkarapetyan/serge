@@ -12,6 +12,7 @@ import {
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 import MessageFeeds from "./MessageFeeds";
+import OutOfGameFeed from "./OutOfGameFeed";
 import DropdownInput from "../Components/Inputs/DropdownInput";
 import GameControls from "../Components/GameControls";
 import AwaitingStart from "../Components/AwaitingStart";
@@ -95,8 +96,9 @@ class PlayerUi extends Component {
               <div className="message-feeds">
                 <MessageFeeds />
               </div>
-              <div className="message-feeds">
+              <div className="message-feeds out-of-game-feed">
                 {this.props.playerUi.controlUi ? <GameControls /> : false}
+                <OutOfGameFeed />
               </div>
             </div>
             : false

@@ -13,6 +13,7 @@ import NewMessage from "../Components/NewMessage";
 
 import '../scss/App.scss';
 import classNames from "classnames";
+import MessagesListRenderProp from "./MessagesListRenderProp";
 
 
 class MessageFeeds extends Component {
@@ -75,10 +76,19 @@ class MessageFeeds extends Component {
         <div className="forces-in-channel">
           {this.props.playerUi.channels[curChannel].forceIcons.map((base64, i) => <img key={`indicator${i}`} className="force-indicator" src={base64} />)}
         </div>
-        <MessagesList
+
+        <MessagesListRenderProp
           curChannel={curChannel}
           messages={this.props.playerUi.messages}
+          render={(messages, actions) => (
+            <MessagesList
+              messages={messages}
+              openSection={actions.openSection}
+              closeSection={actions.closeSection}
+            />
+          )}
         />
+
         <NewMessage
           curChannel={curChannel}
           schema={this.props.playerUi.messageSchema}
