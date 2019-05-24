@@ -11,13 +11,14 @@ class GameControls extends Component {
   }
 
   nextTurn = () => {
+    this.props.clearInterval();
     this.props.dispatch(nextGameTurn(this.props.playerUi.currentWargame));
   };
 
   render() {
     return (
       <>
-        <span className="link link--noIcon" onClick={this.nextTurn}>Next game turn</span>
+        <span className="link link--noIcon link--next-turn" onClick={this.nextTurn}>Next game turn</span>
       </>
     );
   }

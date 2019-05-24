@@ -19,6 +19,8 @@ import {
   setFilteredChannels,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
+import moment from "moment";
+
 
 var wargameDbStore = [];
 
@@ -155,7 +157,7 @@ export const getLatestWargameRevision = (dbName) => {
     .then((messages) => {
       let latestWargame = messages.find((message) => message.infoType);
       if (latestWargame) return latestWargame;
-      return false;
+      return getWargameLocalFromName(dbName);
     })
 };
 
@@ -201,8 +203,11 @@ export const updateWargameTitle = (dbName, title) => {
               name: dbName,
               wargameTitle: title,
               data: res.data,
-              gameTime: res.gameTime,
               gameTurn: res.gameTurn,
+              gameDate: res.gameDate,
+              gameTurnTime: res.gameTurnTime,
+              realtimeTurnTime: res.realtimeTurnTime,
+              turnEndTime: moment().add(res.realtimeTurnTime, 'minutes').format(),
               wargameInitiated: res.wargameInitiated,
             })
               .then(() => {
@@ -239,8 +244,11 @@ export const saveSettings = (dbName, data) => {
           name: res.name,
           wargameTitle: res.wargameTitle,
           data: res.data,
-          gameTime: res.gameTime,
           gameTurn: res.gameTurn,
+          gameDate: data.startTime,
+          gameTurnTime: data.gameTurnTime,
+          realtimeTurnTime: data.realtimeTurnTime,
+          turnEndTime: moment().add(res.realtimeTurnTime, 'minutes').format(),
           wargameInitiated: res.wargameInitiated,
         })
       })
@@ -296,8 +304,11 @@ export const saveForce = (dbName, newName, newData, oldName) => {
               name: res.name,
               wargameTitle: res.wargameTitle,
               data: updatedData,
-              gameTime: res.gameTime,
               gameTurn: res.gameTurn,
+              gameDate: res.gameDate,
+              gameTurnTime: res.gameTurnTime,
+              realtimeTurnTime: res.realtimeTurnTime,
+              turnEndTime: moment().add(res.realtimeTurnTime, 'minutes').format(),
               wargameInitiated: res.wargameInitiated,
             })
               .then(() => {
@@ -332,7 +343,6 @@ export const saveChannel = (dbName, newName, newData, oldName) => {
         channels.push({...newData, name: newName});
       } else {
         let channelIndex = channels.findIndex((channel) => channel.name === oldName);
-        // channels.channelName = newName;
         channels.splice(channelIndex, 1, {...newData, name: newName});
       }
 
@@ -349,8 +359,11 @@ export const saveChannel = (dbName, newName, newData, oldName) => {
               name: res.name,
               wargameTitle: res.wargameTitle,
               data: updatedData,
-              gameTime: res.gameTime,
               gameTurn: res.gameTurn,
+              gameDate: res.gameDate,
+              gameTurnTime: res.gameTurnTime,
+              realtimeTurnTime: res.realtimeTurnTime,
+              turnEndTime: moment().add(res.realtimeTurnTime, 'minutes').format(),
               wargameInitiated: res.wargameInitiated,
             })
               .then(() => {
@@ -395,8 +408,11 @@ export const deleteChannel = (dbName, channelUniqid) => {
               name: res.name,
               wargameTitle: res.wargameTitle,
               data: updatedData,
-              gameTime: res.gameTime,
               gameTurn: res.gameTurn,
+              gameDate: res.gameDate,
+              gameTurnTime: res.gameTurnTime,
+              realtimeTurnTime: res.realtimeTurnTime,
+              turnEndTime: moment().add(res.realtimeTurnTime, 'minutes').format(),
               wargameInitiated: res.wargameInitiated,
             })
               .then(() => {
@@ -440,8 +456,11 @@ export const deleteForce = (dbName, forceName) => {
               name: res.name,
               wargameTitle: res.wargameTitle,
               data: updatedData,
-              gameTime: res.gameTime,
               gameTurn: res.gameTurn,
+              gameDate: res.gameDate,
+              gameTurnTime: res.gameTurnTime,
+              realtimeTurnTime: res.realtimeTurnTime,
+              turnEndTime: moment().add(res.realtimeTurnTime, 'minutes').format(),
               wargameInitiated: res.wargameInitiated,
             })
               .then(() => {
@@ -479,8 +498,11 @@ export const duplicateWargame = (dbPath) => {
           name: newDbName,
           wargameTitle: `${res.wargameTitle}-${uniqId}`,
           data: res.data,
-          gameTime: res.gameTime,
           gameTurn: res.gameTurn,
+          gameDate: res.gameDate,
+          gameTurnTime: res.gameTurnTime,
+          realtimeTurnTime: res.realtimeTurnTime,
+          turnEndTime: moment().add(res.realtimeTurnTime, 'minutes').format(),
           wargameInitiated: res.wargameInitiated,
         })
           .then(() => {
@@ -518,19 +540,15 @@ export const getWargameLocalFromName = (dbName) => {
 
 export const getWargame = (gamePath) => {
 
-  let name = getNameFromPath(gamePath);
+  return (async () => {
 
-  let game = wargameDbStore.find((wargame) => name === wargame.name);
+    let name = getNameFromPath(gamePath);
 
-  return new Promise((resolve, reject) => {
-    game.db.get(dbDefaultSettings._id)
-      .then((res) => {
-        resolve(res);
-      })
-      .catch((err) => {
-        reject(err);
-      })
-  });
+    let wargame = await getLatestWargameRevision(name);
+
+    return wargame;
+
+  })();
 };
 
 export const initiateGame = (dbName) => {
@@ -548,8 +566,11 @@ export const initiateGame = (dbName) => {
               name: res.name,
               wargameTitle: res.wargameTitle,
               data: res.data,
-              gameTime: res.gameTime,
               gameTurn: res.gameTurn,
+              gameDate: res.gameDate,
+              gameTurnTime: res.gameTurnTime,
+              realtimeTurnTime: res.realtimeTurnTime,
+              turnEndTime: moment().add(res.realtimeTurnTime, 'minutes').format(),
               wargameInitiated: true,
             })
           })
@@ -563,8 +584,11 @@ export const initiateGame = (dbName) => {
               name: res.name,
               wargameTitle: res.wargameTitle,
               data: res.data,
-              gameTime: res.gameTime,
               gameTurn: res.gameTurn,
+              gameDate: res.gameDate,
+              gameTurnTime: res.gameTurnTime,
+              realtimeTurnTime: res.realtimeTurnTime,
+              turnEndTime: moment().add(res.realtimeTurnTime, 'minutes').format(),
               wargameInitiated: res.wargameInitiated,
             })
           })
@@ -623,7 +647,11 @@ export const nextGameTurn = (dbName) => {
   return new Promise((resolve, reject) => {
     getLatestWargameRevision(dbName)
       .then((res) => {
+
         res.gameTurn += 1;
+        res.gameDate = moment(res.gameDate).add(res.gameTurnTime, 'hours').format("YYYY-MM-DDTHH:mm");
+        res.turnEndTime = moment().add(res.realtimeTurnTime, 'minutes').format();
+
         return createLatestWargameRevision(dbName, res);
       })
       .then((res) => {

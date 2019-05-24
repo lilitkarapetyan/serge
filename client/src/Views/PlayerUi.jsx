@@ -14,7 +14,7 @@ import {
 import MessageFeeds from "./MessageFeeds";
 import OutOfGameFeed from "./OutOfGameFeed";
 import DropdownInput from "../Components/Inputs/DropdownInput";
-import GameControls from "../Components/GameControls";
+import TurnProgression from "../Components/TurnProgression";
 import AwaitingStart from "../Components/AwaitingStart";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -93,11 +93,11 @@ class PlayerUi extends Component {
 
           {this.props.playerUi.selectedForce && this.props.playerUi.selectedRole && this.props.playerUi.wargameInitiated ?
             <div className="flex-content flex-content--row-wrap">
-              <div className="message-feeds">
+              <div className="message-feed">
                 <MessageFeeds />
               </div>
-              <div className="message-feeds out-of-game-feed">
-                {this.props.playerUi.controlUi ? <GameControls /> : false}
+              <div className="message-feed out-of-game-feed">
+                <TurnProgression />
                 <OutOfGameFeed />
               </div>
             </div>

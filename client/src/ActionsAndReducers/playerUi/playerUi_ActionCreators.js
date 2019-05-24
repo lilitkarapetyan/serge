@@ -40,8 +40,6 @@ export const setWargameMessages = (messages) => ({
 export const getWargame = (gamePath) => {
   return async (dispatch) => {
 
-    // await wargamesApi.populateWargame();
-
     let wargame = await wargamesApi.getWargame(gamePath);
 
     dispatch(setCurrentWargame(wargame));
@@ -52,8 +50,6 @@ export const nextGameTurn = (dbName) => {
   return async (dispatch) => {
 
     let wargame = await wargamesApi.nextGameTurn(dbName);
-
-    console.log(wargame);
 
     dispatch(setCurrentWargame(wargame));
   }

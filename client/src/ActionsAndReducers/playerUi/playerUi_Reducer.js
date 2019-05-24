@@ -8,6 +8,11 @@ const initialState = {
   selectedRole: '',
   controlUi: false,
   currentTurn: 1,
+  gameDate: '',
+  gameTurnTime: 0,
+  realtimeTurnTime: 0,
+  turnEndTime: '',
+  gameDescription: '',
   selectedChannel: '',
   currentWargame: '',
   wargameTitle: '',
@@ -34,13 +39,15 @@ export const playerUiReducer = (state = initialState, action) => {
 
       newState.currentWargame = action.payload.name;
       newState.wargameTitle = action.payload.wargameTitle;
-      newState.currentTurn = action.payload.gameTurn;
       newState.wargameInitiated = action.payload.wargameInitiated;
+      newState.currentTurn = action.payload.gameTurn;
+      newState.gameDate = action.payload.gameDate;
+      newState.gameTurnTime = action.payload.gameTurnTime;
+      newState.realtimeTurnTime = action.payload.realtimeTurnTime;
+      newState.turnEndTime = action.payload.turnEndTime;
       newState.gameDescription = action.payload.data.overview.gameDescription;
-
       newState.allChannels = action.payload.data.channels.channels;
       newState.allForces = action.payload.data.forces.forces;
-
       break;
 
     case ActionConstant.SET_FORCE:

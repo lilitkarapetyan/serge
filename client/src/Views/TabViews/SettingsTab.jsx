@@ -12,6 +12,7 @@ import TextArea from "../../Components/Inputs/TextArea";
 
 import 'flatpickr/dist/themes/material_blue.css';
 import Flatpickr from "react-flatpickr";
+import moment from "moment";
 
 class SettingsTab extends Component {
 
@@ -23,12 +24,12 @@ class SettingsTab extends Component {
     this.props.dispatch(setGameData({spatialRepresentation: value, dirty: true}));
   };
 
-  updatePlanningInterval = (value) => {
-    this.props.dispatch(setGameData({planningInterval: value, dirty: true}));
+  updateGameTurnTime = (value) => {
+    this.props.dispatch(setGameData({gameTurnTime: value, dirty: true}));
   };
 
-  updateReplayInterval = (value) => {
-    this.props.dispatch(setGameData({replayInterval: value, dirty: true}));
+  updateRealtimeTurnTime = (value) => {
+    this.props.dispatch(setGameData({realtimeTurnTime: value, dirty: true}));
   };
 
   updateTurnStrategy = (value) => {
@@ -43,7 +44,8 @@ class SettingsTab extends Component {
   };
 
   updateStartDate = (value) => {
-    this.props.dispatch(setGameData({startTime: value[0].toISOString(), dirty: true}));
+    let date = moment(value[0], moment.ISO_8601).format();
+    this.props.dispatch(setGameData({startTime: date, dirty: true}));
   };
 
   render() {
@@ -87,9 +89,9 @@ class SettingsTab extends Component {
             </div>
             <div className="flex-content flex-content--sml">
               <TextInput
-                updateStore={this.updatePlanningInterval}
+                updateStore={this.updateGameTurnTime}
                 options={{ numInput: true }}
-                data={this.props.wargame.data[this.props.wargame.currentTab].planningInterval}
+                data={this.props.wargame.data[this.props.wargame.currentTab].gameTurnTime}
               />
             </div>
             <div className="flex-content flex-content--sml">
@@ -103,9 +105,9 @@ class SettingsTab extends Component {
             </div>
             <div className="flex-content flex-content--sml">
               <TextInput
-                updateStore={this.updateReplayInterval}
+                updateStore={this.updateRealtimeTurnTime}
                 options={{ numInput: true }}
-                data={this.props.wargame.data[this.props.wargame.currentTab].replayInterval}
+                data={this.props.wargame.data[this.props.wargame.currentTab].realtimeTurnTime}
               />
             </div>
             <div className="flex-content flex-content--sml">
@@ -136,6 +138,9 @@ class SettingsTab extends Component {
               <Flatpickr
                 value={this.props.wargame.data[this.props.wargame.currentTab].startTime}
                 onChange={this.updateStartDate}
+                options={{
+                  enableTime: true,
+                }}
                 />
             </div>
           </Row>

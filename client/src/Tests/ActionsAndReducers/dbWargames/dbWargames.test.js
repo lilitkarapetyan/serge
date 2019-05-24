@@ -34,8 +34,8 @@ const tabs = {
     data: {
       gameDescription: '',
       spatialRepresentation: '',
-      planningInterval: null,
-      replayInterval: null,
+      gameTurnTime: null,
+      realtimeTurnTime: null,
       turnStrategy: '',
     },
     complete: false,
