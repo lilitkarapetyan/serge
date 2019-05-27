@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-
+import Resizable from "re-resizable";
 import '../scss/App.scss';
 import {
   getWargame,
@@ -52,12 +52,14 @@ class PlayerUi extends Component {
 
   render() {
 
+    // PAGE DRAG EVENT LISTENER BUBBLE TO EACH ROW, RESIZE ROW WIDTH ON DRAG
+
     return (
       <div className="flex-content-wrapper">
 
         <div className="flex-content flex-content--fill">
 
-          {!this.props.playerUi.currentWargame ?
+          {!this.props.playerUi.currentWargame &&
             <div className="flex-content--center">
               <h1>Set wargame</h1>
               <DropdownInput
@@ -65,7 +67,6 @@ class PlayerUi extends Component {
                 selectOptions={this.props.wargame.wargameList.map((wargame) => ({option: wargame.title, value: wargame.name}))}
               />
             </div>
-            : false
           }
 
           {this.props.playerUi.currentWargame && !this.props.playerUi.selectedForce ?
