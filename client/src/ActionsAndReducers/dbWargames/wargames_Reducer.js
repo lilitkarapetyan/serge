@@ -15,6 +15,7 @@ var initialState = {
   wargameTitle: '',
   data: {...dbDefaultSettings.data},
   currentTab: Object.keys(dbDefaultSettings.data)[0],
+  wargameInitiated: false,
 };
 
 var getNameFromPath = function (dbPath) {
@@ -29,10 +30,11 @@ export const wargamesReducer = (state = initialState, action) => {
 
   let tab = newState.currentTab;
 
+  let selected;
   let curChannel;
-  let participantIndex;
+  let index;
   let listWithoutThis;
-  let uniqueName;
+  // let uniqueName;
 
   switch (action.type) {
 
@@ -45,6 +47,8 @@ export const wargamesReducer = (state = initialState, action) => {
       newState.currentWargame = action.payload.name;
       newState.wargameTitle = action.payload.wargameTitle;
       newState.data = action.payload.data;
+      newState.wargameInitiated = action.payload.wargameInitiated || false;
+
       return newState;
 
     case ActionConstant.SET_WARGAME_NAME:
@@ -55,7 +59,7 @@ export const wargamesReducer = (state = initialState, action) => {
         if (getNameFromPath(game.name) !== newState.currentWargame) listWithoutThis.push(game);
       });
 
-      uniqueName = listWithoutThis.every((wargame) => wargame.title !== action.payload );
+      // uniqueName = listWithoutThis.every((wargame) => wargame.title !== action.payload );
 
       newState.wargameTitle = action.payload;
       return newState;
@@ -79,7 +83,8 @@ export const wargamesReducer = (state = initialState, action) => {
     case ActionConstant.ADD_NEW_FORCE:
 
       let newForce = forceTemplate;
-      newForce.forceName = action.payload;
+      newForce.name = action.payload.name;
+      newForce.uniqid = action.payload.uniqid;
 
       newState.data[tab].forces.push(newForce);
 
@@ -92,29 +97,9 @@ export const wargamesReducer = (state = initialState, action) => {
     case ActionConstant.ADD_NEW_CHANNEL:
 
       let newChannel = channelTemplate;
-      newChannel.channelName = action.payload;
+      newChannel.name = action.payload.name;
+      newChannel.uniqid = action.payload.uniqid;
       newState.data[tab].channels.push(newChannel);
-      break;
-
-    case ActionConstant.UPDATE_CHANNEL_NAME:
-
-      listWithoutThis = [];
-
-      let selectedChannel = newState.data[tab].data.selectedChannel;
-      let channels = Object.keys(newState.tabs[tab].data.channels);
-
-      channels.forEach((channel) => {
-        if (channel !== selectedChannel) listWithoutThis.push(channel);
-      });
-
-      uniqueName = listWithoutThis.every((channel) => channel !== action.name );
-
-      if (uniqueName && action.name !== '') {
-        newState.tabs[tab].data.channels[action.name] = newState.tabs[tab].data.channels[selectedChannel];
-        newState.tabs[tab].data.selectedChannel = action.name;
-        delete newState.tabs[tab].data.channels[selectedChannel];
-
-      }
       break;
 
     case ActionConstant.SET_SELECTED_CHANNEL:
@@ -123,33 +108,53 @@ export const wargamesReducer = (state = initialState, action) => {
 
     case ActionConstant.DELETE_SELECTED_CHANNEL:
 
-      let channelIndex = newState.data[tab].channels.findIndex((channel) => channel.channelName === action.payload);
+      let channelIndex = newState.data[tab].channels.findIndex((channel) => channel.name === action.payload);
 
       newState.data[tab].channels.splice(channelIndex, 1);
       newState.data[tab].selectedChannel = '';
       break;
 
     case ActionConstant.SET_FORCE_OVERVIEW:
-      let selected = newState.data[tab].selectedForce;
-      newState.data[tab].forces.find((f) => f.forceName === selected).overview = action.payload;
+      selected = newState.data[tab].selectedForce.name;
+      newState.data[tab].forces.find((f) => f.name === selected).overview = action.payload;
       break;
 
     case ActionConstant.ADD_NEW_RECIPIENT:
-      curChannel = newState.data[tab].selectedChannel;
+      curChannel = newState.data[tab].selectedChannel.uniqid;
       let newParticipant = {...action.payload, subscriptionId: uniqId.time()};
-      newState.data[tab].channels.find((c) => c.channelName === curChannel).participants.push(newParticipant);
+      newState.data[tab].channels.find((c) => c.uniqid === curChannel).participants.push(newParticipant);
       break;
 
     case ActionConstant.UPDATE_RECIPIENT:
-      curChannel = newState.data[tab].selectedChannel;
-      participantIndex = newState.data[tab].channels.find((c) => c.channelName === curChannel).participants.findIndex((participant) => participant.subscriptionId === action.payload.id);
-      newState.data[tab].channels.find((c) => c.channelName === curChannel).participants.splice(participantIndex, 1, {...action.payload.data, subscriptionId: action.payload.id});
+      curChannel = newState.data[tab].selectedChannel.uniqid;
+      index = newState.data[tab].channels.find((c) => c.uniqid === curChannel).participants.findIndex((participant) => participant.subscriptionId === action.payload.id);
+      newState.data[tab].channels.find((c) => c.uniqid === curChannel).participants.splice(index, 1, {...action.payload.data, subscriptionId: action.payload.id});
       break;
 
     case ActionConstant.REMOVE_RECIPIENT:
-      curChannel = newState.data[tab].selectedChannel;
-      participantIndex = newState.data[tab].channels.find((c) => c.channelName === curChannel).participants.findIndex((participant) => participant.subscriptionId === action.payload);
-      newState.data[tab].channels.find((c) => c.channelName === curChannel).participants.splice(participantIndex, 1);
+      curChannel = newState.data[tab].selectedChannel.uniqid;
+      index = newState.data[tab].channels.find((c) => c.uniqid === curChannel).participants.findIndex((participant) => participant.subscriptionId === action.payload);
+      newState.data[tab].channels.find((c) => c.uniqid === curChannel).participants.splice(index, 1);
+      break;
+
+    case ActionConstant.ADD_ROLE_TO_FORCE:
+      newState.data[tab].forces.find((force) => force.name === action.payload.force).roles.push(action.payload.role);
+      break;
+
+    case ActionConstant.UPDATE_ROLE_NAME:
+      index = newState.data[tab].forces.find((force) => force.name === action.payload.force).roles.findIndex((role) => role.name === action.payload.oldName)
+      newState.data[tab].forces.find((force) => force.name === action.payload.force).roles.splice(index, 1, action.payload.role);
+      break;
+
+    case ActionConstant.REMOVE_ROLE:
+      index = newState.data[tab].forces.find((force) => force.name === newState.data[tab].selectedForce.name).roles.findIndex((role) => role.name === action.role);
+      newState.data[tab].forces.find((f) => f.name === newState.data[tab].selectedForce.name).roles.splice(index, 1);
+      break;
+
+    case ActionConstant.ADD_ICON:
+
+      selected = newState.data[tab].selectedForce.name;
+      newState.data[tab].forces.find((f) => f.name === selected).icon = action.icon;
       break;
 
     default:

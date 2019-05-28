@@ -1,3 +1,6 @@
+import umpireIcon from "../icons/umpireIcon";
+import defaultIcon from "../icons/default";
+
 export const serverPath = 'https://serge-dev.herokuapp.com/';
 export const databasePath = 'https://serge-dev.herokuapp.com/db/';
 // export const serverPath = 'http://localhost:8080/';
@@ -14,16 +17,36 @@ export const headers = {
 };
 
 export const forceTemplate = {
-  forceName: '',
+  name: '',
+  uniqid: null,
   overview: 'An overview written here..',
-  roles: ['General'],
+  roles: [{
+    name: 'General',
+    control: false,
+  }],
+  icon: defaultIcon.icon,
+  umpire: false,
+  dirty: false,
+};
+
+export const umpireForceTemplate = {
+  name: 'White',
+  uniqid: 'umpire',
+  overview: 'Umpire force.',
+  roles: [{
+    name: 'Game Control',
+    control: true,
+  }],
+  icon: umpireIcon.icon,
+  umpire: true,
   dirty: false,
 };
 
 // export const channelTemplate = [];
 
 export const channelTemplate = {
-  channelName: '',
+  name: '',
+  uniqid: '',
   participants: [],
 };
 
@@ -35,16 +58,16 @@ export const dbDefaultSettings = {
       name: "Overview - settings",
       gameDescription: '',
       spatialRepresentation: '',
-      planningInterval: null,
-      replayInterval: null,
+      gameTurnTime: null,
+      realtimeTurnTime: null,
       turnStrategy: '',
+      startTime: new Date().toISOString(),
       complete: false,
       dirty: false,
     },
     forces: {
       name: "Forces",
-      forces: [],
-      roles: ['General'],
+      forces: [umpireForceTemplate],
       selectedForce: '',
       complete: false,
       dirty: false,
@@ -56,16 +79,11 @@ export const dbDefaultSettings = {
       complete: false,
       dirty: false,
     }
-  }
+  },
+  wargameInitiated: false,
+  gameTurn: 1,
+  gameDate: null,
+  gameTurnTime: null,
+  realtimeTurnTime: null,
+  turnEndTime: null,
 };
-
-
-// export const channelTemplate = [{
-//   force: 'white',
-//   role: 'General',
-//   template: {
-//     name: '',
-//     id: '',
-//   },
-//   // subscriptionId: uniqid.time(),
-// }];

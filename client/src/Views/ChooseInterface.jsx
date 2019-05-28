@@ -17,11 +17,7 @@ class UmpireMenu extends Component {
 
   render() {
 
-    let activeGames = this.props.wargame.wargameList.length > 0;
-
-    let loading = Object.keys(this.props.dbLoading).every((k) => this.props.dbLoading[k] );
-
-    // check connection
+    let loading = Object.values(this.props.dbLoading).some((loading) => loading );
 
     if (loading) {
       return (
@@ -32,6 +28,8 @@ class UmpireMenu extends Component {
         </div>
       )
     }
+
+    let activeGames = this.props.wargame.wargameList.length > 0;
 
     return (
       <div id="umpire" className="flex-content-wrapper">

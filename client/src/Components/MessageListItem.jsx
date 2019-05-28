@@ -15,11 +15,14 @@ import Collapsible from "react-collapsible";
 import MessagePreview from "../Components/MessagePreviewPlayerUi";
 class MessageListItem extends Component {
 
-  shouldComponentUpdate(nextProps, nextState, nextContext) {
-    return this.props.detail.open === nextProps.detail.open;
-  }
-
   render() {
+
+    let itemTitle;
+    if (this.props.detail.message.message.title) {
+      itemTitle = this.props.detail.message.message.title;
+    } else {
+      itemTitle = this.props.detail.message.message.content;
+    }
 
     return (
       <Collapsible
@@ -27,7 +30,8 @@ class MessageListItem extends Component {
         trigger={
           <>
             <FontAwesomeIcon icon={this.props.detail.open ? faMinus : faPlus} size="1x" />
-            {this.props.detail.message.message.title}
+            <div className="message-title">{itemTitle}</div>
+            <Badge pill variant="primary">{this.props.detail.message.details.from.role}</Badge>
             <Badge pill variant="secondary">{this.props.detail.message.details.messageType}</Badge>
           </>
         }

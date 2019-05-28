@@ -3,7 +3,10 @@ import {connect} from 'react-redux';
 
 import '../../scss/App.scss';
 import Select from "react-select";
-import {faCheck} from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheck,
+  faUndoAlt,
+} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class EditSubscriptionRow extends Component {
@@ -14,7 +17,7 @@ class EditSubscriptionRow extends Component {
     this.state = {
       subscriptionId: this.props.data.subscriptionId,
       editSubscriptionForce: {value: this.props.data.force, label: this.props.data.force},
-      editSubscriptionRole: {value: this.props.data.role, label: this.props.data.role},
+      editSubscriptionRoles: this.props.data.roles,
       editSubscriptionTemplates: this.props.data.templates,
     };
   }
@@ -27,7 +30,7 @@ class EditSubscriptionRow extends Component {
 
   updateSubscriptionRole = (option) => {
     this.setState({
-      editSubscriptionRole: option,
+      editSubscriptionRoles: option,
     });
   };
 
@@ -38,12 +41,18 @@ class EditSubscriptionRow extends Component {
   };
 
   updateChannel = () => {
+
     let subscriptionData = {
       force: this.state.editSubscriptionForce.label,
-      role: this.state.editSubscriptionRole.label,
+      roles: this.state.editSubscriptionRoles,
       templates: this.state.editSubscriptionTemplates,
+      forceUniqid: this.props.data.forceUniqid,
     };
     this.props.updateRecipient(this.state.subscriptionId, subscriptionData);
+    this.props.cancelEdit();
+  };
+
+  cancelEdit = () => {
     this.props.cancelEdit();
   };
 
@@ -59,9 +68,10 @@ class EditSubscriptionRow extends Component {
         </td>
         <td>
           <Select
-            value={this.state.editSubscriptionRole}
+            value={this.state.editSubscriptionRoles}
             options={this.props.roleOptions}
             onChange={this.updateSubscriptionRole}
+            isMulti
           />
         </td>
         <td>
@@ -73,6 +83,7 @@ class EditSubscriptionRow extends Component {
           />
         </td>
         <td>
+          <FontAwesomeIcon icon={faUndoAlt} onClick={this.cancelEdit} />
           <FontAwesomeIcon icon={faCheck} onClick={this.updateChannel} />
         </td>
       </tr>

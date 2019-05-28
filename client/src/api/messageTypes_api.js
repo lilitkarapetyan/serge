@@ -6,9 +6,10 @@ import { databasePath,
 
 import machineryFailure from '../Schemas/machinery_failure.json';
 import weatherForecast from '../Schemas/weather_forecase.json';
+import chat from '../Schemas/chat.json';
+import message from '../Schemas/message.json';
 
 var db = new PouchDB(databasePath+MSG_TYPE_STORE);
-
 
 export const populateDb = () => {
 
@@ -19,7 +20,7 @@ export const populateDb = () => {
         var machine = {
           _id: new Date().toISOString(),
           lastUpdated: new Date().toISOString(),
-          title: 'machinery failure',
+          title: 'Machinery failure',
           details: machineryFailure,
           completed: false
         };
@@ -29,16 +30,38 @@ export const populateDb = () => {
           var weather = {
             _id: new Date().toISOString(),
             lastUpdated: new Date().toISOString(),
-            title: 'weather forecast',
+            title: 'Weather forecast',
             details: weatherForecast,
             completed: false
           };
-          db.put(weather).then(() => {
+          db.put(weather);
+        }, 1000);
+
+        setTimeout(function () {
+          var messageInput = {
+            _id: new Date().toISOString(),
+            lastUpdated: new Date().toISOString(),
+            title: 'Message',
+            details: message,
+            completed: false
+          };
+          db.put(messageInput);
+        }, 2000);
+
+        setTimeout(function () {
+          var chatInput = {
+            _id: new Date().toISOString(),
+            lastUpdated: new Date().toISOString(),
+            title: 'Chat',
+            details: chat,
+            completed: false
+          };
+          db.put(chatInput).then(() => {
             resolve(true);
           });
-        }, 2000);
+        }, 3000);
       } else {
-        resolve(true);
+        resolve(false);
       }
     });
   });

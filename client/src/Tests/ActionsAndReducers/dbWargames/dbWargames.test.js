@@ -11,7 +11,7 @@ import {
 
 import ActionConstant from "../../../ActionsAndReducers/ActionConstants";
 import _ from "lodash";
-import deepCopy from "../../../ActionsAndReducers/copyStateHelper";
+import deepCopy from "../../../Helpers/copyStateHelper";
 
 const mockStore = configureStore([thunk]);
 
@@ -34,8 +34,8 @@ const tabs = {
     data: {
       gameDescription: '',
       spatialRepresentation: '',
-      planningInterval: null,
-      replayInterval: null,
+      gameTurnTime: null,
+      realtimeTurnTime: null,
       turnStrategy: '',
     },
     complete: false,

@@ -76,6 +76,11 @@ class MessagePreview extends Component {
     });
   }
 
+  capitalize = (s) => {
+    if (typeof s !== 'string') return '';
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  };
+
 
   render() {
 
@@ -84,11 +89,9 @@ class MessagePreview extends Component {
     const that = this;
     const keyPropPairs = Object.entries(this.props.detail);
 
-    console.log(this.props.from);
-
     return keyPropPairs.map((pair, i) => {
 
-      if (i===0) return (
+      if (i===0 && keyPropPairs.length > 1) return (
         <Fragment key={'from-force'}>
           { this.props.from.force && this.props.from.role ? <>
             <span className="detail">
@@ -101,6 +104,28 @@ class MessagePreview extends Component {
         </Fragment>
       );
 
+      if (i===0 && keyPropPairs.length === 1) return (
+        <Fragment key={'from-force'}>
+          { this.props.from.force && this.props.from.role ?
+            <>
+              <span className="detail">
+                From:
+              </span>
+              <span className="data">
+                {`${this.props.from.force} ${this.props.from.role} `}
+              </span>
+            </>
+            : false }
+
+            <span className="detail">
+              {`${this.capitalize(pair[0])}:`}
+            </span>
+            <span className="data">
+              {pair[1]}
+            </span>
+        </Fragment>
+      );
+
       if (check.object(pair[1])) return that.createObjItem(pair);
       if (check.array.of.object(pair[1])) return that.deconstructArr(pair);
       if (check.boolean(pair[1])) return that.createBoolItem(pair);
@@ -108,7 +133,7 @@ class MessagePreview extends Component {
 
       return (
         <Fragment key={`${pair[0]}-${pair[1]}`}>
-          <span className="detail">{pair[0]}: </span>
+          <span className="detail">{this.capitalize(pair[0])}: </span>
           <span className="data">{pair[1]}</span>
         </Fragment>
       )

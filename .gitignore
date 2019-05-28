@@ -4,5 +4,7 @@
 /node_modules
 /client/node_modules
 /client/build
-/.idea
+/.idea/*
 /db
+
+/log.txt

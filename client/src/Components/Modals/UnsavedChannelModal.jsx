@@ -5,17 +5,26 @@ import { connect } from 'react-redux';
 import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
 import {
   refreshChannel,
-  setTabSaved
+  setTabSaved,
+  addNewChannel,
+  setSelectedChannel,
 } from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
+import uniqid from "uniqid";
 
 class UnsavedChannelModal extends Component {
 
   dontSave = () => {
 
-    this.props.dispatch(refreshChannel(this.props.wargame.currentWargame, this.props.currentModal.data));
+    if (this.props.currentModal.data === "create-new") {
+      let id = `channel-${uniqid.time()}`;
+      this.props.dispatch(addNewChannel({name: id, uniqid: id}));
+      this.props.dispatch(setSelectedChannel({name: id, uniqid: id}));
+    } else {
+      this.props.dispatch(refreshChannel(this.props.wargame.currentWargame, this.props.currentModal.data));
+    }
+
     this.props.dispatch(setTabSaved());
     this.props.dispatch(modalAction.close());
-
   };
 
   hideModal = () => {

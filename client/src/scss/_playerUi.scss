@@ -9,6 +9,11 @@
     padding-bottom: .25em;
   }
 
+  span {
+    font-size: 1.25em;
+    font-family: monospace;
+  }
+
   .group-section {
     margin-top: $umpireMenuMargin;
   }
@@ -32,13 +37,26 @@
   cursor: pointer;
 }
 
-.message-feeds {
+.message-feed {
   position: relative;
   display: flex;
+  flex-direction: column;
+  flex-grow: 1;
   height: 100vh;
   max-height: 100vh;
   max-width: 33%;
   overflow: hidden;
+
+  .forces-in-channel {
+    display: flex;
+    flex-direction: row;
+
+    .force-indicator {
+      width: 24px;
+      height: 24px;
+      margin-left: 10px;
+    }
+  }
 
   .message-list {
     flex-grow: 1;
@@ -57,23 +75,39 @@
       display: flex;
       align-items: center;
       padding: 16px;
-      font-size: 1.4em;
+      font-size: 1.8em;
+      font-family: monospace;
       line-height: 1.75em;
       font-weight: 500;
       cursor: pointer;
+
+      .message-title {
+        max-width: 300px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .badge {
+        font-size: 50%;
+        font-weight: 200;
+        font-family: monospace;
+        height: auto;
+        margin-left: 10px;
+        line-height: 1.5em;
+        padding: 0 6px;
+      }
 
       svg {
         margin-right: 10px;
         padding: 2px;
       }
 
-      .badge {
-        font-size: 50%;
-        font-weight: 200;
-        height: fit-content;
+      img {
         margin-left: 10px;
-        line-height: 1.5em;
-        padding: 0 6px;
+        width: 32px;
+        height: 32px;
+        border-radius: 100%;
       }
     }
 
@@ -82,12 +116,28 @@
     }
   }
 
+  .badge {
+    font-size: 11px;
+    font-weight: 200;
+    font-family: monospace;
+    display: block;
+    width: fit-content;
+    height: auto;
+    margin-top: 2px;
+    line-height: 1.5em;
+    padding: 0 6px;
+  }
+
+  .out-of-game-feed {
+    background: $lightBg;
+  }
+
   .new-message-creator {
     left: 0;
     bottom: 0;
-    background: white;
+    background: #f5f5f5;
     padding: 16px;
-    border-top: 5px solid $primaryTriadColor;
+    //border-top: 5px solid $primaryTriadColor;
 
     @include drawerShadow();
 
@@ -109,7 +159,7 @@
       }
 
       .bg-light {
-        background-color: white !important;
+        background-color: #f5f5f5 !important;
       }
       .card {
         border: none;
@@ -127,5 +177,15 @@
   .data {
     padding: 0 6px 0 2px;
     word-break: break-word;
+  }
+}
+
+.pre-start-screen {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+
+  button {
+    align-self: center;
   }
 }

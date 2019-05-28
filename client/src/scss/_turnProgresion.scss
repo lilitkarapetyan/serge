@@ -1,0 +1,43 @@
+@import "dependencies/variables";
+
+
+.turn-progression-ui {
+  background: $primaryTriadColor;
+  flex-grow: 0;
+  justify-content: space-evenly;
+
+  padding: $umpireMenuMargin;
+
+  h3, h4, p, span {
+    color: $lightBlue !important;
+  }
+
+  h3, h4 {
+    line-height: 1.5em;
+  }
+
+  h3.time-left {
+    display: inline;
+    width: fit-content;
+    margin-right: 5px;
+  }
+
+  h3.ended {
+    animation: blink 1s infinite;
+  }
+
+  @keyframes blink {
+    49% {
+      color: $lightBlue;
+    }
+    50% {
+      color: $primaryTriadColor;
+    }
+    99% {
+      color: $primaryTriadColor;
+    }
+    100% {
+      color: $lightBlue;
+    }
+  }
+}

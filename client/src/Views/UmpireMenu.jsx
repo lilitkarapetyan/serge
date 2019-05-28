@@ -172,7 +172,7 @@ class UmpireMenu extends Component {
   createMessagesActions() {
     return this.props.messages.messagePreviewId.length > 0 ?
       <>
-        <Link class="link link--secondary" href={this.state.creatorType === 'templates' ? "/messageCreator/edit/template" : "/messageCreator/edit/message"}><FontAwesomeIcon icon={faPencilAlt} />Edit</Link>
+        <Link class="link link--secondary" href={this.state.creatorType === 'templates' ? "/client/messageCreator/edit/template" : "/client/messageCreator/edit/message"}><FontAwesomeIcon icon={faPencilAlt} />Edit</Link>
         <span className="link link--secondary" onClick={this.duplicateMessage}><FontAwesomeIcon icon={faClone} />Duplicate</span>
         <span className="link link--secondary" onClick={this.deleteMessage}><FontAwesomeIcon icon={faTrash} />Delete</span>
       </>
@@ -184,7 +184,7 @@ class UmpireMenu extends Component {
   createTemplatesActions() {
     return this.props.umpireMenu.selectedSchemaID.length > 0 ?
       <>
-        <Link class="link link--secondary" href={this.state.creatorType === 'templates' ? "/messageCreator/edit/template" : "/messageCreator/edit/message"}><FontAwesomeIcon icon={faPencilAlt} />Edit</Link>
+        <Link class="link link--secondary" href={this.state.creatorType === 'templates' ? "/client/messageCreator/edit/template" : "/client/messageCreator/edit/message"}><FontAwesomeIcon icon={faPencilAlt} />Edit</Link>
         <span className="link link--secondary" onClick={this.duplicateTemplate}><FontAwesomeIcon icon={faClone} />Duplicate</span>
         <span className="link link--secondary" onClick={this.deleteTemplate}><FontAwesomeIcon icon={faTrash} />Delete</span>
       </>

@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import "../../scss/App.scss";
 import { connect } from 'react-redux';
-import AddForceModal from "./AddForceModal";
+import AddRoleModal from "./AddRoleModal";
 import DeleteModal from './DeleteModal';
 import DeleteWargameModal from "./DeleteWargameModal";
 import UnsavedForceModal from "./UnsavedForceModal";
 import UnsavedChannelModal from "./UnsavedChannelModal";
+import AddIconModal from "./AddIconModal";
 
 class ModalSwitch extends Component {
 
@@ -14,10 +15,6 @@ class ModalSwitch extends Component {
     var modal;
 
     switch (this.props.currentModal.modal) {
-
-      case "addForce":
-        modal = <AddForceModal />;
-        break;
 
       case "delete":
         modal = <DeleteModal />;
@@ -33,6 +30,14 @@ class ModalSwitch extends Component {
 
       case "unsavedChannel":
         modal = <UnsavedChannelModal />;
+        break;
+
+      case "newRole":
+        modal = <AddRoleModal />;
+        break;
+
+      case "addIcon":
+        modal = <AddIconModal />;
         break;
 
       default:

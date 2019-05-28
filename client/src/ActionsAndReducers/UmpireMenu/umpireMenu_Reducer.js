@@ -1,5 +1,5 @@
 import ActionConstant from '../ActionConstants';
-import deepCopy from "../copyStateHelper.js";
+import deepCopy from "../../Helpers/copyStateHelper.js";
 
 const initialState = {
   selectedSchemaID: '',

@@ -1,17 +1,58 @@
 import React, { Component } from 'react';
-import {faTimes} from "@fortawesome/free-solid-svg-icons";
+import {connect} from "react-redux";
+import {
+  faTimes,
+  faPencilAlt,
+} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {removeRole} from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
+import {modalAction} from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
 
 class RemovableGroupItem extends Component {
 
+  constructor() {
+    super();
+    this.state = {
+      hover: false,
+    };
+  }
+
+  removeRole = () => {
+    this.props.dispatch(removeRole(this.props.children));
+  };
+
+  editRole = () => {
+    let role = {
+      name: this.props.children,
+      control: this.props.isControl,
+    };
+
+    this.props.dispatch(modalAction.open("newRole", role));
+  };
+
+  showEditBtn = () => {
+     this.setState({
+       hover: true,
+     });
+  };
+
+  hideEditBtn = () => {
+    this.setState({
+      hover: false,
+    });
+  };
+
   render() {
     return (
-      <span className="group-item" key={this.props.children}>
-        {this.props.children}
-        <FontAwesomeIcon icon={faTimes} />
+      <span className="group-item" key={this.props.children} onMouseOver={this.showEditBtn} onMouseOut={this.hideEditBtn}>
+        { this.props.children }
+        <FontAwesomeIcon className="edit-icon" icon={faPencilAlt} onClick={this.editRole} />
+        { !this.props.isControl ? <FontAwesomeIcon icon={faTimes} onClick={this.removeRole} /> : false }
       </span>
     )
   }
 }
 
-export default RemovableGroupItem;
+const mapStateToProps = () => ({});
+
+export default connect(mapStateToProps)(RemovableGroupItem);

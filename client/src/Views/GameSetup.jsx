@@ -43,7 +43,7 @@ class GameSetup extends Component {
     const that = this;
 
     return Object.entries(this.props.wargame.data).map(function (entry) {
-      let active = that.props.wargame.currentTab === parseInt(entry[0]);
+      let active = that.props.wargame.currentTab === entry[0];
       let completed = entry[1].complete;
       return (<div key={entry[0]} className={classNames("progress-indicator", {"progress-indicator--active": active, "progress-indicator--complete": completed})}></div>);
     });

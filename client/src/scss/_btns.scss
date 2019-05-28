@@ -24,6 +24,16 @@
   }
 }
 
+.button-wrap-tab {
+  display: flex;
+  float: right;
+  flex-direction: row-reverse;
+
+  span {
+    margin-left: 20px;
+  }
+}
+
 .btn-secondary {
   // override bootstrap specificity
   margin-bottom: 0;
@@ -69,6 +79,7 @@ a.link,
 span.link {
   display: block;
   width: fit-content;
+  height: fit-content;
   padding: 8px 14px 8px 6px;
   font-size: 16px;
   font-weight: 500;
@@ -117,9 +128,15 @@ span.link {
   &--noIcon {
     padding: 8px 14px;
   }
+
+  &--next-turn {
+    margin-top: 20px;
+  }
 }
 
 button {
+  width: fit-content;
+  height: fit-content;
   border: none;
 }
 

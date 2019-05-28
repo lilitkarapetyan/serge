@@ -20,7 +20,7 @@ class Router extends Component {
 
   constructor(props) {
     super(props);
-    //
+
     // let path = new URL(window.location.href).pathname;
     //
     // this.props.dispatch(setCurrentViewFromURI(path));

@@ -22,6 +22,7 @@ import {addNotification} from "../../ActionsAndReducers/Notification/Notificatio
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import {modalAction} from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
+import classNames from "classnames";
 
 class ForcesTab extends Component {
 
@@ -36,8 +37,8 @@ class ForcesTab extends Component {
 
   componentWillReceiveProps(nextProps, nextContext) {
 
-    const curSelected = this.props.wargame.data[this.props.wargame.currentTab].selectedForce;
-    const nextSelected = nextProps.wargame.data[nextProps.wargame.currentTab].selectedForce;
+    const curSelected = this.props.wargame.data[this.props.wargame.currentTab].selectedForce.name;
+    const nextSelected = nextProps.wargame.data[nextProps.wargame.currentTab].selectedForce.name;
     const curPropsState = this.props.wargame.data[this.props.wargame.currentTab].forces;
     const nextPropsState = nextProps.wargame.data[nextProps.wargame.currentTab].forces;
 
@@ -56,18 +57,28 @@ class ForcesTab extends Component {
   }
 
   createForce = () => {
-    let name = 'force-' + uniqid.time();
-    this.props.dispatch(addNewForce(name));
-    this.props.dispatch(setSelectedForce(name));
 
-    let template = forceTemplate;
-    template.forceName = name;
+    const curTab = this.props.wargame.currentTab;
 
-    this.props.dispatch(saveForce(this.props.wargame.currentWargame, name, template, name));
+    if (this.props.wargame.data[curTab].dirty) {
+      this.props.dispatch(modalAction.open("unsavedForce", "create-new"));
+    } else {
 
-    this.setState({
-      newForceName: null,
-    });
+      let id = 'force-' + uniqid.time();
+      this.props.dispatch(addNewForce({name: id, uniqid: id}));
+      this.props.dispatch(setSelectedForce({name: id, uniqid: id}));
+
+      let template = forceTemplate;
+      template.name = id;
+      template.uniqid = id;
+
+      this.props.dispatch(saveForce(this.props.wargame.currentWargame, id, template, id));
+
+      this.setState({
+        newForceName: null,
+      });
+
+    }
   };
 
   setSelected = (force) => {
@@ -83,9 +94,9 @@ class ForcesTab extends Component {
 
   checkUnique() {
     const curTab = this.props.wargame.currentTab;
-    let selectedForce = this.props.wargame.data[curTab].selectedForce;
+    let selectedForce = this.props.wargame.data[curTab].selectedForce.name;
 
-    let forceNames = this.props.wargame.data[curTab].forces.map((force) => force.forceName);
+    let forceNames = this.props.wargame.data[curTab].forces.map((force) => force.name);
     forceNames = _.pull(forceNames, selectedForce);
 
     if (!checkUnique(this.state.newForceName, forceNames)) {
@@ -98,28 +109,35 @@ class ForcesTab extends Component {
   saveForce = () => {
 
     const curTab = this.props.wargame.currentTab;
-    let selectedForce = this.props.wargame.data[curTab].selectedForce;
+    let selectedForceId = this.props.wargame.data[curTab].selectedForce.uniqid;
 
-    let newForceData = this.props.wargame.data[curTab].forces.find((f) => f.forceName === selectedForce);
-    let forceOverview = typeof this.state.newForceOverview === 'string' ? this.state.newForceOverview : this.props.wargame.data[curTab].forces.find((force) => force.forceName === selectedForce).overview;
+    let newForceData = this.props.wargame.data[curTab].forces.find((f) => f.uniqid === selectedForceId);
+    let forceOverview = typeof this.state.newForceOverview === 'string' ? this.state.newForceOverview : this.props.wargame.data[curTab].forces.find((force) => force.uniqid === selectedForceId).overview;
 
     newForceData.overview = forceOverview;
 
     if (typeof this.state.newForceName === 'string' && this.state.newForceName.length > 0) {
       if (!this.checkUnique()) return;
+      let selectedForce = this.props.wargame.data[curTab].selectedForce.name;
       this.props.dispatch(saveForce(this.props.wargame.currentWargame, this.state.newForceName, newForceData, selectedForce));
     }
 
     if (this.state.newForceName === null) {
+      let selectedForce = this.props.wargame.data[curTab].selectedForce.name;
       this.props.dispatch(saveForce(this.props.wargame.currentWargame, selectedForce, newForceData, selectedForce));
     } else if (this.state.newForceName.length === 0) {
-      alert('no channel name');
+      this.props.dispatch(addNotification("No Force Name", "warning"));
     }
   };
 
   deleteForce = () => {
+
     let curTab = this.props.wargame.currentTab;
-    let selectedForce = this.props.wargame.data[curTab].selectedForce;
+    let selectedForce = this.props.wargame.data[curTab].selectedForce.uniqid;
+    let isUmpire = this.props.wargame.data[curTab].forces.find((f) => f.uniqid === selectedForce).umpire;
+
+    if (isUmpire) return;
+
     this.props.dispatch(deleteSelectedForce(this.props.wargame.currentWargame, selectedForce));
   };
 
@@ -137,28 +155,45 @@ class ForcesTab extends Component {
     })
   };
 
+  addNewRoleModal = () => {
+    this.props.dispatch(modalAction.open("newRole"));
+  };
+
+  openIconModal = () => {
+    this.props.dispatch(modalAction.open("addIcon"));
+  };
+
+
   createForceEditor() {
 
     let curTab = this.props.wargame.currentTab;
-    let selectedForce = this.props.wargame.data[curTab].selectedForce;
+    let selectedForce = this.props.wargame.data[curTab].selectedForce.name;
+
+    let isUmpire = this.props.wargame.data[curTab].forces.find((f) => f.name === selectedForce).umpire;
 
     let forceName = typeof this.state.newForceName === 'string' ? this.state.newForceName : selectedForce;
-    let forceOverview = typeof this.state.newForceOverview === 'string' ? this.state.newForceOverview : this.props.wargame.data[curTab].forces.find((force) => force.forceName === selectedForce).overview;
+    let forceOverview = typeof this.state.newForceOverview === 'string' ? this.state.newForceOverview : this.props.wargame.data[curTab].forces.find((force) => force.name === selectedForce).overview;
+    let forceIcon = this.props.wargame.data[curTab].forces.find((force) => force.name === selectedForce).icon;
 
     return (
       <div className="flex-content--fill forcesTab">
 
-        <TextInput
-          id="channel-editable"
-          updateStore={this.updateForceName}
-          options={{numInput: false}}
-          data={forceName}
-        />
+        <div className="flex-content flex-content--row">
+          <TextInput
+            id="editable-title"
+            updateStore={this.updateForceName}
+            options={{numInput: false}}
+            data={forceName}
+          />
 
-        <span className="link link--noIcon" onClick={this.saveForce}>save force</span>
-        <span className="link link--secondary" onClick={this.deleteForce}><FontAwesomeIcon icon={faTrash} />Delete</span>
+          <img className="force-icon" src={forceIcon} alt="" />
 
-        <span className="link link--secondary link--noIcon link--disabled">Change icon</span>
+          <div className="force-button-wrap">
+            <span className="link link--noIcon" onClick={this.saveForce}>save force</span>
+            <span className={classNames({"link": true, "link--secondary": true, "link--disabled": isUmpire})} onClick={this.deleteForce}><FontAwesomeIcon icon={faTrash} />Delete</span>
+            <span className="link link--secondary link--noIcon" onClick={this.openIconModal}>Change icon</span>
+          </div>
+        </div>
 
         <p className="heading--sml">Overview &amp; Objectives</p>
         <TextArea
@@ -167,12 +202,14 @@ class ForcesTab extends Component {
         />
 
         <p className="heading--sml">Roles</p>
-        <span className="link link--secondary link--noIcon link--disabled">Add a new role</span>
+        <span className="link link--secondary link--noIcon" onClick={this.addNewRoleModal}>Add a new role</span>
 
         <div className="flex-content">
-          {this.props.wargame.data[curTab].forces.find((force) => force.forceName === selectedForce).roles.map((role) => {
-            return (<RemovableGroupItem key={role}>{role}</RemovableGroupItem>)
-          })}
+          <div className="roles">
+            {this.props.wargame.data[curTab].forces.find((force) => force.name === selectedForce).roles.map((role) => {
+              return (<RemovableGroupItem key={role.name} isControl={role.control}>{role.name}</RemovableGroupItem>)
+            })}
+          </div>
         </div>
       </div>
     );
@@ -181,13 +218,13 @@ class ForcesTab extends Component {
   render() {
 
     let curTab = this.props.wargame.currentTab;
-    let selectedForce = this.props.wargame.data[curTab].selectedForce;
+    let selectedForce = this.props.wargame.data[curTab].selectedForce.name || "";
 
     return (
       <div className="flex-content-wrapper">
         <div className="flex-content">
           <span className="link link--noIcon" onClick={this.createForce}>Add a new force</span>
-          <TabsSearchList listData={this.state.forcesList.map((force) => force.forceName)}
+          <TabsSearchList listData={this.state.forcesList}
                           setSelected={this.setSelected}
                           selected={selectedForce}
           />

@@ -2,7 +2,7 @@ import ActionConstant from '../ActionConstants';
 import * as wargamesApi from "../../api/wargames_api";
 import * as messageTemplatesApi from "../../api/messageTypes_api";
 
-const setCurrentWargame = (data) => ({
+export const setCurrentWargame = (data) => ({
   type: ActionConstant.SET_CURRENT_WARGAME_PLAYER,
   payload: data
 });
@@ -17,8 +17,9 @@ export const setRole = (data) => ({
   payload: data
 });
 
-export const setFilteredChannels = () => ({
+export const setFilteredChannels = (setSelectedChannel) => ({
   type: ActionConstant.SET_FILTERED_CHANNELS,
+  setSelectedChannel
 });
 
 export const setChannel = (data) => ({
@@ -39,16 +40,31 @@ export const setWargameMessages = (messages) => ({
 export const getWargame = (gamePath) => {
   return async (dispatch) => {
 
-    // await wargamesApi.populateWargame();
-
-    // will get active wargame during later stages
     let wargame = await wargamesApi.getWargame(gamePath);
-
-    console.log(wargame);
 
     dispatch(setCurrentWargame(wargame));
   }
 };
+
+export const nextGameTurn = (dbName) => {
+  return async (dispatch) => {
+
+    let wargame = await wargamesApi.nextGameTurn(dbName);
+
+    dispatch(setCurrentWargame(wargame));
+  }
+};
+
+
+export const initiateGame = (dbName) => {
+  return async (dispatch) => {
+
+    let wargame = await wargamesApi.initiateGame(dbName);
+
+    dispatch(setCurrentWargame(wargame));
+  }
+};
+
 
 export const saveMessage = (dbName, details, message) => {
   return async (dispatch) => {
@@ -56,6 +72,8 @@ export const saveMessage = (dbName, details, message) => {
     await wargamesApi.postNewMessage(dbName, details, message);
 
     let messages = await wargamesApi.getAllMessages(dbName);
+
+    messages = messages.filter((message) => !message.hasOwnProperty('infoType'));
 
     dispatch(setWargameMessages(messages));
   }
@@ -75,6 +93,8 @@ export const getAllWargameMessages = (name) => {
   return async (dispatch) => {
 
     var messages = await wargamesApi.getAllMessages(name);
+
+    messages = messages.filter((message) => !message.hasOwnProperty('infoType'));
 
     dispatch(setWargameMessages(messages));
   }

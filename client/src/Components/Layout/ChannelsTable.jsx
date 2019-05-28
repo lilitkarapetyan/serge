@@ -17,6 +17,8 @@ import {
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 
+import deepCopy from "../../Helpers/copyStateHelper";
+
 import classNames from "classnames";
 import {setTabUnsaved} from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
@@ -25,7 +27,7 @@ class ChannelsTable extends Component {
   constructor(props) {
     super(props);
 
-    let forceOptions = this.props.wargame.data.forces.forces.map((f) => ({ value: f.forceName, label: f.forceName }));
+    let forceOptions = this.props.wargame.data.forces.forces.map((f) => ({ value: f.uniqid, label: f.name }));
 
     let templateOptions = this.props.messageTypes.messages.map((messageType) => {
       return {
@@ -37,7 +39,7 @@ class ChannelsTable extends Component {
     this.state = {
       selectedForce: {value: null, label: null},
       forceOptions: forceOptions,
-      selectedRole:  {value: null, label: null},
+      selectedRoles:  [],
       roleOptions: [],
       selectedTemplates:  [],
       templateOptions: templateOptions,
@@ -56,13 +58,12 @@ class ChannelsTable extends Component {
 
       let roleOptions = [];
 
-      let roles = this.props.wargame.data.forces.forces.find((f) => f.forceName === nextState.selectedForce.value).roles;
+      let roles = this.props.wargame.data.forces.forces.find((f) => f.uniqid === nextState.selectedForce.value).roles;
 
       roles.forEach((role) => {
-
         roleOptions.push({
-          value: role,
-          label: role,
+          value: role.name,
+          label: role.name,
         });
       });
 
@@ -73,19 +74,25 @@ class ChannelsTable extends Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    if (this.props.wargame.data.channels.selectedChannel !== nextProps.wargame.data.channels.selectedChannel) {
+    if (this.props.wargame.data.channels.selectedChannel.uniqid !== nextProps.wargame.data.channels.selectedChannel.uniqid) {
       this.setState({
         selectedForce: {value: null, label: null},
-        selectedRole:  {value: null, label: null},
+        selectedRoles: [],
         selectedTemplates: [],
       })
     }
   }
 
-  createRow(data, i) {
+  createRow(rowData, i) {
+
+    let data = deepCopy(rowData);
+
     var row = [];
     for (var prop in data) {
+
       if (prop === "subscriptionId") continue;
+      if (prop === "forceUniqid") continue;
+      if (prop === "icon") continue;
 
       var value = '';
       if (typeof data[prop] !== "string") {
@@ -115,8 +122,13 @@ class ChannelsTable extends Component {
   };
 
   editSubscription(subscriptionId) {
+
+    let forceUniqId = this.props.data.find((force) => force.subscriptionId === subscriptionId).forceUniqid;
+    let selectedForce = this.state.forceOptions.find((opt) => opt.value === forceUniqId);
+
     this.setState({
       subscriptionToEdit: subscriptionId,
+      selectedForce,
     });
   }
 
@@ -139,7 +151,7 @@ class ChannelsTable extends Component {
 
   setSelectedRole = (option) => {
     this.setState({
-      selectedRole: option,
+      selectedRoles: option,
     });
   };
 
@@ -155,17 +167,19 @@ class ChannelsTable extends Component {
 
     if (!rowComplete) return;
 
-    let channelData = {
-      force: this.state.selectedForce.value,
-      role: this.state.selectedRole.value,
+    let recipient = {
+      force: this.props.wargame.data.forces.forces.find((f) => f.uniqid === this.state.selectedForce.value).name,
+      forceUniqid: this.props.wargame.data.forces.forces.find((f) => f.uniqid === this.state.selectedForce.value).uniqid,
+      roles: this.state.selectedRoles,
       templates: this.state.selectedTemplates,
+      icon: this.props.wargame.data.forces.forces.find((f) => f.uniqid === this.state.selectedForce.value).icon,
     };
     this.props.dispatch(setTabUnsaved());
-    this.props.dispatch(addRecipientToChannel(channelData));
+    this.props.dispatch(addRecipientToChannel(recipient));
 
     this.setState({
       selectedForce: {value: null, label: null},
-      selectedRole: {value: null, label: null},
+      selectedRoles: [],
       selectedTemplates: [],
     });
   };
@@ -173,7 +187,7 @@ class ChannelsTable extends Component {
   clearChannelData = () => {
     this.setState({
       selectedForce: {value: null, label: null},
-      selectedRole: {value: null, label: null},
+      selectedRoles: [],
       selectedTemplates: [],
     });
   };
@@ -214,10 +228,11 @@ class ChannelsTable extends Component {
               </td>
               <td>
                 <Select
-                  value={this.state.selectedRole}
+                  value={this.state.selectedRoles}
                   options={this.state.roleOptions}
                   onChange={this.setSelectedRole}
                   isDisabled={!this.state.selectedForce.value}
+                  isMulti
                 />
               </td>
               <td>
@@ -225,7 +240,7 @@ class ChannelsTable extends Component {
                   value={this.state.selectedTemplates}
                   options={this.state.templateOptions}
                   onChange={this.setSelectedTemplate}
-                  isDisabled={!this.state.selectedRole.value}
+                  isDisabled={this.state.selectedRoles.length === 0}
                   isMulti
                 />
               </td>

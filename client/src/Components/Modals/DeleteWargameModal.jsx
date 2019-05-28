@@ -13,6 +13,7 @@ class DeleteWargameModal extends Component {
 
   deleteWargame = () => {
     this.props.dispatch(deleteWargame(this.props.currentModal.data));
+    this.props.dispatch(modalAction.close());
   };
 
   render() {

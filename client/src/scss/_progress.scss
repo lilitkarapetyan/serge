@@ -26,6 +26,7 @@ $progressHeight: 2px;
   }
 
   &-indicator {
+    position: relative;
     width: $indicatorSize;
     height: $indicatorSize;
     margin: 0 $indicatorMargin;
@@ -37,7 +38,30 @@ $progressHeight: 2px;
     z-index: 2;
 
     &--active {
-      @include activeShadow();
+      &:before {
+        content: "";
+        position: absolute;
+        width: calc(#{$indicatorSize} + 8px);
+        height: calc(#{$indicatorSize} + 8px);
+        border-radius: 50%;
+        opacity: .75;
+        top: -6px;
+        left: -6px;
+        box-sizing: border-box;
+        border: 1.5px solid $successColor;
+        animation: scale .5s ease-out;
+      }
+
+      @keyframes scale {
+        0% {
+          transform: scale(.75);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(1);
+          opacity: .75;
+        }
+      }
     }
 
     &--complete {

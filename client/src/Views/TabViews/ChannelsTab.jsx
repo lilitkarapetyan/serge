@@ -39,8 +39,8 @@ class ForcesTab extends Component {
 
   componentWillReceiveProps(nextProps, nextContext) {
 
-    const curSelected = this.props.wargame.data[this.props.wargame.currentTab].selectedChannel;
-    const nextSelected = nextProps.wargame.data[nextProps.wargame.currentTab].selectedChannel;
+    const curSelected = this.props.wargame.data[this.props.wargame.currentTab].selectedChannel.uniqid;
+    const nextSelected = nextProps.wargame.data[nextProps.wargame.currentTab].selectedChannel.uniqid;
     const curPropsState = this.props.wargame.data[this.props.wargame.currentTab].channels;
     const nextPropsState = nextProps.wargame.data[nextProps.wargame.currentTab].channels;
 
@@ -58,14 +58,22 @@ class ForcesTab extends Component {
   }
 
   createChannel = () => {
-    let name = 'channel-' + uniqid.time();
-    this.props.dispatch(addNewChannel(name));
-    this.props.dispatch(setSelectedChannel(name));
 
-    let template = channelTemplate;
-    template.channelName = name;
+    const curTab = this.props.wargame.currentTab;
 
-    this.props.dispatch(saveChannel(this.props.wargame.currentWargame, name, template, name));
+    if (this.props.wargame.data[curTab].dirty) {
+      this.props.dispatch(modalAction.open("unsavedChannel", "create-new"));
+    } else {
+      let id = `channel-${uniqid.time()}`;
+      this.props.dispatch(addNewChannel({name: id, uniqid: id}));
+      this.props.dispatch(setSelectedChannel({name: id, uniqid: id}));
+
+      let template = channelTemplate;
+      template.name = id;
+      template.uniqid = id;
+
+      this.props.dispatch(saveChannel(this.props.wargame.currentWargame, id, template, id));
+    }
   };
 
   setSelected = (channel) => {
@@ -87,21 +95,21 @@ class ForcesTab extends Component {
     let list = this.props.wargame.data[this.props.wargame.currentTab].channels;
 
     this.setState({
-      channelList: list.filter((item) => item.channelName.toLowerCase().indexOf(value.toLowerCase()) > -1),
+      channelList: list.filter((item) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1),
       searchQuery: value
     });
   };
 
   deleteChannel = () => {
     let curTab = this.props.wargame.currentTab;
-    let selectedChannel = this.props.wargame.data[curTab].selectedChannel;
+    let selectedChannel = this.props.wargame.data[curTab].selectedChannel.uniqid;
     this.props.dispatch(deleteSelectedChannel(this.props.wargame.currentWargame, selectedChannel));
   };
 
-  updateChannelName = (name) => {
+  updateChannelName = (channel) => {
     this.props.dispatch(setTabUnsaved());
     this.setState({
-      newChannelName: name,
+      newChannelName: channel,
     })
   };
 
@@ -109,7 +117,7 @@ class ForcesTab extends Component {
     const curTab = this.props.wargame.currentTab;
     let selectedChannel = this.props.wargame.data[curTab].selectedChannel;
 
-    let channelNames = this.props.wargame.data[curTab].channels.map((force) => force.channelName);
+    let channelNames = this.props.wargame.data[curTab].channels.map((force) => force.name);
         channelNames = _.pull(channelNames, selectedChannel);
 
     if (!checkUnique(this.state.newChannelName, channelNames)) {
@@ -121,9 +129,9 @@ class ForcesTab extends Component {
 
   saveChannel = () => {
     const curTab = this.props.wargame.currentTab;
-    let selectedChannel = this.props.wargame.data[curTab].selectedChannel;
+    let selectedChannel = this.props.wargame.data[curTab].selectedChannel.name;
 
-    let newChannelData = this.props.wargame.data[curTab].channels.find((c) => c.channelName === selectedChannel);
+    let newChannelData = this.props.wargame.data[curTab].channels.find((c) => c.name === selectedChannel);
 
     if (typeof this.state.newChannelName === 'string' && this.state.newChannelName.length > 0) {
 
@@ -142,42 +150,17 @@ class ForcesTab extends Component {
   };
 
 
-  createChannelEditor() {
-
-    let curTab = this.props.wargame.currentTab;
-    let selectedChannel = this.props.wargame.data[curTab].selectedChannel;
-
-    let channelName = typeof this.state.newChannelName === 'string' ? this.state.newChannelName : selectedChannel;
-
-    return (
-      <div className="flex-content--fill channelsTab">
-        <div className="flex-content--row">
-          <TextInput
-            id="channel-editable"
-            updateStore={this.updateChannelName}
-            options={{numInput: false}}
-            data={channelName}
-          />
-          <span className="link link--noIcon" onClick={this.saveChannel}>save channel</span>
-          <span className="link link--secondary" onClick={this.deleteChannel}><FontAwesomeIcon icon={faTrash} />Delete</span>
-        </div>
-        <p className="heading--sml">Participants and messages</p>
-
-        <ChannelsTable data={this.props.wargame.data[curTab].channels.find((f) => f.channelName === selectedChannel).participants} />
-      </div>
-    );
-  }
-
   render() {
 
     const curTab = this.props.wargame.currentTab;
-    const selectedChannel = this.props.wargame.data[curTab].selectedChannel;
+    const selectedChannel = this.props.wargame.data[curTab].selectedChannel.name  || "";
+    const channelName = typeof this.state.newChannelName === 'string' ? this.state.newChannelName : selectedChannel;
 
     return (
       <div className="flex-content-wrapper">
         <div className="flex-content">
           <span className="link link--noIcon" onClick={this.createChannel}>Add channel</span>
-          <TabsSearchList listData={this.state.channelList.map((channel) => channel.channelName)}
+          <TabsSearchList listData={this.state.channelList}
                           filter={this.filterChannels}
                           searchQuery={this.state.searchQuery}
                           setSelected={this.setSelected}
@@ -187,7 +170,23 @@ class ForcesTab extends Component {
         </div>
 
         {selectedChannel ?
-          this.createChannelEditor()
+          <div className="flex-content--fill channelsTab">
+            <div className="flex-content--row">
+              <TextInput
+                id="editable-title"
+                updateStore={this.updateChannelName}
+                options={{numInput: false}}
+                data={channelName}
+              />
+              <div className="button-wrap-tab">
+                <span className="link link--noIcon" onClick={this.saveChannel}>save channel</span>
+                <span className="link link--secondary" onClick={this.deleteChannel}><FontAwesomeIcon icon={faTrash} />Delete</span>
+              </div>
+            </div>
+            <p className="heading--sml">Participants and messages</p>
+
+            <ChannelsTable data={this.props.wargame.data[curTab].channels.find((f) => f.name === selectedChannel).participants} />
+          </div>
         : null}
 
       </div>

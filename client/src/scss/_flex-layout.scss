@@ -18,7 +18,7 @@
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: flex-start;
-    min-width: 26%;
+    min-width: 25%;
 
     &--rowend {
       flex-direction: row-reverse !important;
@@ -33,6 +33,10 @@
       }
     }
 
+    &--row-wrap {
+      flex-direction: row;
+    }
+
     &--center {
       width: 25%;
       align-self: center;
@@ -40,14 +44,17 @@
 
     &--sml {
       //flex-grow: 1;
-      min-width: 24%;
+      //min-width: 32%;
       justify-content: center;
-
     }
 
     &--fill {
       flex-grow: 1;
       min-width: 50%;
+    }
+
+    &--turn-progression {
+      min-width: 35%;
     }
 
     &--big {

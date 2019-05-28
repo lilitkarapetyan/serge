@@ -18,15 +18,15 @@ class TabsSearchList extends Component {
           : false
         }
         <div className="list-list">
-          {this.props.listData.map(function(name) {
-              let active = name === that.props.selected ? 'active' : '';
+          {this.props.listData.map(function(item) {
+              let active = item.name === that.props.selected ? 'active' : '';
 
               return (
                 <span
                   href="#"
-                  onClick={that.setSelected.bind(that, name)}
-                  key={name}
-                  className={classNames({"list-title": true, active})}>{name}
+                  onClick={that.setSelected.bind(that, item)}
+                  key={item.uniqid}
+                  className={classNames({"list-title": true, active})}>{item.name}
                 </span>
               )
             })

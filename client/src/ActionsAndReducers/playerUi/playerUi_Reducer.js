@@ -1,19 +1,32 @@
 import ActionConstant from '../ActionConstants';
+import chat from "../../Schemas/chat.json";
 import copyState from "../../Helpers/copyStateHelper";
 import _ from "lodash";
 
 const initialState = {
   selectedForce: '',
   selectedRole: '',
+  controlUi: false,
+  currentTurn: 1,
+  gameDate: '',
+  gameTurnTime: 0,
+  realtimeTurnTime: 0,
+  turnEndTime: '',
+  gameDescription: '',
   selectedChannel: '',
   currentWargame: '',
   wargameTitle: '',
+  chatChannel: {
+    name: "chat-channel",
+    template: chat,
+  },
   channels: {},
   allChannels: {},
   forces: {},
   allForces: {},
   messageSchema: {},
   messages: [],
+  wargameInitiated: false,
 };
 
 export const playerUiReducer = (state = initialState, action) => {
@@ -26,10 +39,15 @@ export const playerUiReducer = (state = initialState, action) => {
 
       newState.currentWargame = action.payload.name;
       newState.wargameTitle = action.payload.wargameTitle;
-
+      newState.wargameInitiated = action.payload.wargameInitiated;
+      newState.currentTurn = action.payload.gameTurn;
+      newState.gameDate = action.payload.gameDate;
+      newState.gameTurnTime = action.payload.gameTurnTime;
+      newState.realtimeTurnTime = action.payload.realtimeTurnTime;
+      newState.turnEndTime = action.payload.turnEndTime;
+      newState.gameDescription = action.payload.data.overview.gameDescription;
       newState.allChannels = action.payload.data.channels.channels;
       newState.allForces = action.payload.data.forces.forces;
-
       break;
 
     case ActionConstant.SET_FORCE:
@@ -37,7 +55,8 @@ export const playerUiReducer = (state = initialState, action) => {
       break;
 
     case ActionConstant.SET_ROLE:
-      newState.selectedRole = action.payload;
+      newState.selectedRole = action.payload.name;
+      newState.controlUi = action.payload.control;
       break;
 
     case ActionConstant.SET_FILTERED_CHANNELS:
@@ -46,19 +65,20 @@ export const playerUiReducer = (state = initialState, action) => {
 
       newState.allChannels.forEach((channel) => {
 
-        let participants = channel.participants.filter((p) => p.force === newState.selectedForce && p.role === newState.selectedRole);
-        let channelActive = channel.participants.some((p) => p.force === newState.selectedForce && p.role === newState.selectedRole);
+        if (action.setSelectedChannel) newState.selectedChannel = newState.allChannels[0].uniqid;
 
-        participants = _.uniqWith(participants, _.isEqual);
+
+        let participants = channel.participants.filter((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
+        let channelActive = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
 
         if (channelActive) {
-          channels[channel.channelName] = {
+          channels[channel.uniqid] = {
+            name: channel.name,
             templates: _.flatMap(participants, (participant) => participant.templates),
-            messages: []
+            forceIcons: channel.participants.map((participant) => participant.icon),
           };
         }
 
-        newState.selectedChannel = Object.keys(channels)[0];
         newState.channels = channels;
 
       });
