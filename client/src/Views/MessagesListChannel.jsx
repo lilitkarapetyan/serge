@@ -13,12 +13,13 @@ class MessagesListChannel extends Component {
 
     let messages = this.props.messages;
 
+    console.log(messages);
+
     return (
       messages.map((item, i) => {
         return (
           <MessageListItem
             detail={item}
-            curChannel={this.props.curChannel}
             key={`${i}-messageitem`}
             openSection={this.props.openSection.bind(this, item)}
             closeSection={this.props.closeSection.bind(this, item)}

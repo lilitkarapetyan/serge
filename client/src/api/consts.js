@@ -8,6 +8,7 @@ export const databasePath = 'http://localhost:8080/db/';
 
 export const MSG_STORE = "messages";
 export const MSG_TYPE_STORE = "message_types";
+export const CHAT_CHANNEL_ID = "chat-channel";
 
 export const headers = {
   'Content-Type': 'application/json',

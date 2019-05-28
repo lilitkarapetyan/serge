@@ -7,20 +7,18 @@ class MessagesListRenderProp extends Component {
     super(props);
 
     this.state = {
-      messages: []
+      messages: this.props.messages.map((item) => ({ message: item, open: false })),
     };
   }
 
-
   componentWillReceiveProps(nextProps, nextContext) {
 
-    let nextMessagesInChannel = nextProps.messages.map((item) => ({ message: item, open: false })).filter((item) => item.message.details.channel === nextProps.curChannel);
-    let messagesInChannel = this.props.messages.map((item) => ({ message: item, open: false })).filter((item) => item.message.details.channel === this.props.curChannel);
+    let nextMessagesInChannel = nextProps.messages.map((item) => ({ message: item, open: false }));
+    let messagesInChannel = this.props.messages.map((item) => ({ message: item, open: false }));
 
     if (
       this.props.messages.length !== 0 &&
-      messagesInChannel.length !== nextMessagesInChannel.length &&
-      this.props.curChannel === nextProps.curChannel
+      messagesInChannel.length !== nextMessagesInChannel.length
     ) {
 
       let newMessages = nextMessagesInChannel;
@@ -38,7 +36,7 @@ class MessagesListRenderProp extends Component {
       (this.props.curChannel !== nextProps.curChannel)
     ) {
       this.setState({
-        messages: nextProps.messages.map((item) => ({ message: item, open: false })).filter((item) => item.message.details.channel === nextProps.curChannel)
+        messages: nextProps.messages.map((item) => ({ message: item, open: false }))
       });
     }
   }
