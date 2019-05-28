@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
 import { connect, Provider } from "react-redux";
-import Store from "../Store/Store";
-import Resizable from "re-resizable";
 import '../scss/App.scss';
 import {
   getWargame,
   setForce,
   setRole,
-  setFilteredChannels,
   initiateGame, getAllWargameMessages,
-  // getAllMessages,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 import ChannelTabsContainer from "./ChannelTabsContainer";
-import MessageFeeds from "./MessageFeeds";
 import OutOfGameFeed from "./OutOfGameFeed";
 import DropdownInput from "../Components/Inputs/DropdownInput";
 import TurnProgression from "../Components/TurnProgression";
