@@ -8,8 +8,6 @@ class MessagesListChannel extends Component {
 
     let messages = this.props.messages;
 
-    console.log(messages);
-
     return (
       messages.map((item, i) => {
         return (

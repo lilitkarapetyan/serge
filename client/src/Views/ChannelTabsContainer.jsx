@@ -35,17 +35,9 @@ class ChannelTabsContainer extends Component {
     };
   }
 
-  // componentWillMount() {
-  //
-  //   this.state.channelNames.forEach((channelName) => {
-  //     this.state.model.doAction(
-  //       FlexLayout.Actions.addNode({type: "tab", component: channelName, name: channelName, id: channelName}, "tabset", FlexLayout.DockLocation.CENTER, -1)      );
-  //   });
-  //
-  //   this.state.model.doAction(
-  //     FlexLayout.Actions.deleteTab("default")
-  //   );
-  // }
+  componentWillMount() {
+    this.addToTabs(this.props);
+  }
 
   componentWillReceiveProps(nextProps, nextContext) {
 
@@ -67,6 +59,8 @@ class ChannelTabsContainer extends Component {
     let channelNames = Object.values(nextProps.playerUi.channels).map((channel) => channel.name);
 
     let newChannels = _.difference(channelNames, this.state.channelNames);
+
+    console.log(newChannels);
 
     newChannels.forEach((channelName) => {
       this.state.model.doAction(
