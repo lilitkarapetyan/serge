@@ -14,7 +14,6 @@
     "check-types": "^8.0.1",
     "classnames": "^2.2.6",
     "flatpickr": "^4.5.7",
-    "flexlayout-react": "^0.3.4",
     "json-metaschema": "^1.2.0",
     "kinto": "^12.3.0",
     "lodash": "^4.17.11",
@@ -24,7 +23,6 @@
     "pouchdb-adapter-node-websql": "^7.0.0",
     "pouchdb-all-dbs": "^1.0.2",
     "prop-types": "^15.7.2",
-    "re-resizable": "^4.11.0",
     "react": "^16.8.3",
     "react-ace-editor": "0.0.3",
     "react-bootstrap": "^1.0.0-beta.8",
@@ -66,5 +64,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "homepage": "http://localhost:8080/client/build"
+  "homepage": "https://serge-dev.herokuapp.com/client/build"
 }
