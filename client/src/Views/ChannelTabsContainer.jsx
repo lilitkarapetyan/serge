@@ -17,23 +17,11 @@ var json = {
     "type": "row",
     "weight": 100,
     "children": [
-      {
-        "type": "tabset",
-        "id": "tabset",
-        "weight": 150,
-        "selected": 0,
-        "children": [
-          {
-            "type": "tab",
-            "id": "default",
-            "name": "default",
-            "component":"grid",
-          },
-        ]
-      }
     ]
   }
 };
+
+
 
 class ChannelTabsContainer extends Component {
 
@@ -47,18 +35,17 @@ class ChannelTabsContainer extends Component {
     };
   }
 
-  componentWillMount() {
-
-    this.state.channelNames.forEach((channelName) => {
-      this.state.model.doAction(
-        FlexLayout.Actions.addNode({type: "tab", component: channelName, name: channelName, id: channelName}, "tabset", FlexLayout.DockLocation.CENTER, 0)
-      );
-    });
-
-    this.state.model.doAction(
-      FlexLayout.Actions.deleteTab("default")
-    );
-  }
+  // componentWillMount() {
+  //
+  //   this.state.channelNames.forEach((channelName) => {
+  //     this.state.model.doAction(
+  //       FlexLayout.Actions.addNode({type: "tab", component: channelName, name: channelName, id: channelName}, "tabset", FlexLayout.DockLocation.CENTER, -1)      );
+  //   });
+  //
+  //   this.state.model.doAction(
+  //     FlexLayout.Actions.deleteTab("default")
+  //   );
+  // }
 
   componentWillReceiveProps(nextProps, nextContext) {
 
@@ -74,6 +61,7 @@ class ChannelTabsContainer extends Component {
     }
   }
 
+
   addToTabs(nextProps) {
 
     let channelNames = Object.values(nextProps.playerUi.channels).map((channel) => channel.name);
@@ -82,7 +70,7 @@ class ChannelTabsContainer extends Component {
 
     newChannels.forEach((channelName) => {
       this.state.model.doAction(
-        FlexLayout.Actions.addNode({type: "tab", component: channelName, name: channelName, id: channelName}, "#2", FlexLayout.DockLocation.CENTER, 0)
+        FlexLayout.Actions.addNode({type: "tab", component: channelName, name: channelName, id: channelName}, "#2", FlexLayout.DockLocation.CENTER, -1)
       );
     });
 
@@ -108,41 +96,19 @@ class ChannelTabsContainer extends Component {
     })
   }
 
-  flexLayoutFactory = (node) => {
-
-    let component = node.getComponent();
-
-    console.log(component);
+  factory = (node) => {
 
     let curChannelEntry = Object.entries(this.props.playerUi.channels).find((entry) => entry[1].name === node.getName());
-
     return <Channel channel={curChannelEntry[0]} />
-    // switch (node.getName()) {
-    //   case "Channel One":
-    //     return <h1>Channel One</h1>;
-    //     break;
-    //
-    //   case "Channel Two":
-    //     return <h1>Channel Two</h1>;
-    //     break;
-    //
-    //   case "Channel Three":
-    //     return <h1>Channel Three</h1>;
-    //     break;
-    //
-    //   default:
-    //     return <h1>default</h1>;
-    //     break;
-    // }
+
   };
 
   render() {
-
     return (
       <>
         <FlexLayout.Layout
           model={this.state.model}
-          factory={this.flexLayoutFactory}
+          factory={this.factory}
         />
       </>
     );
