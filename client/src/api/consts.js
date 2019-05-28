@@ -1,13 +1,14 @@
 import umpireIcon from "../icons/umpireIcon";
 import defaultIcon from "../icons/default";
 
-export const serverPath = 'https://serge-dev.herokuapp.com/';
-export const databasePath = 'https://serge-dev.herokuapp.com/db/';
-// export const serverPath = 'http://localhost:8080/';
-// export const databasePath = 'http://localhost:8080/db/';
+// export const serverPath = 'https://serge-dev.herokuapp.com/';
+// export const databasePath = 'https://serge-dev.herokuapp.com/db/';
+export const serverPath = 'http://localhost:8080/';
+export const databasePath = 'http://localhost:8080/db/';
 
 export const MSG_STORE = "messages";
 export const MSG_TYPE_STORE = "message_types";
+export const CHAT_CHANNEL_ID = "chat-channel";
 
 export const headers = {
   'Content-Type': 'application/json',

@@ -8,6 +8,7 @@ import {
 import MessageCreatorChatChannel from "../Components/MessageCreatorChatChannel";
 import MessagesListChatChannel from "./MessagesListChatChannel";
 
+import {CHAT_CHANNEL_ID} from "../api/consts";
 import '../scss/App.scss';
 import Collapsible from "react-collapsible";
 import MessagesListRenderProp from "./MessagesListRenderProp";
@@ -29,9 +30,6 @@ class MessageFeeds extends Component {
 
     if (channelLength !== nextChannelLength) this.forceUpdate();
 
-    if (!nextProps.playerUi.channels[nextProps.playerUi.selectedChannel]) {
-      this.changeTab(Object.keys(nextProps.playerUi.channels)[0]);
-    }
   }
 
   componentWillMount() {
@@ -44,8 +42,8 @@ class MessageFeeds extends Component {
     return (
       <>
         <MessagesListRenderProp
-          curChannel={this.props.playerUi.chatChannel.name}
-          messages={this.props.playerUi.messages}
+          curChannel={CHAT_CHANNEL_ID}
+          messages={this.props.playerUi.chatChannel.messages}
           render={messages => (
             <MessagesListChatChannel
               messages={messages}
@@ -59,7 +57,10 @@ class MessageFeeds extends Component {
             transitionTime={200}
             easing={'ease-in-out'}
           >
-            <MessageCreatorChatChannel schema={this.props.playerUi.chatChannel.template} />
+            <MessageCreatorChatChannel
+              curChannel={CHAT_CHANNEL_ID}
+              schema={this.props.playerUi.chatChannel.template}
+            />
           </Collapsible>
         </div>
       </>

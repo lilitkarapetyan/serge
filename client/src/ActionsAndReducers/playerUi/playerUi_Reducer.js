@@ -1,6 +1,7 @@
 import ActionConstant from '../ActionConstants';
 import chat from "../../Schemas/chat.json";
 import copyState from "../../Helpers/copyStateHelper";
+import {CHAT_CHANNEL_ID} from "../../api/consts";
 import _ from "lodash";
 
 const initialState = {
@@ -17,8 +18,9 @@ const initialState = {
   currentWargame: '',
   wargameTitle: '',
   chatChannel: {
-    name: "chat-channel",
+    name: CHAT_CHANNEL_ID,
     template: chat,
+    messages: [],
   },
   channels: {},
   allChannels: {},
@@ -59,31 +61,28 @@ export const playerUiReducer = (state = initialState, action) => {
       newState.controlUi = action.payload.control;
       break;
 
-    case ActionConstant.SET_FILTERED_CHANNELS:
-
-      let channels = {};
-
-      newState.allChannels.forEach((channel) => {
-
-        if (action.setSelectedChannel) newState.selectedChannel = newState.allChannels[0].uniqid;
-
-
-        let participants = channel.participants.filter((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
-        let channelActive = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
-
-        if (channelActive) {
-          channels[channel.uniqid] = {
-            name: channel.name,
-            templates: _.flatMap(participants, (participant) => participant.templates),
-            forceIcons: channel.participants.map((participant) => participant.icon),
-          };
-        }
-
-        newState.channels = channels;
-
-      });
-
-      break;
+    // case ActionConstant.SET_FILTERED_CHANNELS:
+    //
+    //   let channels = {};
+    //
+    //   newState.allChannels.forEach((channel) => {
+    //
+    //     let participants = channel.participants.filter((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
+    //     let channelActive = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
+    //
+    //     if (channelActive) {
+    //       channels[channel.uniqid] = {
+    //         name: channel.name,
+    //         templates: _.flatMap(participants, (participant) => participant.templates),
+    //         forceIcons: channel.participants.map((participant) => participant.icon),
+    //       };
+    //     }
+    //
+    //     newState.channels = channels;
+    //
+    //   });
+    //
+    //   break;
 
     case ActionConstant.SET_CHANNEL:
       newState.selectedChannel = action.payload;
@@ -94,7 +93,29 @@ export const playerUiReducer = (state = initialState, action) => {
       break;
 
     case ActionConstant.SET_LATEST_MESSAGES:
-      newState.messages = action.payload;
+
+      let channels = {};
+
+      newState.chatChannel.messages = action.payload.filter((message) => message.details.channel === newState.chatChannel.name);
+
+      newState.allChannels.forEach((channel) => {
+
+        let participants = channel.participants.filter((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
+        let channelActive = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
+
+        if (channelActive) {
+          channels[channel.uniqid] = {
+            name: channel.name,
+            templates: _.flatMap(participants, (participant) => participant.templates),
+            forceIcons: channel.participants.map((participant) => participant.icon),
+            messages: action.payload.filter((message) => message.details.channel === channel.uniqid)
+          };
+        }
+
+        newState.channels = channels;
+
+      });
+
       break;
 
     default:

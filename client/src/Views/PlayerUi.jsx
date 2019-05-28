@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import { connect } from "react-redux";
-
+import { connect, Provider } from "react-redux";
+import Store from "../Store/Store";
+import Resizable from "re-resizable";
 import '../scss/App.scss';
 import {
   getWargame,
   setForce,
   setRole,
   setFilteredChannels,
-  initiateGame,
+  initiateGame, getAllWargameMessages,
   // getAllMessages,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
+import ChannelTabsContainer from "./ChannelTabsContainer";
 import MessageFeeds from "./MessageFeeds";
 import OutOfGameFeed from "./OutOfGameFeed";
 import DropdownInput from "../Components/Inputs/DropdownInput";
@@ -19,6 +21,7 @@ import AwaitingStart from "../Components/AwaitingStart";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
+
 
 class PlayerUi extends Component {
 
@@ -35,11 +38,9 @@ class PlayerUi extends Component {
   };
 
   updateSelectedRole = (selectedRole) => {
-
     let role = this.props.playerUi.allForces.find((f) => f.uniqid === this.props.playerUi.selectedForce).roles.find((role) => role.name === selectedRole);
-
     this.props.dispatch(setRole(role));
-    this.props.dispatch(setFilteredChannels(true));
+    this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
   };
 
   goBack = () => {
@@ -52,12 +53,14 @@ class PlayerUi extends Component {
 
   render() {
 
+    // PAGE DRAG EVENT LISTENER BUBBLE TO EACH ROW, RESIZE ROW WIDTH ON DRAG
+
     return (
       <div className="flex-content-wrapper">
 
         <div className="flex-content flex-content--fill">
 
-          {!this.props.playerUi.currentWargame ?
+          {!this.props.playerUi.currentWargame &&
             <div className="flex-content--center">
               <h1>Set wargame</h1>
               <DropdownInput
@@ -65,7 +68,6 @@ class PlayerUi extends Component {
                 selectOptions={this.props.wargame.wargameList.map((wargame) => ({option: wargame.title, value: wargame.name}))}
               />
             </div>
-            : false
           }
 
           {this.props.playerUi.currentWargame && !this.props.playerUi.selectedForce ?
@@ -94,7 +96,8 @@ class PlayerUi extends Component {
           {this.props.playerUi.selectedForce && this.props.playerUi.selectedRole && this.props.playerUi.wargameInitiated ?
             <div className="flex-content flex-content--row-wrap">
               <div className="message-feed">
-                <MessageFeeds />
+                {/*<MessageFeeds />*/}
+                <ChannelTabsContainer />
               </div>
               <div className="message-feed out-of-game-feed">
                 <TurnProgression />

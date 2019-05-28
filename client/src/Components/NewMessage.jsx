@@ -54,7 +54,10 @@ class NewMessage extends Component {
             placeholder="Select message"
             className="message-input"
           />
-          <MessageCreator schema={this.props.schema} />
+          <MessageCreator
+            schema={this.props.schema}
+            curChannel={this.props.curChannel}
+          />
         </Collapsible>
       </div>
     );
