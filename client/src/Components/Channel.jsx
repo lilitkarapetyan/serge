@@ -15,7 +15,7 @@ class Channel extends Component {
     return (
       <>
         <div className="forces-in-channel">
-          {this.props.playerUi.channels[curChannel].forceIcons.map((base64, i) => <img key={`indicator${i}`} className="force-indicator" src={base64} />)}
+          {this.props.playerUi.channels[curChannel].forceIcons.map((base64, i) => <img key={`indicator${i}`} className="force-indicator" src={base64} alt="" />)}
         </div>
 
         <MessagesListRenderProp

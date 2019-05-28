@@ -16,7 +16,6 @@ import {  databasePath,
 import {
   setWargameMessages,
   setCurrentWargame,
-  setFilteredChannels,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 import moment from "moment";

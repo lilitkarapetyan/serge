@@ -107,7 +107,7 @@ export const playerUiReducer = (state = initialState, action) => {
           channels[channel.uniqid] = {
             name: channel.name,
             templates: _.flatMap(participants, (participant) => participant.templates),
-            forceIcons: channel.participants.map((participant) => participant.icon),
+            forceIcons: channel.participants.filter((participant) => participant.forceUniqid !== newState.selectedForce).map((participant) => participant.icon),
             messages: action.payload.filter((message) => message.details.channel === channel.uniqid)
           };
         }

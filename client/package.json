@@ -65,5 +65,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "homepage": "https://serge-dev.herokuapp.com/client/build"
+  "homepage": "http://serge-dev.herokuapp.com/client/build"
 }
