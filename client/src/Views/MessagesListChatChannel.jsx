@@ -5,10 +5,6 @@ import '../scss/App.scss';
 
 class MessagesListChatChannel extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
 
     let messages = this.props.messages;

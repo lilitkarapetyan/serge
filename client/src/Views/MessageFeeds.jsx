@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
-
 import {
   getAllWargameMessages,
   setChannel,
@@ -74,7 +72,7 @@ class MessageFeeds extends Component {
           {this.createTabs()}
         </ul>
         <div className="forces-in-channel">
-          {this.props.playerUi.channels[curChannel].forceIcons.map((base64, i) => <img key={`indicator${i}`} className="force-indicator" src={base64} />)}
+          {this.props.playerUi.channels[curChannel].forceIcons.map((base64, i) => <img key={`indicator${i}`} className="force-indicator" src={base64} alt="" />)}
         </div>
 
         <MessagesListRenderProp

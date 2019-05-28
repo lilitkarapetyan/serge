@@ -186,7 +186,7 @@ class ForcesTab extends Component {
             data={forceName}
           />
 
-          <img className="force-icon" src={forceIcon} />
+          <img className="force-icon" src={forceIcon} alt="" />
 
           <div className="force-button-wrap">
             <span className="link link--noIcon" onClick={this.saveForce}>save force</span>

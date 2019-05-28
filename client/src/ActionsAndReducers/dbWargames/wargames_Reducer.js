@@ -34,7 +34,7 @@ export const wargamesReducer = (state = initialState, action) => {
   let curChannel;
   let index;
   let listWithoutThis;
-  let uniqueName;
+  // let uniqueName;
 
   switch (action.type) {
 
@@ -59,7 +59,7 @@ export const wargamesReducer = (state = initialState, action) => {
         if (getNameFromPath(game.name) !== newState.currentWargame) listWithoutThis.push(game);
       });
 
-      uniqueName = listWithoutThis.every((wargame) => wargame.title !== action.payload );
+      // uniqueName = listWithoutThis.every((wargame) => wargame.title !== action.payload );
 
       newState.wargameTitle = action.payload;
       return newState;

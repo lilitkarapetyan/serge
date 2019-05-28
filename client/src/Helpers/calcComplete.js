@@ -12,5 +12,5 @@ export default function calcComplete(data) {
 
   let inputResults = _.flatMapDeep(omittedData, flatten);
 
-  return inputResults.every((item) => item !== null && item.length > 0 || item);
+  return inputResults.every((item) => (item !== null && item.length > 0) || item);
 }

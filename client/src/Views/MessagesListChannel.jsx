@@ -4,11 +4,6 @@ import MessageListItem from "../Components/MessageListItem";
 
 class MessagesListChannel extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
-
   render() {
 
     let messages = this.props.messages;

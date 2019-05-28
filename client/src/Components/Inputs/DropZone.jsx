@@ -32,7 +32,7 @@ function DropZone(props) {
     props.dropRejected();
   };
 
-  const {getRootProps, getInputProps, isDragActive} = useDropzone({
+  const {getRootProps, getInputProps} = useDropzone({
     onDrop,
     maxSize: 20000,
     multiple: false,

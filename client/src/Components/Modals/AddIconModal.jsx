@@ -7,11 +7,6 @@ import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators
 
 class AddIconModal extends Component {
 
-  constructor(props) {
-    super(props);
-
-  }
-
   hideModal = () => {
     this.props.dispatch(modalAction.close());
   };

@@ -9,7 +9,6 @@ import MessageCreatorChatChannel from "../Components/MessageCreatorChatChannel";
 import MessagesListChatChannel from "./MessagesListChatChannel";
 
 import '../scss/App.scss';
-import classNames from "classnames";
 import Collapsible from "react-collapsible";
 import MessagesListRenderProp from "./MessagesListRenderProp";
 

@@ -6,10 +6,6 @@ import {nextGameTurn} from "../ActionsAndReducers/playerUi/playerUi_ActionCreato
 
 class GameControls extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   nextTurn = () => {
     this.props.clearInterval();
     this.props.dispatch(nextGameTurn(this.props.playerUi.currentWargame));
