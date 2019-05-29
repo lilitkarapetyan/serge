@@ -76,10 +76,11 @@ class PlayerUi extends Component {
     this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
   };
 
-  render() {
+  roleOptions() {
+    return this.props.playerUi.allForces.map((force) => ({name: force.name, roles: force.roles}));
+  }
 
-    let getRoles = (force) => force.roles;
-    let roleOptions = _.flatMap(this.props.playerUi.allForces, getRoles).map((role) => ({option: role.name, value: role.password}));
+  render() {
 
     return (
       <div className="flex-content-wrapper">
@@ -106,12 +107,20 @@ class PlayerUi extends Component {
                 onChange={this.setRolePassword}
                 value={this.state.rolePassword || ''}
               />
-
-              <h2>Dropdown for demo only</h2>
-              <DropdownInput
-                updateStore={this.setRolePasswordDemo}
-                selectOptions={roleOptions}
-              />
+              <div className="demo-passwords">
+                <h3>Not visible in production</h3>
+                {this.roleOptions().map((force) => {
+                  return (
+                      <>
+                        <h4 key={force.name}>{force.name}</h4>
+                        <ul>
+                          {force.roles.map((role) => (<li key={role.name} onClick={this.setRolePasswordDemo.bind(this, role.password)}>{role.name}</li>))}
+                        </ul>
+                      </>
+                    )
+                  })
+                }
+              </div>
               <button name="add" disabled={!this.state.rolePassword} className="btn btn-action btn-action--primary" onClick={this.checkPassword}>Enter</button>
             </div>
           }
