@@ -40,6 +40,11 @@
 .out-of-game-feed {
   background: $lightBg;
   max-width: 25%;
+
+  span {
+    font-size: .85em;
+    font-family: "Segoe UI", sans-serif;
+  }
 }
 
 .message-feed {

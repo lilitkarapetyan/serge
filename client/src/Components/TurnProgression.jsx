@@ -84,7 +84,6 @@ class TurnProgression extends Component {
     return (
       <div className="flex-content-wrapper turn-progression-ui">
         <div className="flex-content--turn-progression">
-          <h3>Game time</h3>
           <h4>{moment(this.props.playerUi.gameDate).format("DD/MM/YYYY")}</h4>
           <h4>{moment(this.props.playerUi.gameDate).format("HH:mm")}</h4>
         </div>
