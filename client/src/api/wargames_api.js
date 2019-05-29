@@ -31,7 +31,7 @@ const changesListener = (db, name, dispatch) => {
         let messages = await getAllMessages(name);
         let latestWargame = messages.find((message) => message.infoType);
         dispatch(setCurrentWargame(latestWargame));
-        messages = messages.filter((message) => !message.hasOwnProperty('infoType'));
+        // messages = messages.filter((message) => !message.hasOwnProperty('infoType'));
         dispatch(setWargameMessages(messages));
       })();
     })
@@ -151,6 +151,7 @@ export const checkIfWargameStarted = (dbName) => {
 export const getLatestWargameRevision = (dbName) => {
   return getAllMessages(dbName)
     .then((messages) => {
+      console.log(messages);
       let latestWargame = messages.find((message) => message.infoType);
       if (latestWargame) return latestWargame;
       return getWargameLocalFromName(dbName);
@@ -575,7 +576,7 @@ export const initiateGame = (dbName) => {
           })
           .then((res) => {
             return game.db.put({
-              _id: `${uniqid.time()}`,
+              _id: new Date().toISOString(),
               infoType: true,
               name: res.name,
               wargameTitle: res.wargameTitle,
@@ -603,18 +604,20 @@ export const initiateGame = (dbName) => {
 
 export const createLatestWargameRevision = (dbName, wargameData) => {
 
-  delete wargameData._id;
-  delete wargameData._rev;
+  let copiedData = deepCopy(wargameData);
+  delete copiedData._id;
+  delete copiedData._rev;
 
   let game = wargameDbStore.find((wargame) => dbName === wargame.name);
 
   return new Promise((resolve, reject) => {
     game.db.put({
-      _id: `${uniqid.time()}`,
+      _id: new Date().toISOString(),
       infoType: true,
-      ...wargameData,
+      ...copiedData,
     })
       .then((res) => {
+        console.log(res);
         resolve(getLatestWargameRevision(dbName));
       })
       .catch((err) => {
@@ -641,13 +644,12 @@ export const getAllWargameRevisions = (dbName) => {
 export const nextGameTurn = (dbName) => {
 
   return new Promise((resolve, reject) => {
+
     getLatestWargameRevision(dbName)
       .then((res) => {
-
         res.gameTurn += 1;
         res.gameDate = moment(res.gameDate).add(res.gameTurnTime, 'hours').format("YYYY-MM-DDTHH:mm");
         res.turnEndTime = moment().add(res.realtimeTurnTime, 'minutes').format();
-
         return createLatestWargameRevision(dbName, res);
       })
       .then((res) => {

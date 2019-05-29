@@ -3,6 +3,7 @@ import chat from "../../Schemas/chat.json";
 import copyState from "../../Helpers/copyStateHelper";
 import {CHAT_CHANNEL_ID} from "../../api/consts";
 import _ from "lodash";
+import uniqId from "uniqid";
 
 const initialState = {
   selectedForce: '',
@@ -27,7 +28,6 @@ const initialState = {
   forces: {},
   allForces: {},
   messageSchema: {},
-  messages: [],
   wargameInitiated: false,
 };
 
@@ -38,7 +38,6 @@ export const playerUiReducer = (state = initialState, action) => {
   switch (action.type) {
 
     case ActionConstant.SET_CURRENT_WARGAME_PLAYER:
-
       newState.currentWargame = action.payload.name;
       newState.wargameTitle = action.payload.wargameTitle;
       newState.wargameInitiated = action.payload.wargameInitiated;
@@ -61,29 +60,6 @@ export const playerUiReducer = (state = initialState, action) => {
       newState.controlUi = action.payload.control;
       break;
 
-    // case ActionConstant.SET_FILTERED_CHANNELS:
-    //
-    //   let channels = {};
-    //
-    //   newState.allChannels.forEach((channel) => {
-    //
-    //     let participants = channel.participants.filter((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
-    //     let channelActive = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
-    //
-    //     if (channelActive) {
-    //       channels[channel.uniqid] = {
-    //         name: channel.name,
-    //         templates: _.flatMap(participants, (participant) => participant.templates),
-    //         forceIcons: channel.participants.map((participant) => participant.icon),
-    //       };
-    //     }
-    //
-    //     newState.channels = channels;
-    //
-    //   });
-    //
-    //   break;
-
     case ActionConstant.SET_CHANNEL:
       newState.selectedChannel = action.payload;
       break;
@@ -96,7 +72,20 @@ export const playerUiReducer = (state = initialState, action) => {
 
       let channels = {};
 
-      newState.chatChannel.messages = action.payload.filter((message) => message.details.channel === newState.chatChannel.name);
+      let messages = action.payload.map((message) => {
+        if (message.hasOwnProperty('infoType')) {
+          return {
+            details: {
+              channel: `infoTypeChannelMarker${uniqId.time()}`
+            },
+            infoType: true,
+            gameTurn: message.gameTurn,
+          }
+        }
+        return message;
+      });
+
+      newState.chatChannel.messages = messages.filter((message) => message.details.channel === newState.chatChannel.name);
 
       newState.allChannels.forEach((channel) => {
 
@@ -108,7 +97,7 @@ export const playerUiReducer = (state = initialState, action) => {
             name: channel.name,
             templates: _.flatMap(participants, (participant) => participant.templates),
             forceIcons: channel.participants.filter((participant) => participant.forceUniqid !== newState.selectedForce).map((participant) => participant.icon),
-            messages: action.payload.filter((message) => message.details.channel === channel.uniqid)
+            messages: messages.filter((message) => message.details.channel === channel.uniqid || message.infoType === true),
           };
         }
 

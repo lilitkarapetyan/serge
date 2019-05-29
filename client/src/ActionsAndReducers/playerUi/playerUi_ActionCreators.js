@@ -73,7 +73,7 @@ export const saveMessage = (dbName, details, message) => {
 
     let messages = await wargamesApi.getAllMessages(dbName);
 
-    messages = messages.filter((message) => !message.hasOwnProperty('infoType'));
+    // messages = messages.filter((message) => !message.hasOwnProperty('infoType'));
 
     dispatch(setWargameMessages(messages));
   }
@@ -94,7 +94,7 @@ export const getAllWargameMessages = (name) => {
 
     var messages = await wargamesApi.getAllMessages(name);
 
-    messages = messages.filter((message) => !message.hasOwnProperty('infoType'));
+    // messages = messages.filter((message) => !message.hasOwnProperty('infoType'));
 
     dispatch(setWargameMessages(messages));
   }

@@ -111,12 +111,12 @@ class PlayerUi extends Component {
                 <h3>Not visible in production</h3>
                 {this.roleOptions().map((force) => {
                   return (
-                      <>
-                        <h4 key={force.name}>{force.name}</h4>
+                      <React.Fragment key={force.name}>
+                        <h4>{force.name}</h4>
                         <ul>
                           {force.roles.map((role) => (<li key={role.name} onClick={this.setRolePasswordDemo.bind(this, role.password)}>{role.name}</li>))}
                         </ul>
-                      </>
+                      </React.Fragment>
                     )
                   })
                 }

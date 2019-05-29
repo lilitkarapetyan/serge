@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import ModalWrapper from './ModalWrapper';
 import "../../scss/App.scss";
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import uniqId from "uniqid";
 import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
@@ -73,6 +75,8 @@ class AddRoleModal extends Component {
     if (e.key === "Escape") this.hideModal();
   };
 
+
+
   render() {
 
     if (!this.props.currentModal.open) return false;
@@ -86,7 +90,9 @@ class AddRoleModal extends Component {
           {this.state.sameName && <p className="notification">Name already exists</p>}
           {this.state.samePassword && <p className="notification">Password already exists</p>}
           {this.state.rolePassword.length > 30 && <p className="notification">Password limit is 30 chars.</p>}
+          <label className="input-label" htmlFor="role-name">Name</label>
           <input
+            id="role-name"
             autoFocus
             className="modal-input"
             type="text"
@@ -94,7 +100,9 @@ class AddRoleModal extends Component {
             value={this.state.roleName || ''}
             onKeyDown={this.handleKeyDown}
           />
+          <label className="input-label" htmlFor="role-password">Password</label>
           <input
+            id="role-password"
             className="modal-input"
             type="text"
             onChange={this.setNewRolePassword}
