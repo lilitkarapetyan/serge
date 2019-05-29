@@ -1,5 +1,6 @@
 import umpireIcon from "../icons/umpireIcon";
 import defaultIcon from "../icons/default";
+import uniqId from "uniqid";
 
 export const serverPath = 'https://serge-dev.herokuapp.com/';
 export const databasePath = 'https://serge-dev.herokuapp.com/db/';
@@ -23,6 +24,7 @@ export const forceTemplate = {
   overview: 'An overview written here..',
   roles: [{
     name: 'General',
+    password: `pass${uniqId.time()}`,
     control: false,
   }],
   icon: defaultIcon.icon,
@@ -36,6 +38,7 @@ export const umpireForceTemplate = {
   overview: 'Umpire force.',
   roles: [{
     name: 'Game Control',
+    password: `pass${uniqId.time()}`,
     control: true,
   }],
   icon: umpireIcon.icon,
