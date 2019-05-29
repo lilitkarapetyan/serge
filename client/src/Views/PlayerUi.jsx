@@ -37,16 +37,6 @@ class PlayerUi extends Component {
     this.props.dispatch(getWargame(wargamePath));
   };
 
-  updateSelectedForce = (force) => {
-    this.props.dispatch(setForce(force));
-  };
-
-  updateSelectedRole = (selectedRole) => {
-    let role = this.props.playerUi.allForces.find((f) => f.uniqid === this.props.playerUi.selectedForce).roles.find((role) => role.name === selectedRole);
-    this.props.dispatch(setRole(role));
-    this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
-  };
-
   goBack = () => {
     this.props.dispatch(setForce(""));
   };
@@ -58,6 +48,12 @@ class PlayerUi extends Component {
   setRolePassword = (e) => {
     this.setState({
       rolePassword: e.target.value,
+    });
+  };
+
+  setRolePasswordDemo = (pass) => {
+    this.setState({
+      rolePassword: pass,
     });
   };
 
@@ -77,12 +73,13 @@ class PlayerUi extends Component {
 
     this.props.dispatch(setForce(force.uniqid));
     this.props.dispatch(setRole(role));
-
+    this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
   };
 
   render() {
 
-    // PAGE DRAG EVENT LISTENER BUBBLE TO EACH ROW, RESIZE ROW WIDTH ON DRAG
+    let getRoles = (force) => force.roles;
+    let roleOptions = _.flatMap(this.props.playerUi.allForces, getRoles).map((role) => ({option: role.name, value: role.password}));
 
     return (
       <div className="flex-content-wrapper">
@@ -99,7 +96,7 @@ class PlayerUi extends Component {
             </div>
           }
 
-          {this.props.playerUi.currentWargame && !this.props.playerUi.selectedForce ?
+          {this.props.playerUi.currentWargame && !this.props.playerUi.selectedForce &&
             <div className="flex-content--center">
               <h1>Password</h1>
               <input
@@ -109,27 +106,15 @@ class PlayerUi extends Component {
                 onChange={this.setRolePassword}
                 value={this.state.rolePassword || ''}
               />
-              <button name="add" className="btn btn-action btn-action--primary" onClick={this.checkPassword}>Enter</button>
 
-              {/*<DropdownInput*/}
-                {/*updateStore={this.updateSelectedForce}*/}
-                {/*selectOptions={this.props.playerUi.allForces.map((force) => ({option: force.name, value: force.uniqid}))}*/}
-              {/*/>*/}
+              <h2>Dropdown for demo only</h2>
+              <DropdownInput
+                updateStore={this.setRolePasswordDemo}
+                selectOptions={roleOptions}
+              />
+              <button name="add" disabled={!this.state.rolePassword} className="btn btn-action btn-action--primary" onClick={this.checkPassword}>Enter</button>
             </div>
-            : false
           }
-
-          {/*{this.props.playerUi.selectedForce && !this.props.playerUi.selectedRole ?*/}
-            {/*<div className="flex-content--center">*/}
-              {/*<h1>Set role</h1>*/}
-              {/*<FontAwesomeIcon icon={faArrowLeft} size="2x" style={{cursor: 'pointer'}} onClick={this.goBack} />*/}
-              {/*<DropdownInput*/}
-                {/*updateStore={this.updateSelectedRole}*/}
-                {/*selectOptions={this.props.playerUi.allForces.find((f) => f.uniqid === this.props.playerUi.selectedForce).roles.map((role) => ({option: role.name, value: role.name}))}*/}
-              {/*/>*/}
-            {/*</div>*/}
-            {/*: false*/}
-          {/*}*/}
 
           {this.props.playerUi.selectedForce && this.props.playerUi.selectedRole && this.props.playerUi.wargameInitiated &&
             <div className="flex-content flex-content--row-wrap">
