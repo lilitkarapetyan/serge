@@ -85,6 +85,16 @@ export const playerUiReducer = (state = initialState, action) => {
         return message;
       });
 
+      let reduceTurnMarkers = (message) => {
+        if (message.infoType) {
+          return message.gameTurn;
+        } else {
+          return message._id;
+        }
+      };
+
+      messages = _.uniqBy(messages, reduceTurnMarkers);
+
       newState.chatChannel.messages = messages.filter((message) => message.details.channel === newState.chatChannel.name);
 
       newState.allChannels.forEach((channel) => {
