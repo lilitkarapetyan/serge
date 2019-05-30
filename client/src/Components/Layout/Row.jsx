@@ -4,7 +4,7 @@ class Row extends Component {
 
   render() {
 
-    var classes = this.props.className ? `${this.props.className} flex-content flex-content--row` : "flex-content flex-content--row";
+    var classes = this.props.className ? `${this.props.className} flex-content` : "flex-content";
 
     return (
       <div className={classes}>
