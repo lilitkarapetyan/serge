@@ -28,6 +28,7 @@ const initialState = {
   forces: {},
   allForces: {},
   messageSchema: {},
+  showObjective: false,
   wargameInitiated: false,
 };
 
@@ -66,6 +67,10 @@ export const playerUiReducer = (state = initialState, action) => {
 
     case ActionConstant.SET_MESSAGE_SCHEMA:
       newState.messageSchema = action.payload;
+      break;
+
+    case ActionConstant.SHOW_HIDE_OBJECTIVES:
+      newState.showObjective = !newState.showObjective;
       break;
 
     case ActionConstant.SET_LATEST_MESSAGES:

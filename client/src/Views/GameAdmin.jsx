@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import {
   getAllWargameMessages,
+  showHideObjectives,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 import MessageCreatorChatChannel from "../Components/MessageCreatorChatChannel";
@@ -14,13 +15,14 @@ import Collapsible from "react-collapsible";
 import MessagesListRenderProp from "./MessagesListRenderProp";
 
 
-class OutOfGameFeed extends Component {
+class GameAdmin extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
       activeTab: Object.keys(this.props.playerUi.channels)[0],
+      showObjectives: false,
     };
   }
 
@@ -36,6 +38,9 @@ class OutOfGameFeed extends Component {
     this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
   }
 
+  showHideForceObjectives = () => {
+    this.props.dispatch(showHideObjectives());
+  };
 
   render() {
 
@@ -68,7 +73,7 @@ class OutOfGameFeed extends Component {
           <div className="role-info">
             <span className="role-type">{ this.props.playerUi.selectedRole }</span>
             <span className="force-type">{ forceName }</span>
-            <img src={forceIcon} alt="" />
+            <img src={forceIcon} alt="" onClick={this.showHideForceObjectives} />
           </div>
         </div>
       </>
@@ -80,4 +85,4 @@ const mapStateToProps = ({ playerUi }) => ({
   playerUi,
 });
 
-export default connect(mapStateToProps)(OutOfGameFeed);
+export default connect(mapStateToProps)(GameAdmin);

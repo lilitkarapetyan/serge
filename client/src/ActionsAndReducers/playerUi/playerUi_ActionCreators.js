@@ -12,6 +12,10 @@ export const setForce = (data) => ({
   payload: data
 });
 
+export const showHideObjectives = () => ({
+  type: ActionConstant.SHOW_HIDE_OBJECTIVES,
+});
+
 export const setRole = (data) => ({
   type: ActionConstant.SET_ROLE,
   payload: data

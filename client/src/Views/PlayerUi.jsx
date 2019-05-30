@@ -6,7 +6,9 @@ import {
   getWargame,
   setForce,
   setRole,
-  initiateGame, getAllWargameMessages,
+  initiateGame,
+  getAllWargameMessages,
+  showHideObjectives,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 import {
@@ -14,7 +16,7 @@ import {
 } from "../ActionsAndReducers/Notification/Notification_ActionCreators";
 
 import ChannelTabsContainer from "./ChannelTabsContainer";
-import OutOfGameFeed from "./OutOfGameFeed";
+import GameAdmin from "./GameAdmin";
 import DropdownInput from "../Components/Inputs/DropdownInput";
 import TurnProgression from "../Components/TurnProgression";
 import AwaitingStart from "../Components/AwaitingStart";
@@ -80,6 +82,10 @@ class PlayerUi extends Component {
     return this.props.playerUi.allForces.map((force) => ({name: force.name, roles: force.roles}));
   }
 
+  showHideForceObjectives = () => {
+    this.props.dispatch(showHideObjectives());
+  };
+
   render() {
 
     return (
@@ -132,8 +138,21 @@ class PlayerUi extends Component {
               </div>
               <div className="message-feed out-of-game-feed">
                 <TurnProgression />
-                <OutOfGameFeed />
+                <GameAdmin />
               </div>
+              { this.props.playerUi.showObjective &&
+                <div className="force-objectives">
+                  <h3>Objectives</h3>
+                  <div className="objective-text">
+                    {this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).overview}
+                  </div>
+
+                  <div className="role-info">
+                    <span className="force-type">{ this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).name }</span>
+                    <img src={this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).icon} alt="" onClick={this.showHideForceObjectives} />
+                  </div>
+                </div>
+              }
             </div>
           }
 
