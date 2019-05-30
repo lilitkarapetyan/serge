@@ -12,7 +12,7 @@ class MessagesListChannel extends Component {
       messages.map((item, i) => {
 
         if (item.message.infoType) {
-          return <p className="turn-marker">Turn {item.message.gameTurn}</p>
+          return <p className="turn-marker" key={`${i}-turnmarker`}>Turn {item.message.gameTurn}</p>
         }
 
         return (

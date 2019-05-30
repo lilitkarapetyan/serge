@@ -32,6 +32,7 @@ class JsonCreator extends Component {
         role: this.props.playerUi.selectedRole,
         icon: this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).icon,
       },
+      timestamp: new Date().toISOString(),
     };
 
     this.props.dispatch(saveMessage(this.props.playerUi.currentWargame, messageDetails, this.editor.getValue()));

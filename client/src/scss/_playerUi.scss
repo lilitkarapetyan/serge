@@ -14,6 +14,21 @@
     font-family: monospace;
   }
 
+  .info-wrap {
+    display: flex;
+    align-items: center;
+
+    span {
+      font-size: 13px;
+      font-weight: 400;
+      margin-right: 6px;
+    }
+
+    .badge {
+      font-size: 11px;
+    }
+  }
+
   .group-section {
     margin-top: $umpireMenuMargin;
   }
@@ -89,27 +104,42 @@
     position: relative;
 
     &__trigger {
-      display: flex;
-      align-items: center;
-      padding: .25px;
+      display: block;
+      padding: 16px 0;
       font-size: 1.45em;
       font-family: monospace;
       line-height: 1.75em;
       font-weight: 500;
       cursor: pointer;
 
+      .message-title-wrap {
+        display: block;
+        padding: 0 16px;
+      }
+
       .message-title {
+        display: inline;
         max-width: 300px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
 
+      .info-wrap {
+        display: flex;
+        align-items: center;
+
+        span {
+          font-size: 13px;
+          font-weight: 400;
+        }
+      }
+
       .badge {
         font-size: 55%;
         font-weight: 200;
         font-family: monospace;
-        height: auto;
+        height: fit-content;
         margin-left: 10px;
         line-height: 1.5em;
         padding: 0 6px;
@@ -151,13 +181,12 @@
     left: 0;
     bottom: 0;
     background: #f5f5f5;
-    padding: 16px;
-    cursor: pointer;
+    padding: 0 16px 16px;
 
     @include drawerShadow();
 
     .message-input {
-      margin: 18px 0;
+      margin-bottom: 18px;
     }
 
     .btn {
