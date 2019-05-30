@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ModalWrapper from './ModalWrapper';
 import "../../scss/App.scss";
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import uniqId from "uniqid";
 import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
@@ -83,6 +83,46 @@ class AddRoleModal extends Component {
 
     var disable = this.state.roleName.length < 1 || this.state.sameName || this.state.samePassword || this.state.rolePassword.length > 30;
 
+    const NameTextInput = withStyles({
+      root: {
+        display: "block",
+        marginBottom: "24px",
+      },
+      input: {
+        width: "100%",
+      }
+    })(({ classes }) => (
+      <TextField
+        label="Name"
+        className={classes.root}
+        InputLabelProps={{className: classes.label}}
+        InputProps={{className: classes.input}}
+        onChange={this.setNewRoleName}
+        value={this.state.roleName || ''}
+        onKeyDown={this.handleKeyDown}
+      />
+    ));
+
+    const PasswordTextInput = withStyles({
+      root: {
+        display: "block",
+        marginBottom: "24px",
+      },
+      input: {
+        width: "100%",
+      }
+    })(({ classes }) => (
+      <TextField
+        label="Password"
+        className={classes.root}
+        InputLabelProps={{className: classes.label}}
+        InputProps={{className: classes.input}}
+        onChange={this.setNewRolePassword}
+        value={this.state.rolePassword || ''}
+        onKeyDown={this.handleKeyDown}
+      />
+    ));
+
     return (
       <ModalWrapper>
         <div className="display-text-wrapper">
@@ -90,25 +130,8 @@ class AddRoleModal extends Component {
           {this.state.sameName && <p className="notification">Name already exists</p>}
           {this.state.samePassword && <p className="notification">Password already exists</p>}
           {this.state.rolePassword.length > 30 && <p className="notification">Password limit is 30 chars.</p>}
-          <label className="input-label" htmlFor="role-name">Name</label>
-          <input
-            id="role-name"
-            autoFocus
-            className="modal-input"
-            type="text"
-            onChange={this.setNewRoleName}
-            value={this.state.roleName || ''}
-            onKeyDown={this.handleKeyDown}
-          />
-          <label className="input-label" htmlFor="role-password">Password</label>
-          <input
-            id="role-password"
-            className="modal-input"
-            type="text"
-            onChange={this.setNewRolePassword}
-            value={this.state.rolePassword || ''}
-            onKeyDown={this.handleKeyDown}
-          />
+          <NameTextInput />
+          <PasswordTextInput />
           <div className="buttons">
             <button disabled={disable} name="add" className="btn btn-action btn-action--primary" onClick={this.addRole}>Add</button>
             <button name="cancel" className="btn btn-action btn-action--secondary" onClick={this.hideModal}>Cancel</button>
