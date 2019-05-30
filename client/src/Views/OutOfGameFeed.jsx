@@ -14,7 +14,7 @@ import Collapsible from "react-collapsible";
 import MessagesListRenderProp from "./MessagesListRenderProp";
 
 
-class MessageFeeds extends Component {
+class OutOfGameFeed extends Component {
 
   constructor(props) {
     super(props);
@@ -39,6 +39,9 @@ class MessageFeeds extends Component {
 
   render() {
 
+    let forceName = this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).name;
+    let forceIcon = this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).icon;
+
     return (
       <>
         <MessagesListRenderProp
@@ -62,6 +65,11 @@ class MessageFeeds extends Component {
               schema={this.props.playerUi.chatChannel.template}
             />
           </Collapsible>
+          <div className="role-info">
+            <span className="role-type">{ this.props.playerUi.selectedRole }</span>
+            <span className="force-type">{ forceName }</span>
+            <img src={forceIcon} alt="" />
+          </div>
         </div>
       </>
     );
@@ -72,4 +80,4 @@ const mapStateToProps = ({ playerUi }) => ({
   playerUi,
 });
 
-export default connect(mapStateToProps)(MessageFeeds);
+export default connect(mapStateToProps)(OutOfGameFeed);

@@ -215,6 +215,32 @@
     }
   }
 
+  .role-info {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 14px;
+
+    .role-type {
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .force-type {
+      font-size: 26px;
+      font-weight: 500;
+      margin-left: auto;
+    }
+
+    img {
+      width: auto;
+      height: 36px;
+      margin-left: 12px;
+    }
+  }
+
   .detail {
     font-style: italic;
   }
