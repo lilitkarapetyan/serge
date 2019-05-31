@@ -7,6 +7,7 @@ import _ from "lodash";
 import {
   editWargame,
   duplicateWargame,
+  exportWargame
 } from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
 import {setCurrentViewFromURI} from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
@@ -14,7 +15,8 @@ import {setCurrentViewFromURI} from "../ActionsAndReducers/setCurrentViewFromURI
 import {
   faClone,
   faPencilAlt,
-  faTrash
+  faTrash,
+  faFileDownload,
 } from "@fortawesome/free-solid-svg-icons";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -57,6 +59,11 @@ class WargameSearchList extends Component {
   setSelectedWargame(name) {
     this.props.dispatch(editWargame(name));
     this.props.dispatch(setCurrentViewFromURI('/client/gameSetup'));
+  }
+
+  exportWargame(name) {
+    this.props.dispatch(exportWargame(name));
+    this.props.dispatch(setCurrentViewFromURI('/client/export'));
   }
 
   duplicateWargame(name) {
@@ -113,6 +120,7 @@ class WargameSearchList extends Component {
                     <FontAwesomeIcon icon={faPencilAlt} onClick={that.setSelectedWargame.bind(that, db.name)} />
                     <FontAwesomeIcon icon={faClone} onClick={that.duplicateWargame.bind(that, db.name)} />
                     <FontAwesomeIcon icon={faTrash} onClick={that.deleteWargame.bind(that, db.name)} />
+                    <FontAwesomeIcon icon={faFileDownload} onClick={that.exportWargame.bind(that, db.name)} />
                   </>
                   : null
                 }

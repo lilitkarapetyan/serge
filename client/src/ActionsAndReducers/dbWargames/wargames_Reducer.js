@@ -12,6 +12,7 @@ var initialState = {
   isLoading: false,
   wargameList: [],
   currentWargame: '',
+  exportMessagelist: [],
   wargameTitle: '',
   data: {...dbDefaultSettings.data},
   currentTab: Object.keys(dbDefaultSettings.data)[0],
@@ -47,6 +48,15 @@ export const wargamesReducer = (state = initialState, action) => {
       newState.currentWargame = action.payload.name;
       newState.wargameTitle = action.payload.wargameTitle;
       newState.data = action.payload.data;
+      newState.wargameInitiated = action.payload.wargameInitiated || false;
+
+      return newState;
+
+    case ActionConstant.SET_EXPORT_WARGAME:
+
+      newState.currentWargame = action.payload.name;
+      newState.wargameTitle = action.payload.wargameTitle;
+      newState.exportMessagelist = action.payload.exportMessagelist;
       newState.wargameInitiated = action.payload.wargameInitiated || false;
 
       return newState;

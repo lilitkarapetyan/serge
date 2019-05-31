@@ -13,6 +13,7 @@
     "bootstrap": "^4.3.1",
     "check-types": "^8.0.1",
     "classnames": "^2.2.6",
+    "excellentexport": "^3.3.0",
     "flatpickr": "^4.5.7",
     "json-metaschema": "^1.2.0",
     "kinto": "^12.3.0",

@@ -185,6 +185,28 @@ export const editWargame = (dbPath) => {
   });
 };
 
+export const exportWargame = (dbPath) => {
+  let dbName = getNameFromPath(dbPath);
+  return new Promise((resolve, reject) => {
+    getAllMessages(dbName)
+      .then((messages) => {
+        let latestWargame = messages.find((message) => message.infoType);
+        if (latestWargame) {
+          resolve({...latestWargame, exportMessagelist: messages});
+        } else {
+          var db = wargameDbStore.find((db) => db.name === dbName).db;
+          db.get(dbDefaultSettings._id)
+            .then((res) => {
+              resolve({...res, exportMessagelist: messages});
+            });
+        }
+      })
+      .catch((err) => {
+        reject(err);
+      })
+  });
+}
+
 export const updateWargameTitle = (dbName, title) => {
 
   return getAllWargames()

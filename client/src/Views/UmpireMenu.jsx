@@ -19,7 +19,7 @@ import JsonCreator from "../Components/JsonCreator";
 import MessagePreview from "../Components/MessagePreview";
 import '../scss/App.scss';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPencilAlt, faClone, faTrash, faArrowLeft,faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faFileDownload, faPencilAlt, faClone, faTrash, faArrowLeft,faPlus} from "@fortawesome/free-solid-svg-icons";
 import SearchList from "../Components/SearchList";
 import {setSelectedSchema} from "../ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators";
 
@@ -153,6 +153,7 @@ class UmpireMenu extends Component {
 
         return [
             <Link href="/client/messageCreator/create/message" key="messages" class="link"><FontAwesomeIcon icon={faPlus} />Create new Message</Link>,
+            <Link href="/client/export" key="messages" class="link link--secondary"><FontAwesomeIcon icon={faFileDownload} />Export Messages</Link>,
             <SearchList key="searchlist"
                         listData={this.state.messageList}
                         searchQuery={this.state.searchQuery}
