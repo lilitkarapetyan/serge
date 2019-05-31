@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Badge from "react-bootstrap/Badge";
 import MessagePreview from "../Components/MessagePreviewPlayerUi";
 import '../scss/App.scss';
+import moment from "moment";
 
 class MessagesListChatChannel extends Component {
 
@@ -11,10 +12,14 @@ class MessagesListChatChannel extends Component {
 
     return (
       messages.map((item, i) => {
+        console.log(item);
         return (
           <div key={`${i}-preview`} className="message-preview-player wrap">
             <MessagePreview detail={item.message.message} from={item.message.details.from} />
-            <Badge pill variant="primary">{item.message.details.from.role}</Badge>
+            <div className="info-wrap">
+              <span>{moment(item.message.details.timestamp).format("HH:mm")}</span>
+              <Badge pill variant="primary">{item.message.details.from.role}</Badge>
+            </div>
           </div>
         );
       })

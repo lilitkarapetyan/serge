@@ -3,23 +3,26 @@ import { connect } from "react-redux";
 
 import {
   getAllWargameMessages,
+  showHideObjectives,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 import MessageCreatorChatChannel from "../Components/MessageCreatorChatChannel";
 import MessagesListChatChannel from "./MessagesListChatChannel";
 
+import {CHAT_CHANNEL_ID} from "../api/consts";
 import '../scss/App.scss';
 import Collapsible from "react-collapsible";
 import MessagesListRenderProp from "./MessagesListRenderProp";
 
 
-class MessageFeeds extends Component {
+class GameAdmin extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
       activeTab: Object.keys(this.props.playerUi.channels)[0],
+      showObjectives: false,
     };
   }
 
@@ -29,23 +32,26 @@ class MessageFeeds extends Component {
 
     if (channelLength !== nextChannelLength) this.forceUpdate();
 
-    if (!nextProps.playerUi.channels[nextProps.playerUi.selectedChannel]) {
-      this.changeTab(Object.keys(nextProps.playerUi.channels)[0]);
-    }
   }
 
   componentWillMount() {
     this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
   }
 
+  showHideForceObjectives = () => {
+    this.props.dispatch(showHideObjectives());
+  };
 
   render() {
+
+    let forceName = this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).name;
+    let forceIcon = this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).icon;
 
     return (
       <>
         <MessagesListRenderProp
-          curChannel={this.props.playerUi.chatChannel.name}
-          messages={this.props.playerUi.messages}
+          curChannel={CHAT_CHANNEL_ID}
+          messages={this.props.playerUi.chatChannel.messages}
           render={messages => (
             <MessagesListChatChannel
               messages={messages}
@@ -59,8 +65,16 @@ class MessageFeeds extends Component {
             transitionTime={200}
             easing={'ease-in-out'}
           >
-            <MessageCreatorChatChannel schema={this.props.playerUi.chatChannel.template} />
+            <MessageCreatorChatChannel
+              curChannel={CHAT_CHANNEL_ID}
+              schema={this.props.playerUi.chatChannel.template}
+            />
           </Collapsible>
+          <div className="role-info">
+            <span className="role-type">{ this.props.playerUi.selectedRole }</span>
+            <span className="force-type">{ forceName }</span>
+            <img src={forceIcon} alt="" onClick={this.showHideForceObjectives} />
+          </div>
         </div>
       </>
     );
@@ -71,4 +85,4 @@ const mapStateToProps = ({ playerUi }) => ({
   playerUi,
 });
 
-export default connect(mapStateToProps)(MessageFeeds);
+export default connect(mapStateToProps)(GameAdmin);

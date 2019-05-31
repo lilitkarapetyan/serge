@@ -5,7 +5,7 @@ import {
   faPencilAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {removeRole} from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
+import {removeRole, setTabUnsaved} from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 import {modalAction} from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
 
 class RemovableGroupItem extends Component {
@@ -18,12 +18,14 @@ class RemovableGroupItem extends Component {
   }
 
   removeRole = () => {
+    this.props.dispatch(setTabUnsaved());
     this.props.dispatch(removeRole(this.props.children));
   };
 
   editRole = () => {
     let role = {
-      name: this.props.children,
+      name: this.props.data.name,
+      password: this.props.data.password,
       control: this.props.isControl,
     };
 

@@ -1,5 +1,6 @@
 @import './dependencies/variables';
 
+
 .modal-bg {
   position: fixed;
   display: flex;
@@ -19,7 +20,7 @@
   width: auto;
   height: auto;
   margin: auto;
-  background: rgba(255,255,255,1);
+  background: #fafcff;
   border-radius: 2px;
 
 
@@ -36,9 +37,18 @@
     padding: 20px;
     order: 2;
 
+    #role-name,
+    #role-password {
+      width: 300px !important;
+    }
+
+    .input-label {
+      display: block;
+    }
+
     .modal-input {
       width: 100%;
-      margin: 20px 0 30px;
+      margin-bottom: 30px;
     }
 
     p.notification {

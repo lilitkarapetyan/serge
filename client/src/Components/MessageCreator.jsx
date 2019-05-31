@@ -26,13 +26,14 @@ class JsonCreator extends Component {
   sendMessage = () => {
 
     let messageDetails = {
-      channel: this.props.playerUi.selectedChannel,
+      channel: this.props.curChannel,
       from: {
         force: this.props.playerUi.selectedForce,
         role: this.props.playerUi.selectedRole,
         icon: this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).icon,
       },
       messageType: this.props.playerUi.messageSchema.title,
+      timestamp: new Date().toISOString(),
     };
 
     this.props.dispatch(saveMessage(this.props.playerUi.currentWargame, messageDetails, this.editor.getValue()));

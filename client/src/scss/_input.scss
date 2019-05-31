@@ -24,3 +24,29 @@ select {
   background-position: right .5em top 50%, 0 0;
   background-size: 2.2em;
 }
+
+
+input.material-input {
+  display: block;
+  padding: 3px 0;
+  margin-bottom: 16px;
+  border: none;
+  border-bottom: 2px solid $primaryColor;
+  min-width: 250px;
+  background: $lightBg;
+}
+
+label.material-label {
+  font-size: 12px;
+  margin: 0 0 4px;
+  font-family: "Segoe UI", sans-serif;
+  color: $primaryColor;
+}
+
+.flatpickr-input {
+  font-family: "Segoe UI", sans-serif;
+  padding: 3px 0;
+  border: none;
+  border-bottom: 2px solid $primaryColor;
+  background: $lightBg;
+}

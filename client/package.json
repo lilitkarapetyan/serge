@@ -15,6 +15,7 @@
     "classnames": "^2.2.6",
     "excellentexport": "^3.3.0",
     "flatpickr": "^4.5.7",
+    "flexlayout-react": "^0.3.4",
     "json-metaschema": "^1.2.0",
     "kinto": "^12.3.0",
     "lodash": "^4.17.11",

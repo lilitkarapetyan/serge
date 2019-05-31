@@ -10,10 +10,14 @@ class MessagesListChannel extends Component {
 
     return (
       messages.map((item, i) => {
+
+        if (item.message.infoType) {
+          return <p className="turn-marker" key={`${i}-turnmarker`}>Turn {item.message.gameTurn}</p>
+        }
+
         return (
           <MessageListItem
             detail={item}
-            curChannel={this.props.curChannel}
             key={`${i}-messageitem`}
             openSection={this.props.openSection.bind(this, item)}
             closeSection={this.props.closeSection.bind(this, item)}

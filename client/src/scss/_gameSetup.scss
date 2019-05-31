@@ -63,7 +63,14 @@
   }
 
   .settings-title {
-    min-width: 35%;
+    display: block;
+
+    p {
+      font-size: 12px;
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      color: $primaryColor;
+    }
   }
 }
 

@@ -14,6 +14,21 @@
     font-family: monospace;
   }
 
+  .info-wrap {
+    display: flex;
+    align-items: center;
+
+    span {
+      font-size: 13px;
+      font-weight: 400;
+      margin-right: 6px;
+    }
+
+    .badge {
+      font-size: 11px;
+    }
+  }
+
   .group-section {
     margin-top: $umpireMenuMargin;
   }
@@ -37,6 +52,16 @@
   cursor: pointer;
 }
 
+.out-of-game-feed {
+  background: $lightBg;
+  max-width: 25%;
+
+  span {
+    font-size: .85em;
+    font-family: "Segoe UI", sans-serif;
+  }
+}
+
 .message-feed {
   position: relative;
   display: flex;
@@ -44,7 +69,6 @@
   flex-grow: 1;
   height: 100vh;
   max-height: 100vh;
-  max-width: 33%;
   overflow: hidden;
 
   .forces-in-channel {
@@ -59,12 +83,20 @@
   }
 
   .message-list {
-    flex-grow: 1;
-    max-height: calc(100vh - 100px);
+    max-height: calc(100vh - 135px);
     overflow-y: scroll;
 
     .wrap {
       padding: 16px;
+    }
+
+    .turn-marker {
+      width: 100%;
+      border-bottom: 1px solid $grey2;
+      color: $grey2;
+      text-align: right;
+      padding-right: 10px;
+      padding-top: 18px;
     }
   }
 
@@ -72,27 +104,42 @@
     position: relative;
 
     &__trigger {
-      display: flex;
-      align-items: center;
-      padding: 16px;
-      font-size: 1.8em;
+      display: block;
+      padding: 16px 0;
+      font-size: 1.45em;
       font-family: monospace;
       line-height: 1.75em;
       font-weight: 500;
       cursor: pointer;
 
+      .message-title-wrap {
+        display: block;
+        padding: 0 16px;
+      }
+
       .message-title {
+        display: inline;
         max-width: 300px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
 
+      .info-wrap {
+        display: flex;
+        align-items: center;
+
+        span {
+          font-size: 13px;
+          font-weight: 400;
+        }
+      }
+
       .badge {
-        font-size: 50%;
+        font-size: 55%;
         font-weight: 200;
         font-family: monospace;
-        height: auto;
+        height: fit-content;
         margin-left: 10px;
         line-height: 1.5em;
         padding: 0 6px;
@@ -128,21 +175,18 @@
     padding: 0 6px;
   }
 
-  .out-of-game-feed {
-    background: $lightBg;
-  }
-
   .new-message-creator {
+    position: absolute;
+    width: 100%;
     left: 0;
     bottom: 0;
     background: #f5f5f5;
-    padding: 16px;
-    //border-top: 5px solid $primaryTriadColor;
+    padding: 0 16px 16px;
 
     @include drawerShadow();
 
     .message-input {
-      margin: 18px 0;
+      margin-bottom: 18px;
     }
 
     .btn {
@@ -187,5 +231,69 @@
 
   button {
     align-self: center;
+  }
+}
+
+
+.demo-passwords {
+  position: absolute;
+  top: 10px;
+  left: 50px;
+
+  li {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+  }
+}
+
+.role-info {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 14px;
+
+  .role-type {
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .force-type {
+    font-size: 26px;
+    font-weight: 500;
+    margin-left: auto;
+  }
+
+  img {
+    width: auto;
+    height: 36px;
+    margin-left: 12px;
+    cursor: pointer;
+  }
+}
+
+.force-objectives {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 750px;
+  height: 550px;
+  padding: 24px;
+  border: 5px solid $primaryColor;
+  background: $lightBg;
+  overflow: hidden;
+
+  .objective-text {
+    margin-top: 15px;
+    max-height: 400px;
+    overflow-y: scroll;
+  }
+
+  .role-info {
+    position: absolute;
+    bottom: 11px;
+    right: 11px;
   }
 }

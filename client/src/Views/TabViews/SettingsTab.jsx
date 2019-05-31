@@ -69,70 +69,62 @@ class SettingsTab extends Component {
           <Row className="flex-content--rowend">
             <span className="link link--noIcon" onClick={this.saveSettings}>save Overview</span>
           </Row>
-          <Row>
-            <div className="flex-content settings-title">
-              <p className="heading--sml">Spatial Representation</p>
-            </div>
-            <div className="flex-content flex-content--fill">
-              <DropdownInput
-                updateStore={this.updateSpatialRepresentation}
-                selectOptions={spatialRepresentationOptions}
-                placeholder="Select spatial representation"
-                data={this.props.wargame.data[this.props.wargame.currentTab].spatialRepresentation}
-              />
-            </div>
-          </Row>
+          {/*<Row>*/}
+            {/*<div className="flex-content settings-title">*/}
+              {/*<p className="heading--sml">Spatial Representation</p>*/}
+            {/*</div>*/}
+            {/*<div className="flex-content flex-content--fill">*/}
+              {/*<DropdownInput*/}
+                {/*updateStore={this.updateSpatialRepresentation}*/}
+                {/*selectOptions={spatialRepresentationOptions}*/}
+                {/*placeholder="Select spatial representation"*/}
+                {/*data={this.props.wargame.data[this.props.wargame.currentTab].spatialRepresentation}*/}
+              {/*/>*/}
+            {/*</div>*/}
+          {/*</Row>*/}
 
           <Row>
-            <div className="flex-content settings-title">
-              <p className="heading--sml">War Game turn time</p>
-            </div>
             <div className="flex-content flex-content--sml">
               <TextInput
+                className="material-input"
+                label="War Game turn time (hrs)"
                 updateStore={this.updateGameTurnTime}
                 options={{ numInput: true }}
                 data={this.props.wargame.data[this.props.wargame.currentTab].gameTurnTime}
               />
             </div>
-            <div className="flex-content flex-content--sml">
-              <p className="heading--sml heading--mleft">(hrs)</p>
-            </div>
           </Row>
 
           <Row>
-            <div className="flex-content settings-title">
-              <p className="heading--sml">Real time planning allowance.</p>
-            </div>
             <div className="flex-content flex-content--sml">
               <TextInput
+                className="material-input"
+                label="Real time planning allowance (mins)"
                 updateStore={this.updateRealtimeTurnTime}
                 options={{ numInput: true }}
                 data={this.props.wargame.data[this.props.wargame.currentTab].realtimeTurnTime}
               />
             </div>
-            <div className="flex-content flex-content--sml">
-              <p className="heading--sml heading--mleft">(mins)</p>
-            </div>
           </Row>
 
-          <Row>
-            <div className="flex-content settings-title">
-              <p className="heading--sml">Turn Strategy</p>
-            </div>
-            <div className="flex-content flex-content--fill">
-              <DropdownInput
-                updateStore={this.updateTurnStrategy}
-                selectOptions={turnStrategyOptions}
-                placeholder="Not implemented yet"
-                data={this.props.wargame.data[this.props.wargame.currentTab].turnStrategy}
-                // disabled={true}
-              />
-            </div>
-          </Row>
+          {/*<Row>*/}
+            {/*<div className="flex-content settings-title">*/}
+              {/*<p className="heading--sml">Turn Strategy</p>*/}
+            {/*</div>*/}
+            {/*<div className="flex-content flex-content--fill">*/}
+              {/*<DropdownInput*/}
+                {/*updateStore={this.updateTurnStrategy}*/}
+                {/*selectOptions={turnStrategyOptions}*/}
+                {/*placeholder="Not implemented yet"*/}
+                {/*data={this.props.wargame.data[this.props.wargame.currentTab].turnStrategy}*/}
+                {/*// disabled={true}*/}
+              {/*/>*/}
+            {/*</div>*/}
+          {/*</Row>*/}
 
           <Row>
-            <div className="flex-content settings-title">
-              <p className="heading--sml">Start time</p>
+            <div className="settings-title">
+              <p>Start time</p>
             </div>
             <div className="flex-content flex-content--fill">
               <Flatpickr

@@ -1,5 +1,6 @@
 import umpireIcon from "../icons/umpireIcon";
 import defaultIcon from "../icons/default";
+import uniqId from "uniqid";
 
 // export const serverPath = 'https://serge-dev.herokuapp.com/';
 // export const databasePath = 'https://serge-dev.herokuapp.com/db/';
@@ -8,6 +9,7 @@ export const databasePath = 'http://localhost:8080/db/';
 
 export const MSG_STORE = "messages";
 export const MSG_TYPE_STORE = "message_types";
+export const CHAT_CHANNEL_ID = "chat-channel";
 
 export const headers = {
   'Content-Type': 'application/json',
@@ -22,6 +24,7 @@ export const forceTemplate = {
   overview: 'An overview written here..',
   roles: [{
     name: 'General',
+    password: `pass${uniqId.time()}`,
     control: false,
   }],
   icon: defaultIcon.icon,
@@ -35,6 +38,7 @@ export const umpireForceTemplate = {
   overview: 'Umpire force.',
   roles: [{
     name: 'Game Control',
+    password: `pass${uniqId.time()}`,
     control: true,
   }],
   icon: umpireIcon.icon,
@@ -57,10 +61,10 @@ export const dbDefaultSettings = {
     overview: {
       name: "Overview - settings",
       gameDescription: '',
-      spatialRepresentation: '',
+      // spatialRepresentation: '',
       gameTurnTime: null,
       realtimeTurnTime: null,
-      turnStrategy: '',
+      // turnStrategy: '',
       startTime: new Date().toISOString(),
       complete: false,
       dirty: false,

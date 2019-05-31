@@ -13,14 +13,15 @@ class TextInput extends Component {
     };
   }
 
-  onChange = (e) => {
-    this.props.updateStore(e.target.value);
-  };
+    onChange = (e) => {
+      this.props.updateStore(e.target.value);
+    };
 
   render() {
     return (
       <>
-        <input id={this.props.id ? this.props.id : null} type={this.state.type} onChange={this.onChange} value={this.props.data ? this.props.data : ""} />
+        { this.props.label && <label className="material-label" htmlFor={this.props.id}>{this.props.label}</label> }
+        <input className={this.props.className || ""} id={this.props.id ? this.props.id : null} type={this.state.type} onChange={this.onChange} value={this.props.data ? this.props.data : ""} />
       </>
     );
   }

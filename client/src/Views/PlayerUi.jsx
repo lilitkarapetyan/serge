@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-
+import _ from "lodash";
 import '../scss/App.scss';
 import {
   getWargame,
   setForce,
   setRole,
-  setFilteredChannels,
   initiateGame,
-  // getAllMessages,
+  getAllWargameMessages,
+  showHideObjectives,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
-import MessageFeeds from "./MessageFeeds";
-import OutOfGameFeed from "./OutOfGameFeed";
+import {
+  addNotification,
+} from "../ActionsAndReducers/Notification/Notification_ActionCreators";
+
+import ChannelTabsContainer from "./ChannelTabsContainer";
+import GameAdmin from "./GameAdmin";
 import DropdownInput from "../Components/Inputs/DropdownInput";
 import TurnProgression from "../Components/TurnProgression";
 import AwaitingStart from "../Components/AwaitingStart";
@@ -20,26 +24,19 @@ import AwaitingStart from "../Components/AwaitingStart";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 
+
 class PlayerUi extends Component {
 
-  // componentWillMount() {
-  //   this.props.dispatch(getAllMessages());
-  // }
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      rolePassword: '',
+    };
+  }
 
   updateSelectedWargame = (wargamePath) => {
     this.props.dispatch(getWargame(wargamePath));
-  };
-
-  updateSelectedForce = (force) => {
-    this.props.dispatch(setForce(force));
-  };
-
-  updateSelectedRole = (selectedRole) => {
-
-    let role = this.props.playerUi.allForces.find((f) => f.uniqid === this.props.playerUi.selectedForce).roles.find((role) => role.name === selectedRole);
-
-    this.props.dispatch(setRole(role));
-    this.props.dispatch(setFilteredChannels(true));
   };
 
   goBack = () => {
@@ -50,6 +47,45 @@ class PlayerUi extends Component {
     this.props.dispatch(initiateGame(this.props.playerUi.currentWargame));
   };
 
+  setRolePassword = (e) => {
+    this.setState({
+      rolePassword: e.target.value,
+    });
+  };
+
+  setRolePasswordDemo = (pass) => {
+    this.setState({
+      rolePassword: pass,
+    });
+  };
+
+  checkPassword = () => {
+    let pass = this.state.rolePassword;
+
+    let matchRole = (force) => force.roles.find((role) => role.password === pass);
+
+    let force = this.props.playerUi.allForces[_.findIndex(this.props.playerUi.allForces, matchRole)];
+
+    if (force === undefined) {
+      this.props.dispatch(addNotification("Password did not match", "warning"));
+      return;
+    }
+
+    let role = force.roles[_.findIndex(force.roles, (role) => role.password === pass)];
+
+    this.props.dispatch(setForce(force.uniqid));
+    this.props.dispatch(setRole(role));
+    this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
+  };
+
+  roleOptions() {
+    return this.props.playerUi.allForces.map((force) => ({name: force.name, roles: force.roles}));
+  }
+
+  showHideForceObjectives = () => {
+    this.props.dispatch(showHideObjectives());
+  };
+
   render() {
 
     return (
@@ -57,7 +93,7 @@ class PlayerUi extends Component {
 
         <div className="flex-content flex-content--fill">
 
-          {!this.props.playerUi.currentWargame ?
+          {!this.props.playerUi.currentWargame &&
             <div className="flex-content--center">
               <h1>Set wargame</h1>
               <DropdownInput
@@ -65,53 +101,68 @@ class PlayerUi extends Component {
                 selectOptions={this.props.wargame.wargameList.map((wargame) => ({option: wargame.title, value: wargame.name}))}
               />
             </div>
-            : false
           }
 
-          {this.props.playerUi.currentWargame && !this.props.playerUi.selectedForce ?
+          {this.props.playerUi.currentWargame && !this.props.playerUi.selectedForce &&
             <div className="flex-content--center">
-              <h1>Set force</h1>
-              <DropdownInput
-                updateStore={this.updateSelectedForce}
-                selectOptions={this.props.playerUi.allForces.map((force) => ({option: force.name, value: force.uniqid}))}
+              <h1>Password</h1>
+              <input
+                autoFocus
+                className="modal-input"
+                type="text"
+                onChange={this.setRolePassword}
+                value={this.state.rolePassword || ''}
               />
+              <div className="demo-passwords">
+                <h3>Not visible in production</h3>
+                {this.roleOptions().map((force) => {
+                  return (
+                      <React.Fragment key={force.name}>
+                        <h4>{force.name}</h4>
+                        <ul>
+                          {force.roles.map((role) => (<li key={role.name} onClick={this.setRolePasswordDemo.bind(this, role.password)}>{role.name}</li>))}
+                        </ul>
+                      </React.Fragment>
+                    )
+                  })
+                }
+              </div>
+              <button name="add" disabled={!this.state.rolePassword} className="btn btn-action btn-action--primary" onClick={this.checkPassword}>Enter</button>
             </div>
-            : false
           }
 
-          {this.props.playerUi.selectedForce && !this.props.playerUi.selectedRole ?
-            <div className="flex-content--center">
-              <h1>Set role</h1>
-              <FontAwesomeIcon icon={faArrowLeft} size="2x" style={{cursor: 'pointer'}} onClick={this.goBack} />
-              <DropdownInput
-                updateStore={this.updateSelectedRole}
-                selectOptions={this.props.playerUi.allForces.find((f) => f.uniqid === this.props.playerUi.selectedForce).roles.map((role) => ({option: role.name, value: role.name}))}
-              />
-            </div>
-            : false
-          }
-
-          {this.props.playerUi.selectedForce && this.props.playerUi.selectedRole && this.props.playerUi.wargameInitiated ?
+          {this.props.playerUi.selectedForce && this.props.playerUi.selectedRole && this.props.playerUi.wargameInitiated &&
             <div className="flex-content flex-content--row-wrap">
               <div className="message-feed">
-                <MessageFeeds />
+                <ChannelTabsContainer />
               </div>
               <div className="message-feed out-of-game-feed">
                 <TurnProgression />
-                <OutOfGameFeed />
+                <GameAdmin />
               </div>
+              { this.props.playerUi.showObjective &&
+                <div className="force-objectives">
+                  <h3>Objectives</h3>
+                  <div className="objective-text">
+                    {this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).overview}
+                  </div>
+
+                  <div className="role-info">
+                    <span className="force-type">{ this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).name }</span>
+                    <img src={this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).icon} alt="" onClick={this.showHideForceObjectives} />
+                  </div>
+                </div>
+              }
             </div>
-            : false
           }
 
-          {this.props.playerUi.selectedForce && this.props.playerUi.selectedRole && !this.props.playerUi.wargameInitiated ?
-
+          {this.props.playerUi.selectedForce && this.props.playerUi.selectedRole && !this.props.playerUi.wargameInitiated &&
             <div className="pre-start-screen">
               {this.props.playerUi.controlUi ?
                 <button name="delete" className="btn btn-action btn-action--primary" onClick={this.initiateGameplay}>Start Game</button>
               : <AwaitingStart description={this.props.playerUi.gameDescription} />}
             </div>
-          : false }
+          }
 
         </div>
       </div>
