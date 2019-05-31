@@ -34,6 +34,7 @@
     "react-font-awesome": "^1.0.3",
     "react-fontawesome": "^1.6.1",
     "react-jsonschema-form": "^1.3.0",
+    "react-maskedinput": "^4.0.1",
     "react-materialize": "^3.0.4",
     "react-redux": "^6.0.1",
     "react-scripts": "2.1.5",
@@ -65,5 +66,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "homepage": "http://localhost:8080/client/build"
+  "homepage": "https://serge-dev.herokuapp.com/client/build"
 }

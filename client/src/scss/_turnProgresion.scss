@@ -23,6 +23,12 @@
   }
 
   h3.ended {
+    &:before {
+      content: "-";
+    }
+  }
+
+  h3.warning {
     animation: blink 1s infinite;
   }
 
