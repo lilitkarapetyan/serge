@@ -10,7 +10,7 @@ import { getAllMessages } from "../ActionsAndReducers/dbMessages/messages_Action
 import { createExportItem } from "../ActionsAndReducers/ExportItems/ExportItems_ActionsCreators";
 import ExcelExport from '../Components/ExcelExport';
 
-class GameSetup extends Component {
+class ExportMessages extends Component {
 
   constructor(props) {
     super(props);
@@ -116,18 +116,11 @@ class GameSetup extends Component {
     ];
   }
 
-  checkAllSaved() {
-    return true;
-  }
-
   render() {
     return (
       <div className="view-wrapper view-wrapper-gamesetup">
         <div id="sidebar">
-          <Link
-            disable={!this.checkAllSaved()}
-            class={classNames({"link--disabled": !this.checkAllSaved()})}
-            onClickHandler={this.notSavedNotification} href="/client/umpireMenu" id="home-btn"><FontAwesomeIcon icon={faArrowLeft} size="2x" /></Link>
+          <Link onClickHandler={this.notSavedNotification} href="/client/umpireMenu" id="home-btn"><FontAwesomeIcon icon={faArrowLeft} size="2x" /></Link>
         </div>
         <div className="export-container">
           <h2>Export messages</h2>
@@ -161,4 +154,4 @@ const mapStateToProps = ({ wargame, messages, messageTypes, exportItems }) => ({
   wargame, messages, messageTypes, exportItems
 });
 
-export default connect(mapStateToProps)(GameSetup);
+export default connect(mapStateToProps)(ExportMessages);

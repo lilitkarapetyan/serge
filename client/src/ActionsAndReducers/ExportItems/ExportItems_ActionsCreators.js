@@ -1,6 +1,6 @@
-export const CREATE_EXPORT_ITEM = 'CREATE_EXPORT_ITEM';
+import ActionConstant from '../ActionConstants';
 
 export const createExportItem = (exportData) => ({
-  type: CREATE_EXPORT_ITEM,
+  type: ActionConstant.CREATE_EXPORT_ITEM,
   payload: { exportData: exportData }
 });
