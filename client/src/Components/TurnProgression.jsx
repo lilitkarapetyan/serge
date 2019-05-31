@@ -40,8 +40,11 @@ class TurnProgression extends Component {
 
       let seconds = end - now;
 
+      let minutes = Math.floor(seconds / 60);
+          minutes = minutes < 100 ? ('0' + minutes).slice(-2) : minutes;
+
       this.setState({
-        minutesLeft: ('0' + Math.floor(seconds / 60)).slice(-2),
+        minutesLeft: minutes,
         secondsLeft: ('0' + Math.floor(seconds % 60)).slice(-2),
       });
 
@@ -57,18 +60,35 @@ class TurnProgression extends Component {
     }
   }
 
+  // minusTimer = () => {
+  //   this.setState({
+  //     minutesLeft: this.state.secondsLeft === 59 ? this.state.minutesLeft += 1 : this.state.minutesLeft,
+  //     secondsLeft: this.state.secondsLeft === 59 ? 0 : this.state.secondsLeft += 1,
+  //   })
+  // };
+
   timer = () => {
 
-    if (this.state.secondsLeft === '01' && this.state.minutesLeft === '00') clearInterval(this.interval);
+    if (this.state.secondsLeft === '01' && this.state.minutesLeft === '00') {
+      // clearInterval(this.interval);
+      // this.setState({
+      //   minutesLeft: 0,
+      //   secondsLeft: 0,
+      // });
+      // setInterval(this.minusTimer, 1000);
+    }
 
     let now = Math.floor(new Date().getTime() / 1000);
-    let end = Math.round(new Date(this.props.playerUi.turnEndTime).getTime()/1000);
+    let end = Math.round(new Date(this.props.playerUi.turnEndTime).getTime() / 1000);
 
     let seconds = end - now;
 
+    let minutesLeft = Math.floor(seconds / 60);
+        minutesLeft = minutesLeft < 100 ? ('0' + minutesLeft).slice(-2) : minutesLeft;
+
     this.setState({
-      minutesLeft: ('0' + Math.floor(seconds / 60)).slice(-2),
-      secondsLeft: ('0' + Math.floor(seconds % 60)).slice(-2),
+      minutesLeft,
+      secondsLeft: ('0' + Math.round(seconds % 60)).slice(-2),
     })
   };
 
