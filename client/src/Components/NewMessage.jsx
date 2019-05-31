@@ -49,7 +49,7 @@ class NewMessage extends Component {
           transitionTime={200}
           easing={'ease-in-out'}
         >
-          {templates.length > 1 &&
+          {/*{templates.length > 1 &&*/}
             <DropdownInput
               updateStore={this.setTemplate}
               data={this.state.dropdownValue}
@@ -57,7 +57,7 @@ class NewMessage extends Component {
               placeholder="Select message"
               className="message-input"
             />
-          }
+          {/*}*/}
           <MessageCreator
             schema={this.props.schema}
             curChannel={this.props.curChannel}
