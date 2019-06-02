@@ -46,6 +46,7 @@ export const playerUiReducer = (state = initialState, action) => {
       newState.gameDate = action.payload.gameDate;
       newState.gameTurnTime = action.payload.gameTurnTime;
       newState.realtimeTurnTime = action.payload.realtimeTurnTime;
+      newState.timeWarning = action.payload.timeWarning;
       newState.turnEndTime = action.payload.turnEndTime;
       newState.gameDescription = action.payload.data.overview.gameDescription;
       newState.allChannels = action.payload.data.channels.channels;

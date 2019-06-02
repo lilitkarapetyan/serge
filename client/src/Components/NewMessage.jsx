@@ -40,6 +40,8 @@ class NewMessage extends Component {
 
     const templates = this.props.templates.map((item) => ({value: item.value, option: item.label }));
 
+    // if (templates.length === 1) this.props.dispatch(getMessageTemplate(templates[0].value));
+
     return (
       <div className="new-message-creator wrap">
         <Collapsible
@@ -47,13 +49,15 @@ class NewMessage extends Component {
           transitionTime={200}
           easing={'ease-in-out'}
         >
-          <DropdownInput
-            updateStore={this.setTemplate}
-            data={this.state.dropdownValue}
-            selectOptions={templates}
-            placeholder="Select message"
-            className="message-input"
-          />
+          {/*{templates.length > 1 &&*/}
+            <DropdownInput
+              updateStore={this.setTemplate}
+              data={this.state.dropdownValue}
+              selectOptions={templates}
+              placeholder="Select message"
+              className="message-input"
+            />
+          {/*}*/}
           <MessageCreator
             schema={this.props.schema}
             curChannel={this.props.curChannel}

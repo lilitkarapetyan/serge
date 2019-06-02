@@ -54,24 +54,6 @@
     max-width: 33%;
     text-overflow: ellipsis;
   }
-
-  textarea {
-    width: 100%;
-    height: 200px;
-    padding: 8px 12px;
-    margin-top: 6px;
-  }
-
-  .settings-title {
-    display: block;
-
-    p {
-      font-size: 12px;
-      margin: 0;
-      font-family: "Segoe UI", sans-serif;
-      color: $primaryColor;
-    }
-  }
 }
 
 .forcesTab {

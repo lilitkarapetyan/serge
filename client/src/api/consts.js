@@ -64,6 +64,7 @@ export const dbDefaultSettings = {
       // spatialRepresentation: '',
       gameTurnTime: null,
       realtimeTurnTime: null,
+      timeWarning: null,
       // turnStrategy: '',
       startTime: new Date().toISOString(),
       complete: false,
