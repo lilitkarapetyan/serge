@@ -1,10 +1,14 @@
 import ActionConstant from '../ActionConstants';
+import copyState from "../../Helpers/copyStateHelper";
 
 export const exportItems = (state = [], action) => {
+  let newState = copyState(state);
+
   switch (action.type) {
     case ActionConstant.CREATE_EXPORT_ITEM:
-      return [...state, action.payload.exportData];
+      newState.push(action.payload);
+      return newState;
     default:
-      return state;
+      return newState;
   }
 };

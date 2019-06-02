@@ -182,26 +182,23 @@ export const editWargame = (dbPath) => {
   });
 };
 
-export const exportWargame = (dbPath) => {
-  let dbName = getNameFromPath(dbPath);
-  return new Promise((resolve, reject) => {
-    getAllMessages(dbName)
-      .then((messages) => {
-        let latestWargame = messages.find((message) => message.infoType);
-        if (latestWargame) {
-          resolve({...latestWargame, exportMessagelist: messages});
-        } else {
-          var db = wargameDbStore.find((db) => db.name === dbName).db;
-          db.get(dbDefaultSettings._id)
-            .then((res) => {
-              resolve({...res, exportMessagelist: messages});
-            });
-        }
-      })
-      .catch((err) => {
-        reject(err);
-      })
-  });
+export const exportWargame = dbPath => {
+  const dbName = getNameFromPath(dbPath);
+
+  return getAllMessages(dbName).then(messages => {
+    const latestWargame = messages.find(message => message.infoType);
+
+    if(latestWargame) {
+      return {...latestWargame, exportMessagelist: messages};
+    }
+    else {
+      const db = wargameDbStore.find(db => db.name === dbName).db;
+
+      db.get(dbDefaultSettings._id).then(res => {
+        return {...res, exportMessagelist: messages};
+      });
+    }
+  })
 }
 
 export const updateWargameTitle = (dbName, title) => {
@@ -739,21 +736,13 @@ export const postNewMessage = (dbName, details, message) => {
   });
 };
 
-export const getAllMessages = (dbName) => {
+export const getAllMessages = dbName => {
 
-  let db = wargameDbStore.find((db) => db.name === dbName).db;
+  const db = wargameDbStore.find(db => db.name === dbName).db;
 
-  return new Promise((resolve, reject) => {
-
-    db.allDocs({include_docs: true, descending: true})
-      .then((res) => {
-        resolve(res.rows.map((a) => a.doc));
-      })
-      .catch((err) => {
-        reject(err);
-      });
-  });
-};
+  return db.allDocs({include_docs: true, descending: true})
+    .then(res => res.rows.map(a => a.doc))
+}
 
 export var getAllWargames = function () {
 

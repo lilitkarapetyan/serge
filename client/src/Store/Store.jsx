@@ -29,5 +29,5 @@ export default createStore(combineReducers({
   wargame: wargamesReducer,
   playerUi: playerUiReducer,
   dbLoading: loadingDbReducer,
-  exportItems: exportItems,
+  exportItems,
 }), applyMiddleware(...middlewares));

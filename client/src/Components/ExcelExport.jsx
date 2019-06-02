@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import excellentExport from 'excellentexport';
 import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,9 +9,9 @@ const ExcelExport = ({ exp, index }) => {
     xlsx: `export_button_${index}_xlsx`,
     xls: `export_button_${index}_xls`,
     csv: `export_button_${index}_csv`
-  }
+  };
 
-  const hreflink = '#'
+  const hreflink = '#';
 
   const generateFile = (format) => {
     return excellentExport.convert({
@@ -25,8 +25,8 @@ const ExcelExport = ({ exp, index }) => {
           arrayHasHeader: true,
           array: dataItem.messages
         }
-      })
-    }))
+      });
+    }));
   }
 
   return (
@@ -51,4 +51,4 @@ const ExcelExport = ({ exp, index }) => {
   )
 }
 
-export default ExcelExport
+export default ExcelExport;

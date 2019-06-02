@@ -4,9 +4,7 @@ import { connect } from "react-redux";
 import Link from "../Components/Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import classNames from "classnames";
 import { getAllMessageTypes } from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
-import { getAllMessages } from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
 import { createExportItem } from "../ActionsAndReducers/ExportItems/ExportItems_ActionsCreators";
 import ExcelExport from '../Components/ExcelExport';
 
@@ -14,96 +12,80 @@ class ExportMessages extends Component {
 
   constructor(props) {
     super(props);
-
-    this.createExportItem = this.createExportItem.bind(this);
-    this.filterAndMapMessagesByType = this.filterAndMapMessagesByType.bind(this);
-
-    this.state = {
-
-    };
   }
 
   componentWillMount() {
     this.props.dispatch(getAllMessageTypes());
-    this.props.dispatch(getAllMessages());
   }
 
-  createExportItem() {
-    let additionalTypes = [];
-    let additionalMessages = [];
+  createExportItem = () => {
+    const infoTypeMessages = this.props.wargame.exportMessagelist.filter(({infoType, data}) => (
+      infoType && data && data.channels && Array.isArray(data.channels.channels)
+    ));
 
-    if(this.props.wargame.currentWargame) {
-      additionalTypes = [
-        {title: "infoType"},
-        {title: "Game", wargame: this.props.wargame.currentWargame},
-      ]
+    let channelTitles = {};
 
-      additionalMessages = this.props.wargame.exportMessagelist;
+    for(const { data } of infoTypeMessages) {
+      for(const { uniqid, name } of data.channels.channels) {
+        if(channelTitles[uniqid]) continue;
+        channelTitles[uniqid] = name;
+      }
     }
-
-    const messageTypes = [
-      ...additionalTypes,
-      ...this.props.messageTypes.messages
-    ]
 
     this.props.dispatch(createExportItem({
       title: `Export ${new Date().toISOString().slice(0, 19).replace('T', ' ')}`,
       wargame: this.props.wargame.currentWargame ? this.props.wargame.wargameTitle : 'Not Selected',
-      data: messageTypes.map(messageType => ({
+      data: this.props.messageTypes.messages.map(messageType => ({
         type: messageType.title,
         details: messageType.details,
-        messages: this.filterAndMapMessagesByType(messageType, [
-          ...this.props.messages.messages,
-          ...additionalMessages
-        ])
+        messages: this.filterAndMapMessagesByType(messageType, this.props.wargame.exportMessagelist, channelTitles)
       }))
     }));
   }
 
-  filterAndMapMessagesByType(type, messages) {
+  filterAndMapMessagesByType(type, messages, channelTitles) {
+    //all excel keys/titles for current tab
     let fields = [];
+    //rows under titles
     let rows = [];
 
-    const messagesFiltered = messages.filter(msg => {
-      if(msg.schema) {
-        return msg.schema.title === type.title;
-      }
-      else {
-        switch (type.title) {
-          case "infoType":
-            return msg.infoType;
-          case "Game":
-            return !msg.infoType;
-          default:
-            return false;
-        }
-      }
-    });
+    const messagesFiltered = messages.filter(msg => (msg.details && msg.details.messageType === type.title));
 
-    for(let msgK = 0; msgK < messagesFiltered.length; msgK++) {
-      const msg = messagesFiltered[msgK];
+    //loop on filtered messages
+    for(let msg of messagesFiltered) {
+      //check message channel
+      if(msg.details && msg.details.channel && channelTitles[msg.details.channel]) {
+        msg.details.channel = channelTitles[msg.details.channel];
+      }
+
+      //get message object keys as array
       const keys = Object.keys(msg);
+      //reate row with empty items equal to current fields length
       const row = Array(fields.length).fill("");
 
-      for(let i = 0; i < keys.length; i++) {
-        const key = keys[i];
+      //loop on message keys
+      for(const key of keys) {
+        //if message[key] is object then do loop for that object keys
         if(typeof msg[key] === 'object') {
           let nextLevelKeys = Object.keys(msg[key]);
-          for(let j = 0; j < nextLevelKeys.length; j++) {
-            const key2 = nextLevelKeys[j];
+          for(const key2 of nextLevelKeys) {
             if(typeof msg[key][key2] !== 'object') {
+              //check if fields/titles have no current key then add
               if(!fields.includes(key2)) {
                 fields.push(key2);
               }
 
+              //check position for field then add value to rigth position in row
               row[fields.indexOf(key2)] = msg[key][key2];
             }
           }
         }
         else {
+          //check if fields/titles have no current key then add
           if(!fields.includes(key)) {
             fields.push(key);
           }
+          //check position for field then add value to rigth position in row
           row[fields.indexOf(key)] = msg[key];
         }
       }
@@ -150,8 +132,8 @@ class ExportMessages extends Component {
 }
 
 // temp use allMessages
-const mapStateToProps = ({ wargame, messages, messageTypes, exportItems }) => ({
-  wargame, messages, messageTypes, exportItems
+const mapStateToProps = ({ wargame, messageTypes, exportItems }) => ({
+  wargame, messageTypes, exportItems
 });
 
 export default connect(mapStateToProps)(ExportMessages);
