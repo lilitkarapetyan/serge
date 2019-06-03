@@ -29,6 +29,7 @@
     min-height: 48px;
     padding: 6px 12px;
     cursor: pointer;
+    border-bottom: 2px solid transparent;
 
     &.active-tab {
       border-bottom: 2px solid $primaryColor;

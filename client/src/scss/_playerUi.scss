@@ -221,6 +221,11 @@
   .data {
     padding: 0 6px 0 2px;
     word-break: break-word;
+
+    a {
+      display: inline;
+      font-weight: bold;
+    }
   }
 }
 

@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import '../scss/App.scss';
 import check from "check-types";
 import moment from "moment";
+import isValidUrl from "../Helpers/isValidUrl";
 const Fragment = React.Fragment;
 
 class MessagePreview extends Component {
@@ -29,7 +30,7 @@ class MessagePreview extends Component {
     )
   }
 
-  createStrItem(pair, withoutName) {
+  createStrItem(pair) {
     return (
       <Fragment key={`strItem-${pair[0]}${pair[1]}`}>
         <span className="detail">
@@ -37,6 +38,19 @@ class MessagePreview extends Component {
         </span>
         <span className="data">
           {pair[1]}
+        </span>
+      </Fragment>
+    );
+  }
+
+  createUrlItem(pair) {
+    return (
+      <Fragment key={`urlItem-${pair[0]}${pair[1]}`}>
+        <span className="detail">
+          {pair[0]}:
+        </span>
+        <span className="data">
+          <a href={pair[1]}>{pair[1]}</a>
         </span>
       </Fragment>
     );
@@ -68,7 +82,7 @@ class MessagePreview extends Component {
       if (check.object(pair[1])) return that.createObjItem(pair);
       if (check.array.of.object(pair[1])) return that.deconstructArr(pair);
       if (check.boolean(pair[1])) return that.createBoolItem(pair);
-
+      if (isValidUrl(pair[1])) return that.createUrlItem(pair);
       if (moment(pair[1], moment.ISO_8601, true).isValid()) return that.createTimeItem(pair);
 
       return that.createStrItem(pair);
@@ -129,6 +143,7 @@ class MessagePreview extends Component {
       if (check.object(pair[1])) return that.createObjItem(pair);
       if (check.array.of.object(pair[1])) return that.deconstructArr(pair);
       if (check.boolean(pair[1])) return that.createBoolItem(pair);
+      if (isValidUrl(pair[1])) return that.createUrlItem(pair);
       if (moment(pair[1], moment.ISO_8601, true).isValid()) return that.createTimeItem(pair);
 
       return (
