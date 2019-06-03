@@ -10,10 +10,6 @@ import ExcelExport from '../Components/ExcelExport';
 
 class ExportMessages extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   componentWillMount() {
     this.props.dispatch(getAllMessageTypes());
   }
