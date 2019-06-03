@@ -2,7 +2,7 @@ import umpireIcon from "../icons/umpireIcon";
 import defaultIcon from "../icons/default";
 import uniqId from "uniqid";
 
-  export const serverPath = 'https://serge-dev.herokuapp.com/';
+export const serverPath = 'https://serge-dev.herokuapp.com/';
 export const databasePath = 'https://serge-dev.herokuapp.com/db/';
 // export const serverPath = 'http://localhost:8080/';
 // export const databasePath = 'http://localhost:8080/db/';

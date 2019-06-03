@@ -12,7 +12,7 @@ class MessagePreview extends Component {
   createObjItem(pair) {
     const that = this;
     return (
-      <span key={`objItem--${pair[0]}-${pair[1]}`} className="group-section">{ that.deconstructObj(pair[1]) }</span>
+      <Fragment key={`objItem--${pair[0]}-${pair[1]}`}>{ that.deconstructObj(pair[1]) }</Fragment>
     )
   }
 
@@ -64,7 +64,7 @@ class MessagePreview extends Component {
         {pair[1].map((item) => {
           // CHECK NAME PROP ON EVERY OBJ
           return (
-              <span key={`section-${item.name}`}>{ that.deconstructObj(item) }</span>
+              <Fragment key={`section-${item.name}`}>{ that.deconstructObj(item) }</Fragment>
           );
         })}
       </Fragment>
