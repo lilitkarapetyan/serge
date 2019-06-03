@@ -151,7 +151,6 @@ export const checkIfWargameStarted = (dbName) => {
 export const getLatestWargameRevision = (dbName) => {
   return getAllMessages(dbName)
     .then((messages) => {
-      console.log(messages);
       let latestWargame = messages.find((message) => message.infoType);
       if (latestWargame) return latestWargame;
       return getWargameLocalFromName(dbName);
@@ -396,6 +395,70 @@ export const saveChannel = (dbName, newName, newData, oldName) => {
     })
 };
 
+export const duplicateChannel = (dbName, channelUniqid) => {
+
+  let db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
+
+  return getLatestWargameRevision(dbName)
+    .then(function (localDoc) {
+
+      let newDoc = deepCopy(localDoc);
+
+      let updatedData = newDoc.data;
+
+      let channels = updatedData.channels.channels;
+
+      let channelIndex = channels.findIndex((channel) => channel.uniqid === channelUniqid);
+
+      let duplicateChannel = deepCopy(channels[channelIndex]);
+
+      let uniq = uniqid.time();
+
+      duplicateChannel.name = duplicateChannel.name + `-${uniq}`;
+      duplicateChannel.uniqid = `channel-${uniq}`;
+
+      channels.splice(channelIndex, 0, duplicateChannel);
+
+      updatedData.channels.channels = channels;
+      updatedData.channels.complete = calcComplete(channels) && channels.length !== 0;
+
+      return new Promise((resolve, reject) => {
+
+        getLatestWargameRevision(dbName)
+          .then((res) => {
+            if (res.wargameInitiated) {
+              let data = res;
+              data.data = updatedData;
+              createLatestWargameRevision(dbName, data)
+                .then((res) => {
+                  resolve(res);
+                })
+            } else {
+              db.put({
+                _id: dbDefaultSettings._id,
+                _rev: res._rev,
+                name: res.name,
+                wargameTitle: res.wargameTitle,
+                data: updatedData,
+                gameTurn: res.gameTurn,
+                gameDate: res.gameDate,
+                gameTurnTime: res.gameTurnTime,
+                realtimeTurnTime: res.realtimeTurnTime,
+                timeWarning: res.timeWarning,
+                turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
+                wargameInitiated: res.wargameInitiated,
+              })
+                .then(() => {
+                  resolve(db.get(dbDefaultSettings._id));
+                })
+                .catch((err) => {
+                  reject(err);
+                })
+            }
+          });
+      });
+    });
+};
 
 export const deleteChannel = (dbName, channelUniqid) => {
 
@@ -412,7 +475,7 @@ export const deleteChannel = (dbName, channelUniqid) => {
 
       let channelIndex = channels.findIndex((channel) => channel.uniqid === channelUniqid);
 
-        channels.splice(channelIndex, 1);
+      channels.splice(channelIndex, 1);
 
       updatedData.channels.channels = channels;
       updatedData.channels.complete = calcComplete(channels) && channels.length !== 0;

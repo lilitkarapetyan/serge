@@ -108,13 +108,12 @@ class WargameSearchList extends Component {
             return (
               <span className="searchlist-title" key={db.title} onMouseOver={that.displayControls.bind(that, db.title)} onMouseLeave={that.hideControls}>
                 {db.title}
-                {that.state.activeTitle === db.title ?
+                {that.state.activeTitle === db.title &&
                   <>
                     <FontAwesomeIcon icon={faPencilAlt} onClick={that.setSelectedWargame.bind(that, db.name)} />
                     <FontAwesomeIcon icon={faClone} onClick={that.duplicateWargame.bind(that, db.name)} />
                     <FontAwesomeIcon icon={faTrash} onClick={that.deleteWargame.bind(that, db.name)} />
                   </>
-                  : null
                 }
               </span>
             )

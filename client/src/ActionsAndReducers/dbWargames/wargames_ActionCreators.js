@@ -254,8 +254,6 @@ export const saveForce = (dbName, newName, newData, oldName) => {
       await wargamesApi.createLatestWargameRevision(dbName, wargame);
     }
 
-    console.log(newData);
-
     dispatch(setCurrentWargame(wargame));
     dispatch(setTabSaved());
     dispatch(setSelectedForce({name: newName, uniqid: newData.uniqid}));
@@ -296,6 +294,22 @@ export const deleteSelectedChannel = (dbName, channel) => {
     dispatch(setCurrentWargame(wargame));
 
     dispatch(addNotification("Channel deleted.", "warning"));
+  }
+};
+
+export const duplicateChannel = (dbName, channel) => {
+  return async (dispatch) => {
+
+    let wargame = await wargamesApi.duplicateChannel(dbName, channel);
+
+    let wargameIsInProgress = await wargamesApi.checkIfWargameStarted(dbName);
+
+    if (wargameIsInProgress) {
+      await wargamesApi.createLatestWargameRevision(dbName, wargame);
+    }
+
+    dispatch(setCurrentWargame(wargame));
+    dispatch(addNotification("Channel duplicated.", "success"));
   }
 };
 

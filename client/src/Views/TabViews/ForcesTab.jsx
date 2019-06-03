@@ -222,7 +222,7 @@ class ForcesTab extends Component {
 
     return (
       <div className="flex-content-wrapper">
-        <div className="flex-content">
+        <div className="flex-content searchlist-wrap">
           <span className="link link--noIcon" onClick={this.createForce}>Add a new force</span>
           <TabsSearchList listData={this.state.forcesList}
                           setSelected={this.setSelected}
