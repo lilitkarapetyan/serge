@@ -1,26 +1,48 @@
 @import "dependencies/variables";
 
+.wargame-title {
+  background: $lightBg;
+  flex-grow: 0;
+  justify-content: space-between !important;
+  align-items: center;
+  flex-direction: row !important;
+  padding: $umpireMenuMargin;
+
+  h3 {
+    width: fit-content;
+    color: $primaryTriadColor;
+  }
+
+  svg {
+    cursor: pointer;
+    color: $primaryTriadColor;
+  }
+}
 
 .turn-progression-ui {
   background: $primaryTriadColor;
   flex-grow: 0;
-  justify-content: space-evenly;
+  justify-content: space-between;
 
   padding: $umpireMenuMargin;
 
-  h3, h4, p, span {
+  h3, h4, h5, h6, p, span {
     color: $lightBlue !important;
   }
 
-  h3, h4 {
-    line-height: 1.5em;
+  h5 {
+    font-weight: 400;
+  }
+  h6 {
+    font-weight: 200;
+  }
+  h3, h6 {
+    text-align: center;
   }
 
-  h3.time-left {
-    display: inline;
-    width: fit-content;
-    margin-right: 5px;
-  }
+  //h3, h4 {
+  //  line-height: 1.5em;
+  //}
 
   h3.ended {
     &:before {

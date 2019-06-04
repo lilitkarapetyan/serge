@@ -1,7 +1,7 @@
 import ActionConstant from '../ActionConstants';
 import * as wargamesApi from "../../api/wargames_api";
 import * as messageTemplatesApi from "../../api/messageTypes_api";
-import _ from "lodash";
+import {modalAction} from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
 
 export const setCurrentWargame = (data) => ({
   type: ActionConstant.SET_CURRENT_WARGAME_PLAYER,
@@ -22,19 +22,9 @@ export const setRole = (data) => ({
   payload: data
 });
 
-export const setFilteredChannels = (setSelectedChannel) => ({
-  type: ActionConstant.SET_FILTERED_CHANNELS,
-  setSelectedChannel
-});
-
-export const setChannel = (data) => ({
-  type: ActionConstant.SET_CHANNEL,
-  payload: data,
-});
-
-export const setMessageSchema = (schema) => ({
-  type: ActionConstant.SET_MESSAGE_SCHEMA,
-  payload: schema,
+export const setWargameFeedback = (messages) => ({
+  type: ActionConstant.SET_FEEDBACK_MESSAGES,
+  payload: messages,
 });
 
 export const setWargameMessages = (messages) => ({
@@ -42,7 +32,7 @@ export const setWargameMessages = (messages) => ({
   payload: messages,
 });
 
-const transformTemplates = (wargame, messages) => {
+export const transformTemplates = (wargame, messages) => {
   wargame.data.channels.channels.forEach((channel) => {
     channel.participants.forEach((participant) => {
       let templateSchemas = [];
@@ -86,13 +76,23 @@ export const initiateGame = (dbName) => {
   return async (dispatch) => {
 
     let wargame = await wargamesApi.initiateGame(dbName);
+    let messages = await messageTemplatesApi.getAllMessagesFromDb();
 
-    let transformedWargame = await transformTemplates(wargame);
+    let transformedWargame = transformTemplates(wargame, messages);
 
     dispatch(setCurrentWargame(transformedWargame));
   }
 };
 
+
+export const sendFeedbackMessage = (dbName, playerInfo, message) => {
+  return async (dispatch) => {
+
+    await wargamesApi.postFeedback(dbName, playerInfo, message);
+
+    dispatch(modalAction.close());
+  }
+};
 
 export const saveMessage = (dbName, details, message) => {
   return async (dispatch) => {
@@ -101,28 +101,28 @@ export const saveMessage = (dbName, details, message) => {
 
     let messages = await wargamesApi.getAllMessages(dbName);
 
-    // messages = messages.filter((message) => !message.hasOwnProperty('infoType'));
+    messages = messages.filter((message) => !message.hasOwnProperty('feedback'));
 
     dispatch(setWargameMessages(messages));
   }
 };
 
-export const getMessageTemplate = (id) => {
+export const getAllWargameFeedback = (dbName) => {
   return async (dispatch) => {
-    let messages = await messageTemplatesApi.getAllMessagesFromDb();
 
-    var template = messages.find((message) => message._id === id);
+    let messages = await wargamesApi.getAllMessages(dbName);
+    messages = messages.filter((message) => message.hasOwnProperty('feedback'));
 
-    dispatch(setMessageSchema(template.details));
+    dispatch(setWargameFeedback(messages));
   }
 };
 
 export const getAllWargameMessages = (name) => {
   return async (dispatch) => {
 
-    var messages = await wargamesApi.getAllMessages(name);
+    let messages = await wargamesApi.getAllMessages(name);
 
-    // messages = messages.filter((message) => !message.hasOwnProperty('infoType'));
+    messages = messages.filter((message) => !message.hasOwnProperty('feedback'));
 
     dispatch(setWargameMessages(messages));
   }

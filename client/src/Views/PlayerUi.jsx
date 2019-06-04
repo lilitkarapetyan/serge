@@ -20,10 +20,9 @@ import GameAdmin from "./GameAdmin";
 import DropdownInput from "../Components/Inputs/DropdownInput";
 import TurnProgression from "../Components/TurnProgression";
 import AwaitingStart from "../Components/AwaitingStart";
+import FeedbackChannel from "./FeedbackChannel";
 
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
-
+import classNames from "classnames";
 
 class PlayerUi extends Component {
 
@@ -136,10 +135,15 @@ class PlayerUi extends Component {
               <div className="message-feed">
                 <ChannelTabsContainer />
               </div>
-              <div className="message-feed out-of-game-feed">
+              <div className={classNames({"message-feed": true, "out-of-game-feed": true, "umpire-feed": this.props.playerUi.controlUi})}>
                 <TurnProgression />
                 <GameAdmin />
               </div>
+              {this.props.playerUi.controlUi &&
+                <div className="message-feed feedback-channel">
+                  <FeedbackChannel />
+                </div>
+              }
               { this.props.playerUi.showObjective &&
                 <div className="force-objectives">
                   <h3>Objectives</h3>

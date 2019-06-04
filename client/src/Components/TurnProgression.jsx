@@ -5,6 +5,9 @@ import GameControls from "../Components/GameControls";
 
 import classNames from "classnames";
 import moment from "moment";
+import {faCommentAlt} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { modalAction } from "../ActionsAndReducers/Modal/Modal_ActionCreators";
 
 class TurnProgression extends Component {
 
@@ -93,20 +96,30 @@ class TurnProgression extends Component {
     clearInterval(this.interval);
   };
 
+  showLessonsModal = () => {
+    this.props.dispatch(modalAction.open("lessons"));
+  };
+
 
   render() {
     return (
-      <div className="flex-content-wrapper turn-progression-ui">
-        <div className="flex-content--turn-progression">
-          <h4>{moment(this.props.playerUi.gameDate).format("DD/MM/YYYY")}</h4>
-          <h4>{moment(this.props.playerUi.gameDate).format("HH:mm")}</h4>
+      <>
+        <div className="flex-content wargame-title">
+          <h3>{this.props.playerUi.wargameTitle}</h3>
+          {!this.props.playerUi.controlUi && <FontAwesomeIcon icon={faCommentAlt} size="2x" onClick={this.showLessonsModal} />}
         </div>
-        <div className="flex-content--turn-progression">
-          <h3>Turn {this.props.playerUi.currentTurn}</h3>
-          <h3 className={classNames({"time-left": true, "ended": this.state.ended, "warning": this.state.warning})}>{this.state.minutesLeft}:{this.state.secondsLeft}</h3><span>left</span>
-          {this.props.playerUi.controlUi ? <GameControls clearInterval={this.clearInterval} /> : false}
+        <div className="flex-content-wrapper turn-progression-ui">
+          <div>
+            <h5>Turn {this.props.playerUi.currentTurn}</h5>
+            <h5>{moment(this.props.playerUi.gameDate).format("DD/MM/YYYY HH:mm")}</h5>
+          </div>
+          <div>
+            <h3 className={classNames({"time-left": true, "ended": this.state.ended, "warning": this.state.warning})}>{this.state.minutesLeft}:{this.state.secondsLeft}</h3>
+            <h6>Time left</h6>
+            {this.props.playerUi.controlUi ? <GameControls clearInterval={this.clearInterval} /> : false}
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 }

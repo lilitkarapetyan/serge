@@ -8,6 +8,11 @@
   flex-grow: 1;
   align-items: flex-start;
 
+  &--column {
+    display: flex;
+    flex-direction: column;
+  }
+
   &--distribute {
     justify-content: space-between;
     flex-grow: 0;
@@ -51,10 +56,6 @@
     &--fill {
       flex-grow: 1;
       min-width: 50%;
-    }
-
-    &--turn-progression {
-      min-width: 35%;
     }
 
     &--big {

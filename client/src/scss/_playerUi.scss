@@ -30,6 +30,17 @@
   }
 }
 
+.feedback-channel {
+  //padding: 20px;
+  background: $lightBg;
+  max-width: 15%;
+
+  .message-list {
+
+    padding: 20px;
+  }
+}
+
 #title-editable {
   font-family: "Segoe UI", sans-serif;
   font-size: 1.85em;
@@ -79,8 +90,9 @@
   }
 
   .message-list {
-    max-height: calc(100vh - 135px);
+    max-height: calc(100vh - 150px);
     overflow-y: scroll;
+    flex-grow: 2;
 
     .wrap {
       padding: 16px;
@@ -171,11 +183,14 @@
     padding: 0 6px;
   }
 
-  .new-message-creator {
+  .new-message-orderable {
     position: absolute;
-    width: 100%;
     left: 0;
     bottom: 0;
+  };
+
+  .new-message-creator {
+    width: 100%;
     background: #f5f5f5;
     padding: 0 16px 16px;
 

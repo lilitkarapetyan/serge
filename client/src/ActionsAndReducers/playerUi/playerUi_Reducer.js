@@ -15,7 +15,6 @@ const initialState = {
   realtimeTurnTime: 0,
   turnEndTime: '',
   gameDescription: '',
-  selectedChannel: '',
   currentWargame: '',
   wargameTitle: '',
   chatChannel: {
@@ -27,9 +26,9 @@ const initialState = {
   allChannels: {},
   forces: {},
   allForces: {},
-  messageSchema: {},
   showObjective: false,
   wargameInitiated: false,
+  feedbackMessages: [],
 };
 
 export const playerUiReducer = (state = initialState, action) => {
@@ -62,16 +61,12 @@ export const playerUiReducer = (state = initialState, action) => {
       newState.controlUi = action.payload.control;
       break;
 
-    case ActionConstant.SET_CHANNEL:
-      newState.selectedChannel = action.payload;
-      break;
-
-    case ActionConstant.SET_MESSAGE_SCHEMA: // remove .messageSchema
-      newState.messageSchema = action.payload;
-      break;
-
     case ActionConstant.SHOW_HIDE_OBJECTIVES:
       newState.showObjective = !newState.showObjective;
+      break;
+
+    case ActionConstant.SET_FEEDBACK_MESSAGES:
+      newState.feedbackMessages = action.payload;
       break;
 
     case ActionConstant.SET_LATEST_MESSAGES:

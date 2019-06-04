@@ -32,8 +32,8 @@ class Channel extends Component {
         />
 
         <NewMessage
+          orderableChannel={true}
           curChannel={curChannel}
-          // schema={this.props.playerUi.messageSchema}
           templates={this.props.playerUi.channels[curChannel].templates}
         />
       </>

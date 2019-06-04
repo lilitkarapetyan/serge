@@ -90,3 +90,43 @@
     }
   }
 }
+
+.lessons-modal {
+  max-width: 500px;
+
+  .title {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  svg {
+    color: $primaryColor;
+  }
+  h3 {
+    display: inline;
+    line-height: 1em;
+    font-weight: bold;
+    margin-left: .5em;
+    color: $primaryColor;
+    width: fit-content;
+  }
+
+  p {
+    font-size: 16px;
+    color: $primaryColor;
+  }
+
+  textarea {
+    resize: none;
+  }
+
+  .buttons {
+    margin-top: 12px;
+  }
+}
+
+.text-input-wrap {
+  display: flex;
+  flex-direction: column;
+}

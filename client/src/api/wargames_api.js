@@ -16,9 +16,12 @@ import {  databasePath,
 import {
   setWargameMessages,
   setCurrentWargame,
+  setWargameFeedback,
+  transformTemplates,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 import moment from "moment";
+import * as messageTemplatesApi from "./messageTypes_api";
 
 
 var wargameDbStore = [];
@@ -30,9 +33,13 @@ const changesListener = (db, name, dispatch) => {
       (async () => {
         let messages = await getAllMessages(name);
         let latestWargame = messages.find((message) => message.infoType);
-        dispatch(setCurrentWargame(latestWargame));
-        // messages = messages.filter((message) => !message.hasOwnProperty('infoType'));
-        dispatch(setWargameMessages(messages));
+        let messageTemplates = await messageTemplatesApi.getAllMessagesFromDb();
+        let transformedWargame = transformTemplates(latestWargame, messageTemplates);
+        dispatch(setCurrentWargame(transformedWargame));
+        let wargameMessages = messages.filter((message) => !message.hasOwnProperty('feedback'));
+        dispatch(setWargameMessages(wargameMessages));
+        let feedbackMessages = messages.filter((message) => message.hasOwnProperty('feedback'));
+        dispatch(setWargameFeedback(feedbackMessages));
       })();
     })
     .on('error', function (err) {
@@ -753,7 +760,6 @@ export const getAllWargameRevisions = (dbName) => {
 export const nextGameTurn = (dbName) => {
 
   return new Promise((resolve, reject) => {
-
     getLatestWargameRevision(dbName)
       .then((res) => {
         res.gameTurn += 1;
@@ -761,6 +767,27 @@ export const nextGameTurn = (dbName) => {
         res.turnEndTime = moment().add(res.realtimeTurnTime, 'ms').format();
         return createLatestWargameRevision(dbName, res);
       })
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
+      })
+  });
+};
+
+export const postFeedback = (dbName, playerInfo, message) => {
+
+  let db = wargameDbStore.find((db) => db.name === dbName).db;
+
+  return new Promise((resolve, reject) => {
+    db.put({
+      _id: new Date().toISOString(),
+      playerInfo,
+      message,
+      feedback: true,
+    })
       .then((res) => {
         resolve(res);
       })
@@ -787,6 +814,7 @@ export const postNewMessage = (dbName, details, message) => {
       })
       .catch((err) => {
         console.log(err);
+        reject(err);
       })
   });
 };
@@ -806,6 +834,7 @@ export const getAllMessages = (dbName) => {
       });
   });
 };
+
 
 export var getAllWargames = function () {
 
