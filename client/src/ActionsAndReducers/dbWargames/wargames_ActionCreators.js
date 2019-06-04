@@ -4,6 +4,7 @@ import _ from "lodash";
 
 import * as wargamesApi from "../../api/wargames_api";
 import { addNotification } from "../Notification/Notification_ActionCreators";
+import * as messageTemplatesApi from "../../api/messageTypes_api";
 
 export const setCurrentTab = (tab) => ({
   type: ActionConstant.SET_CURRENT_GAME_SETUP_TAB,

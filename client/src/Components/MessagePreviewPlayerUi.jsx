@@ -64,7 +64,7 @@ class MessagePreview extends Component {
         {pair[1].map((item) => {
           // CHECK NAME PROP ON EVERY OBJ
           return (
-              <Fragment key={`section-${item.name}`}>{ that.deconstructObj(item) }</Fragment>
+            that.deconstructObj(item)
           );
         })}
       </Fragment>

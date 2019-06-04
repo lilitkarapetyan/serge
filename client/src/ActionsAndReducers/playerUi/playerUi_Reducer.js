@@ -66,7 +66,7 @@ export const playerUiReducer = (state = initialState, action) => {
       newState.selectedChannel = action.payload;
       break;
 
-    case ActionConstant.SET_MESSAGE_SCHEMA:
+    case ActionConstant.SET_MESSAGE_SCHEMA: // remove .messageSchema
       newState.messageSchema = action.payload;
       break;
 

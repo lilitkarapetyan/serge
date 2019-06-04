@@ -649,6 +649,8 @@ export const getWargame = (gamePath) => {
 
     let wargame = await getLatestWargameRevision(name);
 
+    console.log(wargame);
+
     return wargame;
 
   })();

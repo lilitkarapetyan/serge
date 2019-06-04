@@ -1,6 +1,7 @@
 import ActionConstant from '../ActionConstants';
 import * as wargamesApi from "../../api/wargames_api";
 import * as messageTemplatesApi from "../../api/messageTypes_api";
+import _ from "lodash";
 
 export const setCurrentWargame = (data) => ({
   type: ActionConstant.SET_CURRENT_WARGAME_PLAYER,
@@ -41,12 +42,30 @@ export const setWargameMessages = (messages) => ({
   payload: messages,
 });
 
+const transformTemplates = (wargame, messages) => {
+  wargame.data.channels.channels.forEach((channel) => {
+    channel.participants.forEach((participant) => {
+      let templateSchemas = [];
+      participant.templates.forEach((templateInfo) => {
+        let templateIndex = messages.findIndex((template) => template._id === templateInfo.value);
+        if (templateIndex > -1) templateSchemas.push(messages[templateIndex]);
+        if (templateIndex === -1) throw new Error("Template not found");
+      });
+      participant.templates = templateSchemas;
+    })
+  });
+  return wargame;
+};
+
 export const getWargame = (gamePath) => {
   return async (dispatch) => {
 
     let wargame = await wargamesApi.getWargame(gamePath);
+    let messages = await messageTemplatesApi.getAllMessagesFromDb();
 
-    dispatch(setCurrentWargame(wargame));
+    let transformedWargame = transformTemplates(wargame, messages);
+
+    dispatch(setCurrentWargame(transformedWargame));
   }
 };
 
@@ -54,8 +73,11 @@ export const nextGameTurn = (dbName) => {
   return async (dispatch) => {
 
     let wargame = await wargamesApi.nextGameTurn(dbName);
+    let messages = await messageTemplatesApi.getAllMessagesFromDb();
 
-    dispatch(setCurrentWargame(wargame));
+    let transformedWargame = transformTemplates(wargame, messages);
+
+    dispatch(setCurrentWargame(transformedWargame));
   }
 };
 
@@ -65,7 +87,9 @@ export const initiateGame = (dbName) => {
 
     let wargame = await wargamesApi.initiateGame(dbName);
 
-    dispatch(setCurrentWargame(wargame));
+    let transformedWargame = await transformTemplates(wargame);
+
+    dispatch(setCurrentWargame(transformedWargame));
   }
 };
 

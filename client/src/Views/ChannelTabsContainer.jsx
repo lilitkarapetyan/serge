@@ -60,8 +60,6 @@ class ChannelTabsContainer extends Component {
 
     let newChannels = _.difference(channelNames, this.state.channelNames);
 
-    console.log(newChannels);
-
     newChannels.forEach((channelName) => {
       this.state.model.doAction(
         FlexLayout.Actions.addNode({type: "tab", component: channelName, name: channelName, id: channelName}, "#2", FlexLayout.DockLocation.CENTER, -1)

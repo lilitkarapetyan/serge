@@ -33,7 +33,7 @@ class Channel extends Component {
 
         <NewMessage
           curChannel={curChannel}
-          schema={this.props.playerUi.messageSchema}
+          // schema={this.props.playerUi.messageSchema}
           templates={this.props.playerUi.channels[curChannel].templates}
         />
       </>
