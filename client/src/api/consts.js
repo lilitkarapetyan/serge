@@ -11,6 +11,9 @@ export const MSG_STORE = "messages";
 export const MSG_TYPE_STORE = "message_types";
 export const CHAT_CHANNEL_ID = "chat-channel";
 
+export const PLANNING_PHASE = 'planning';
+export const ADJUDICATION_PHASE = 'adjudication';
+
 export const headers = {
   'Content-Type': 'application/json',
   'Access-Control-Allow-Origin': '*',
@@ -87,6 +90,7 @@ export const dbDefaultSettings = {
   },
   wargameInitiated: false,
   gameTurn: 1,
+  phase: '',
   gameDate: null,
   gameTurnTime: null,
   realtimeTurnTime: null,

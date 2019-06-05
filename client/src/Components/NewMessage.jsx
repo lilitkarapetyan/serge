@@ -44,8 +44,6 @@ class NewMessage extends Component {
 
     const templates = this.props.templates.map((item) => ({value: JSON.stringify(item.details), option: item.title }));
 
-    console.log(templates);
-
     let classes = "new-message-creator wrap";
     if (this.props.orderableChannel) classes += " new-message-orderable";
 

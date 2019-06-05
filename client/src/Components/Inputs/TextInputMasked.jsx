@@ -6,10 +6,6 @@ import '../../scss/App.scss';
 
 class TextInputMasked extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   onChange = (e) => {
     this.props.updateStore(e.target.value);
   };

@@ -3,7 +3,7 @@ import classNames from "classnames";
 import '../scss/App.scss';
 import {PropTypes} from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faClone, faPencilAlt, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faClone, faTrash} from "@fortawesome/free-solid-svg-icons";
 
 class TabsSearchList extends Component {
 

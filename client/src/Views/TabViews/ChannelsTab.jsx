@@ -17,8 +17,6 @@ import '../../scss/App.scss';
 import TabsSearchList from "../../Components/TabsSearchList";
 import TextInput from "../../Components/Inputs/TextInput";
 import ChannelsTable from "../../Components/Layout/ChannelsTable";
-import {faTrash} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import uniqid from "uniqid";
 import _ from "lodash";
 import checkUnique from "../../Helpers/checkUnique";

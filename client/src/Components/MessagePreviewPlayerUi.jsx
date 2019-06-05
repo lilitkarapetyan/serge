@@ -50,7 +50,7 @@ class MessagePreview extends Component {
           {pair[0]}:
         </span>
         <span className="data">
-          <a href={pair[1]} target="_blank">{pair[1]}</a>
+          <a href={pair[1]} target="_blank" rel="noopener noreferrer">{pair[1]}</a>
         </span>
       </Fragment>
     );

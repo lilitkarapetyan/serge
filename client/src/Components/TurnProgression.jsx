@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import '../scss/App.scss';
 import {connect} from "react-redux";
 import GameControls from "../Components/GameControls";
-
+import _ from "lodash";
 import classNames from "classnames";
 import moment from "moment";
 import {faCommentAlt} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { modalAction } from "../ActionsAndReducers/Modal/Modal_ActionCreators";
+import {ADJUDICATION_PHASE, PLANNING_PHASE} from "../api/consts";
 
 class TurnProgression extends Component {
 
@@ -19,7 +20,7 @@ class TurnProgression extends Component {
 
     let seconds = end - now;
 
-    if (seconds > 0) {
+    if (seconds > 0 && this.props.playerUi.phase === PLANNING_PHASE) {
       this.state = {
         minutesLeft: ('0' + Math.floor(seconds / 60)).slice(-2),
         secondsLeft: ('0' + Math.floor(seconds % 60)).slice(-2),
@@ -27,30 +28,28 @@ class TurnProgression extends Component {
       this.interval = setInterval(this.timer, 1000);
     } else {
       this.state = {
-        minutesLeft: '00',
-        secondsLeft: '00',
+        minutesLeft: '--',
+        secondsLeft: '--',
       };
     }
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
 
-    if (this.props.playerUi.currentTurn !== nextProps.playerUi.currentTurn) {
-
-      let now = Math.floor(new Date().getTime() / 1000);
-      let end = Math.floor(nextProps.playerUi.turnEndTime / 1000) % 60;
-
-      let seconds = end - now;
-
-      let minutes = Math.floor(seconds / 60);
-          minutes = minutes < 100 ? ('0' + minutes).slice(-2) : minutes;
-
-      this.setState({
-        minutesLeft: minutes,
-        secondsLeft: ('0' + Math.floor(seconds % 60)).slice(-2),
-      });
-
+    if (
+      nextProps.playerUi.phase === PLANNING_PHASE &&
+      nextProps.playerUi.phase !== this.props.playerUi.phase
+    ) {
+      this.clearInterval();
       this.interval = setInterval(this.timer, 1000);
+    }
+
+    if (nextProps.playerUi.phase === ADJUDICATION_PHASE) {
+      this.setState({
+        minutesLeft: '--',
+        secondsLeft: '--',
+      });
+      this.clearInterval();
     }
   }
 
@@ -59,7 +58,7 @@ class TurnProgression extends Component {
       this.setState({
         ended: true,
       });
-      this.interval = setInterval(this.timer, 1000);
+      _.debounce(() => this.interval = setInterval(this.timer, 1000));
     }
   }
 
@@ -102,6 +101,7 @@ class TurnProgression extends Component {
 
 
   render() {
+
     return (
       <>
         <div className="flex-content wargame-title">
@@ -110,13 +110,13 @@ class TurnProgression extends Component {
         </div>
         <div className="flex-content-wrapper turn-progression-ui">
           <div>
-            <h5>Turn {this.props.playerUi.currentTurn}</h5>
+            <h5>Turn {this.props.playerUi.currentTurn} - {this.props.playerUi.phase} phase</h5>
             <h5>{moment(this.props.playerUi.gameDate).format("DD/MM/YYYY HH:mm")}</h5>
           </div>
           <div>
             <h3 className={classNames({"time-left": true, "ended": this.state.ended, "warning": this.state.warning})}>{this.state.minutesLeft}:{this.state.secondsLeft}</h3>
             <h6>Time left</h6>
-            {this.props.playerUi.controlUi ? <GameControls clearInterval={this.clearInterval} /> : false}
+            {this.props.playerUi.controlUi ? <GameControls /> : false}
           </div>
         </div>
       </>

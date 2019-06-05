@@ -90,20 +90,26 @@ class AddRoleModal extends Component {
           {this.state.samePassword && <p className="notification">Password already exists</p>}
           {this.state.rolePassword.length > 30 && <p className="notification">Password limit is 30 chars.</p>}
 
-          <TextInput
-            className="material-input"
-            label="Name"
-            updateStore={this.setNewRoleName}
-            data={this.state.roleName || ""}
-            options={{numInput: false}}
-          />
-          <TextInput
-            className="material-input"
-            label="Password"
-            updateStore={this.setNewRolePassword}
-            data={this.state.rolePassword || ""}
-            options={{numInput: false}}
-          />
+          <div className="flex-content-wrapper flex-content-wrapper--column">
+            <div className="flex-content">
+              <TextInput
+                className="material-input"
+                label="Name"
+                updateStore={this.setNewRoleName}
+                data={this.state.roleName || ""}
+                options={{numInput: false}}
+              />
+            </div>
+            <div className="flex-content">
+              <TextInput
+                className="material-input"
+                label="Password"
+                updateStore={this.setNewRolePassword}
+                data={this.state.rolePassword || ""}
+                options={{numInput: false}}
+              />
+            </div>
+          </div>
           <div className="buttons">
             <button disabled={disable} name="add" className="btn btn-action btn-action--primary" onClick={this.addRole}>Add</button>
             <button name="cancel" className="btn btn-action btn-action--secondary" onClick={this.hideModal}>Cancel</button>

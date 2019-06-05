@@ -10,7 +10,9 @@ import {  databasePath,
   serverPath,
   dbDefaultSettings,
   MSG_STORE,
-  MSG_TYPE_STORE
+  MSG_TYPE_STORE,
+  PLANNING_PHASE,
+  ADJUDICATION_PHASE,
 } from "./consts";
 
 import {
@@ -207,6 +209,7 @@ export const updateWargameTitle = (dbName, title) => {
               wargameTitle: title,
               data: res.data,
               gameTurn: res.gameTurn,
+              phase: res.phase,
               gameDate: res.gameDate,
               gameTurnTime: res.gameTurnTime,
               realtimeTurnTime: res.realtimeTurnTime,
@@ -232,9 +235,7 @@ export const saveSettings = (dbName, data) => {
 
   let db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
 
-  return new Promise((resolve, reject) => {
-
-    getWargameLocalFromName(dbName)
+  return getLatestWargameRevision(dbName)
       .then(function (localDoc) {
         let newDoc = deepCopy(localDoc);
         newDoc.data.overview = data;
@@ -242,28 +243,26 @@ export const saveSettings = (dbName, data) => {
         return newDoc;
       })
       .then((res) => {
-        return db.put({
-          _id: res._id,
-          _rev: res._rev,
-          name: res.name,
-          wargameTitle: res.wargameTitle,
-          data: res.data,
-          gameTurn: res.gameTurn,
-          gameDate: data.startTime,
-          gameTurnTime: data.gameTurnTime,
-          realtimeTurnTime: data.realtimeTurnTime,
-          timeWarning: data.timeWarning,
-          turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
-          wargameInitiated: res.wargameInitiated,
-        })
+        if (res.wargameInitiated) {
+          return createLatestWargameRevision(dbName, res);
+        } else {
+          return db.put({
+            ...res,
+            _id: dbDefaultSettings._id,
+            gameDate: data.startTime,
+            gameTurnTime: data.gameTurnTime,
+            realtimeTurnTime: data.realtimeTurnTime,
+            timeWarning: data.timeWarning,
+            turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
+          });
+        }
       })
       .then(() => {
-        resolve(db.get(dbDefaultSettings._id));
+        return db.get(dbDefaultSettings._id);
       })
       .catch((err) => {
-        reject(err);
-      })
-  });
+        console.log(err);
+      });
 };
 
 export const saveForce = (dbName, newName, newData, oldName) => {
@@ -317,6 +316,7 @@ export const saveForce = (dbName, newName, newData, oldName) => {
                 wargameTitle: res.wargameTitle,
                 data: updatedData,
                 gameTurn: res.gameTurn,
+                phase: res.phase,
                 gameDate: res.gameDate,
                 gameTurnTime: res.gameTurnTime,
                 realtimeTurnTime: res.realtimeTurnTime,
@@ -383,6 +383,7 @@ export const saveChannel = (dbName, newName, newData, oldName) => {
                 wargameTitle: res.wargameTitle,
                 data: updatedData,
                 gameTurn: res.gameTurn,
+                phase: res.phase,
                 gameDate: res.gameDate,
                 gameTurnTime: res.gameTurnTime,
                 realtimeTurnTime: res.realtimeTurnTime,
@@ -448,6 +449,7 @@ export const duplicateChannel = (dbName, channelUniqid) => {
                 wargameTitle: res.wargameTitle,
                 data: updatedData,
                 gameTurn: res.gameTurn,
+                phase: res.phase,
                 gameDate: res.gameDate,
                 gameTurnTime: res.gameTurnTime,
                 realtimeTurnTime: res.realtimeTurnTime,
@@ -506,6 +508,7 @@ export const deleteChannel = (dbName, channelUniqid) => {
                 wargameTitle: res.wargameTitle,
                 data: updatedData,
                 gameTurn: res.gameTurn,
+                phase: res.phase,
                 gameDate: res.gameDate,
                 gameTurnTime: res.gameTurnTime,
                 realtimeTurnTime: res.realtimeTurnTime,
@@ -564,6 +567,7 @@ export const deleteForce = (dbName, forceName) => {
                 wargameTitle: res.wargameTitle,
                 data: updatedData,
                 gameTurn: res.gameTurn,
+                phase: res.phase,
                 gameDate: res.gameDate,
                 gameTurnTime: res.gameTurnTime,
                 realtimeTurnTime: res.realtimeTurnTime,
@@ -608,6 +612,7 @@ export const duplicateWargame = (dbPath) => {
           wargameTitle: `${res.wargameTitle}-${uniqId}`,
           data: res.data,
           gameTurn: res.gameTurn,
+          phase: res.phase,
           gameDate: res.gameDate,
           gameTurnTime: res.gameTurnTime,
           realtimeTurnTime: res.realtimeTurnTime,
@@ -656,8 +661,6 @@ export const getWargame = (gamePath) => {
 
     let wargame = await getLatestWargameRevision(name);
 
-    console.log(wargame);
-
     return wargame;
 
   })();
@@ -679,6 +682,7 @@ export const initiateGame = (dbName) => {
               wargameTitle: res.wargameTitle,
               data: res.data,
               gameTurn: res.gameTurn,
+              phase: PLANNING_PHASE,
               gameDate: res.gameDate,
               gameTurnTime: res.gameTurnTime,
               realtimeTurnTime: res.realtimeTurnTime,
@@ -698,6 +702,7 @@ export const initiateGame = (dbName) => {
               wargameTitle: res.wargameTitle,
               data: res.data,
               gameTurn: res.gameTurn,
+              phase: res.phase,
               gameDate: res.gameDate,
               gameTurnTime: res.gameTurnTime,
               realtimeTurnTime: res.realtimeTurnTime,
@@ -762,9 +767,23 @@ export const nextGameTurn = (dbName) => {
   return new Promise((resolve, reject) => {
     getLatestWargameRevision(dbName)
       .then((res) => {
-        res.gameTurn += 1;
-        res.gameDate = moment(res.gameDate).add(res.gameTurnTime, 'ms').format("YYYY-MM-DDTHH:mm");
-        res.turnEndTime = moment().add(res.realtimeTurnTime, 'ms').format();
+
+        let phase = res.phase;
+
+        switch (phase) {
+          case PLANNING_PHASE:
+            res.phase = ADJUDICATION_PHASE;
+            res.turnEndTime = 0;
+            break;
+          case ADJUDICATION_PHASE:
+            res.phase = PLANNING_PHASE;
+            res.gameTurn += 1;
+            res.gameDate = moment(res.gameDate).add(res.gameTurnTime, 'ms').format("YYYY-MM-DDTHH:mm");
+            res.turnEndTime = moment().add(res.realtimeTurnTime, 'ms').format();
+            break;
+          default:
+            break;
+        }
         return createLatestWargameRevision(dbName, res);
       })
       .then((res) => {

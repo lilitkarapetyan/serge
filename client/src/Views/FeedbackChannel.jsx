@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-
 import {
   getAllWargameFeedback,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
-
-import MessagesListChatChannel from "./MessagesListChatChannel";
-
-import {CHAT_CHANNEL_ID} from "../api/consts";
 import '../scss/App.scss';
-import MessagesListRenderProp from "./MessagesListRenderProp";
-
 
 class GameAdmin extends Component {
 

@@ -10,6 +10,7 @@ const initialState = {
   selectedRole: '',
   controlUi: false,
   currentTurn: 1,
+  phase: '',
   gameDate: '',
   gameTurnTime: 0,
   realtimeTurnTime: 0,
@@ -42,6 +43,7 @@ export const playerUiReducer = (state = initialState, action) => {
       newState.wargameTitle = action.payload.wargameTitle;
       newState.wargameInitiated = action.payload.wargameInitiated;
       newState.currentTurn = action.payload.gameTurn;
+      newState.phase = action.payload.phase;
       newState.gameDate = action.payload.gameDate;
       newState.gameTurnTime = action.payload.gameTurnTime;
       newState.realtimeTurnTime = action.payload.realtimeTurnTime;
