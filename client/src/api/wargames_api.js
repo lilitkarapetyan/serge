@@ -100,16 +100,16 @@ export const deleteWargame = (wargamePath) => {
   const name = getNameFromPath(wargamePath);
 
   let wargame = wargameDbStore.find((item) => item.name === name);
-      wargame.db.destroy();
-        // .then(() => {
-        //   return fetch(serverPath+'deleteDb?db='+name);
-        // })
-        // .then((res) => {
-        //   console.log(res);
-        // })
-        // .catch((err) => {
-        //   console.log(err);
-        // });
+  wargame.db.destroy();
+  // .then(() => {
+  //   return fetch(serverPath+'deleteDb?db='+name);
+  // })
+  // .then((res) => {
+  //   console.log(res);
+  // })
+  // .catch((err) => {
+  //   console.log(err);
+  // });
 
 
   const index = wargameDbStore.findIndex((item) => item.name === name);
@@ -201,11 +201,19 @@ export const updateWargameTitle = (dbName, title) => {
         db.get(dbDefaultSettings._id)
           .then((res) => {
             db.put({
-              ...res,
               _id: dbDefaultSettings._id,
+              _rev: res._rev,
               name: dbName,
               wargameTitle: title,
+              data: res.data,
+              gameTurn: res.gameTurn,
+              phase: res.phase,
+              gameDate: res.gameDate,
+              gameTurnTime: res.gameTurnTime,
+              realtimeTurnTime: res.realtimeTurnTime,
+              timeWarning: res.timeWarning,
               turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
+              wargameInitiated: res.wargameInitiated,
             })
               .then(() => {
                 resolve(db.get(dbDefaultSettings._id));
@@ -302,10 +310,19 @@ export const saveForce = (dbName, newName, newData, oldName) => {
               resolve(createLatestWargameRevision(dbName, data));
             } else {
               db.put({
-                ...res,
                 _id: dbDefaultSettings._id,
+                _rev: res._rev,
+                name: res.name,
+                wargameTitle: res.wargameTitle,
                 data: updatedData,
+                gameTurn: res.gameTurn,
+                phase: res.phase,
+                gameDate: res.gameDate,
+                gameTurnTime: res.gameTurnTime,
+                realtimeTurnTime: res.realtimeTurnTime,
+                timeWarning: res.timeWarning,
                 turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
+                wargameInitiated: res.wargameInitiated,
               })
                 .then(() => {
                   resolve(db.get(dbDefaultSettings._id));
@@ -360,10 +377,19 @@ export const saveChannel = (dbName, newName, newData, oldName) => {
                 })
             } else {
               db.put({
-                ...res,
                 _id: dbDefaultSettings._id,
+                _rev: res._rev,
+                name: res.name,
+                wargameTitle: res.wargameTitle,
                 data: updatedData,
+                gameTurn: res.gameTurn,
+                phase: res.phase,
+                gameDate: res.gameDate,
+                gameTurnTime: res.gameTurnTime,
+                realtimeTurnTime: res.realtimeTurnTime,
+                timeWarning: res.timeWarning,
                 turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
+                wargameInitiated: res.wargameInitiated,
               })
                 .then(() => {
                   resolve(db.get(dbDefaultSettings._id));
@@ -417,10 +443,19 @@ export const duplicateChannel = (dbName, channelUniqid) => {
                 })
             } else {
               db.put({
-                ...res,
                 _id: dbDefaultSettings._id,
+                _rev: res._rev,
+                name: res.name,
+                wargameTitle: res.wargameTitle,
                 data: updatedData,
+                gameTurn: res.gameTurn,
+                phase: res.phase,
+                gameDate: res.gameDate,
+                gameTurnTime: res.gameTurnTime,
+                realtimeTurnTime: res.realtimeTurnTime,
+                timeWarning: res.timeWarning,
                 turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
+                wargameInitiated: res.wargameInitiated,
               })
                 .then(() => {
                   resolve(db.get(dbDefaultSettings._id));
@@ -467,10 +502,19 @@ export const deleteChannel = (dbName, channelUniqid) => {
                 })
             } else {
               db.put({
-                ...res,
                 _id: dbDefaultSettings._id,
+                _rev: res._rev,
+                name: res.name,
+                wargameTitle: res.wargameTitle,
                 data: updatedData,
+                gameTurn: res.gameTurn,
+                phase: res.phase,
+                gameDate: res.gameDate,
+                gameTurnTime: res.gameTurnTime,
+                realtimeTurnTime: res.realtimeTurnTime,
+                timeWarning: res.timeWarning,
                 turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
+                wargameInitiated: res.wargameInitiated,
               })
                 .then(() => {
                   resolve(db.get(dbDefaultSettings._id));
@@ -517,10 +561,19 @@ export const deleteForce = (dbName, forceName) => {
                 })
             } else {
               db.put({
-                ...res,
                 _id: dbDefaultSettings._id,
+                _rev: res._rev,
+                name: res.name,
+                wargameTitle: res.wargameTitle,
                 data: updatedData,
+                gameTurn: res.gameTurn,
+                phase: res.phase,
+                gameDate: res.gameDate,
+                gameTurnTime: res.gameTurnTime,
+                realtimeTurnTime: res.realtimeTurnTime,
+                timeWarning: res.timeWarning,
                 turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
+                wargameInitiated: res.wargameInitiated,
               })
                 .then(() => {
                   resolve(db.get(dbDefaultSettings._id));
@@ -554,15 +607,22 @@ export const duplicateWargame = (dbPath) => {
       })
       .then((res) => {
         return newDb.put({
-        ...res,
-        _id: dbDefaultSettings._id,
-        name: newDbName,
-        wargameTitle: `${res.wargameTitle}-${uniqId}`,
-        turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
-      })
-      .then(() => {
-        return res;
-      })
+          _id: dbDefaultSettings._id,
+          name: newDbName,
+          wargameTitle: `${res.wargameTitle}-${uniqId}`,
+          data: res.data,
+          gameTurn: res.gameTurn,
+          phase: res.phase,
+          gameDate: res.gameDate,
+          gameTurnTime: res.gameTurnTime,
+          realtimeTurnTime: res.realtimeTurnTime,
+          timeWarning: res.timeWarning,
+          turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
+          wargameInitiated: res.wargameInitiated,
+        })
+          .then(() => {
+            return res;
+          })
       })
       .then(() => {
         wargameDbStore.unshift({name: newDbName, db: newDb});
@@ -612,38 +672,55 @@ export const initiateGame = (dbName) => {
 
   return new Promise((resolve, reject) => {
 
-        return game.db.get(dbDefaultSettings._id)
+    return game.db.get(dbDefaultSettings._id)
 
-          .then((res) => {
-            return game.db.put({
-              ...res,
-              _id: dbDefaultSettings._id,
-              phase: PLANNING_PHASE,
-              turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
-              wargameInitiated: true,
-            })
-          })
-          .then(() => {
-            return game.db.get(dbDefaultSettings._id)
-          })
-          .then((res) => {
-            return game.db.put({
-              ...res,
-              _id: new Date().toISOString(),
-              infoType: true,
-              turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
-            })
-          })
-          .then(() => {
-            return game.db.get(dbDefaultSettings._id)
-          })
-          .then((res) => {
-            resolve(res);
-          })
-          .catch((err) => {
-            console.log(err);
-            reject(err);
-          })
+      .then((res) => {
+        return game.db.put({
+          _id: dbDefaultSettings._id,
+          _rev: res._rev,
+          name: res.name,
+          wargameTitle: res.wargameTitle,
+          data: res.data,
+          gameTurn: res.gameTurn,
+          phase: PLANNING_PHASE,
+          gameDate: res.gameDate,
+          gameTurnTime: res.gameTurnTime,
+          realtimeTurnTime: res.realtimeTurnTime,
+          timeWarning: res.timeWarning,
+          turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
+          wargameInitiated: true,
+        })
+      })
+      .then(() => {
+        return game.db.get(dbDefaultSettings._id)
+      })
+      .then((res) => {
+        return game.db.put({
+          _id: new Date().toISOString(),
+          infoType: true,
+          name: res.name,
+          wargameTitle: res.wargameTitle,
+          data: res.data,
+          gameTurn: res.gameTurn,
+          phase: res.phase,
+          gameDate: res.gameDate,
+          gameTurnTime: res.gameTurnTime,
+          realtimeTurnTime: res.realtimeTurnTime,
+          timeWarning: res.timeWarning,
+          turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
+          wargameInitiated: res.wargameInitiated,
+        })
+      })
+      .then(() => {
+        return game.db.get(dbDefaultSettings._id)
+      })
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
+      })
   })
 };
 
