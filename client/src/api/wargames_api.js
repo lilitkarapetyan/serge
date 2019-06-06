@@ -228,33 +228,35 @@ export const saveSettings = (dbName, data) => {
   let db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
 
   return getLatestWargameRevision(dbName)
-      .then(function (localDoc) {
-        let newDoc = deepCopy(localDoc);
-        newDoc.data.overview = data;
-        newDoc.data.overview.complete = calcComplete(data);
-        return newDoc;
-      })
-      .then((res) => {
-        if (res.wargameInitiated) {
-          return createLatestWargameRevision(dbName, res);
+    .then(function (localDoc) {
+      let newDoc = deepCopy(localDoc);
+      newDoc.data.overview = data;
+      newDoc.data.overview.complete = calcComplete(data);
+
+      return new Promise((resolve, reject) => {
+        if (newDoc.wargameInitiated) {
+          resolve(createLatestWargameRevision(dbName, newDoc));
         } else {
           return db.put({
-            ...res,
-            _id: dbDefaultSettings._id,
+            _id: newDoc._id,
+            _rev: newDoc._rev,
+            name: newDoc.name,
+            wargameTitle: newDoc.wargameTitle,
+            data: newDoc.data,
+            gameTurn: newDoc.gameTurn,
             gameDate: data.startTime,
             gameTurnTime: data.gameTurnTime,
             realtimeTurnTime: data.realtimeTurnTime,
             timeWarning: data.timeWarning,
-            turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
-          });
+            turnEndTime: moment().add(data.realtimeTurnTime, 'ms').format(),
+            wargameInitiated: newDoc.wargameInitiated,
+          })
+            .then(() => {
+              resolve(db.get(dbDefaultSettings._id));
+            })
         }
-      })
-      .then(() => {
-        return db.get(dbDefaultSettings._id);
-      })
-      .catch((err) => {
-        console.log(err);
       });
+    });
 };
 
 export const saveForce = (dbName, newName, newData, oldName) => {
