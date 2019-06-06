@@ -33,14 +33,14 @@ const changesListener = (db, name, dispatch) => {
   db.changes({since: 'now', live: true, timeout: false, heartbeat: false})
     .on('change', function () {
       (async () => {
-        let messages = await getAllMessages(name);
-        let latestWargame = messages.find((message) => message.infoType);
-        let messageTemplates = await messageTemplatesApi.getAllMessagesFromDb();
-        let transformedWargame = transformTemplates(latestWargame, messageTemplates);
+        const messages = await getAllMessages(name);
+        const latestWargame = messages.find((message) => message.infoType);
+        const messageTemplates = await messageTemplatesApi.getAllMessagesFromDb();
+        const transformedWargame = transformTemplates(latestWargame, messageTemplates);
         dispatch(setCurrentWargame(transformedWargame));
-        let wargameMessages = messages.filter((message) => !message.hasOwnProperty('feedback'));
+        const wargameMessages = messages.filter((message) => !message.hasOwnProperty('feedback'));
         dispatch(setWargameMessages(wargameMessages));
-        let feedbackMessages = messages.filter((message) => message.hasOwnProperty('feedback'));
+        const feedbackMessages = messages.filter((message) => message.hasOwnProperty('feedback'));
         dispatch(setWargameFeedback(feedbackMessages));
       })();
     })
@@ -56,12 +56,12 @@ export const populateWargame = (dispatch) => {
       return response.json();
     })
     .then((dbs) => {
-      let wargameNames = wargameDbStore.map((db) => db.name);
+      const wargameNames = wargameDbStore.map((db) => db.name);
       let toCreate = _.difference(dbs, wargameNames);
       toCreate = _.pull(toCreate, MSG_STORE, MSG_TYPE_STORE, "_replicator", "_users");
 
       toCreate.forEach((name) => {
-        var db = new PouchDB(databasePath+name);
+        const db = new PouchDB(databasePath+name);
         db.setMaxListeners(15);
 
         changesListener(db, name, dispatch);
@@ -69,7 +69,7 @@ export const populateWargame = (dispatch) => {
         wargameDbStore.unshift({name, db});
       });
 
-      let promises = wargameDbStore.map((game) => {
+      const promises = wargameDbStore.map((game) => {
         return game.db.get(dbDefaultSettings._id)
           .then(function (res) {
             return {
@@ -97,7 +97,7 @@ export const clearWargames = () => {
 
 export const deleteWargame = (wargamePath) => {
 
-  let name = getNameFromPath(wargamePath);
+  const name = getNameFromPath(wargamePath);
 
   let wargame = wargameDbStore.find((item) => item.name === name);
       wargame.db.destroy();
@@ -112,27 +112,25 @@ export const deleteWargame = (wargamePath) => {
         // });
 
 
-  let index = wargameDbStore.findIndex((item) => item.name === name);
+  const index = wargameDbStore.findIndex((item) => item.name === name);
   wargameDbStore.splice(index, 1);
 };
 
 export const createWargame = (dispatch) => {
-  let uniqId = uniqid.time();
+  const uniqId = uniqid.time();
 
-  var name = `wargame-${uniqId}`;
+  const name = `wargame-${uniqId}`;
 
   return new Promise((resolve, reject) => {
 
-    let db = new PouchDB(databasePath+name);
+    const db = new PouchDB(databasePath+name);
 
     db.setMaxListeners(15);
     changesListener(db, name, dispatch);
 
     wargameDbStore.unshift({name, db});
 
-    let settings = {...dbDefaultSettings, name: name};
-
-    settings.wargameTitle = name;
+    const settings = {...dbDefaultSettings, name: name, wargameTitle: name};
 
     db.put(settings)
       .then(() => {
@@ -151,7 +149,7 @@ export const createWargame = (dispatch) => {
 export const checkIfWargameStarted = (dbName) => {
   return getAllMessages(dbName)
     .then((messages) => {
-      let latestWargame = messages.find((message) => message.infoType);
+      const latestWargame = messages.find((message) => message.infoType);
       if (latestWargame) return true;
       return false;
     })
@@ -160,7 +158,7 @@ export const checkIfWargameStarted = (dbName) => {
 export const getLatestWargameRevision = (dbName) => {
   return getAllMessages(dbName)
     .then((messages) => {
-      let latestWargame = messages.find((message) => message.infoType);
+      const latestWargame = messages.find((message) => message.infoType);
       if (latestWargame) return latestWargame;
       return getWargameLocalFromName(dbName);
     })
@@ -196,7 +194,7 @@ export const updateWargameTitle = (dbName, title) => {
     .then(function (games) {
       if (games.some((game) => game.title === title && getNameFromPath(game.name) !== dbName)) return 'Name already in use.';
 
-      var db = wargameDbStore.find((db) => db.name === dbName).db;
+      const db = wargameDbStore.find((db) => db.name === dbName).db;
 
       return new Promise((resolve, reject) => {
 
@@ -225,7 +223,7 @@ export const updateWargameTitle = (dbName, title) => {
 
 export const saveSettings = (dbName, data) => {
 
-  let db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
+  const db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
 
   return getLatestWargameRevision(dbName)
     .then(function (localDoc) {
@@ -261,7 +259,7 @@ export const saveSettings = (dbName, data) => {
 
 export const saveForce = (dbName, newName, newData, oldName) => {
 
-  let db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
+  const db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
 
   return getLatestWargameRevision(dbName)
     .then(function (localDoc) {
@@ -325,7 +323,7 @@ export const saveForce = (dbName, newName, newData, oldName) => {
 
 export const saveChannel = (dbName, newName, newData, oldName) => {
 
-  let db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
+  const db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
 
   return getLatestWargameRevision(dbName)
     .then(function (localDoc) {
@@ -381,7 +379,7 @@ export const saveChannel = (dbName, newName, newData, oldName) => {
 
 export const duplicateChannel = (dbName, channelUniqid) => {
 
-  let db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
+  const db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
 
   return getLatestWargameRevision(dbName)
     .then(function (localDoc) {
@@ -438,7 +436,7 @@ export const duplicateChannel = (dbName, channelUniqid) => {
 
 export const deleteChannel = (dbName, channelUniqid) => {
 
-  let db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
+  const db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
   //
   return getLatestWargameRevision(dbName)
     .then(function (localDoc) {
@@ -488,7 +486,7 @@ export const deleteChannel = (dbName, channelUniqid) => {
 
 export const deleteForce = (dbName, forceName) => {
 
-  let db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
+  const db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
   //
   return getLatestWargameRevision(dbName)
     .then(function (localDoc) {
@@ -539,10 +537,10 @@ export const deleteForce = (dbName, forceName) => {
 
 export const duplicateWargame = (dbPath) => {
 
-  let dbName = getNameFromPath(dbPath);
+  const dbName = getNameFromPath(dbPath);
 
-  let db = wargameDbStore.find((db) => db.name === dbName).db;
-  let uniqId = uniqid.time();
+  const db = wargameDbStore.find((db) => db.name === dbName).db;
+  const uniqId = uniqid.time();
 
   return new Promise((resolve, reject) => {
 
@@ -582,7 +580,7 @@ export const duplicateWargame = (dbPath) => {
 
 export const getWargameLocalFromName = (dbName) => {
 
-  let game = wargameDbStore.find((wargame) => dbName === wargame.name);
+  const game = wargameDbStore.find((wargame) => dbName === wargame.name);
 
   return new Promise((resolve, reject) => {
     game.db.get(dbDefaultSettings._id)
@@ -599,9 +597,9 @@ export const getWargame = (gamePath) => {
 
   return (async () => {
 
-    let name = getNameFromPath(gamePath);
+    const name = getNameFromPath(gamePath);
 
-    let wargame = await getLatestWargameRevision(name);
+    const wargame = await getLatestWargameRevision(name);
 
     return wargame;
 
@@ -610,7 +608,7 @@ export const getWargame = (gamePath) => {
 
 export const initiateGame = (dbName) => {
 
-  let game = wargameDbStore.find((wargame) => dbName === wargame.name);
+  const game = wargameDbStore.find((wargame) => dbName === wargame.name);
 
   return new Promise((resolve, reject) => {
 
@@ -655,7 +653,7 @@ export const createLatestWargameRevision = (dbName, wargameData) => {
   delete copiedData._id;
   delete copiedData._rev;
 
-  let game = wargameDbStore.find((wargame) => dbName === wargame.name);
+  const game = wargameDbStore.find((wargame) => dbName === wargame.name);
 
   return new Promise((resolve, reject) => {
     game.db.put({
@@ -723,7 +721,7 @@ export const nextGameTurn = (dbName) => {
 
 export const postFeedback = (dbName, playerInfo, message) => {
 
-  let db = wargameDbStore.find((db) => db.name === dbName).db;
+  const db = wargameDbStore.find((db) => db.name === dbName).db;
 
   return new Promise((resolve, reject) => {
     db.put({
@@ -744,7 +742,7 @@ export const postFeedback = (dbName, playerInfo, message) => {
 
 export const postNewMessage = (dbName, details, message) => {
 
-  let db = wargameDbStore.find((db) => db.name === dbName).db;
+  const db = wargameDbStore.find((db) => db.name === dbName).db;
 
   return new Promise((resolve, reject) => {
 
@@ -765,7 +763,7 @@ export const postNewMessage = (dbName, details, message) => {
 
 export const getAllMessages = (dbName) => {
 
-  let db = wargameDbStore.find((db) => db.name === dbName).db;
+  const db = wargameDbStore.find((db) => db.name === dbName).db;
 
   return new Promise((resolve, reject) => {
 
@@ -780,9 +778,9 @@ export const getAllMessages = (dbName) => {
 };
 
 
-export var getAllWargames = function () {
+export const getAllWargames = function () {
 
-  let promises = wargameDbStore.map((game) => {
+  const promises = wargameDbStore.map((game) => {
     return game.db.get(dbDefaultSettings._id)
       .then(function (res) {
         return {
@@ -797,7 +795,7 @@ export var getAllWargames = function () {
   return Promise.all(promises);
 };
 
-var getNameFromPath = function (dbPath) {
+const getNameFromPath = function (dbPath) {
   let path = new URL(dbPath).pathname;
   let index = path.lastIndexOf('/');
   return path.substring(index + 1);
