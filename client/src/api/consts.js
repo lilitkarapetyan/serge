@@ -3,13 +3,14 @@ import defaultIcon from "../icons/default";
 import uniqId from "uniqid";
 
 
-export const serverPath = 'https://serge-dev.herokuapp.com/';
-// export const serverPath = 'http://localhost:8080/';
+// export const serverPath = 'https://serge-dev.herokuapp.com/';
+export const serverPath = 'http://localhost:8080/';
 export const databasePath = `${serverPath}db/`;
 
 export const MSG_STORE = "messages";
 export const MSG_TYPE_STORE = "message_types";
 export const CHAT_CHANNEL_ID = "chat-channel";
+export const POLL_TIMEOUT = 250;
 
 export const PLANNING_PHASE = 'planning';
 export const ADJUDICATION_PHASE = 'adjudication';

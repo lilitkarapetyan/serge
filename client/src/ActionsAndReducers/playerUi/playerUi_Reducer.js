@@ -107,6 +107,12 @@ export const playerUiReducer = (state = initialState, action) => {
         let participants = channel.participants.filter((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
         let channelActive = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
 
+        console.log(participants);
+        if (participants.length === 0) {
+          participants = newState.allForces.find((force) => force.uniqid === newState.selectedForce).roles;
+          console.log(participants);
+        }
+
         if (channelActive) {
           channels[channel.uniqid] = {
             name: channel.name,

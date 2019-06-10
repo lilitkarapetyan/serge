@@ -16,6 +16,7 @@ import {
   PLANNING_PHASE,
   ADJUDICATION_PHASE,
   LONG_POLLING,
+  POLL_TIMEOUT,
 } from "./consts";
 
 import {
@@ -56,7 +57,7 @@ const changesListener = ({db, name, dispatch}) => {
     });
   }
   else {
-    shortPoll(listenerActions.bind(this, {name, dispatch}), 250)
+    shortPoll(listenerActions.bind(this, {name, dispatch}), POLL_TIMEOUT)
       .then(changesListener.bind(this, {name, dispatch}))
       .catch((err) => console.log(err));
   }

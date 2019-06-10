@@ -217,24 +217,13 @@ export const deleteMessageFromDb = (id) => {
 };
 
 export const getAllMessagesFromDb = () => {
-
   return new Promise((resolve, reject) => {
-    return db.changes({
-      since: 1,
-      include_docs: true,
-      descending: true,
-    })
-      .then(function (changes) {
-
-        let results = changes.results.map((a) => a.doc);
-        results = results.filter((a) => !a.hasOwnProperty('_deleted') && a.hasOwnProperty('details'));
-
-        resolve(results);
+    db.allDocs({include_docs: true, descending: true})
+      .then((res) => {
+        resolve(res.rows.map((a) => a.doc));
       })
-      .catch(function (err) {
-        // handle errors
+      .catch((err) => {
         reject(err);
-        console.log(err);
       });
   });
 };

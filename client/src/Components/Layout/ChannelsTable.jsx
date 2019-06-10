@@ -166,7 +166,7 @@ class ChannelsTable extends Component {
 
     let rowComplete = this.state.selectedTemplates.length > 0;
 
-    if (!rowComplete) return;
+    // if (!rowComplete) return;
 
     let recipient = {
       force: this.props.wargame.data.forces.forces.find((f) => f.uniqid === this.state.selectedForce.value).name,
@@ -232,7 +232,7 @@ class ChannelsTable extends Component {
                   value={this.state.selectedRoles}
                   options={this.state.roleOptions}
                   onChange={this.setSelectedRole}
-                  isDisabled={!this.state.selectedForce.value}
+                  // isDisabled={!this.state.selectedForce.value}
                   isMulti
                   allowSelectAll={true}
                 />
@@ -242,14 +242,17 @@ class ChannelsTable extends Component {
                   value={this.state.selectedTemplates}
                   options={this.state.templateOptions}
                   onChange={this.setSelectedTemplate}
-                  isDisabled={this.state.selectedRoles.length === 0}
+                  // isDisabled={this.state.selectedRoles.length === 0}
                   isMulti
                   allowSelectAll={true}
                 />
               </td>
               <td>
                 <FontAwesomeIcon icon={faUndoAlt} onClick={this.clearChannelData} />
-                <FontAwesomeIcon icon={faCheck} className={classNames({"btn--disabled": !rowComplete})} onClick={this.addToChannel} />
+                <FontAwesomeIcon
+                  icon={faCheck}
+                  // className={classNames({"btn--disabled": !rowComplete})}
+                  onClick={this.addToChannel} />
               </td>
             </tr>
           </tbody>
