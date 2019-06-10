@@ -27,7 +27,6 @@ class ChannelTabsContainer extends Component {
 
   constructor(props) {
     super(props);
-    // this.model = FlexLayout.Model.fromJson(json);
 
     this.state = {
       model: FlexLayout.Model.fromJson(json),

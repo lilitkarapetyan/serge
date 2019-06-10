@@ -54,7 +54,7 @@ class LessonsModal extends Component {
       <ModalWrapper>
         <div className="display-text-wrapper lessons-modal">
           <div className="title">
-            <FontAwesomeIcon icon={faCommentAlt} size="2x"/><h3>Feedback</h3>
+            <FontAwesomeIcon icon={faCommentAlt} size="2x"/><h3>Insights</h3>
           </div>
           <p>Use this form to give private feedback on the game itself.</p>
           <p>Comments are only visible to the Game Controller. No other player has access to the comments you post here.</p>

@@ -6,9 +6,8 @@ import {
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 import ChannelTabsContainer from "./ChannelTabsContainer";
-import GameAdmin from "./GameAdmin";
 import TurnProgression from "../Components/TurnProgression";
-import FeedbackChannel from "./FeedbackChannel";
+import AdminAndInsightsTabsContainer from "./AdminAndInsightsTabsContainer";
 import classNames from "classnames";
 
 class GameChannels extends Component {
@@ -26,13 +25,8 @@ class GameChannels extends Component {
         </div>
         <div className={classNames({"message-feed": true, "out-of-game-feed": true, "umpire-feed": this.props.playerUi.controlUi})}>
           <TurnProgression />
-          <GameAdmin />
+          <AdminAndInsightsTabsContainer />
         </div>
-        {this.props.playerUi.controlUi &&
-          <div className="message-feed feedback-channel">
-            <FeedbackChannel />
-          </div>
-        }
         { this.props.playerUi.showObjective &&
           <div className="force-objectives">
             <h3>Objectives</h3>

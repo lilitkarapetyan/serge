@@ -5,7 +5,7 @@ import {
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 import '../scss/App.scss';
 
-class GameAdmin extends Component {
+class InsightsChannel extends Component {
 
   constructor(props) {
     super(props);
@@ -30,24 +30,19 @@ class GameAdmin extends Component {
   render() {
 
     return (
-      <>
-        <div className="flex-content wargame-title">
-          <h3>Feedback</h3>
-        </div>
-        <div className="message-list">
-          {this.props.playerUi.feedbackMessages.map((message) => {
-            return (
-              <>
-                <h6>{message.playerInfo.force}</h6>
-                <p>{message.playerInfo.role}</p>
-                {message.playerInfo.name && <p>{message.playerInfo.name}</p>}
-                <p>{message.message}</p>
-              </>
-            )
-          })
-          }
-        </div>
-      </>
+      <div className="message-list">
+        {this.props.playerUi.feedbackMessages.map((message) => {
+          return (
+            <>
+              <h6>{message.playerInfo.force}</h6>
+              <p>{message.playerInfo.role}</p>
+              {message.playerInfo.name && <p>{message.playerInfo.name}</p>}
+              <p>{message.message}</p>
+            </>
+          )
+        })
+        }
+      </div>
     );
   }
 }
@@ -56,4 +51,4 @@ const mapStateToProps = ({ playerUi }) => ({
   playerUi,
 });
 
-export default connect(mapStateToProps)(GameAdmin);
+export default connect(mapStateToProps)(InsightsChannel);
