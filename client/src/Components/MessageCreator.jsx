@@ -38,27 +38,37 @@ class JsonCreator extends Component {
 
     this.props.dispatch(saveMessage(this.props.playerUi.currentWargame, messageDetails, this.editor.getValue()));
     this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
+
+    this.editor.destroy();
+    this.editor = null;
+    this.createEditor(this.props.schema);
   };
 
   componentWillReceiveProps(nextProps, nextContext) {
-    if (this.editor) {
+
+    if (
+      this.props.schema &&
+      this.props.schema.title !== nextProps.schema.title
+    ) {
       this.editor.destroy();
       this.editor = null;
     }
 
     if (nextProps.schema && nextProps.schema.type) {
-        if (this.editor) return;
-
-      this.editor = new JSONEditor(this.editorPreviewRef.current, {
-        schema: nextProps.schema,
-        theme: 'bootstrap4',
-        disable_collapse: true,
-        disable_edit_json: true,
-        disable_properties: true,
-      });
+      if (this.editor) return;
+      this.createEditor(nextProps.schema);
     }
   }
 
+  createEditor(schema) {
+    this.editor = new JSONEditor(this.editorPreviewRef.current, {
+      schema: schema,
+      theme: 'bootstrap4',
+      disable_collapse: true,
+      disable_edit_json: true,
+      disable_properties: true,
+    });
+  }
 
   render() {
     return (

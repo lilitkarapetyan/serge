@@ -47,6 +47,12 @@ export const transformTemplates = (wargame, messages) => {
   return wargame;
 };
 
+export const startListening = (dbName) => {
+  return (dispatch) => {
+    wargamesApi.listenForWargameChanges(dbName, dispatch);
+  }
+};
+
 export const getWargame = (gamePath) => {
   return async (dispatch) => {
 

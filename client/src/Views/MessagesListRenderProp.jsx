@@ -18,7 +18,7 @@ class MessagesListRenderProp extends Component {
 
     if (
       this.props.messages.length !== 0 &&
-      messagesInChannel.length !== nextMessagesInChannel.length
+      messagesInChannel.length < nextMessagesInChannel.length
     ) {
 
       let newMessages = nextMessagesInChannel;

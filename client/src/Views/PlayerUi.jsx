@@ -9,20 +9,16 @@ import {
   initiateGame,
   getAllWargameMessages,
   showHideObjectives,
+  startListening,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 import {
   addNotification,
 } from "../ActionsAndReducers/Notification/Notification_ActionCreators";
 
-import ChannelTabsContainer from "./ChannelTabsContainer";
-import GameAdmin from "./GameAdmin";
 import DropdownInput from "../Components/Inputs/DropdownInput";
-import TurnProgression from "../Components/TurnProgression";
 import AwaitingStart from "../Components/AwaitingStart";
-import FeedbackChannel from "./FeedbackChannel";
-
-import classNames from "classnames";
+import GameChannels from "./GameChannels";
 
 class PlayerUi extends Component {
 
@@ -32,7 +28,11 @@ class PlayerUi extends Component {
     this.state = {
       rolePassword: '',
     };
-  }
+  };
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (nextProps.playerUi.selectedForce && nextProps.playerUi.selectedRole) this.props.dispatch(startListening(nextProps.playerUi.currentWargame));
+  };
 
   updateSelectedWargame = (wargamePath) => {
     this.props.dispatch(getWargame(wargamePath));
@@ -131,33 +131,7 @@ class PlayerUi extends Component {
           }
 
           {this.props.playerUi.selectedForce && this.props.playerUi.selectedRole && this.props.playerUi.wargameInitiated &&
-            <div className="flex-content flex-content--row-wrap">
-              <div className="message-feed">
-                <ChannelTabsContainer />
-              </div>
-              <div className={classNames({"message-feed": true, "out-of-game-feed": true, "umpire-feed": this.props.playerUi.controlUi})}>
-                <TurnProgression />
-                <GameAdmin />
-              </div>
-              {this.props.playerUi.controlUi &&
-                <div className="message-feed feedback-channel">
-                  <FeedbackChannel />
-                </div>
-              }
-              { this.props.playerUi.showObjective &&
-                <div className="force-objectives">
-                  <h3>Objectives</h3>
-                  <div className="objective-text">
-                    {this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).overview}
-                  </div>
-
-                  <div className="role-info">
-                    <span className="force-type">{ this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).name }</span>
-                    <img src={this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).icon} alt="" onClick={this.showHideForceObjectives} />
-                  </div>
-                </div>
-              }
-            </div>
+            <GameChannels />
           }
 
           {this.props.playerUi.selectedForce && this.props.playerUi.selectedRole && !this.props.playerUi.wargameInitiated &&

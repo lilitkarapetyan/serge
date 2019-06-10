@@ -4,15 +4,18 @@ import {fetch} from "whatwg-fetch";
 import deepCopy from "../Helpers/copyStateHelper";
 
 import calcComplete from "../Helpers/calcComplete";
+import shortPoll from "../Helpers/shortPoll";
 
 import PouchDB from "pouchdb";
-import {  databasePath,
+import {
+  databasePath,
   serverPath,
   dbDefaultSettings,
   MSG_STORE,
   MSG_TYPE_STORE,
   PLANNING_PHASE,
   ADJUDICATION_PHASE,
+  LONG_POLLING,
 } from "./consts";
 
 import {
@@ -28,27 +31,44 @@ import * as messageTemplatesApi from "./messageTypes_api";
 
 var wargameDbStore = [];
 
+const listenerActions = async ({name, dispatch}) => {
+  const messages = await getAllMessages(name);
+  const latestWargame = await getLatestWargameRevision(name);
+  const messageTemplates = await messageTemplatesApi.getAllMessagesFromDb();
+  const transformedWargame = transformTemplates(latestWargame, messageTemplates);
+  dispatch(setCurrentWargame(transformedWargame));
+  const wargameMessages = messages.filter((message) => !message.hasOwnProperty('feedback'));
+  dispatch(setWargameMessages(wargameMessages));
+  const feedbackMessages = messages.filter((message) => message.hasOwnProperty('feedback'));
+  dispatch(setWargameFeedback(feedbackMessages));
+};
 
-const changesListener = (db, name, dispatch) => {
-  db.changes({since: 'now', live: true, timeout: false, heartbeat: false})
+
+const changesListener = ({db, name, dispatch}) => {
+  if (LONG_POLLING) {
+    db.changes({since: 'now', live: true, timeout: false, heartbeat: false})
     .on('change', function () {
-      (async () => {
-        const messages = await getAllMessages(name);
-        const latestWargame = messages.find((message) => message.infoType);
-        const messageTemplates = await messageTemplatesApi.getAllMessagesFromDb();
-        const transformedWargame = transformTemplates(latestWargame, messageTemplates);
-        dispatch(setCurrentWargame(transformedWargame));
-        const wargameMessages = messages.filter((message) => !message.hasOwnProperty('feedback'));
-        dispatch(setWargameMessages(wargameMessages));
-        const feedbackMessages = messages.filter((message) => message.hasOwnProperty('feedback'));
-        dispatch(setWargameFeedback(feedbackMessages));
-      })();
+      listenerActions({name, dispatch});
     })
     .on('error', function (err) {
       console.log(err);
-      changesListener(db, name, dispatch);
+      changesListener({db, name, dispatch});
     });
+  }
+  else {
+    shortPoll(listenerActions.bind(this, {name, dispatch}), 250)
+      .then(changesListener.bind(this, {name, dispatch}))
+      .catch((err) => console.log(err));
+  }
 };
+
+
+export const listenForWargameChanges = (name, dispatch) => {
+  let wargame = wargameDbStore.find((item) => item.name === name);
+  let db = wargame.db;
+  changesListener({db, name, dispatch});
+};
+
 
 export const populateWargame = (dispatch) => {
   return fetch(serverPath+'allDbs')
@@ -63,8 +83,6 @@ export const populateWargame = (dispatch) => {
       toCreate.forEach((name) => {
         const db = new PouchDB(databasePath+name);
         db.setMaxListeners(15);
-
-        changesListener(db, name, dispatch);
 
         wargameDbStore.unshift({name, db});
       });
@@ -126,7 +144,6 @@ export const createWargame = (dispatch) => {
     const db = new PouchDB(databasePath+name);
 
     db.setMaxListeners(15);
-    changesListener(db, name, dispatch);
 
     wargameDbStore.unshift({name, db});
 

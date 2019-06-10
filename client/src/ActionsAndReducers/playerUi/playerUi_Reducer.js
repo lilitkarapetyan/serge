@@ -24,9 +24,9 @@ const initialState = {
     messages: [],
   },
   channels: {},
-  allChannels: {},
-  forces: {},
-  allForces: {},
+  allChannels: [],
+  allMessages: [],
+  allForces: [],
   showObjective: false,
   wargameInitiated: false,
   feedbackMessages: [],
@@ -74,6 +74,8 @@ export const playerUiReducer = (state = initialState, action) => {
     case ActionConstant.SET_LATEST_MESSAGES:
 
       let channels = {};
+
+      newState.allMessages = action.payload;
 
       let messages = action.payload.map((message) => {
         if (message.hasOwnProperty('infoType')) {
