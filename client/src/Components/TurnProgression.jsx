@@ -102,13 +102,15 @@ class TurnProgression extends Component {
 
   render() {
 
+    let adjunctionPhase = this.props.playerUi.phase === ADJUDICATION_PHASE;
+
     return (
       <>
         <div className="flex-content wargame-title">
           <h3>{this.props.playerUi.wargameTitle}</h3>
           {!this.props.playerUi.controlUi && <FontAwesomeIcon icon={faCommentAlt} size="2x" onClick={this.showLessonsModal} />}
         </div>
-        <div className="flex-content-wrapper turn-progression-ui">
+        <div className={classNames({"flex-content-wrapper": true, "turn-progression-ui": true, "adjunction-phase": adjunctionPhase})}>
           <div>
             <h5>Turn {this.props.playerUi.currentTurn} - {this.props.playerUi.phase} phase</h5>
             <h5>{moment(this.props.playerUi.gameDate).format("DD/MM/YYYY HH:mm")}</h5>

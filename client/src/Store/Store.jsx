@@ -21,6 +21,7 @@ const stopActions = store => next => action => {
     case ActionConstants.SET_CURRENT_WARGAME_PLAYER:
       if (
         action.payload.gameTurn !== store.getState().playerUi.currentTurn ||
+        action.payload.phase !== store.getState().playerUi.phase ||
         action.payload.name !== store.getState().playerUi.currentWargame ||
         action.payload.wargameInitiated !== store.getState().playerUi.wargameInitiated
       ) {
