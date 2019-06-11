@@ -13,6 +13,15 @@ import {
 
 class UmpireMenu extends Component {
 
+  constructor(props) {
+    super(props);
+
+    window.onbeforeunload = function() {
+      return "Please avoid reloading Serge. Are you sure you need to reload?";
+    };
+  }
+
+
   componentWillMount() {
     this.props.dispatch(populateMessageTypesDb());
     this.props.dispatch(populateWargameStore());
