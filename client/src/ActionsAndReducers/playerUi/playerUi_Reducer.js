@@ -117,7 +117,11 @@ export const playerUiReducer = (state = initialState, action) => {
           participants = channel.participants.filter((p) => p.forceUniqid === newState.selectedForce);
         }
 
-        let noTemplates = channel.participants.find((p) => p.forceUniqid === newState.selectedForce).templates.length === 0;
+        let participant = channel.participants.find((p) => p.forceUniqid === newState.selectedForce);
+
+        if (participant === undefined) return;
+
+        let noTemplates = participant.templates.length === 0;
 
         let templates;
         if (noTemplates) {

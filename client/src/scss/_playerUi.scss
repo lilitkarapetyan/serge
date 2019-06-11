@@ -59,6 +59,20 @@
   cursor: pointer;
 }
 
+.wargame-in-progress-warning {
+  position: absolute;
+  width: 200px;
+  top: 50px;
+  left: 50%;
+  margin-left: -100px;
+
+  svg {
+    color: $secondaryColor;
+    width: 100% !important;
+    margin-bottom: 5px;
+  }
+}
+
 .out-of-game-feed {
   background: $lightBg;
   max-width: 25%;

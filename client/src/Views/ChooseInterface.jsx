@@ -17,7 +17,8 @@ class UmpireMenu extends Component {
     super(props);
 
     window.onbeforeunload = function() {
-      return "Please avoid reloading Serge. Are you sure you need to reload?";
+      return;
+      // return "Please avoid reloading Serge. Are you sure you need to reload?";
     };
   }
 
