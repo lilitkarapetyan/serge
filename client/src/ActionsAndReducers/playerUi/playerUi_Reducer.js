@@ -27,6 +27,7 @@ const initialState = {
   allChannels: [],
   allMessages: [],
   allForces: [],
+  allTemplates: [],
   showObjective: false,
   wargameInitiated: false,
   feedbackMessages: [],
@@ -61,6 +62,10 @@ export const playerUiReducer = (state = initialState, action) => {
     case ActionConstant.SET_ROLE:
       newState.selectedRole = action.payload.name;
       newState.controlUi = action.payload.control;
+      break;
+
+    case ActionConstant.SET_ALL_TEMPLATES_PLAYERUI:
+      newState.allTemplates = action.payload;
       break;
 
     case ActionConstant.SHOW_HIDE_OBJECTIVES:
@@ -106,17 +111,25 @@ export const playerUiReducer = (state = initialState, action) => {
 
         let participants = channel.participants.filter((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
         let channelActive = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
+        let allRoles = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.length === 0);
 
-        console.log(participants);
-        if (participants.length === 0) {
-          participants = newState.allForces.find((force) => force.uniqid === newState.selectedForce).roles;
-          console.log(participants);
+        if (participants.length === 0 && allRoles) {
+          participants = channel.participants.filter((p) => p.forceUniqid === newState.selectedForce);
         }
 
-        if (channelActive) {
+        let noTemplates = channel.participants.find((p) => p.forceUniqid === newState.selectedForce).templates.length === 0;
+
+        let templates;
+        if (noTemplates) {
+          templates = newState.allTemplates.filter((template) => template.title === "Chat");
+        } else {
+          templates = _.flatMap(participants, (participant) => participant.templates);
+        }
+
+        if (channelActive || allRoles) {
           channels[channel.uniqid] = {
             name: channel.name,
-            templates: _.flatMap(participants, (participant) => participant.templates),
+            templates,
             forceIcons: channel.participants.filter((participant) => participant.forceUniqid !== newState.selectedForce).map((participant) => participant.icon),
             messages: messages.filter((message) => message.details.channel === channel.uniqid || message.infoType === true),
           };

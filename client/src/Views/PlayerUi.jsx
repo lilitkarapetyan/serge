@@ -10,7 +10,10 @@ import {
   getAllWargameMessages,
   showHideObjectives,
   startListening,
+  setAllTemplates,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
+
+
 
 import {
   addNotification,
@@ -74,6 +77,7 @@ class PlayerUi extends Component {
 
     this.props.dispatch(setForce(force.uniqid));
     this.props.dispatch(setRole(role));
+    this.props.dispatch(setAllTemplates(this.props.messageTypes.messages));
     this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
   };
 
@@ -148,9 +152,10 @@ class PlayerUi extends Component {
   }
 }
 
-const mapStateToProps = ({ playerUi, wargame }) => ({
+const mapStateToProps = ({ playerUi, wargame, messageTypes }) => ({
   playerUi,
   wargame,
+  messageTypes,
 });
 
 export default connect(mapStateToProps)(PlayerUi);

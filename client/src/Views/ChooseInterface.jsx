@@ -6,13 +6,17 @@ import classNames from "classnames";
 
 import '../scss/App.scss';
 import {populateWargameStore} from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
-import {populateMessageTypesDb} from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
+import {
+  getAllMessageTypes,
+  populateMessageTypesDb
+} from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
 
 class UmpireMenu extends Component {
 
   componentWillMount() {
     this.props.dispatch(populateMessageTypesDb());
     this.props.dispatch(populateWargameStore());
+    this.props.dispatch(getAllMessageTypes());
   }
 
   render() {

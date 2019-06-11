@@ -32,6 +32,11 @@ export const setWargameMessages = (messages) => ({
   payload: messages,
 });
 
+export const setAllTemplates = (templates) => ({
+  type: ActionConstant.SET_ALL_TEMPLATES_PLAYERUI,
+  payload: templates,
+});
+
 export const transformTemplates = (wargame, messages) => {
   wargame.data.channels.channels.forEach((channel) => {
     channel.participants.forEach((participant) => {

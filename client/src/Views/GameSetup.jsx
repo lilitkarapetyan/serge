@@ -18,7 +18,6 @@ import checkUnique from "../Helpers/checkUnique";
 
 import classNames from "classnames";
 import TextInput from "../Components/Inputs/TextInput";
-import {getAllMessageTypes} from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
 import {addNotification} from "../ActionsAndReducers/Notification/Notification_ActionCreators";
 
 class GameSetup extends Component {
@@ -29,10 +28,6 @@ class GameSetup extends Component {
     this.state = {
       newWargameName: null,
     };
-  }
-
-  componentWillMount() {
-    this.props.dispatch(getAllMessageTypes());
   }
 
   setCurrentTab = (tab) => {

@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import FlexLayout from "flexlayout-react";
 import GameAdmin from "./GameAdmin";
 import InsightsChannel from "./InsightsChannel";
-import _ from "lodash";
 import "../scss/dependencies/flexlayout-react.scss";
 import '../scss/App.scss';
 

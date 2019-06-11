@@ -20,7 +20,6 @@ import {
 
 import deepCopy from "../../Helpers/copyStateHelper";
 
-import classNames from "classnames";
 import {setTabUnsaved} from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
 class ChannelsTable extends Component {
@@ -88,12 +87,15 @@ class ChannelsTable extends Component {
 
     let data = deepCopy(rowData);
 
-    var row = [];
+    let row = [];
+    let key = 0;
     for (var prop in data) {
 
       if (prop === "subscriptionId") continue;
       if (prop === "forceUniqid") continue;
       if (prop === "icon") continue;
+
+      key++;
 
       var value = '';
       if (typeof data[prop] !== "string") {
@@ -106,7 +108,7 @@ class ChannelsTable extends Component {
       } else {
         value = data[prop];
       }
-      row.push(<td key={`${value}${i}`}>{value}</td>)
+      row.push(<td key={`${value}${key}`}>{value}</td>)
     }
     row.push(
       <td key={`edit-delete${i}`}>
@@ -164,10 +166,6 @@ class ChannelsTable extends Component {
 
   addToChannel = () => {
 
-    let rowComplete = this.state.selectedTemplates.length > 0;
-
-    // if (!rowComplete) return;
-
     let recipient = {
       force: this.props.wargame.data.forces.forces.find((f) => f.uniqid === this.state.selectedForce.value).name,
       forceUniqid: this.props.wargame.data.forces.forces.find((f) => f.uniqid === this.state.selectedForce.value).uniqid,
@@ -195,15 +193,13 @@ class ChannelsTable extends Component {
 
   render() {
 
-    let rowComplete = this.state.selectedTemplates.length > 0;
-
     return (
       <div className="flex-content">
         <table>
           <thead>
             <tr>
               <th>Force</th>
-              <th>Roles</th>
+              <th>Restrict access specific roles</th>
               <th>Templates</th>
             </tr>
           </thead>
