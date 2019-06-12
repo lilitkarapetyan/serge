@@ -6,7 +6,7 @@ import {
   forceTemplate,
   channelTemplate,
   dbDefaultSettings,
-} from "../../api/consts";
+} from "../../consts";
 
 var initialState = {
   isLoading: false,

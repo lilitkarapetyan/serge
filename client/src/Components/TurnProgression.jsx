@@ -8,7 +8,7 @@ import moment from "moment";
 import {faCommentAlt} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { modalAction } from "../ActionsAndReducers/Modal/Modal_ActionCreators";
-import {ADJUDICATION_PHASE, PLANNING_PHASE} from "../api/consts";
+import {ADJUDICATION_PHASE, PLANNING_PHASE} from "../consts";
 
 class TurnProgression extends Component {
 

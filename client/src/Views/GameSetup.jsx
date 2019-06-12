@@ -118,12 +118,12 @@ class GameSetup extends Component {
             <ProgressBar>
               {this.createIndicators()}
             </ProgressBar>
-            {this.props.wargame.wargameInitiated &&
-              <div className="wargame-in-progress-warning">
-                <FontAwesomeIcon icon={faHourglassStart} size="2x" />
-                <h5>Wargame in progress</h5>
-              </div>
-            }
+            {/*{this.props.wargame.wargameInitiated &&*/}
+              {/*<div className="wargame-in-progress-warning">*/}
+                {/*<FontAwesomeIcon icon={faHourglassStart} size="2x" />*/}
+                {/*<h5>Wargame in progress</h5>*/}
+              {/*</div>*/}
+            {/*}*/}
           </div>
           <TabbedView
             tabs={this.props.wargame.data}

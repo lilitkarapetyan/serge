@@ -15,7 +15,7 @@ import RemovableGroupItem from "../../Components/Layout/RemovableGroupItem";
 import TextInput from "../../Components/Inputs/TextInput";
 import uniqid from "uniqid";
 
-import {forceTemplate} from "../../api/consts";
+import {forceTemplate} from "../../consts";
 import _ from "lodash";
 import checkUnique from "../../Helpers/checkUnique";
 import {addNotification} from "../../ActionsAndReducers/Notification/Notification_ActionCreators";

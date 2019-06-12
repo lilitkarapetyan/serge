@@ -1,5 +1,5 @@
-import umpireIcon from "../icons/umpireIcon";
-import defaultIcon from "../icons/default";
+import umpireIcon from "./icons/umpireIcon";
+import defaultIcon from "./icons/default";
 import uniqId from "uniqid";
 
 
@@ -15,7 +15,8 @@ export const POLL_TIMEOUT = 250;
 export const PLANNING_PHASE = 'planning';
 export const ADJUDICATION_PHASE = 'adjudication';
 
-export const LONG_POLLING = false;
+export const MAX_LISTENERS = 82;
+export const LONG_POLLING = true;
 
 export const headers = {
   'Content-Type': 'application/json',

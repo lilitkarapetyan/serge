@@ -18,6 +18,7 @@ import {
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 
+import _ from "lodash";
 import deepCopy from "../../Helpers/copyStateHelper";
 
 import {setTabUnsaved} from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
@@ -166,11 +167,15 @@ class ChannelsTable extends Component {
 
   addToChannel = () => {
 
+    let templateIds = this.state.selectedTemplates.map((template) => ({_id: template.value}));
+    let templates = _.intersectionBy(this.props.messageTypes.messages, templateIds, (item) => item._id);
+    templates = templates.map((template) => ({label: template.title, value: template}));
+
     let recipient = {
       force: this.props.wargame.data.forces.forces.find((f) => f.uniqid === this.state.selectedForce.value).name,
       forceUniqid: this.props.wargame.data.forces.forces.find((f) => f.uniqid === this.state.selectedForce.value).uniqid,
       roles: this.state.selectedRoles,
-      templates: this.state.selectedTemplates,
+      templates,
       icon: this.props.wargame.data.forces.forces.find((f) => f.uniqid === this.state.selectedForce.value).icon,
     };
     this.props.dispatch(setTabUnsaved());
@@ -208,6 +213,7 @@ class ChannelsTable extends Component {
               return data.subscriptionId === this.state.subscriptionToEdit ? <EditSubscriptionRow
                                                                                   key={data.subscriptionId}
                                                                                   data={data}
+                                                                                  messageTypes={this.props.messageTypes}
                                                                                   forceOptions={this.state.forceOptions}
                                                                                   roleOptions={this.state.roleOptions}
                                                                                   templateOptions={this.state.templateOptions}

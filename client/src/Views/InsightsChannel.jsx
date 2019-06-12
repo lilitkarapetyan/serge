@@ -31,14 +31,14 @@ class InsightsChannel extends Component {
 
     return (
       <div className="message-list">
-        {this.props.playerUi.feedbackMessages.map((message) => {
+        {this.props.playerUi.feedbackMessages.map((message, i) => {
           return (
-            <>
+            <React.Fragment key={`feedback${i}`}>
               <h6>{message.playerInfo.force}</h6>
               <p>{message.playerInfo.role}</p>
               {message.playerInfo.name && <p>{message.playerInfo.name}</p>}
               <p>{message.message}</p>
-            </>
+            </React.Fragment>
           )
         })
         }

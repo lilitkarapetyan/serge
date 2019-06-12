@@ -9,7 +9,7 @@ import {
 import MessageCreatorChatChannel from "../Components/MessageCreatorChatChannel";
 import MessagesListChatChannel from "./MessagesListChatChannel";
 
-import {CHAT_CHANNEL_ID} from "../api/consts";
+import {CHAT_CHANNEL_ID} from "../consts";
 import '../scss/App.scss';
 import Collapsible from "react-collapsible";
 import MessagesListRenderProp from "./MessagesListRenderProp";

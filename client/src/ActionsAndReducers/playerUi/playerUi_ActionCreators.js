@@ -37,20 +37,6 @@ export const setAllTemplates = (templates) => ({
   payload: templates,
 });
 
-export const transformTemplates = (wargame, messages) => {
-  wargame.data.channels.channels.forEach((channel) => {
-    channel.participants.forEach((participant) => {
-      let templateSchemas = [];
-      participant.templates.forEach((templateInfo) => {
-        let templateIndex = messages.findIndex((template) => template._id === templateInfo.value);
-        if (templateIndex > -1) templateSchemas.push(messages[templateIndex]);
-        if (templateIndex === -1) throw new Error("Template not found");
-      });
-      participant.templates = templateSchemas;
-    })
-  });
-  return wargame;
-};
 
 export const startListening = (dbName) => {
   return (dispatch) => {
@@ -62,11 +48,8 @@ export const getWargame = (gamePath) => {
   return async (dispatch) => {
 
     let wargame = await wargamesApi.getWargame(gamePath);
-    let messages = await messageTemplatesApi.getAllMessagesFromDb();
 
-    let transformedWargame = transformTemplates(wargame, messages);
-
-    dispatch(setCurrentWargame(transformedWargame));
+    dispatch(setCurrentWargame(wargame));
   }
 };
 
@@ -74,11 +57,8 @@ export const nextGameTurn = (dbName) => {
   return async (dispatch) => {
 
     let wargame = await wargamesApi.nextGameTurn(dbName);
-    let messages = await messageTemplatesApi.getAllMessagesFromDb();
 
-    let transformedWargame = transformTemplates(wargame, messages);
-
-    dispatch(setCurrentWargame(transformedWargame));
+    dispatch(setCurrentWargame(wargame));
   }
 };
 
@@ -87,11 +67,8 @@ export const initiateGame = (dbName) => {
   return async (dispatch) => {
 
     let wargame = await wargamesApi.initiateGame(dbName);
-    let messages = await messageTemplatesApi.getAllMessagesFromDb();
 
-    let transformedWargame = transformTemplates(wargame, messages);
-
-    dispatch(setCurrentWargame(transformedWargame));
+    dispatch(setCurrentWargame(wargame));
   }
 };
 

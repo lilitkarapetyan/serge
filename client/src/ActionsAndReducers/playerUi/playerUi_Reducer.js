@@ -1,7 +1,7 @@
 import ActionConstant from '../ActionConstants';
 import chat from "../../Schemas/chat.json";
 import copyState from "../../Helpers/copyStateHelper";
-import {CHAT_CHANNEL_ID} from "../../api/consts";
+import {CHAT_CHANNEL_ID} from "../../consts";
 import _ from "lodash";
 import uniqId from "uniqid";
 
@@ -127,7 +127,8 @@ export const playerUiReducer = (state = initialState, action) => {
         if (noTemplates) {
           templates = newState.allTemplates.filter((template) => template.title === "Chat");
         } else {
-          templates = _.flatMap(participants, (participant) => participant.templates);
+          // templates = _.flatMap(participants, (participant) => participant.templates);
+          templates = participant.templates.map((template) => template.value);
         }
 
         if (channelActive || allRoles) {

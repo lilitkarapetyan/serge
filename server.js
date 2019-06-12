@@ -1,3 +1,4 @@
+require('events').EventEmitter.defaultMaxListeners = 82;
 const express = require('express');
 const path = require('path');
 const PouchDB = require('pouchdb-core')

@@ -10,7 +10,7 @@ import {
   setTabSaved,
 } from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
-import {channelTemplate} from "../../api/consts";
+import {channelTemplate} from "../../consts";
 
 import '../../scss/App.scss';
 

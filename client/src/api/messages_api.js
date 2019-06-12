@@ -2,7 +2,7 @@ import uniqid from "uniqid";
 
 import PouchDB from "pouchdb";
 import {  databasePath,
-          MSG_STORE} from "./consts";
+          MSG_STORE} from "../consts";
 
 
 var db = new PouchDB(databasePath+MSG_STORE);
