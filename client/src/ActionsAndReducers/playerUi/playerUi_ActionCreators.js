@@ -87,11 +87,6 @@ export const saveMessage = (dbName, details, message) => {
 
     await wargamesApi.postNewMessage(dbName, details, message);
 
-    let messages = await wargamesApi.getAllMessages(dbName);
-
-    messages = messages.filter((message) => !message.hasOwnProperty('feedback'));
-
-    dispatch(setWargameMessages(messages));
   }
 };
 

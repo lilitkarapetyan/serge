@@ -768,7 +768,7 @@ export const nextGameTurn = (dbName) => {
   return new Promise((resolve, reject) => {
     getLatestWargameRevision(dbName)
       .then((res) => {
-
+        console.log('latest got');
         let phase = res.phase;
 
         switch (phase) {

@@ -13,8 +13,6 @@ import {
   setAllTemplates,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
-
-
 import {
   addNotification,
 } from "../ActionsAndReducers/Notification/Notification_ActionCreators";
@@ -33,9 +31,6 @@ class PlayerUi extends Component {
     };
   };
 
-  componentWillReceiveProps(nextProps, nextContext) {
-    if (nextProps.playerUi.selectedForce && nextProps.playerUi.selectedRole) this.props.dispatch(startListening(nextProps.playerUi.currentWargame));
-  };
 
   updateSelectedWargame = (wargamePath) => {
     this.props.dispatch(getWargame(wargamePath));
@@ -79,6 +74,7 @@ class PlayerUi extends Component {
     this.props.dispatch(setRole(role));
     this.props.dispatch(setAllTemplates(this.props.messageTypes.messages));
     this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
+    this.props.dispatch(startListening(this.props.playerUi.currentWargame));
   };
 
   roleOptions() {
