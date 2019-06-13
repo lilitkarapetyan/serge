@@ -9,7 +9,7 @@ import {sendFeedbackMessage} from "../../ActionsAndReducers/playerUi/playerUi_Ac
 import TextArea from "../Inputs/TextArea";
 import TextInput from "../Inputs/TextInput";
 
-class LessonsModal extends Component {
+class InsightsModal extends Component {
 
   constructor(props) {
     super(props);
@@ -92,4 +92,4 @@ const mapStateToProps = ({ playerUi, currentModal }) => ({
   currentModal
 });
 
-export default connect(mapStateToProps)(LessonsModal);
+export default connect(mapStateToProps)(InsightsModal);

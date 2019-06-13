@@ -7,7 +7,7 @@ import DeleteWargameModal from "./DeleteWargameModal";
 import UnsavedForceModal from "./UnsavedForceModal";
 import UnsavedChannelModal from "./UnsavedChannelModal";
 import AddIconModal from "./AddIconModal";
-import LessonsModal from "./LessonsModal";
+import LessonsModal from "./InsightsModal";
 
 class ModalSwitch extends Component {
 
