@@ -36,7 +36,6 @@ class JsonCreator extends Component {
     };
 
     this.props.dispatch(saveMessage(this.props.playerUi.currentWargame, messageDetails, this.editor.getValue()));
-    this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
   };
 
   componentWillReceiveProps(nextProps, nextContext) {

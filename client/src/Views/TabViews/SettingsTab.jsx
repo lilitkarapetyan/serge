@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
-import TextInput from "../../Components/Inputs/TextInput";
-import DropdownInput from "../../Components/Inputs/DropdownInput";
+// import TextInput from "../../Components/Inputs/TextInput";
+// import DropdownInput from "../../Components/Inputs/DropdownInput";
 import TextInputMasked from "../../Components/Inputs/TextInputMasked";
 import millisecondsToDDHHMMSS from "../../Helpers/millisecondsToDDHHMMSS";
 import millisecondsToHHMMSS from "../../Helpers/millisecondsToHHMMSS";
@@ -17,10 +17,6 @@ import Flatpickr from "react-flatpickr";
 import moment from "moment";
 
 class SettingsTab extends Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   updateDescription = (value) => {
     this.props.dispatch(setGameData({gameDescription: value, dirty: true}));
@@ -99,8 +95,8 @@ class SettingsTab extends Component {
 
   render() {
 
-    let spatialRepresentationOptions = [{value: "opt1", option: "opt1"}, {value: "opt2", option: "opt2"}, {value: "opt3", option: "opt3"}]
-    let turnStrategyOptions = [{value: "opt1", option: "opt1"}, {value: "opt2", option: "opt2"}, {value: "opt3", option: "opt3"}]
+    // let spatialRepresentationOptions = [{value: "opt1", option: "opt1"}, {value: "opt2", option: "opt2"}, {value: "opt3", option: "opt3"}]
+    // let turnStrategyOptions = [{value: "opt1", option: "opt1"}, {value: "opt2", option: "opt2"}, {value: "opt3", option: "opt3"}]
 
     return (
       <>

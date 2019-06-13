@@ -106,6 +106,16 @@ export const addIcon = (icon) => ({
   icon,
 });
 
+export const saveIcon = (file) => {
+
+  return async (dispatch) => {
+
+    var iconLocation = await wargamesApi.saveIcon(file);
+
+    dispatch(addIcon(iconLocation.path));
+  }
+};
+
 
 export const populateWargameStore = () => {
   return async (dispatch) => {
@@ -220,12 +230,6 @@ export const saveWargameTitle = (dbName, title) => {
 
     let wargame = await wargamesApi.updateWargameTitle(dbName, title);
 
-    let wargameIsInProgress = await wargamesApi.checkIfWargameStarted(dbName);
-
-    if (wargameIsInProgress) {
-      await wargamesApi.createLatestWargameRevision(dbName, wargame);
-    }
-
     let wargames = await wargamesApi.getAllWargames();
 
     dispatch(saveAllWargameNames(wargames));
@@ -243,12 +247,6 @@ export const saveSettings = (dbName, data) => {
 
     let wargame = await wargamesApi.saveSettings(dbName, data);
 
-    let wargameIsInProgress = await wargamesApi.checkIfWargameStarted(dbName);
-
-    if (wargameIsInProgress) {
-      await wargamesApi.createLatestWargameRevision(dbName, wargame);
-    }
-
     dispatch(setCurrentWargame(wargame));
 
     dispatch(setTabSaved());
@@ -261,14 +259,6 @@ export const saveForce = (dbName, newName, newData, oldName) => {
   return async (dispatch) => {
 
     let wargame = await wargamesApi.saveForce(dbName, newName, newData, oldName);
-
-    let wargameIsInProgress = await wargamesApi.checkIfWargameStarted(dbName);
-
-    if (wargameIsInProgress) {
-      await wargamesApi.createLatestWargameRevision(dbName, wargame);
-    }
-
-    console.log(newData);
 
     dispatch(setCurrentWargame(wargame));
     dispatch(setTabSaved());
@@ -283,12 +273,6 @@ export const saveChannel = (dbName, newName, newData, oldName) => {
 
     let wargame = await wargamesApi.saveChannel(dbName, newName, newData, oldName);
 
-    let wargameIsInProgress = await wargamesApi.checkIfWargameStarted(dbName);
-
-    if (wargameIsInProgress) {
-      await wargamesApi.createLatestWargameRevision(dbName, wargame);
-    }
-
     dispatch(setCurrentWargame(wargame));
     dispatch(setSelectedChannel({name: newName, uniqid: newData.uniqid}));
 
@@ -301,15 +285,19 @@ export const deleteSelectedChannel = (dbName, channel) => {
 
     let wargame = await wargamesApi.deleteChannel(dbName, channel);
 
-    let wargameIsInProgress = await wargamesApi.checkIfWargameStarted(dbName);
-
-    if (wargameIsInProgress) {
-      await wargamesApi.createLatestWargameRevision(dbName, wargame);
-    }
-
     dispatch(setCurrentWargame(wargame));
 
     dispatch(addNotification("Channel deleted.", "warning"));
+  }
+};
+
+export const duplicateChannel = (dbName, channel) => {
+  return async (dispatch) => {
+
+    let wargame = await wargamesApi.duplicateChannel(dbName, channel);
+
+    dispatch(setCurrentWargame(wargame));
+    dispatch(addNotification("Channel duplicated.", "success"));
   }
 };
 
@@ -317,12 +305,6 @@ export const deleteSelectedForce = (dbName, force) => {
   return async (dispatch) => {
 
     let wargame = await wargamesApi.deleteForce(dbName, force);
-
-    let wargameIsInProgress = await wargamesApi.checkIfWargameStarted(dbName);
-
-    if (wargameIsInProgress) {
-      await wargamesApi.createLatestWargameRevision(dbName, wargame);
-    }
 
     dispatch(setCurrentWargame(wargame));
 

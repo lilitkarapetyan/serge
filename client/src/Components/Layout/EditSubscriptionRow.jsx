@@ -8,6 +8,7 @@ import {
   faUndoAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import _ from "lodash";
 
 class EditSubscriptionRow extends Component {
 
@@ -42,11 +43,16 @@ class EditSubscriptionRow extends Component {
 
   updateChannel = () => {
 
+    let templateIds = this.state.editSubscriptionTemplates.map((template) => ({_id: template.value}));
+    let templates = _.intersectionBy(this.props.messageTypes.messages, templateIds, (item) => item._id);
+        templates = templates.map((template) => ({label: template.title, value: template}));
+
     let subscriptionData = {
       force: this.state.editSubscriptionForce.label,
       roles: this.state.editSubscriptionRoles,
-      templates: this.state.editSubscriptionTemplates,
+      templates,
       forceUniqid: this.props.data.forceUniqid,
+      icon: this.props.data.icon,
     };
     this.props.updateRecipient(this.state.subscriptionId, subscriptionData);
     this.props.cancelEdit();

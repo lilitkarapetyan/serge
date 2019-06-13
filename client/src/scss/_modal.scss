@@ -30,7 +30,6 @@
     justify-content: flex-end;
     //padding: 0 20px 20px;
     position: relative;
-    right: -14px; // minus button margin
   }
 
   .display-text-wrapper {
@@ -89,4 +88,44 @@
       object-fit: cover;
     }
   }
+}
+
+.lessons-modal {
+  max-width: 500px;
+
+  .title {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  svg {
+    color: $primaryColor;
+  }
+  h3 {
+    display: inline;
+    line-height: 1em;
+    font-weight: bold;
+    margin-left: .5em;
+    color: $primaryColor;
+    width: fit-content;
+  }
+
+  p {
+    font-size: 16px;
+    color: $primaryColor;
+  }
+
+  textarea {
+    resize: none;
+  }
+
+  .buttons {
+    margin-top: 12px;
+  }
+}
+
+.text-input-wrap {
+  display: flex;
+  flex-direction: column;
 }

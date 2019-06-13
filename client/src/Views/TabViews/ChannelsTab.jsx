@@ -3,21 +3,20 @@ import {connect} from "react-redux";
 import {
   setSelectedChannel,
   deleteSelectedChannel,
+  duplicateChannel,
   saveChannel,
   addNewChannel,
   setTabUnsaved,
   setTabSaved,
 } from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
-import {channelTemplate} from "../../api/consts";
+import {channelTemplate} from "../../consts";
 
 import '../../scss/App.scss';
 
 import TabsSearchList from "../../Components/TabsSearchList";
 import TextInput from "../../Components/Inputs/TextInput";
 import ChannelsTable from "../../Components/Layout/ChannelsTable";
-import {faTrash} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import uniqid from "uniqid";
 import _ from "lodash";
 import checkUnique from "../../Helpers/checkUnique";
@@ -100,10 +99,12 @@ class ForcesTab extends Component {
     });
   };
 
-  deleteChannel = () => {
-    let curTab = this.props.wargame.currentTab;
-    let selectedChannel = this.props.wargame.data[curTab].selectedChannel.uniqid;
-    this.props.dispatch(deleteSelectedChannel(this.props.wargame.currentWargame, selectedChannel));
+  deleteChannel = (uniqid) => {
+    this.props.dispatch(deleteSelectedChannel(this.props.wargame.currentWargame, uniqid));
+  };
+
+  duplicateChannel = (uniqid) => {
+    this.props.dispatch(duplicateChannel(this.props.wargame.currentWargame, uniqid));
   };
 
   updateChannelName = (channel) => {
@@ -158,7 +159,7 @@ class ForcesTab extends Component {
 
     return (
       <div className="flex-content-wrapper">
-        <div className="flex-content">
+        <div className="flex-content searchlist-wrap">
           <span className="link link--noIcon" onClick={this.createChannel}>Add channel</span>
           <TabsSearchList listData={this.state.channelList}
                           filter={this.filterChannels}
@@ -166,6 +167,8 @@ class ForcesTab extends Component {
                           setSelected={this.setSelected}
                           selected={selectedChannel}
                           placeholder={"Search channels"}
+                          delete={this.deleteChannel}
+                          duplicate={this.duplicateChannel}
           />
         </div>
 
@@ -180,7 +183,6 @@ class ForcesTab extends Component {
               />
               <div className="button-wrap-tab">
                 <span className="link link--noIcon" onClick={this.saveChannel}>save channel</span>
-                <span className="link link--secondary" onClick={this.deleteChannel}><FontAwesomeIcon icon={faTrash} />Delete</span>
               </div>
             </div>
             <p className="heading--sml">Participants and messages</p>

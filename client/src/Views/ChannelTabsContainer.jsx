@@ -27,7 +27,6 @@ class ChannelTabsContainer extends Component {
 
   constructor(props) {
     super(props);
-    // this.model = FlexLayout.Model.fromJson(json);
 
     this.state = {
       model: FlexLayout.Model.fromJson(json),
@@ -59,8 +58,6 @@ class ChannelTabsContainer extends Component {
     let channelNames = Object.values(nextProps.playerUi.channels).map((channel) => channel.name);
 
     let newChannels = _.difference(channelNames, this.state.channelNames);
-
-    console.log(newChannels);
 
     newChannels.forEach((channelName) => {
       this.state.model.doAction(

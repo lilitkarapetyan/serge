@@ -12,7 +12,6 @@ class MessagesListChatChannel extends Component {
 
     return (
       messages.map((item, i) => {
-        console.log(item);
         return (
           <div key={`${i}-preview`} className="message-preview-player wrap">
             <MessagePreview detail={item.message.message} from={item.message.details.from} />

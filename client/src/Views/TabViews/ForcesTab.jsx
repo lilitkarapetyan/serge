@@ -15,7 +15,7 @@ import RemovableGroupItem from "../../Components/Layout/RemovableGroupItem";
 import TextInput from "../../Components/Inputs/TextInput";
 import uniqid from "uniqid";
 
-import {forceTemplate} from "../../api/consts";
+import {forceTemplate} from "../../consts";
 import _ from "lodash";
 import checkUnique from "../../Helpers/checkUnique";
 import {addNotification} from "../../ActionsAndReducers/Notification/Notification_ActionCreators";
@@ -222,7 +222,7 @@ class ForcesTab extends Component {
 
     return (
       <div className="flex-content-wrapper">
-        <div className="flex-content">
+        <div className="flex-content searchlist-wrap">
           <span className="link link--noIcon" onClick={this.createForce}>Add a new force</span>
           <TabsSearchList listData={this.state.forcesList}
                           setSelected={this.setSelected}

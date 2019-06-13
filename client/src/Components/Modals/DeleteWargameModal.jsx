@@ -27,8 +27,8 @@ class DeleteWargameModal extends Component {
           <h3>Delete</h3>
           <p>This will permanently delete the wargame.<br/>Are you sure?</p>
           <div className="buttons">
-            <button name="delete" className="btn btn-action btn-action--primary" onClick={this.deleteWargame}>Delete</button>
             <button name="cancel" className="btn btn-action btn-action--secondary" onClick={this.hideModal}>Cancel</button>
+            <button name="delete" className="btn btn-action btn-action--primary" onClick={this.deleteWargame}>Delete</button>
           </div>
         </div>
       </ModalWrapper>

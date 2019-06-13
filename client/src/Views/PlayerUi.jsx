@@ -9,21 +9,17 @@ import {
   initiateGame,
   getAllWargameMessages,
   showHideObjectives,
+  startListening,
+  setAllTemplates,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 import {
   addNotification,
 } from "../ActionsAndReducers/Notification/Notification_ActionCreators";
 
-import ChannelTabsContainer from "./ChannelTabsContainer";
-import GameAdmin from "./GameAdmin";
 import DropdownInput from "../Components/Inputs/DropdownInput";
-import TurnProgression from "../Components/TurnProgression";
 import AwaitingStart from "../Components/AwaitingStart";
-
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
-
+import GameChannels from "./GameChannels";
 
 class PlayerUi extends Component {
 
@@ -33,7 +29,8 @@ class PlayerUi extends Component {
     this.state = {
       rolePassword: '',
     };
-  }
+  };
+
 
   updateSelectedWargame = (wargamePath) => {
     this.props.dispatch(getWargame(wargamePath));
@@ -75,7 +72,9 @@ class PlayerUi extends Component {
 
     this.props.dispatch(setForce(force.uniqid));
     this.props.dispatch(setRole(role));
+    this.props.dispatch(setAllTemplates(this.props.messageTypes.messages));
     this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
+    this.props.dispatch(startListening(this.props.playerUi.currentWargame));
   };
 
   roleOptions() {
@@ -132,28 +131,7 @@ class PlayerUi extends Component {
           }
 
           {this.props.playerUi.selectedForce && this.props.playerUi.selectedRole && this.props.playerUi.wargameInitiated &&
-            <div className="flex-content flex-content--row-wrap">
-              <div className="message-feed">
-                <ChannelTabsContainer />
-              </div>
-              <div className="message-feed out-of-game-feed">
-                <TurnProgression />
-                <GameAdmin />
-              </div>
-              { this.props.playerUi.showObjective &&
-                <div className="force-objectives">
-                  <h3>Objectives</h3>
-                  <div className="objective-text">
-                    {this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).overview}
-                  </div>
-
-                  <div className="role-info">
-                    <span className="force-type">{ this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).name }</span>
-                    <img src={this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).icon} alt="" onClick={this.showHideForceObjectives} />
-                  </div>
-                </div>
-              }
-            </div>
+            <GameChannels />
           }
 
           {this.props.playerUi.selectedForce && this.props.playerUi.selectedRole && !this.props.playerUi.wargameInitiated &&
@@ -170,9 +148,10 @@ class PlayerUi extends Component {
   }
 }
 
-const mapStateToProps = ({ playerUi, wargame }) => ({
+const mapStateToProps = ({ playerUi, wargame, messageTypes }) => ({
   playerUi,
   wargame,
+  messageTypes,
 });
 
 export default connect(mapStateToProps)(PlayerUi);

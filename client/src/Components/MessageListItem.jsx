@@ -15,6 +15,19 @@ import Collapsible from "react-collapsible";
 import MessagePreview from "../Components/MessagePreviewPlayerUi";
 class MessageListItem extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      hasBeenRead: false,
+    }
+  }
+
+  open = () => {
+    this.setState({hasBeenRead: true});
+    this.props.openSection();
+  };
+
   render() {
 
     let itemTitle;
@@ -35,13 +48,14 @@ class MessageListItem extends Component {
                 <span>{moment(this.props.detail.message.details.timestamp).format("HH:mm")}</span>
                 <Badge pill variant="primary">{this.props.detail.message.details.from.role}</Badge>
                 <Badge pill variant="secondary">{this.props.detail.message.details.messageType}</Badge>
+                {!this.state.hasBeenRead && <Badge pill variant="warning">Unread</Badge>}
               </div>
             </div>
           }
           transitionTime={200}
           easing={'ease-in-out'}
           open={this.props.detail.open}
-          onOpening={this.props.openSection}
+          onOpening={this.open}
           onClosing={this.props.closeSection}
         >
           <div key={`${this.props.key}-preview`} className="message-preview-player wrap"><MessagePreview detail={this.props.detail.message.message} from={this.props.detail.message.details.from} /></div>
