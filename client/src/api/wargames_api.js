@@ -18,31 +18,39 @@ import {
 } from "../consts";
 
 import {
-  setWargameMessages,
+  setLatestFeedbackMessage,
   setCurrentWargame,
-  setWargameFeedback,
+  setLatestWargameMessage,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 import moment from "moment";
 
 var wargameDbStore = [];
 
-const changesListener = ({db, name, dispatch}) => {
+const listenNewMessage = ({db, name, dispatch}) => {
 
-  db.changes({since: 'now', live: true, timeout: false, heartbeat: false})
-    .on('change', function () {
+  db.changes({since: 'now', live: true, timeout: false, heartbeat: false, include_docs: true})
+    .on('change', function (changes) {
       (async () => {
-        let messages = await getAllMessages(name);
-        let latestWargame = messages.find((message) => message.infoType);
-        dispatch(setCurrentWargame(latestWargame));
-        dispatch(setWargameMessages(messages));
-        const feedbackMessages = messages.filter((message) => message.hasOwnProperty('feedback'));
-        dispatch(setWargameFeedback(feedbackMessages));
+
+        console.log(changes.doc);
+
+        if (changes.doc.hasOwnProperty("infoType")) {
+          dispatch(setCurrentWargame(changes.doc));
+          dispatch(setLatestWargameMessage(changes.doc));
+          return;
+        }
+
+        if (changes.doc.hasOwnProperty("feedback")) {
+          dispatch(setLatestFeedbackMessage(changes.doc));
+        } else {
+          dispatch(setLatestWargameMessage(changes.doc));
+        };
       })();
     })
     .on('error', function (err) {
       console.log(err);
-      changesListener({db, name, dispatch});
+      listenNewMessage({db, name, dispatch});
     });
 };
 
@@ -50,7 +58,7 @@ const changesListener = ({db, name, dispatch}) => {
 export const listenForWargameChanges = (name, dispatch) => {
   let wargame = wargameDbStore.find((item) => item.name === name);
   let db = wargame.db;
-  changesListener({db, name, dispatch});
+  listenNewMessage({db, name, dispatch});
 };
 
 

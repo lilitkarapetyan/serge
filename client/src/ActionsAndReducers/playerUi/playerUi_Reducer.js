@@ -76,6 +76,38 @@ export const playerUiReducer = (state = initialState, action) => {
       newState.feedbackMessages = action.payload;
       break;
 
+    case ActionConstant.SET_LATEST_FEEDBACK_MESSAGE:
+      newState.feedbackMessages.unshift(action.payload);
+      break;
+
+    case ActionConstant.SET_LATEST_WARGAME_MESSAGE:
+
+      newState.allMessages.unshift(action.payload);
+
+      if (action.payload.hasOwnProperty('infoType') && action.payload.phase === "planning") {
+        let message = {
+          details: {
+            channel: `infoTypeChannelMarker${uniqId.time()}`
+          },
+          infoType: true,
+          gameTurn: action.payload.gameTurn,
+        };
+
+        newState.allChannels.forEach((channel) => {
+          newState.channels[channel.uniqid].messages.unshift(message);
+        });
+
+      } else if (!action.payload.hasOwnProperty('infoType')) {
+
+        if (action.payload.details.channel === "chat-channel") {
+          newState.chatChannel.messages.unshift(action.payload);
+        } else {
+          newState.channels[action.payload.details.channel].messages.unshift(action.payload);
+        }
+      }
+
+      break;
+
     case ActionConstant.SET_LATEST_MESSAGES:
 
       let channels = {};
@@ -109,13 +141,13 @@ export const playerUiReducer = (state = initialState, action) => {
 
       newState.allChannels.forEach((channel) => {
 
-        let participants = channel.participants.filter((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
+        // let participants = channel.participants.filter((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
         let channelActive = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
         let allRoles = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.length === 0);
 
-        if (participants.length === 0 && allRoles) {
-          participants = channel.participants.filter((p) => p.forceUniqid === newState.selectedForce);
-        }
+        // if (participants.length === 0 && allRoles) {
+        //   participants = channel.participants.filter((p) => p.forceUniqid === newState.selectedForce);
+        // }
 
         let participant = channel.participants.find((p) => p.forceUniqid === newState.selectedForce);
 

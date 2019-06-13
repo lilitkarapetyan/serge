@@ -27,6 +27,16 @@ export const setWargameFeedback = (messages) => ({
   payload: messages,
 });
 
+export const setLatestFeedbackMessage = (message) => ({
+  type: ActionConstant.SET_LATEST_FEEDBACK_MESSAGE,
+  payload: message,
+});
+
+export const setLatestWargameMessage = (message) => ({
+  type: ActionConstant.SET_LATEST_WARGAME_MESSAGE,
+  payload: message,
+});
+
 export const setWargameMessages = (messages) => ({
   type: ActionConstant.SET_LATEST_MESSAGES,
   payload: messages,
