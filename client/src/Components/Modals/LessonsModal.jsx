@@ -59,6 +59,15 @@ class LessonsModal extends Component {
           <p>Use this form to give private feedback on the game itself.</p>
           <p>Comments are only visible to the Game Controller. No other player has access to the comments you post here.</p>
           <div className="text-input-wrap">
+            <TextArea
+              id="message-input"
+              className="material-input"
+              label="Message"
+              updateStore={this.setMessage}
+              data={this.state.message}
+            />
+          </div>
+          <div className="text-input-wrap">
             <TextInput
               id="name-input"
               className="material-input"
@@ -68,18 +77,9 @@ class LessonsModal extends Component {
               data={this.state.name}
             />
           </div>
-          <div className="text-input-wrap">
-            <TextArea
-              id="message-input"
-              className="material-input"
-              label="Message"
-              updateStore={this.setMessage}
-              data={this.state.message}
-            />
-          </div>
           <div className="buttons">
-            <button name="continue" className="btn btn-action btn-action--primary" onClick={this.send}>Send</button>
             <button name="cancel" className="btn btn-action btn-action--secondary" onClick={this.hideModal}>Cancel</button>
+            <button name="continue" className="btn btn-action btn-action--primary" onClick={this.send}>Send</button>
           </div>
         </div>
       </ModalWrapper>

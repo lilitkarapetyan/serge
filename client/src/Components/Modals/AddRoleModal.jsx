@@ -111,8 +111,8 @@ class AddRoleModal extends Component {
             </div>
           </div>
           <div className="buttons">
-            <button disabled={disable} name="add" className="btn btn-action btn-action--primary" onClick={this.addRole}>Add</button>
             <button name="cancel" className="btn btn-action btn-action--secondary" onClick={this.hideModal}>Cancel</button>
+            <button disabled={disable} name="add" className="btn btn-action btn-action--primary" onClick={this.addRole}>Add</button>
           </div>
         </div>
       </ModalWrapper>
