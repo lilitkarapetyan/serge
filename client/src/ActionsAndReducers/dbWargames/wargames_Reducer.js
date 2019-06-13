@@ -5,7 +5,7 @@ import uniqId from "uniqid";
 import {
   forceTemplate,
   channelTemplate,
-  dbDefaultSettings,
+  dbDefaultSettings, serverPath,
 } from "../../consts";
 
 var initialState = {
@@ -155,7 +155,7 @@ export const wargamesReducer = (state = initialState, action) => {
     case ActionConstant.ADD_ICON:
 
       selected = newState.data[tab].selectedForce.name;
-      newState.data[tab].forces.find((f) => f.name === selected).icon = action.icon;
+      newState.data[tab].forces.find((f) => f.name === selected).icon = serverPath + action.icon.slice(1);
       break;
 
     default:

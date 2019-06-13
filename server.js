@@ -1,6 +1,8 @@
 require('events').EventEmitter.defaultMaxListeners = 82;
 const express = require('express');
+const bodyParser = require('body-parser');
 const path = require('path');
+const uniqid = require('uniqid');
 const PouchDB = require('pouchdb-core')
   .plugin(require('pouchdb-adapter-node-websql'))
   .plugin(require('pouchdb-adapter-http'))
@@ -21,10 +23,15 @@ const app = express();
 
 app.use(cors());
 
-let dir = './db';
+let dbDir = './db';
 
-if (!fs.existsSync(dir)) {
-  fs.mkdirSync(dir);
+if (!fs.existsSync(dbDir)) {
+  fs.mkdirSync(dbDir);
+}
+
+let imgDir = './img';
+if (!fs.existsSync(imgDir)) {
+  fs.mkdirSync(imgDir);
 }
 
 app.use('/db', require('express-pouchdb')(PouchDB));
@@ -57,6 +64,18 @@ app.get('/deleteDb', (req, res) => {
       res.status(200).send();
     }
   });
+});
+
+app.use('/saveIcon', bodyParser.raw({type: 'image/png', limit: '20kb'}));
+
+app.post('/saveIcon', (req, res) => {
+
+  let image = `${imgDir}/${uniqid.time('icon-')}.png`;
+
+  fs.writeFile(image, req.body, (err) => console.log(err));
+
+  res.status(200).send({path: image});
+
 });
 
 app.use(express.static(path.join(__dirname)));

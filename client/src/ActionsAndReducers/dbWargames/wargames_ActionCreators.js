@@ -101,6 +101,16 @@ export const addIcon = (icon) => ({
   icon,
 });
 
+export const saveIcon = (file) => {
+
+  return async (dispatch) => {
+
+    var iconLocation = await wargamesApi.saveIcon(file);
+
+    dispatch(addIcon(iconLocation.path));
+  }
+};
+
 
 export const populateWargameStore = () => {
   return async (dispatch) => {

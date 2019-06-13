@@ -97,6 +97,15 @@ export const clearWargames = () => {
     });
 };
 
+export const saveIcon = (file) => {
+  return fetch(serverPath+'saveIcon', {
+    method: 'POST',
+    "Content-Type": "image/png",
+    body: file,
+  })
+    .then((res) => res.json());
+};
+
 export const deleteWargame = (wargamePath) => {
 
   const name = getNameFromPath(wargamePath);

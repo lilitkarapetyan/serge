@@ -1,7 +1,4 @@
-import umpireIcon from "./icons/umpireIcon";
-import defaultIcon from "./icons/default";
 import uniqId from "uniqid";
-
 
 export const serverPath = 'https://serge-dev.herokuapp.com/';
 // export const serverPath = 'http://localhost:8080/';
@@ -34,7 +31,7 @@ export const forceTemplate = {
     password: `pass${uniqId.time()}`,
     control: false,
   }],
-  icon: defaultIcon.icon,
+  icon: serverPath+'/default_img/forceDefault.png',
   umpire: false,
   dirty: false,
 };
@@ -48,7 +45,7 @@ export const umpireForceTemplate = {
     password: `pass${uniqId.time()}`,
     control: true,
   }],
-  icon: umpireIcon.icon,
+  icon: serverPath+'/default_img/umpireDefault.png',
   umpire: true,
   dirty: false,
 };
