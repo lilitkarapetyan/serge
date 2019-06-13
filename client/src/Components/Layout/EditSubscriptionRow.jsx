@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 
 import '../../scss/App.scss';
 import Select from "react-select";
-import SelectAll from "../SelectAllSelect";
 import {
   faCheck,
   faUndoAlt,
@@ -74,21 +73,19 @@ class EditSubscriptionRow extends Component {
           />
         </td>
         <td>
-          <SelectAll
+          <Select
             value={this.state.editSubscriptionRoles}
             options={this.props.roleOptions}
             onChange={this.updateSubscriptionRole}
             isMulti
-            allowSelectAll={true}
           />
         </td>
         <td>
-          <SelectAll
+          <Select
             value={this.state.editSubscriptionTemplates}
             options={this.props.templateOptions}
             onChange={this.updateSubscriptionTemplates}
             isMulti
-            allowSelectAll={true}
           />
         </td>
         <td>

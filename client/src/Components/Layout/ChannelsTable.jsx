@@ -9,7 +9,6 @@ import {
 
 import EditSubscriptionRow from "./EditSubscriptionRow";
 import Select from "react-select";
-import SelectAll from "../SelectAllSelect";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   faTrash,
@@ -230,7 +229,7 @@ class ChannelsTable extends Component {
                 />
               </td>
               <td>
-                <SelectAll
+                <Select
                   value={this.state.selectedRoles}
                   options={this.state.roleOptions}
                   onChange={this.setSelectedRole}
@@ -240,13 +239,12 @@ class ChannelsTable extends Component {
                 />
               </td>
               <td>
-                <SelectAll
+                <Select
                   value={this.state.selectedTemplates}
                   options={this.state.templateOptions}
                   onChange={this.setSelectedTemplate}
                   // isDisabled={this.state.selectedRoles.length === 0}
                   isMulti
-                  allowSelectAll={true}
                 />
               </td>
               <td>
