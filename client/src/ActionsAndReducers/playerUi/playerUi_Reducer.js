@@ -93,8 +93,54 @@ export const playerUiReducer = (state = initialState, action) => {
           gameTurn: action.payload.gameTurn,
         };
 
+        for (let channelId in newState.channels) {
+          let matchedChannel = newState.allChannels.find((channel) => channel.uniqid === channelId);
+          if (!matchedChannel) {
+            delete newState.channels[channelId];
+          } else {
+            let channelActive = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
+            if (!channelActive) delete newState.channels[channelId];
+          }
+        }
+
         newState.allChannels.forEach((channel) => {
-          newState.channels[channel.uniqid].messages.unshift(message);
+
+          let channelActive = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
+          let allRoles = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.length === 0);
+
+          if (
+            (channelActive || allRoles) &&
+            !!newState.channels[channel.uniqid] &&
+            !newState.channels[channel.uniqid].messages.find((prevMessage) => prevMessage.gameTurn === message.gameTurn)
+          ) {
+            newState.channels[channel.uniqid].messages.unshift(message);
+          }
+
+          if (
+            (channelActive || allRoles) &&
+            !newState.channels[channel.uniqid]
+          ) {
+
+            let participant = channel.participants.find((p) => p.forceUniqid === newState.selectedForce);
+            if (participant === undefined) return;
+
+            let noTemplates = participant.templates.length === 0;
+
+            let templates;
+            if (noTemplates) {
+              templates = newState.allTemplates.filter((template) => template.title === "Chat");
+            } else {
+              templates = participant.templates.map((template) => template.value);
+            }
+
+            newState.channels[channel.uniqid] = {
+              name: channel.name,
+              templates,
+              forceIcons: channel.participants.filter((participant) => participant.forceUniqid !== newState.selectedForce).map((participant) => participant.icon),
+              messages: [],
+            };
+          }
+
         });
 
       } else if (!action.payload.hasOwnProperty('infoType')) {
@@ -108,7 +154,7 @@ export const playerUiReducer = (state = initialState, action) => {
 
       break;
 
-    case ActionConstant.SET_LATEST_MESSAGES:
+    case ActionConstant.SET_ALL_MESSAGES:
 
       let channels = {};
 

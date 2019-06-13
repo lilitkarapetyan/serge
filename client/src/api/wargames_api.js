@@ -168,8 +168,7 @@ export const checkIfWargameStarted = (dbName) => {
   return getAllMessages(dbName)
     .then((messages) => {
       const latestWargame = messages.find((message) => message.infoType);
-      if (latestWargame) return true;
-      return false;
+      return !!latestWargame;
     })
 };
 

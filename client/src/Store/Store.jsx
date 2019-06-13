@@ -35,7 +35,7 @@ const stopActions = store => next => action => {
   //     }
   //     break;
   //
-  //   case ActionConstants.SET_LATEST_MESSAGES:
+  //   case ActionConstants.SET_ALL_MESSAGES:
   //     if (action.payload.length > store.getState().playerUi.allMessages.length) {
   //       next(action);
   //     }

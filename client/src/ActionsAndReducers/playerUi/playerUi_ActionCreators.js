@@ -38,7 +38,7 @@ export const setLatestWargameMessage = (message) => ({
 });
 
 export const setWargameMessages = (messages) => ({
-  type: ActionConstant.SET_LATEST_MESSAGES,
+  type: ActionConstant.SET_ALL_MESSAGES,
   payload: messages,
 });
 
