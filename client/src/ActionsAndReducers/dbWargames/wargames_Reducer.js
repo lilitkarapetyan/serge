@@ -88,7 +88,10 @@ export const wargamesReducer = (state = initialState, action) => {
       newForce.roles[0].password = `pass${uniqId.time()}`;
 
       newState.data[tab].forces.push(newForce);
+      break;
 
+    case ActionConstant.SET_FORCE_COLOR:
+      newState.data[tab].forces.find((force) => force.name === newState.data[tab].selectedForce.name).color = action.payload;
       break;
 
     case ActionConstant.SET_SELECTED_FORCE:

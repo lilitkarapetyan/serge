@@ -72,12 +72,18 @@
     margin-top: 6px;
   }
 
+  .force-color,
   .force-icon {
     width: 32px;
     height: 32px;
     margin: 0 20px;
-    border-radius: 100%;
+    //border-radius: 100%;
     align-self: center;
+  }
+
+  .force-color {
+    cursor: pointer;
+    border: 1px solid black;
   }
 
   .force-button-wrap {

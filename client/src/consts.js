@@ -33,6 +33,7 @@ export const forceTemplate = {
     isObserver: false,
   }],
   icon: serverPath+'default_img/forceDefault.png',
+  color: '#0000ff',
   umpire: false,
   dirty: false,
 };
@@ -48,6 +49,7 @@ export const umpireForceTemplate = {
     isObserver: false,
   }],
   icon: serverPath+'default_img/umpireDefault.png',
+  color: '#FFFFFF',
   umpire: true,
   dirty: false,
 };
