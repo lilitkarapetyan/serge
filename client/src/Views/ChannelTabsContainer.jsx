@@ -30,11 +30,14 @@ class ChannelTabsContainer extends Component {
 
     this.localStorage = window.localStorage;
 
-    let model = this.localStorage.getItem('model');
+    let modelName = `FlexLayout-model-${this.props.playerUi.wargameTitle}`;
+
+    let model = this.localStorage.getItem(modelName);
 
     this.model = model ? FlexLayout.Model.fromJson(JSON.parse(model)) : FlexLayout.Model.fromJson(json);
 
     this.state = {
+      modelName,
       channelNames: [],
       isSavedModel: !!model,
     };
@@ -102,7 +105,7 @@ class ChannelTabsContainer extends Component {
   };
 
   modelChanged = () => {
-    this.localStorage.setItem('model', JSON.stringify(this.model.toJson()));
+    this.localStorage.setItem(this.state.modelName, JSON.stringify(this.model.toJson()));
   };
 
   render() {

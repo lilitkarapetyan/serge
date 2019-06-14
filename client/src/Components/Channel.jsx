@@ -9,11 +9,25 @@ import {getAllWargameMessages} from "../ActionsAndReducers/playerUi/playerUi_Act
 
 class Channel extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      allMarkedRead: false,
+    }
+  }
+
   componentWillMount() {
     if (this.props.playerUi.channels[this.props.channel].messages.length === 0) {
       this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
     }
   }
+
+  markAllRead = () => {
+    this.setState({
+      allMarkedRead: true,
+    });
+  };
 
   render() {
 
@@ -23,10 +37,12 @@ class Channel extends Component {
       <>
         <div className="forces-in-channel">
           {this.props.playerUi.channels[curChannel].forceIcons.map((base64, i) => <img key={`indicator${i}`} className="force-indicator" src={base64} alt="" />)}
+          <button name="mark as read" className="btn btn-action btn-action--secondary" onClick={this.markAllRead}>Mark all read</button>
         </div>
 
         <MessagesListRenderProp
           curChannel={curChannel}
+          allMarkedRead={this.state.allMarkedRead}
           messages={this.props.playerUi.channels[curChannel].messages}
           render={(messages, actions) => (
             <MessagesListChannel

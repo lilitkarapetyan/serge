@@ -7,11 +7,17 @@ class MessagesListRenderProp extends Component {
     super(props);
 
     this.state = {
-      messages: this.props.messages.map((item) => ({ message: item, open: false, hasBeenRead: false })),
+      messages: this.props.messages.map((item) => ({ message: item, open: false, hasBeenRead: this.props.allMarkedRead })),
     };
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
+
+    if (!this.props.allMarkedRead && nextProps.allMarkedRead) {
+      this.setState({
+        messages: this.state.messages.map((message) => ({...message, hasBeenRead: true})),
+      });
+    }
 
     let nextMessagesInChannel = nextProps.messages.map((item) => ({ message: item, open: false, hasBeenRead: false }));
 
@@ -35,7 +41,7 @@ class MessagesListRenderProp extends Component {
       (this.props.curChannel !== nextProps.curChannel)
     ) {
       this.setState({
-        messages: nextProps.messages.map((item) => ({ message: item, open: false, hasBeenRead: false }))
+        messages: nextProps.messages.map((item) => ({ message: item, open: false, hasBeenRead: nextProps.allMarkedRead }))
       });
     }
   }

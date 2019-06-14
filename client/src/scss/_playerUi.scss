@@ -104,6 +104,11 @@
     display: flex;
     flex-direction: row;
 
+    button {
+      margin-left: auto;
+      font-size: 12px;
+    }
+
     .force-indicator {
       width: 24px;
       height: 24px;
