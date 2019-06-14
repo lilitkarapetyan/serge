@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import ModalSwitch from "./Components/Modals/ModalSwitch";
 import Notifications from "./Components/Notifications";
+import Version from "./Views/Version";
 
 import Router from "./Components/Router";
 
@@ -22,6 +23,7 @@ class App extends Component {
           <Router />
           <ModalSwitch />
           <Notifications />
+          <Version />
         </Provider>
     );
   }
