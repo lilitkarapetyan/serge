@@ -7,7 +7,5 @@
 /.idea/*
 /db
 /img
-.env.development
-.env.local
 
 /log.txt

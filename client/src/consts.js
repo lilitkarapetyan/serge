@@ -1,13 +1,7 @@
 import uniqId from "uniqid";
 
-export const serverPath = process.env.REACT_APP_SERVER_PATH;
+export const serverPath = 'https://serge-dev.herokuapp.com/';
 // export const serverPath = 'http://localhost:8080/';
-/*
-for development just create .env.local file in client folder and add line,
-it's under gitignore and you don't need change this value before every deployment:
-REACT_APP_SERVER_PATH='http://localhost:8080/'
-*/
-
 export const databasePath = `${serverPath}db/`;
 
 export const MSG_STORE = "messages";
@@ -36,8 +30,10 @@ export const forceTemplate = {
     name: 'General',
     password: `pass${uniqId.time()}`,
     control: false,
+    isObserver: false,
   }],
-  icon: serverPath+'/default_img/forceDefault.png',
+  icon: serverPath+'default_img/forceDefault.png',
+  color: '#0000ff',
   umpire: false,
   dirty: false,
 };
@@ -50,8 +46,10 @@ export const umpireForceTemplate = {
     name: 'Game Control',
     password: `pass${uniqId.time()}`,
     control: true,
+    isObserver: false,
   }],
-  icon: serverPath+'/default_img/umpireDefault.png',
+  icon: serverPath+'default_img/umpireDefault.png',
+  color: '#FFFFFF',
   umpire: true,
   dirty: false,
 };
