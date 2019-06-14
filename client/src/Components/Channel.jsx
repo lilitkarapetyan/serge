@@ -5,8 +5,15 @@ import MessagesListChannel from "../Views/MessagesListChannel";
 import MessagesListRenderProp from "../Views/MessagesListRenderProp";
 import NewMessage from "./NewMessage";
 import '../scss/App.scss';
+import {getAllWargameMessages} from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 class Channel extends Component {
+
+  componentWillMount() {
+    if (this.props.playerUi.channels[this.props.channel].messages.length === 0) {
+      this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
+    }
+  }
 
   render() {
 

@@ -31,7 +31,7 @@ export const forceTemplate = {
     password: `pass${uniqId.time()}`,
     control: false,
   }],
-  icon: serverPath+'/default_img/forceDefault.png',
+  icon: serverPath+'default_img/forceDefault.png',
   umpire: false,
   dirty: false,
 };
@@ -45,7 +45,7 @@ export const umpireForceTemplate = {
     password: `pass${uniqId.time()}`,
     control: true,
   }],
-  icon: serverPath+'/default_img/umpireDefault.png',
+  icon: serverPath+'default_img/umpireDefault.png',
   umpire: true,
   dirty: false,
 };

@@ -64,7 +64,7 @@ class PlayerUi extends Component {
     let force = this.props.playerUi.allForces[_.findIndex(this.props.playerUi.allForces, matchRole)];
 
     if (force === undefined) {
-      this.props.dispatch(addNotification("Password did not match", "warning"));
+      this.props.dispatch(addNotification("Access code incorrect", "warning"));
       return;
     }
 
@@ -104,7 +104,7 @@ class PlayerUi extends Component {
 
           {this.props.playerUi.currentWargame && !this.props.playerUi.selectedForce &&
             <div className="flex-content--center">
-              <h1>Password</h1>
+              <h1>Access code</h1>
               <input
                 autoFocus
                 className="modal-input"

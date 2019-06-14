@@ -18,6 +18,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import _ from "lodash";
+import classNames from "classnames";
 import deepCopy from "../../Helpers/copyStateHelper";
 
 import {setTabUnsaved} from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
@@ -166,6 +167,8 @@ class ChannelsTable extends Component {
 
   addToChannel = () => {
 
+    if (!this.state.selectedForce.value) return;
+
     let templateIds = this.state.selectedTemplates.map((template) => ({_id: template.value}));
     let templates = _.intersectionBy(this.props.messageTypes.messages, templateIds, (item) => item._id);
     templates = templates.map((template) => ({label: template.title, value: template}));
@@ -251,7 +254,7 @@ class ChannelsTable extends Component {
                 <FontAwesomeIcon icon={faUndoAlt} onClick={this.clearChannelData} />
                 <FontAwesomeIcon
                   icon={faCheck}
-                  // className={classNames({"btn--disabled": !rowComplete})}
+                  className={classNames({"btn--disabled": !this.state.selectedForce.value})}
                   onClick={this.addToChannel} />
               </td>
             </tr>
