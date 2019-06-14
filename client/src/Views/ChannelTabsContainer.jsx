@@ -34,7 +34,8 @@ class ChannelTabsContainer extends Component {
 
     let model = this.localStorage.getItem(modelName);
 
-    this.model = model ? FlexLayout.Model.fromJson(JSON.parse(model)) : FlexLayout.Model.fromJson(json);
+    // this.model = model ? FlexLayout.Model.fromJson(JSON.parse(model)) : FlexLayout.Model.fromJson(json);
+    this.model = FlexLayout.Model.fromJson(json);
 
     this.state = {
       modelName,
@@ -48,9 +49,9 @@ class ChannelTabsContainer extends Component {
     let channelLength = Object.keys(this.props.playerUi.channels).length;
     let nextChannelLength = Object.keys(nextProps.playerUi.channels).length;
 
-    if (this.state.isSavedModel) {
-      return;
-    }
+    // if (this.state.isSavedModel) {
+    //   return;
+    // }
 
     if (channelLength < nextChannelLength) {
       this.addToTabs(nextProps);

@@ -11,14 +11,19 @@ import {
   setTabUnsaved,
 } from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
+import Checkbox from "../Inputs/Checkbox";
+
 class AddRoleModal extends Component {
 
   constructor(props) {
     super(props);
 
+    console.log(this.props.currentModal.data);
+
     this.state = {
       roleName: this.props.currentModal.data ? this.props.currentModal.data.name : '',
       rolePassword: this.props.currentModal.data ? this.props.currentModal.data.password : `pass${uniqId.time()}`,
+      isObserver: this.props.currentModal.data ? this.props.currentModal.data.isObserver : false,
     };
   }
 
@@ -27,6 +32,7 @@ class AddRoleModal extends Component {
     this.setState({
       roleName: '',
       rolePassword: '',
+      isObserver: false,
     });
 
     this.props.dispatch(modalAction.close());
@@ -51,12 +57,20 @@ class AddRoleModal extends Component {
     });
   };
 
+  setRoleObserver = (value) => {
+    console.log(value);
+    this.setState({
+      isObserver: value
+    });
+  };
+
   addRole = () => {
     let selectedForce = this.props.wargame.data.forces.selectedForce.name;
 
     let newRole = {
       name: this.state.roleName,
       password: this.state.rolePassword,
+      isObserver: this.state.isObserver,
       control: this.props.currentModal.data ? this.props.currentModal.data.control : false,
     };
 
@@ -73,7 +87,6 @@ class AddRoleModal extends Component {
     if (e.key === 'Enter' && this.state.roleName.length > 0 && !this.state.sameName) this.addRole();
     if (e.key === "Escape") this.hideModal();
   };
-
 
 
   render() {
@@ -96,7 +109,7 @@ class AddRoleModal extends Component {
                 className="material-input"
                 label="Name"
                 updateStore={this.setNewRoleName}
-                data={this.state.roleName || ""}
+                data={this.state.roleName}
                 options={{numInput: false}}
               />
             </div>
@@ -105,8 +118,16 @@ class AddRoleModal extends Component {
                 className="material-input"
                 label="Password"
                 updateStore={this.setNewRolePassword}
-                data={this.state.rolePassword || ""}
+                data={this.state.rolePassword}
                 options={{numInput: false}}
+              />
+            </div>
+            <div className="flex-content">
+              <Checkbox
+                id="c1"
+                label="Is Observer"
+                updateStore={this.setRoleObserver}
+                isChecked={this.state.isObserver}
               />
             </div>
           </div>

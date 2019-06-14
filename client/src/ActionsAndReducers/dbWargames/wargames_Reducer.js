@@ -143,7 +143,7 @@ export const wargamesReducer = (state = initialState, action) => {
       break;
 
     case ActionConstant.UPDATE_ROLE_NAME:
-      index = newState.data[tab].forces.find((force) => force.name === action.payload.force).roles.findIndex((role) => role.name === action.payload.oldName)
+      index = newState.data[tab].forces.find((force) => force.name === action.payload.force).roles.findIndex((role) => role.name === action.payload.oldName);
       newState.data[tab].forces.find((force) => force.name === action.payload.force).roles.splice(index, 1, action.payload.role);
       break;
 

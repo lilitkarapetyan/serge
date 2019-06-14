@@ -8,6 +8,7 @@ import uniqId from "uniqid";
 const initialState = {
   selectedForce: '',
   selectedRole: '',
+  isObserver: false,
   controlUi: false,
   currentTurn: 1,
   phase: '',
@@ -61,6 +62,7 @@ export const playerUiReducer = (state = initialState, action) => {
     case ActionConstant.SET_ROLE:
       newState.selectedRole = action.payload.name;
       newState.controlUi = action.payload.control;
+      newState.isObserver = action.payload.isObserver;
       break;
 
     case ActionConstant.SET_ALL_TEMPLATES_PLAYERUI:
@@ -182,13 +184,8 @@ export const playerUiReducer = (state = initialState, action) => {
 
       newState.allChannels.forEach((channel) => {
 
-        // let participants = channel.participants.filter((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
         let channelActive = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
         let allRoles = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.length === 0);
-
-        // if (participants.length === 0 && allRoles) {
-        //   participants = channel.participants.filter((p) => p.forceUniqid === newState.selectedForce);
-        // }
 
         let participant = channel.participants.find((p) => p.forceUniqid === newState.selectedForce);
 
@@ -203,10 +200,10 @@ export const playerUiReducer = (state = initialState, action) => {
           templates = participant.templates.map((template) => template.value);
         }
 
-        if (channelActive || allRoles) {
+        if (channelActive || allRoles || newState.isObserver) {
           channels[channel.uniqid] = {
             name: channel.name,
-            templates,
+            templates: newState.isObserver && !channelActive ? [] : templates,
             forceIcons: channel.participants.filter((participant) => participant.forceUniqid !== newState.selectedForce).map((participant) => participant.icon),
             messages: messages.filter((message) => message.details.channel === channel.uniqid || message.infoType === true),
           };
@@ -215,48 +212,6 @@ export const playerUiReducer = (state = initialState, action) => {
         newState.channels = channels;
 
       });
-
-      break;
-
-    case ActionConstant.MARK_MESSAGE_AS_READ:
-
-      for (let channelId in newState.channels) {
-        let matchedMessageIndex = newState.channels[channelId].messages.findIndex((message) => message._id === action.payload);
-        let matchedMessage = newState.channels[channelId].messages.find((message) => message._id === action.payload);
-
-        if (matchedMessage) {
-          matchedMessage.hasBeenRead = true;
-          newState.channels[channelId].messages.splice(matchedMessageIndex, 1, matchedMessage);
-        }
-      }
-
-      break;
-
-    case ActionConstant.OPEN_MESSAGE:
-
-      for (let channelId in newState.channels) {
-        let matchedMessageIndex = newState.channels[channelId].messages.findIndex((message) => message._id === action.payload);
-        let matchedMessage = newState.channels[channelId].messages.find((message) => message._id === action.payload);
-
-        if (matchedMessage) {
-          matchedMessage.isOpen = true;
-          newState.channels[channelId].messages.splice(matchedMessageIndex, 1, matchedMessage);
-        }
-      }
-
-      break;
-
-    case ActionConstant.CLOSE_MESSAGE:
-
-      for (let channelId in newState.channels) {
-        let matchedMessageIndex = newState.channels[channelId].messages.findIndex((message) => message._id === action.payload);
-        let matchedMessage = newState.channels[channelId].messages.find((message) => message._id === action.payload);
-
-        if (matchedMessage) {
-          matchedMessage.isOpen = false;
-          newState.channels[channelId].messages.splice(matchedMessageIndex, 1, matchedMessage);
-        }
-      }
 
       break;
 
