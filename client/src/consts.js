@@ -1,7 +1,13 @@
 import uniqId from "uniqid";
 
-export const serverPath = 'https://serge-dev.herokuapp.com/';
+export const serverPath = process.env.REACT_APP_SERVER_PATH;
 // export const serverPath = 'http://localhost:8080/';
+/*
+for development just create .env.local file in client folder and add line,
+it's under gitignore and you don't need change this value before every deployment:
+REACT_APP_SERVER_PATH='http://localhost:8080/'
+*/
+
 export const databasePath = `${serverPath}db/`;
 
 export const MSG_STORE = "messages";

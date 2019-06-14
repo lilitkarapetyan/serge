@@ -54,6 +54,7 @@ export const wargamesReducer = (state = initialState, action) => {
 
     case ActionConstant.SET_EXPORT_WARGAME:
 
+      newState.data = action.payload.data;
       newState.currentWargame = action.payload.name;
       newState.wargameTitle = action.payload.wargameTitle;
       newState.exportMessagelist = action.payload.exportMessagelist;

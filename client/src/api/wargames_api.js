@@ -217,11 +217,11 @@ export const exportWargame = dbPath => {
     else {
       const db = wargameDbStore.find(db => db.name === dbName).db;
 
-      db.get(dbDefaultSettings._id).then(res => {
+      return db.get(dbDefaultSettings._id).then(res => {
         return {...res, exportMessagelist: messages};
       });
     }
-  })
+  });
 }
 
 export const updateWargameTitle = (dbName, title) => {

@@ -110,7 +110,7 @@ class ExportMessages extends Component {
                   <h5>{item.title}</h5>
                   <p>Selected wargame: {item.wargame}</p>
                   <p>
-                    Message Types: {item.data.map((item, key) => (<span key={key}>
+                    Message Types: {item.data.filter(item => item.messages.length > 1).map((item, key) => (<span key={key}>
                       {item.type} ({item.messages.length-1})
                     </span>))}
                   </p>

@@ -69,5 +69,7 @@
     "not op_mini all"
   ],
   "homepage": "https://serge-dev.herokuapp.com/client/build",
-  "devDependencies": {}
+  "devDependencies": {
+    "preval.macro": "^3.0.0"
+  }
 }
