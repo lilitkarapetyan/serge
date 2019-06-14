@@ -25,7 +25,6 @@ const initialState = {
   },
   channels: {},
   allChannels: [],
-  allMessages: [],
   allForces: [],
   allTemplates: [],
   showObjective: false,
@@ -81,8 +80,6 @@ export const playerUiReducer = (state = initialState, action) => {
       break;
 
     case ActionConstant.SET_LATEST_WARGAME_MESSAGE:
-
-      newState.allMessages.unshift(action.payload);
 
       if (action.payload.hasOwnProperty('infoType') && action.payload.phase === "planning") {
         let message = {
@@ -148,7 +145,7 @@ export const playerUiReducer = (state = initialState, action) => {
         if (action.payload.details.channel === "chat-channel") {
           newState.chatChannel.messages.unshift(action.payload);
         } else {
-          newState.channels[action.payload.details.channel].messages.unshift(action.payload);
+          newState.channels[action.payload.details.channel].messages.unshift({...action.payload, hasBeenRead: false, isOpen: false});
         }
       }
 
@@ -157,8 +154,6 @@ export const playerUiReducer = (state = initialState, action) => {
     case ActionConstant.SET_ALL_MESSAGES:
 
       let channels = {};
-
-      newState.allMessages = action.payload;
 
       let messages = action.payload.map((message) => {
         if (message.hasOwnProperty('infoType')) {
@@ -170,7 +165,7 @@ export const playerUiReducer = (state = initialState, action) => {
             gameTurn: message.gameTurn,
           }
         }
-        return message;
+        return {...message, hasBeenRead: false, isOpen: false};
       });
 
       let reduceTurnMarkers = (message) => {
@@ -205,7 +200,6 @@ export const playerUiReducer = (state = initialState, action) => {
         if (noTemplates) {
           templates = newState.allTemplates.filter((template) => template.title === "Chat");
         } else {
-          // templates = _.flatMap(participants, (participant) => participant.templates);
           templates = participant.templates.map((template) => template.value);
         }
 
@@ -221,6 +215,48 @@ export const playerUiReducer = (state = initialState, action) => {
         newState.channels = channels;
 
       });
+
+      break;
+
+    case ActionConstant.MARK_MESSAGE_AS_READ:
+
+      for (let channelId in newState.channels) {
+        let matchedMessageIndex = newState.channels[channelId].messages.findIndex((message) => message._id === action.payload);
+        let matchedMessage = newState.channels[channelId].messages.find((message) => message._id === action.payload);
+
+        if (matchedMessage) {
+          matchedMessage.hasBeenRead = true;
+          newState.channels[channelId].messages.splice(matchedMessageIndex, 1, matchedMessage);
+        }
+      }
+
+      break;
+
+    case ActionConstant.OPEN_MESSAGE:
+
+      for (let channelId in newState.channels) {
+        let matchedMessageIndex = newState.channels[channelId].messages.findIndex((message) => message._id === action.payload);
+        let matchedMessage = newState.channels[channelId].messages.find((message) => message._id === action.payload);
+
+        if (matchedMessage) {
+          matchedMessage.isOpen = true;
+          newState.channels[channelId].messages.splice(matchedMessageIndex, 1, matchedMessage);
+        }
+      }
+
+      break;
+
+    case ActionConstant.CLOSE_MESSAGE:
+
+      for (let channelId in newState.channels) {
+        let matchedMessageIndex = newState.channels[channelId].messages.findIndex((message) => message._id === action.payload);
+        let matchedMessage = newState.channels[channelId].messages.find((message) => message._id === action.payload);
+
+        if (matchedMessage) {
+          matchedMessage.isOpen = false;
+          newState.channels[channelId].messages.splice(matchedMessageIndex, 1, matchedMessage);
+        }
+      }
 
       break;
 

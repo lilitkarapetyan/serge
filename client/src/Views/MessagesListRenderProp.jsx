@@ -7,18 +7,17 @@ class MessagesListRenderProp extends Component {
     super(props);
 
     this.state = {
-      messages: this.props.messages.map((item) => ({ message: item, open: false })),
+      messages: this.props.messages.map((item) => ({ message: item, open: false, hasBeenRead: false })),
     };
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
 
-    let nextMessagesInChannel = nextProps.messages.map((item) => ({ message: item, open: false }));
-    let messagesInChannel = this.props.messages.map((item) => ({ message: item, open: false }));
+    let nextMessagesInChannel = nextProps.messages.map((item) => ({ message: item, open: false, hasBeenRead: false }));
 
     if (
       this.props.messages.length !== 0 &&
-      messagesInChannel.length < nextMessagesInChannel.length
+      this.props.messages.length < nextMessagesInChannel.length
     ) {
 
       let newMessages = nextMessagesInChannel;
@@ -36,16 +35,15 @@ class MessagesListRenderProp extends Component {
       (this.props.curChannel !== nextProps.curChannel)
     ) {
       this.setState({
-        messages: nextProps.messages.map((item) => ({ message: item, open: false }))
+        messages: nextProps.messages.map((item) => ({ message: item, open: false, hasBeenRead: false }))
       });
     }
   }
 
-
-
   openSection = (el) => {
 
     el.open = true;
+    el.hasBeenRead = true;
     let index = this.state.messages.findIndex((item) => item.message._id === el.message._id);
     let messages = this.state.messages;
 

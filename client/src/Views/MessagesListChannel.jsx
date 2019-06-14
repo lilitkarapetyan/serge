@@ -9,6 +9,7 @@ class MessagesListChannel extends Component {
     let messages = this.props.messages;
 
     return (
+
       messages.map((item, i) => {
 
         if (item.message.infoType) {
@@ -19,8 +20,8 @@ class MessagesListChannel extends Component {
           <MessageListItem
             detail={item}
             key={`${i}-messageitem`}
-            openSection={this.props.openSection.bind(this, item)}
-            closeSection={this.props.closeSection.bind(this, item)}
+            openSection={this.props.openSection}
+            closeSection={this.props.closeSection}
           />
         );
       })
