@@ -106,7 +106,8 @@ class WargameSearchList extends Component {
           { list.map(function(db) {
             // let active
             return (
-              <span className="searchlist-title" key={db.title} onMouseOver={that.displayControls.bind(that, db.title)} onMouseLeave={that.hideControls}>
+              <span className="searchlist-title" key={db.title} onClick={that.setSelectedWargame.bind(that, db.name)}
+              onMouseOver={that.displayControls.bind(that, db.title)} onMouseLeave={that.hideControls}>
                 {db.title}
                 {that.state.activeTitle === db.title &&
                   <>
