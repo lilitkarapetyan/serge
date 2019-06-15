@@ -250,9 +250,9 @@ class ChannelsTable extends Component {
                 />
               </td>
               <td>
-                <FontAwesomeIcon icon={faUndoAlt} onClick={this.clearChannelData} />
+                <FontAwesomeIcon icon={faUndoAlt} title="Delete channel" onClick={this.clearChannelData} />
                 <FontAwesomeIcon
-                  icon={faCheck}
+                  icon={faCheck} title="Duplicate channel"
                   className={classNames({"btn--disabled": !this.state.selectedForce.value})}
                   onClick={this.addToChannel} />
               </td>
