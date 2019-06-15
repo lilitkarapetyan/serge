@@ -113,8 +113,8 @@ class ChannelsTable extends Component {
     }
     row.push(
       <td key={`edit-delete${i}`}>
-        <FontAwesomeIcon icon={faTrash} onClick={this.removeSubscription.bind(this, data.subscriptionId)} />
-        <FontAwesomeIcon icon={faPencilAlt} onClick={this.editSubscription.bind(this, data.subscriptionId)} />
+        <FontAwesomeIcon icon={faTrash} title="Delete membership" onClick={this.removeSubscription.bind(this, data.subscriptionId)} />
+        <FontAwesomeIcon icon={faPencilAlt} title="Edit membership" onClick={this.editSubscription.bind(this, data.subscriptionId)} />
       </td>
     );
     return (<tr key={`row-${i}`}>{row}</tr>);
@@ -250,9 +250,9 @@ class ChannelsTable extends Component {
                 />
               </td>
               <td>
-                <FontAwesomeIcon icon={faUndoAlt} onClick={this.clearChannelData} />
+                <FontAwesomeIcon icon={faUndoAlt} title="Delete channel" onClick={this.clearChannelData} />
                 <FontAwesomeIcon
-                  icon={faCheck}
+                  icon={faCheck} title="Duplicate channel"
                   className={classNames({"btn--disabled": !this.state.selectedForce.value})}
                   onClick={this.addToChannel} />
               </td>
