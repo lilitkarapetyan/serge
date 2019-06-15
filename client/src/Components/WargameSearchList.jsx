@@ -110,9 +110,9 @@ class WargameSearchList extends Component {
                 {db.title}
                 {that.state.activeTitle === db.title &&
                   <>
-                    <FontAwesomeIcon icon={faPencilAlt} onClick={that.setSelectedWargame.bind(that, db.name)} />
-                    <FontAwesomeIcon icon={faClone} onClick={that.duplicateWargame.bind(that, db.name)} />
-                    <FontAwesomeIcon icon={faTrash} onClick={that.deleteWargame.bind(that, db.name)} />
+                    <FontAwesomeIcon icon={faPencilAlt} title="Edit wargame" onClick={that.setSelectedWargame.bind(that, db.name)} />
+                    <FontAwesomeIcon icon={faClone} title="Duplicate wargame" onClick={that.duplicateWargame.bind(that, db.name)} />
+                    <FontAwesomeIcon icon={faTrash} title="Delete wargame" onClick={that.deleteWargame.bind(that, db.name)} />
                   </>
                 }
               </span>
