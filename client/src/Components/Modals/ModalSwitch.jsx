@@ -8,6 +8,7 @@ import UnsavedForceModal from "./UnsavedForceModal";
 import UnsavedChannelModal from "./UnsavedChannelModal";
 import AddIconModal from "./AddIconModal";
 import LessonsModal from "./InsightsModal";
+import ColorPickerModal from "./ColorPickerModal";
 
 class ModalSwitch extends Component {
 
@@ -43,6 +44,10 @@ class ModalSwitch extends Component {
 
       case "lessons":
         modal = <LessonsModal />;
+        break;
+
+      case "colorpicker":
+        modal = <ColorPickerModal />;
         break;
 
       default:

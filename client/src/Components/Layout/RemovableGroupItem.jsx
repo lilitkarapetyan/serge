@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {
   faTimes,
   faPencilAlt,
+  faEye,
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {removeRole, setTabUnsaved} from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
@@ -10,8 +11,8 @@ import {modalAction} from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
 
 class RemovableGroupItem extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       hover: false,
     };
@@ -24,8 +25,7 @@ class RemovableGroupItem extends Component {
 
   editRole = () => {
     let role = {
-      name: this.props.data.name,
-      password: this.props.data.password,
+      ...this.props.data,
       control: this.props.isControl,
     };
 
@@ -47,9 +47,10 @@ class RemovableGroupItem extends Component {
   render() {
     return (
       <span className="group-item" key={this.props.children} onMouseOver={this.showEditBtn} onMouseOut={this.hideEditBtn}>
+        { this.props.data.isObserver && <FontAwesomeIcon icon={faEye} /> }
         { this.props.children }
         <FontAwesomeIcon className="edit-icon" icon={faPencilAlt} onClick={this.editRole} />
-        { !this.props.isControl ? <FontAwesomeIcon icon={faTimes} onClick={this.removeRole} /> : false }
+        { !this.props.isControl && <FontAwesomeIcon icon={faTimes} onClick={this.removeRole} /> }
       </span>
     )
   }

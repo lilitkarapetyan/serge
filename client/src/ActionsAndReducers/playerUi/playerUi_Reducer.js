@@ -8,6 +8,7 @@ import uniqId from "uniqid";
 const initialState = {
   selectedForce: '',
   selectedRole: '',
+  isObserver: false,
   controlUi: false,
   currentTurn: 1,
   phase: '',
@@ -25,7 +26,6 @@ const initialState = {
   },
   channels: {},
   allChannels: [],
-  allMessages: [],
   allForces: [],
   allTemplates: [],
   showObjective: false,
@@ -62,6 +62,7 @@ export const playerUiReducer = (state = initialState, action) => {
     case ActionConstant.SET_ROLE:
       newState.selectedRole = action.payload.name;
       newState.controlUi = action.payload.control;
+      newState.isObserver = action.payload.isObserver;
       break;
 
     case ActionConstant.SET_ALL_TEMPLATES_PLAYERUI:
@@ -81,8 +82,6 @@ export const playerUiReducer = (state = initialState, action) => {
       break;
 
     case ActionConstant.SET_LATEST_WARGAME_MESSAGE:
-
-      newState.allMessages.unshift(action.payload);
 
       if (action.payload.hasOwnProperty('infoType') && action.payload.phase === "planning") {
         let message = {
@@ -145,10 +144,10 @@ export const playerUiReducer = (state = initialState, action) => {
 
       } else if (!action.payload.hasOwnProperty('infoType')) {
 
-        if (action.payload.details.channel === "chat-channel") {
+        if (action.payload.details.channel === CHAT_CHANNEL_ID) {
           newState.chatChannel.messages.unshift(action.payload);
         } else {
-          newState.channels[action.payload.details.channel].messages.unshift(action.payload);
+          newState.channels[action.payload.details.channel].messages.unshift({...action.payload, hasBeenRead: false, isOpen: false});
         }
       }
 
@@ -157,8 +156,6 @@ export const playerUiReducer = (state = initialState, action) => {
     case ActionConstant.SET_ALL_MESSAGES:
 
       let channels = {};
-
-      newState.allMessages = action.payload;
 
       let messages = action.payload.map((message) => {
         if (message.hasOwnProperty('infoType')) {
@@ -170,7 +167,7 @@ export const playerUiReducer = (state = initialState, action) => {
             gameTurn: message.gameTurn,
           }
         }
-        return message;
+        return {...message, hasBeenRead: false, isOpen: false};
       });
 
       let reduceTurnMarkers = (message) => {
@@ -187,13 +184,8 @@ export const playerUiReducer = (state = initialState, action) => {
 
       newState.allChannels.forEach((channel) => {
 
-        // let participants = channel.participants.filter((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
         let channelActive = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
         let allRoles = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.length === 0);
-
-        // if (participants.length === 0 && allRoles) {
-        //   participants = channel.participants.filter((p) => p.forceUniqid === newState.selectedForce);
-        // }
 
         let participant = channel.participants.find((p) => p.forceUniqid === newState.selectedForce);
 
@@ -205,14 +197,13 @@ export const playerUiReducer = (state = initialState, action) => {
         if (noTemplates) {
           templates = newState.allTemplates.filter((template) => template.title === "Chat");
         } else {
-          // templates = _.flatMap(participants, (participant) => participant.templates);
           templates = participant.templates.map((template) => template.value);
         }
 
-        if (channelActive || allRoles) {
+        if (channelActive || allRoles || newState.isObserver) {
           channels[channel.uniqid] = {
             name: channel.name,
-            templates,
+            templates: newState.isObserver && !channelActive ? [] : templates,
             forceIcons: channel.participants.filter((participant) => participant.forceUniqid !== newState.selectedForce).map((participant) => participant.icon),
             messages: messages.filter((message) => message.details.channel === channel.uniqid || message.infoType === true),
           };

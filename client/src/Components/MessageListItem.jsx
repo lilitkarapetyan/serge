@@ -13,19 +13,21 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import moment from "moment";
 import Collapsible from "react-collapsible";
 import MessagePreview from "../Components/MessagePreviewPlayerUi";
+
 class MessageListItem extends Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      hasBeenRead: false,
-    }
   }
 
   open = () => {
-    this.setState({hasBeenRead: true});
-    this.props.openSection();
+    this.setState({open: true}); // force update
+    this.props.openSection(this.props.detail);
+  };
+
+  close = () => {
+    this.setState({open: false}); // force update
+    this.props.closeSection(this.props.detail);
   };
 
   render() {
@@ -48,7 +50,7 @@ class MessageListItem extends Component {
                 <span>{moment(this.props.detail.message.details.timestamp).format("HH:mm")}</span>
                 <Badge pill variant="primary">{this.props.detail.message.details.from.role}</Badge>
                 <Badge pill variant="secondary">{this.props.detail.message.details.messageType}</Badge>
-                {!this.state.hasBeenRead && <Badge pill variant="warning">Unread</Badge>}
+                {!this.props.detail.hasBeenRead && <Badge pill variant="warning">Unread</Badge>}
               </div>
             </div>
           }
@@ -56,7 +58,7 @@ class MessageListItem extends Component {
           easing={'ease-in-out'}
           open={this.props.detail.open}
           onOpening={this.open}
-          onClosing={this.props.closeSection}
+          onClosing={this.close}
         >
           <div key={`${this.props.key}-preview`} className="message-preview-player wrap"><MessagePreview detail={this.props.detail.message.message} from={this.props.detail.message.details.from} /></div>
         </Collapsible>

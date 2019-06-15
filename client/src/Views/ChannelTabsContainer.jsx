@@ -28,20 +28,30 @@ class ChannelTabsContainer extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      model: FlexLayout.Model.fromJson(json),
-      channelNames: [],
-    };
-  }
+    this.localStorage = window.localStorage;
 
-  componentWillMount() {
-    this.addToTabs(this.props);
+    let modelName = `FlexLayout-model-${this.props.playerUi.wargameTitle}`;
+
+    let model = this.localStorage.getItem(modelName);
+
+    // this.model = model ? FlexLayout.Model.fromJson(JSON.parse(model)) : FlexLayout.Model.fromJson(json);
+    this.model = FlexLayout.Model.fromJson(json);
+
+    this.state = {
+      modelName,
+      channelNames: [],
+      isSavedModel: !!model,
+    };
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
 
     let channelLength = Object.keys(this.props.playerUi.channels).length;
     let nextChannelLength = Object.keys(nextProps.playerUi.channels).length;
+
+    // if (this.state.isSavedModel) {
+    //   return;
+    // }
 
     if (channelLength < nextChannelLength) {
       this.addToTabs(nextProps);
@@ -60,7 +70,7 @@ class ChannelTabsContainer extends Component {
     let newChannels = _.difference(channelNames, this.state.channelNames);
 
     newChannels.forEach((channelName) => {
-      this.state.model.doAction(
+      this.model.doAction(
         FlexLayout.Actions.addNode({type: "tab", component: channelName, name: channelName, id: channelName}, "#2", FlexLayout.DockLocation.CENTER, -1)
       );
     });
@@ -77,7 +87,7 @@ class ChannelTabsContainer extends Component {
     let channelsToRemove = _.difference(this.state.channelNames, channelNames);
 
     channelsToRemove.forEach((channelName) => {
-      this.state.model.doAction(
+      this.model.doAction(
         FlexLayout.Actions.deleteTab(channelName)
       );
     });
@@ -89,17 +99,23 @@ class ChannelTabsContainer extends Component {
 
   factory = (node) => {
 
+    if (_.isEmpty(this.props.playerUi.channels)) return;
     let curChannelEntry = Object.entries(this.props.playerUi.channels).find((entry) => entry[1].name === node.getName());
     return <Channel channel={curChannelEntry[0]} />
 
+  };
+
+  modelChanged = () => {
+    this.localStorage.setItem(this.state.modelName, JSON.stringify(this.model.toJson()));
   };
 
   render() {
     return (
       <>
         <FlexLayout.Layout
-          model={this.state.model}
+          model={this.model}
           factory={this.factory}
+          onModelChange={this.modelChanged}
         />
       </>
     );

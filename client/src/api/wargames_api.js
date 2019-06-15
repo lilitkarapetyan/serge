@@ -21,6 +21,7 @@ import {
   setLatestFeedbackMessage,
   setCurrentWargame,
   setLatestWargameMessage,
+  setWargameMessages,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 import moment from "moment";
@@ -32,8 +33,6 @@ const listenNewMessage = ({db, name, dispatch}) => {
   db.changes({since: 'now', live: true, timeout: false, heartbeat: false, include_docs: true})
     .on('change', function (changes) {
       (async () => {
-
-        console.log(changes.doc);
 
         if (changes.doc.hasOwnProperty("infoType")) {
           dispatch(setCurrentWargame(changes.doc));

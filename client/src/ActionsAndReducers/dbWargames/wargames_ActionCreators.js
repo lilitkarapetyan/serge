@@ -39,6 +39,11 @@ export const addNewForce = (data) => ({
   payload: data,
 });
 
+export const setForceColor = (hex) => ({
+  type: ActionConstant.SET_FORCE_COLOR,
+  payload: hex,
+});
+
 export const setSelectedChannel = (payload) => ({
   type: ActionConstant.SET_SELECTED_CHANNEL,
   payload

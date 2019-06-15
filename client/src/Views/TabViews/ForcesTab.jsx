@@ -15,6 +15,7 @@ import RemovableGroupItem from "../../Components/Layout/RemovableGroupItem";
 import TextInput from "../../Components/Inputs/TextInput";
 import uniqid from "uniqid";
 
+import { SketchPicker } from "react-color";
 import {forceTemplate} from "../../consts";
 import _ from "lodash";
 import checkUnique from "../../Helpers/checkUnique";
@@ -155,6 +156,10 @@ class ForcesTab extends Component {
     })
   };
 
+  toggleColorPicker = () => {
+    this.props.dispatch(modalAction.open("colorpicker"));
+  };
+
   addNewRoleModal = () => {
     this.props.dispatch(modalAction.open("newRole"));
   };
@@ -173,7 +178,9 @@ class ForcesTab extends Component {
 
     let forceName = typeof this.state.newForceName === 'string' ? this.state.newForceName : selectedForce;
     let forceOverview = typeof this.state.newForceOverview === 'string' ? this.state.newForceOverview : this.props.wargame.data[curTab].forces.find((force) => force.name === selectedForce).overview;
-    let forceIcon = this.props.wargame.data[curTab].forces.find((force) => force.name === selectedForce).icon;
+    let force = this.props.wargame.data[curTab].forces.find((force) => force.name === selectedForce);
+    let forceIcon = force.icon;
+    let forceColor = force.color;
 
     return (
       <div className="flex-content--fill forcesTab">
@@ -186,6 +193,7 @@ class ForcesTab extends Component {
             data={forceName}
           />
 
+          <div className="force-color" style={{background: forceColor}} onClick={this.toggleColorPicker} />
           <img className="force-icon" src={forceIcon} alt="" />
 
           <div className="force-button-wrap">
