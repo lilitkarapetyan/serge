@@ -6,6 +6,11 @@ import InsightsChannel from "./InsightsChannel";
 import "../scss/dependencies/flexlayout-react.scss";
 import '../scss/App.scss';
 
+
+import {
+  showHideObjectives,
+} from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
+
 var json = {
   global: {
     tabSetTabStripHeight: 45,
@@ -63,14 +68,27 @@ class AdminAndInsightsTabsContainer extends Component {
     }
   };
 
+
+  showHideForceObjectives = () => {
+    this.props.dispatch(showHideObjectives());
+  };
+
   render() {
+
+    let forceName = this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).name;
+    let forceIcon = this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).icon;
+
     return (
       <>
         <FlexLayout.Layout
           model={this.state.model}
           factory={this.factory}
         />
-      </>
+        <div className="role-info">
+          <span className="role-type">{ this.props.playerUi.selectedRole }</span>
+          <span className="force-type">{ forceName }</span>
+          <img src={forceIcon} alt="" onClick={this.showHideForceObjectives} />
+        </div>      </>
     );
   }
 }
