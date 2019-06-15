@@ -238,7 +238,6 @@ class ChannelsTable extends Component {
                   onChange={this.setSelectedRole}
                   // isDisabled={!this.state.selectedForce.value}
                   isMulti
-                  allowSelectAll={true}
                 />
               </td>
               <td>
