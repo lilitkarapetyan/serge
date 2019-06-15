@@ -113,8 +113,8 @@ class ChannelsTable extends Component {
     }
     row.push(
       <td key={`edit-delete${i}`}>
-        <FontAwesomeIcon icon={faTrash} onClick={this.removeSubscription.bind(this, data.subscriptionId)} />
-        <FontAwesomeIcon icon={faPencilAlt} onClick={this.editSubscription.bind(this, data.subscriptionId)} />
+        <FontAwesomeIcon icon={faTrash} title="Delete membership" onClick={this.removeSubscription.bind(this, data.subscriptionId)} />
+        <FontAwesomeIcon icon={faPencilAlt} title="Edit membership" onClick={this.editSubscription.bind(this, data.subscriptionId)} />
       </td>
     );
     return (<tr key={`row-${i}`}>{row}</tr>);

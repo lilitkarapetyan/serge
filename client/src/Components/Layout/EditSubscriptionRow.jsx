@@ -89,8 +89,8 @@ class EditSubscriptionRow extends Component {
           />
         </td>
         <td>
-          <FontAwesomeIcon icon={faUndoAlt} onClick={this.cancelEdit} />
-          <FontAwesomeIcon icon={faCheck} onClick={this.updateChannel} />
+          <FontAwesomeIcon icon={faUndoAlt} title="Cancel" onClick={this.cancelEdit} />
+          <FontAwesomeIcon icon={faCheck} title="Save" onClick={this.updateChannel} />
         </td>
       </tr>
     )
