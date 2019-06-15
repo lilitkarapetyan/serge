@@ -8,7 +8,7 @@ import '../scss/App.scss';
 
 
 import {
-  showHideObjectives,
+  showHideObjectives
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 var json = {
