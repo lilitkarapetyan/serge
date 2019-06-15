@@ -12,7 +12,7 @@ export const databasePath = `${serverPath}db/`;
 
 export const MSG_STORE = "messages";
 export const MSG_TYPE_STORE = "message_types";
-export const CHAT_CHANNEL_ID = "chat-channel";
+export const CHAT_CHANNEL_ID = "game-admin";
 export const POLL_TIMEOUT = 250;
 
 export const PLANNING_PHASE = 'planning';
