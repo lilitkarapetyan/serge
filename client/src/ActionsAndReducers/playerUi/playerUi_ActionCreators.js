@@ -1,6 +1,5 @@
 import ActionConstant from '../ActionConstants';
 import * as wargamesApi from "../../api/wargames_api";
-import * as messageTemplatesApi from "../../api/messageTypes_api";
 import {modalAction} from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
 
 export const setCurrentWargame = (data) => ({
@@ -40,6 +39,21 @@ export const setLatestWargameMessage = (message) => ({
 export const setWargameMessages = (messages) => ({
   type: ActionConstant.SET_ALL_MESSAGES,
   payload: messages,
+});
+
+export const openMessage = (channel, message) => ({
+  type: ActionConstant.OPEN_MESSAGE,
+  payload: {channel, message},
+});
+
+export const closeMessage = (channel, message) => ({
+  type: ActionConstant.CLOSE_MESSAGE,
+  payload: {channel, message},
+});
+
+export const markAllAsRead = (channel) => ({
+  type: ActionConstant.MARK_ALL_AS_READ,
+  payload: channel,
 });
 
 export const setAllTemplates = (templates) => ({

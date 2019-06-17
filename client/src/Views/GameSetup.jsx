@@ -11,7 +11,7 @@ import ProgressBar from "../Components/ProgressBar/ProgressBar";
 
 import Link from "../Components/Link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowLeft, faSave, faHourglassStart} from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faSave } from "@fortawesome/free-solid-svg-icons";
 
  import _ from "lodash";
 import checkUnique from "../Helpers/checkUnique";

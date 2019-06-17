@@ -15,7 +15,6 @@ import RemovableGroupItem from "../../Components/Layout/RemovableGroupItem";
 import TextInput from "../../Components/Inputs/TextInput";
 import uniqid from "uniqid";
 
-import { SketchPicker } from "react-color";
 import {forceTemplate} from "../../consts";
 import _ from "lodash";
 import checkUnique from "../../Helpers/checkUnique";

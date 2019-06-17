@@ -109,12 +109,28 @@ class ChannelTabsContainer extends Component {
     this.localStorage.setItem(this.state.modelName, JSON.stringify(this.model.toJson()));
   };
 
+  tabRender = (node) => {
+
+    let channel = Object.entries(this.props.playerUi.channels).find((entry) => entry[1].name === node.getName())[1];
+
+    if (node._attributes.className !== "unread" && channel.unreadMessageCount > 0) {
+      //   // node.getModel().doAction(FlexLayout.Actions.renameTab(node.getId(), `${node.getName()} (${channel.unreadMessageCount})`));
+      node.getModel().doAction(FlexLayout.Actions.updateNodeAttributes(node.getId(), {className: "unread"}));
+    }
+
+    if (node._attributes.className === "unread" && channel.unreadMessageCount === 0) {
+      //   // node.getModel().doAction(FlexLayout.Actions.renameTab(node.getId(), `${node.getName()} (${channel.unreadMessageCount})`));
+      node.getModel().doAction(FlexLayout.Actions.updateNodeAttributes(node.getId(), {className: ""}));
+    }
+  };
+
   render() {
     return (
       <>
         <FlexLayout.Layout
           model={this.model}
           factory={this.factory}
+          onRenderTab={this.tabRender}
           onModelChange={this.modelChanged}
         />
       </>

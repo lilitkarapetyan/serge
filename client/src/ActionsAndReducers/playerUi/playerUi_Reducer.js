@@ -37,6 +37,9 @@ export const playerUiReducer = (state = initialState, action) => {
 
   let newState = copyState(state);
 
+  let messages;
+  let index;
+
   switch (action.type) {
 
     case ActionConstant.SET_CURRENT_WARGAME_PLAYER:
@@ -137,6 +140,7 @@ export const playerUiReducer = (state = initialState, action) => {
               templates,
               forceIcons: channel.participants.filter((participant) => participant.forceUniqid !== newState.selectedForce).map((participant) => participant.icon),
               messages: [],
+              unreadMessageCount: 0,
             };
           }
 
@@ -148,6 +152,7 @@ export const playerUiReducer = (state = initialState, action) => {
           newState.chatChannel.messages.unshift(action.payload);
         } else {
           newState.channels[action.payload.details.channel].messages.unshift({...action.payload, hasBeenRead: false, isOpen: false});
+          newState.channels[action.payload.details.channel].unreadMessageCount++;
         }
       }
 
@@ -157,7 +162,7 @@ export const playerUiReducer = (state = initialState, action) => {
 
       let channels = {};
 
-      let messages = action.payload.map((message) => {
+      messages = action.payload.map((message) => {
         if (message.hasOwnProperty('infoType')) {
           return {
             details: {
@@ -206,12 +211,50 @@ export const playerUiReducer = (state = initialState, action) => {
             templates: newState.isObserver && !channelActive ? [] : templates,
             forceIcons: channel.participants.filter((participant) => participant.forceUniqid !== newState.selectedForce).map((participant) => participant.icon),
             messages: messages.filter((message) => message.details.channel === channel.uniqid || message.infoType === true),
+            unreadMessageCount: messages.filter((message) => message.details.channel === channel.uniqid).length,
           };
         }
 
         newState.channels = channels;
 
       });
+
+      break;
+
+    case ActionConstant.OPEN_MESSAGE:
+
+      messages = newState.channels[action.payload.channel].messages;
+
+      action.payload.message.isOpen = true;
+      action.payload.message.hasBeenRead = true;
+      index = messages.findIndex((item) => item._id === action.payload.message._id);
+      messages.splice(index, 1, action.payload.message);
+      newState.channels[action.payload.channel].messages = messages;
+
+      let unreadMessages = newState.channels[action.payload.channel].messages.filter((message) => {
+        return !message.hasOwnProperty("infoType") && !message.hasBeenRead;
+      });
+
+      newState.channels[action.payload.channel].unreadMessageCount = unreadMessages.length;
+
+      break;
+
+    case ActionConstant.CLOSE_MESSAGE:
+
+      messages = newState.channels[action.payload.channel].messages;
+      action.payload.message.isOpen = false;
+      index = messages.findIndex((item) => item._id === action.payload.message._id);
+      messages.splice(index, 1, action.payload.message);
+      newState.channels[action.payload.channel].messages = messages;
+
+      break;
+
+    case ActionConstant.MARK_ALL_AS_READ:
+
+      newState.channels[action.payload].messages.forEach((message) => {
+        if (message.hasOwnProperty("hasBeenRead")) message.hasBeenRead = true;
+      });
+      newState.channels[action.payload].unreadMessageCount = 0;
 
       break;
 

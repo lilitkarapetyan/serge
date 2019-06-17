@@ -16,27 +16,23 @@ import MessagePreview from "../Components/MessagePreviewPlayerUi";
 
 class MessageListItem extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   open = () => {
-    this.setState({open: true}); // force update
     this.props.openSection(this.props.detail);
+    this.forceUpdate();
   };
 
   close = () => {
-    this.setState({open: false}); // force update
     this.props.closeSection(this.props.detail);
+    this.forceUpdate();
   };
 
   render() {
 
     let itemTitle;
-    if (this.props.detail.message.message.title) {
-      itemTitle = this.props.detail.message.message.title;
+    if (this.props.detail.message.title) {
+      itemTitle = this.props.detail.message.title;
     } else {
-      itemTitle = this.props.detail.message.message.content;
+      itemTitle = this.props.detail.message.content;
     }
 
     return (
@@ -44,23 +40,23 @@ class MessageListItem extends Component {
         <Collapsible
           trigger={
             <div className="message-title-wrap">
-              <FontAwesomeIcon icon={this.props.detail.open ? faMinus : faPlus} size="1x" />
+              <FontAwesomeIcon icon={this.props.detail.isOpen ? faMinus : faPlus} size="1x" />
               <div className="message-title">{itemTitle}</div>
               <div className="info-wrap">
-                <span>{moment(this.props.detail.message.details.timestamp).format("HH:mm")}</span>
-                <Badge pill variant="primary">{this.props.detail.message.details.from.role}</Badge>
-                <Badge pill variant="secondary">{this.props.detail.message.details.messageType}</Badge>
+                <span>{moment(this.props.detail.details.timestamp).format("HH:mm")}</span>
+                <Badge pill variant="primary">{this.props.detail.details.from.role}</Badge>
+                <Badge pill variant="secondary">{this.props.detail.details.messageType}</Badge>
                 {!this.props.detail.hasBeenRead && <Badge pill variant="warning">Unread</Badge>}
               </div>
             </div>
           }
           transitionTime={200}
           easing={'ease-in-out'}
-          open={this.props.detail.open}
+          open={this.props.detail.isOpen}
           onOpening={this.open}
           onClosing={this.close}
         >
-          <div key={`${this.props.key}-preview`} className="message-preview-player wrap"><MessagePreview detail={this.props.detail.message.message} from={this.props.detail.message.details.from} /></div>
+          <div key={`${this.props.key}-preview`} className="message-preview-player wrap"><MessagePreview detail={this.props.detail.message} from={this.props.detail.details.from} /></div>
         </Collapsible>
       </React.Fragment>
     )

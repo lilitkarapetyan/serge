@@ -9,10 +9,6 @@ import {setForceColor, setTabUnsaved} from "../../ActionsAndReducers/dbWargames/
 
 class ColorPickerModal extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   hideModal = () => {
     this.props.dispatch(modalAction.close());
   };

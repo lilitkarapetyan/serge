@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import '../scss/App.scss';
+// import React, { Component } from 'react';
+// import '../scss/App.scss';
 import MessageListItem from "../Components/MessageListItem";
 
 class MessagesListChannel extends Component {
@@ -12,8 +12,8 @@ class MessagesListChannel extends Component {
 
       messages.map((item, i) => {
 
-        if (item.message.infoType) {
-          return <p className="turn-marker" key={`${i}-turnmarker`}>Turn {item.message.gameTurn}</p>
+        if (item.infoType) {
+          return <p className="turn-marker" key={`${i}-turnmarker`}>Turn {item.gameTurn}</p>
         }
 
         return (

@@ -89,8 +89,6 @@
   }
 }
 
-
-
 .message-feed {
   position: relative;
   display: flex;
@@ -99,6 +97,15 @@
   height: 100vh;
   max-height: 100vh;
   overflow: hidden;
+
+  .unread {
+    &:after {
+      position: absolute;
+      top: -.5em;
+      content: 'new';
+      font-size: .45em;
+    }
+  }
 
   .forces-in-channel {
     display: flex;
@@ -123,7 +130,7 @@
   }
 
   .message-list {
-    max-height: calc(100vh - 128px);
+    max-height: calc(100vh - 165px);
     overflow-y: scroll;
     overflow-x: hidden;
     flex-grow: 2;

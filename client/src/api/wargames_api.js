@@ -21,7 +21,6 @@ import {
   setLatestFeedbackMessage,
   setCurrentWargame,
   setLatestWargameMessage,
-  setWargameMessages,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 import moment from "moment";

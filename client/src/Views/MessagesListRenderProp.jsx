@@ -11,6 +11,7 @@ class MessagesListRenderProp extends Component {
     };
   }
 
+
   componentWillReceiveProps(nextProps, nextContext) {
 
     if (!this.props.allMarkedRead && nextProps.allMarkedRead) {
@@ -58,6 +59,7 @@ class MessagesListRenderProp extends Component {
     this.setState({
       messages
     });
+
   };
 
   closeSection = (el) => {
