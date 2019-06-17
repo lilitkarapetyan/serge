@@ -75,8 +75,7 @@ class AdminAndInsightsTabsContainer extends Component {
 
   render() {
 
-    let forceName = this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).name;
-    let forceIcon = this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).icon;
+    let force = this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce);
 
     return (
       <>
@@ -86,8 +85,8 @@ class AdminAndInsightsTabsContainer extends Component {
         />
         <div className="role-info">
           <span className="role-type">{ this.props.playerUi.selectedRole }</span>
-          <span className="force-type">{ forceName }</span>
-          <img src={forceIcon} alt="" onClick={this.showHideForceObjectives} />
+          <span className="force-type">{ force.name }</span>
+          <img src={force.icon} alt="" onClick={this.showHideForceObjectives} />
         </div>      </>
     );
   }
