@@ -8,6 +8,7 @@ import { wargamesReducer } from "../ActionsAndReducers/dbWargames/wargames_Reduc
 import { notificationReducer } from "../ActionsAndReducers/Notification/Notification_Reducer";
 import { playerUiReducer } from "../ActionsAndReducers/playerUi/playerUi_Reducer";
 import { loadingDbReducer } from "../ActionsAndReducers/loadingDb_Reducer";
+import { exportItems } from "../ActionsAndReducers/ExportItems/ExportItems_Reducer";
 
 import ActionConstants from "../ActionsAndReducers/ActionConstants";
 
@@ -64,4 +65,5 @@ export default createStore(combineReducers({
   wargame: wargamesReducer,
   playerUi: playerUiReducer,
   dbLoading: loadingDbReducer,
+  exportItems,
 }), applyMiddleware(...middlewares));

@@ -7,6 +7,7 @@ import _ from "lodash";
 import {
   editWargame,
   duplicateWargame,
+  exportWargame
 } from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
 import {setCurrentViewFromURI} from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
@@ -14,7 +15,8 @@ import {setCurrentViewFromURI} from "../ActionsAndReducers/setCurrentViewFromURI
 import {
   faClone,
   faPencilAlt,
-  faTrash
+  faTrash,
+  faFileDownload,
 } from "@fortawesome/free-solid-svg-icons";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -57,6 +59,11 @@ class WargameSearchList extends Component {
   setSelectedWargame(name) {
     this.props.dispatch(editWargame(name));
     this.props.dispatch(setCurrentViewFromURI('/client/gameSetup'));
+  }
+
+  exportWargame(name) {
+    this.props.dispatch(exportWargame(name));
+    this.props.dispatch(setCurrentViewFromURI('/client/export'));
   }
 
   duplicateWargame(name) {
@@ -106,7 +113,7 @@ class WargameSearchList extends Component {
           { list.map(function(db) {
             // let active
             return (
-              <span className="searchlist-title" key={db.title} onClick={that.setSelectedWargame.bind(that, db.name)}
+              <span className="searchlist-title" key={db.title}
               onMouseOver={that.displayControls.bind(that, db.title)} onMouseLeave={that.hideControls}>
                 {db.title}
                 {that.state.activeTitle === db.title &&
@@ -114,6 +121,7 @@ class WargameSearchList extends Component {
                     <FontAwesomeIcon icon={faPencilAlt} title="Edit wargame" onClick={that.setSelectedWargame.bind(that, db.name)} />
                     <FontAwesomeIcon icon={faClone} title="Duplicate wargame" onClick={that.duplicateWargame.bind(that, db.name)} />
                     <FontAwesomeIcon icon={faTrash} title="Delete wargame" onClick={that.deleteWargame.bind(that, db.name)} />
+                    <FontAwesomeIcon icon={faFileDownload} title="Export wargame" onClick={that.exportWargame.bind(that, db.name)} />
                   </>
                 }
               </span>
