@@ -78,6 +78,10 @@ describe('wargames actions', () => {
       return wargameLocal;
     });
 
+    wargamesApi.exportWargame = jest.fn(() => {
+      return wargameLocal;
+    });
+
     wargamesApi.updateWargame = jest.fn(() => {
       return wargameLocal;
     });
@@ -350,5 +354,3 @@ describe('wargames reducer', () => {
     });
   });
 });
-
-

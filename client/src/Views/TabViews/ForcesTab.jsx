@@ -141,6 +141,14 @@ class ForcesTab extends Component {
     this.props.dispatch(deleteSelectedForce(this.props.wargame.currentWargame, selectedForce));
   };
 
+  deleteForceFromList = (force) => {
+    let curTab = this.props.wargame.currentTab;
+    let isUmpire = this.props.wargame.data[curTab].forces.find((f) => f.uniqid === force).umpire;
+
+    if (isUmpire) return;
+    this.props.dispatch(deleteSelectedForce(this.props.wargame.currentWargame, force));
+  };
+
   updateForceName = (name) => {
     this.props.dispatch(setTabUnsaved());
     this.setState({
@@ -234,6 +242,7 @@ class ForcesTab extends Component {
           <TabsSearchList listData={this.state.forcesList}
                           setSelected={this.setSelected}
                           selected={selectedForce}
+                          delete={this.deleteForceFromList}
           />
         </div>
 

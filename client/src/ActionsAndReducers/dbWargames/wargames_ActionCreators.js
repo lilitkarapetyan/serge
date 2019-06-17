@@ -59,6 +59,11 @@ const setCurrentWargame = (data) => ({
   payload: data
 });
 
+const setExportWargame = (data) => ({
+  type: ActionConstant.SET_EXPORT_WARGAME,
+  payload: data
+});
+
 export const addRecipientToChannel = (data) => ({
   type: ActionConstant.ADD_NEW_RECIPIENT,
   payload: data,
@@ -177,6 +182,15 @@ export const editWargame = (name) => {
     let wargame = await wargamesApi.editWargame(name);
 
     dispatch(setCurrentWargame(wargame));
+  }
+};
+
+export const exportWargame = (name) => {
+  return async (dispatch) => {
+
+    let wargame = await wargamesApi.exportWargame(name);
+
+    dispatch(setExportWargame(wargame));
   }
 };
 
@@ -312,4 +326,3 @@ export const duplicateWargame = (dbName) => {
     dispatch(saveAllWargameNames(games));
   }
 };
-

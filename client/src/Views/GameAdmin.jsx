@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 
 import {
-  getAllWargameMessages,
-  showHideObjectives,
+  getAllWargameMessages
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 import MessageCreatorChatChannel from "../Components/MessageCreatorChatChannel";
@@ -38,14 +37,7 @@ class GameAdmin extends Component {
     this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
   }
 
-  showHideForceObjectives = () => {
-    this.props.dispatch(showHideObjectives());
-  };
-
   render() {
-
-    let forceName = this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).name;
-    let forceIcon = this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).icon;
 
     return (
       <>
@@ -70,11 +62,6 @@ class GameAdmin extends Component {
               schema={this.props.playerUi.chatChannel.template}
             />
           </Collapsible>
-          <div className="role-info">
-            <span className="role-type">{ this.props.playerUi.selectedRole }</span>
-            <span className="force-type">{ forceName }</span>
-            <img src={forceIcon} alt="" onClick={this.showHideForceObjectives} />
-          </div>
         </div>
       </>
     );

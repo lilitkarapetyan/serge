@@ -62,8 +62,8 @@ class TabsSearchList extends Component {
                   {item.name}
                   {that.state.activeTitle === item.uniqid &&
                   <>
-                    {that.props.duplicate && <FontAwesomeIcon icon={faClone} onClick={that.duplicate.bind(that, item.uniqid)} />}
-                    {that.props.delete && <FontAwesomeIcon icon={faTrash} onClick={that.delete.bind(that, item.uniqid)} />}
+                    {that.props.duplicate && <FontAwesomeIcon icon={faClone} title="Duplicate channel" onClick={that.duplicate.bind(that, item.uniqid)} />}
+                    {that.props.delete && <FontAwesomeIcon icon={faTrash} title="Delete channel" onClick={that.delete.bind(that, item.uniqid)} />}
                   </>
                   }
                 </span>

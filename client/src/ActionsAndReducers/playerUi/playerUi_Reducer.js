@@ -148,7 +148,7 @@ export const playerUiReducer = (state = initialState, action) => {
 
       } else if (!action.payload.hasOwnProperty('infoType')) {
 
-        if (action.payload.details.channel === "chat-channel") {
+        if (action.payload.details.channel === CHAT_CHANNEL_ID) {
           newState.chatChannel.messages.unshift(action.payload);
         } else {
           newState.channels[action.payload.details.channel].messages.unshift({...action.payload, hasBeenRead: false, isOpen: false});
