@@ -24,6 +24,7 @@
     "pouchdb": "^7.0.0",
     "pouchdb-adapter-node-websql": "^7.0.0",
     "pouchdb-all-dbs": "^1.0.2",
+    "preval.macro": "^3.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.3",
     "react-ace-editor": "0.0.3",
@@ -69,7 +70,5 @@
     "not op_mini all"
   ],
   "homepage": "https://serge-dev.herokuapp.com/client/build",
-  "devDependencies": {
-    "preval.macro": "^3.0.0"
-  }
+  "devDependencies": {}
 }
