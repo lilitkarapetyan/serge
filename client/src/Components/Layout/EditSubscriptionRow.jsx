@@ -21,6 +21,8 @@ class EditSubscriptionRow extends Component {
       editSubscriptionRoles: this.props.data.roles,
       editSubscriptionTemplates: this.props.data.templates,
     };
+
+    console.log(this.props.data.templates);
   }
 
   updateSubscriptionForce = (option) => {
@@ -43,7 +45,12 @@ class EditSubscriptionRow extends Component {
 
   updateChannel = () => {
 
-    let templateIds = this.state.editSubscriptionTemplates.map((template) => ({_id: template.value}));
+    let templateIds = this.state.editSubscriptionTemplates.map(function(template) {
+      if (typeof template.value === "string") {
+        return {_id: template.value};
+      }
+      return {_id: template.value._id};
+    });
     let templates = _.intersectionBy(this.props.messageTypes.messages, templateIds, (item) => item._id);
         templates = templates.map((template) => ({label: template.title, value: template}));
 

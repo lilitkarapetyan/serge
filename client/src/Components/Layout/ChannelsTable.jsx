@@ -126,13 +126,8 @@ class ChannelsTable extends Component {
   };
 
   editSubscription(subscriptionId) {
-
-    let forceUniqId = this.props.data.find((force) => force.subscriptionId === subscriptionId).forceUniqid;
-    let selectedForce = this.state.forceOptions.find((opt) => opt.value === forceUniqId);
-
     this.setState({
       subscriptionToEdit: subscriptionId,
-      selectedForce,
     });
   }
 
