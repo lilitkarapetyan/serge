@@ -41,7 +41,7 @@ class InsightsChannel extends Component {
                 {message.playerInfo.name && <Badge pill variant="warning">{message.playerInfo.name}</Badge>}
               </div>
               {message.message}
-              <p className="feedback-marker"  style={{borderColor: this.props.detail.details.from.forceColor}}></p>
+              <p className="feedback-marker"  style={{borderColor: message.playerInfo.forceColor}}></p>
             </React.Fragment>
           )
         })
