@@ -77,8 +77,4 @@ NewMessage.propTypes = {
   templates: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = () => ({
-
-});
-
-export default connect(mapStateToProps)(NewMessage);
+export default NewMessage;

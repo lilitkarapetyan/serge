@@ -7,6 +7,7 @@ import uniqId from "uniqid";
 
 const initialState = {
   selectedForce: '',
+  forceColor: '',
   selectedRole: '',
   isObserver: false,
   controlUi: false,
@@ -62,6 +63,7 @@ export const playerUiReducer = (state = initialState, action) => {
 
     case ActionConstant.SET_FORCE:
       newState.selectedForce = action.payload;
+      newState.forceColor = newState.allForces.find((force) => force.uniqid === action.payload).color;
       break;
 
     case ActionConstant.SET_ROLE:

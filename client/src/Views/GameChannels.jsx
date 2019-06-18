@@ -28,7 +28,7 @@ class GameChannels extends Component {
           <AdminAndInsightsTabsContainer />
         </div>
         { this.props.playerUi.showObjective &&
-          <div className="force-objectives">
+          <div className="force-objectives" style={{borderColor: this.props.playerUi.forceColor}}>
             <h3>Objectives</h3>
             <div className="objective-text">
               {this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).overview}

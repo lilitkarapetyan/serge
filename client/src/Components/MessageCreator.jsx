@@ -28,6 +28,7 @@ class JsonCreator extends Component {
       channel: this.props.curChannel,
       from: {
         force: this.props.playerUi.selectedForce,
+        forceColor: this.props.playerUi.forceColor,
         role: this.props.playerUi.selectedRole,
         icon: this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).icon,
       },
