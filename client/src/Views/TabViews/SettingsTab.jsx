@@ -169,7 +169,7 @@ class SettingsTab extends Component {
                   mask="11 11 11"
                   placeholder="HH MM SS"
                   className="material-input"
-                  label="Display time warning at (HH MM SS)"
+                  label="Time warning at (HH MM SS) remaining"
                   updateStore={this.updateTimeWarning}
                   data={millisecondsToHHMMSS(this.props.wargame.data[this.props.wargame.currentTab].timeWarning)}
                 />
