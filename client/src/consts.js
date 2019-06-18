@@ -82,7 +82,10 @@ export const dbDefaultSettings = {
       // turnStrategy: '',
       startTime: new Date().toISOString(),
       complete: false,
-      dirty: false,
+      // mark page as dirty the first time it's opened,
+      // in order to overwrite existing time
+      // values with the above defaults
+      dirty: true,
     },
     forces: {
       name: "Forces",
