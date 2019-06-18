@@ -73,7 +73,6 @@ class PlayerUi extends Component {
     this.props.dispatch(setForce(force.uniqid));
     this.props.dispatch(setRole(role));
     this.props.dispatch(setAllTemplates(this.props.messageTypes.messages));
-    this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
     this.props.dispatch(startListening(this.props.playerUi.currentWargame));
   };
 

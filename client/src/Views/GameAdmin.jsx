@@ -33,9 +33,6 @@ class GameAdmin extends Component {
 
   }
 
-  componentWillMount() {
-    this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
-  }
 
   render() {
 

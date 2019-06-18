@@ -5,6 +5,7 @@ import Channel from "../Components/Channel";
 import _ from "lodash";
 import "../scss/dependencies/flexlayout-react.scss";
 import '../scss/App.scss';
+import {getAllWargameMessages} from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 var json = {
   global: {
@@ -42,6 +43,10 @@ class ChannelTabsContainer extends Component {
       channelNames: [],
       isSavedModel: !!model,
     };
+  }
+
+  componentWillMount() {
+    this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
