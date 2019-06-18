@@ -60,12 +60,14 @@ class Channel extends Component {
             );
           })}
         </div>
-
-        <NewMessage
-          orderableChannel={true}
-          curChannel={curChannel}
-          templates={this.props.playerUi.channels[curChannel].templates}
-        />
+        {
+          this.props.playerUi.channels[curChannel].observing === false &&
+          <NewMessage
+            orderableChannel={true}
+            curChannel={curChannel}
+            templates={this.props.playerUi.channels[curChannel].templates}
+          />
+        }
       </>
     );
   }

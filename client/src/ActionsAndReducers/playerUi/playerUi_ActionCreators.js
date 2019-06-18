@@ -79,10 +79,7 @@ export const getWargame = (gamePath) => {
 
 export const nextGameTurn = (dbName) => {
   return async (dispatch) => {
-
-    let wargame = await wargamesApi.nextGameTurn(dbName);
-
-    dispatch(setCurrentWargame(wargame));
+    await wargamesApi.nextGameTurn(dbName);
   }
 };
 

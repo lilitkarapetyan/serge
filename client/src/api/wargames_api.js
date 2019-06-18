@@ -878,7 +878,7 @@ export const getAllMessages = dbName => {
 
   return db.allDocs({include_docs: true, descending: true})
     .then(res => res.rows.map(a => a.doc))
-}
+};
 
 
 export const getAllWargames = function () {

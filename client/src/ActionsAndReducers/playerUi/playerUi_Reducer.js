@@ -39,10 +39,12 @@ export const playerUiReducer = (state = initialState, action) => {
 
   let messages;
   let index;
+  let channels = {};
 
   switch (action.type) {
 
     case ActionConstant.SET_CURRENT_WARGAME_PLAYER:
+
       newState.currentWargame = action.payload.name;
       newState.wargameTitle = action.payload.wargameTitle;
       newState.wargameInitiated = action.payload.wargameInitiated;
@@ -101,15 +103,17 @@ export const playerUiReducer = (state = initialState, action) => {
             delete newState.channels[channelId];
           } else {
             let channelActive = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
-            if (!channelActive) delete newState.channels[channelId];
+            if (!channelActive && !newState.isObserver) delete newState.channels[channelId];
           }
         }
 
+        // create any new channels & add to current channel
         newState.allChannels.forEach((channel) => {
 
           let channelActive = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
           let allRoles = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.length === 0);
 
+          // if channel already created
           if (
             (channelActive || allRoles) &&
             !!newState.channels[channel.uniqid] &&
@@ -118,39 +122,60 @@ export const playerUiReducer = (state = initialState, action) => {
             newState.channels[channel.uniqid].messages.unshift(message);
           }
 
+          // if no channel created yet
           if (
             (channelActive || allRoles) &&
             !newState.channels[channel.uniqid]
           ) {
 
-            let participant = channel.participants.find((p) => p.forceUniqid === newState.selectedForce);
-            if (participant === undefined) return;
+            let participatingRole = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
+            let participatingForce = channel.participants.find((p) => p.forceUniqid === newState.selectedForce);
 
-            let noTemplates = participant.templates.length === 0;
+            if (!participatingForce && !newState.isObserver) return;
+
+            let isParticipant = !!participatingRole;
+            let allRolesIncluded = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.length === 0);
+            let chosenTemplates = participatingForce.templates;
 
             let templates;
-            if (noTemplates) {
-              templates = newState.allTemplates.filter((template) => template.title === "Chat");
-            } else {
-              templates = participant.templates.map((template) => template.value);
+            if (isParticipant || allRolesIncluded) {
+              if (chosenTemplates.length === 0) {
+                templates = newState.allTemplates.filter((template) => template.title === "Chat");
+              }
+              else {
+                templates = chosenTemplates.map((template) => template.value);
+              }
             }
 
-            newState.channels[channel.uniqid] = {
-              name: channel.name,
-              templates,
-              forceIcons: channel.participants.filter((participant) => participant.forceUniqid !== newState.selectedForce).map((participant) => participant.icon),
-              messages: [],
-              unreadMessageCount: 0,
-            };
+            let observing = false;
+            if (newState.isObserver && !isParticipant && !allRolesIncluded) {
+              observing = true;
+              templates = [];
+            }
+
+            if (allRolesIncluded || isParticipant || newState.isObserver) {
+              channels[channel.uniqid] = {
+                name: channel.name,
+                templates,
+                forceIcons: channel.participants.filter((participant) => participant.forceUniqid !== newState.selectedForce).map((participant) => participant.icon),
+                messages: [],
+                unreadMessageCount: 0,
+                observing,
+              };
+            }
+            newState.channels = channels;
           }
 
         });
 
       } else if (!action.payload.hasOwnProperty('infoType')) {
 
-        if (action.payload.details.channel === CHAT_CHANNEL_ID) {
+        if (action.payload.details.channel === CHAT_CHANNEL_ID)
+        {
           newState.chatChannel.messages.unshift(action.payload);
-        } else {
+        }
+        else if (!!newState.channels[action.payload.details.channel])
+        {
           newState.channels[action.payload.details.channel].messages.unshift({...action.payload, hasBeenRead: false, isOpen: false});
           newState.channels[action.payload.details.channel].unreadMessageCount++;
         }
@@ -159,8 +184,6 @@ export const playerUiReducer = (state = initialState, action) => {
       break;
 
     case ActionConstant.SET_ALL_MESSAGES:
-
-      let channels = {};
 
       messages = action.payload.map((message) => {
         if (message.hasOwnProperty('infoType')) {
@@ -189,29 +212,48 @@ export const playerUiReducer = (state = initialState, action) => {
 
       newState.allChannels.forEach((channel) => {
 
-        let channelActive = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
-        let allRoles = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.length === 0);
+        let participatingRole = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
+        let participatingForce = channel.participants.find((p) => p.forceUniqid === newState.selectedForce);
 
-        let participant = channel.participants.find((p) => p.forceUniqid === newState.selectedForce);
+        if (!participatingForce && !newState.isObserver) return;
 
-        if (participant === undefined) return;
+        let isParticipant = !!participatingRole;
+        let allRolesIncluded = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.length === 0);
 
-        let noTemplates = participant.templates.length === 0;
-
-        let templates;
-        if (noTemplates) {
-          templates = newState.allTemplates.filter((template) => template.title === "Chat");
+        let chosenTemplates;
+        if (!!participatingForce) {
+          chosenTemplates = participatingForce.templates;
         } else {
-          templates = participant.templates.map((template) => template.value);
+          chosenTemplates = [];
         }
 
-        if (channelActive || allRoles || newState.isObserver) {
+        let templates;
+        if (isParticipant || allRolesIncluded) {
+          if (chosenTemplates.length === 0) {
+            templates = newState.allTemplates.filter((template) => template.title === "Chat");
+          }
+          else {
+            templates = chosenTemplates.map((template) => template.value);
+          }
+        }
+
+        let observing = false;
+        if (newState.isObserver && !isParticipant && !allRolesIncluded) {
+          observing = true;
+          templates = [];
+        }
+
+        if (!newState.isObserver && !isParticipant && !allRolesIncluded) return;
+
+
+        if (allRolesIncluded || isParticipant || newState.isObserver) {
           channels[channel.uniqid] = {
             name: channel.name,
-            templates: newState.isObserver && !channelActive ? [] : templates,
+            templates,
             forceIcons: channel.participants.filter((participant) => participant.forceUniqid !== newState.selectedForce).map((participant) => participant.icon),
             messages: messages.filter((message) => message.details.channel === channel.uniqid || message.infoType === true),
             unreadMessageCount: messages.filter((message) => message.details.channel === channel.uniqid).length,
+            observing,
           };
         }
 
