@@ -63,14 +63,22 @@ class ExportMessages extends Component {
       for(const key of keys) {
         //if message[key] is object then do loop for that object keys
         if(typeof msg[key] === 'object') {
-          let nextLevelKeys = Object.keys(msg[key]);
-          for(const key2 of nextLevelKeys) {
-            if(typeof msg[key][key2] !== 'object') {
+          for(const key2 of Object.keys(msg[key])) {
+            if(typeof msg[key][key2] === 'object') {
+              for(const key3 of Object.keys(msg[key][key2])) {
+                if(typeof msg[key][key2][key3] !== 'object') {
+                  if(!fields.includes(key3)) {
+                    fields.push(key3);
+                  }
+                  row[fields.indexOf(key3)] = msg[key][key2][key3];
+                }
+              }
+            }
+            else {
               //check if fields/titles have no current key then add
               if(!fields.includes(key2)) {
                 fields.push(key2);
               }
-
               //check position for field then add value to rigth position in row
               row[fields.indexOf(key2)] = msg[key][key2];
             }
