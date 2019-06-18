@@ -1,9 +1,28 @@
 @import "dependencies/variables";
 
 #game-setup-head {
+  position: relative;
   background: $greyBg;
   z-index: 2;
   padding: 6vh 1vw 0;
+}
+
+.wargame-in-progress-warning {
+  position: absolute;
+  width: 200px;
+  top: 50px;
+  left: 50%;
+  margin-left: -100px;
+
+  h6 {
+    text-align: center;
+  }
+
+  svg {
+    color: $secondaryColor;
+    width: 100% !important;
+    margin-bottom: 5px;
+  }
 }
 
 .tab-nav {

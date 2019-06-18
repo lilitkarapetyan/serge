@@ -11,7 +11,7 @@ import ProgressBar from "../Components/ProgressBar/ProgressBar";
 
 import Link from "../Components/Link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faSave } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faSave, faHourglassStart } from "@fortawesome/free-solid-svg-icons";
 
  import _ from "lodash";
 import checkUnique from "../Helpers/checkUnique";
@@ -118,12 +118,12 @@ class GameSetup extends Component {
             <ProgressBar>
               {this.createIndicators()}
             </ProgressBar>
-            {/*{this.props.wargame.wargameInitiated &&*/}
-              {/*<div className="wargame-in-progress-warning">*/}
-                {/*<FontAwesomeIcon icon={faHourglassStart} size="2x" />*/}
-                {/*<h5>Wargame in progress</h5>*/}
-              {/*</div>*/}
-            {/*}*/}
+            {this.props.wargame.wargameInitiated &&
+              <div className="wargame-in-progress-warning">
+                <FontAwesomeIcon icon={faHourglassStart} size="1x" />
+                <h6>Wargame in progress</h6>
+              </div>
+            }
           </div>
           <TabbedView
             tabs={this.props.wargame.data}
