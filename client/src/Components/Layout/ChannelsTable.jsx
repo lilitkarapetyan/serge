@@ -17,9 +17,10 @@ import {
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 
+import _ from "lodash";
+import classNames from "classnames";
 import deepCopy from "../../Helpers/copyStateHelper";
 
-import classNames from "classnames";
 import {setTabUnsaved} from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
 class ChannelsTable extends Component {
@@ -40,7 +41,7 @@ class ChannelsTable extends Component {
       selectedForce: {value: null, label: null},
       forceOptions: forceOptions,
       selectedRoles:  [],
-      roleOptions: [],
+      roleOptions: [{value: '', label: ''}],
       selectedTemplates:  [],
       templateOptions: templateOptions,
       subscriptionToEdit: null,
@@ -87,12 +88,15 @@ class ChannelsTable extends Component {
 
     let data = deepCopy(rowData);
 
-    var row = [];
+    let row = [];
+    let key = 0;
     for (var prop in data) {
 
       if (prop === "subscriptionId") continue;
       if (prop === "forceUniqid") continue;
       if (prop === "icon") continue;
+
+      key++;
 
       var value = '';
       if (typeof data[prop] !== "string") {
@@ -105,12 +109,12 @@ class ChannelsTable extends Component {
       } else {
         value = data[prop];
       }
-      row.push(<td key={`${value}${i}`}>{value}</td>)
+      row.push(<td key={`${value}${key}`}>{value}</td>)
     }
     row.push(
       <td key={`edit-delete${i}`}>
-        <FontAwesomeIcon icon={faTrash} onClick={this.removeSubscription.bind(this, data.subscriptionId)} />
-        <FontAwesomeIcon icon={faPencilAlt} onClick={this.editSubscription.bind(this, data.subscriptionId)} />
+        <FontAwesomeIcon icon={faTrash} title="Delete membership" onClick={this.removeSubscription.bind(this, data.subscriptionId)} />
+        <FontAwesomeIcon icon={faPencilAlt} title="Edit membership" onClick={this.editSubscription.bind(this, data.subscriptionId)} />
       </td>
     );
     return (<tr key={`row-${i}`}>{row}</tr>);
@@ -122,13 +126,8 @@ class ChannelsTable extends Component {
   };
 
   editSubscription(subscriptionId) {
-
-    let forceUniqId = this.props.data.find((force) => force.subscriptionId === subscriptionId).forceUniqid;
-    let selectedForce = this.state.forceOptions.find((opt) => opt.value === forceUniqId);
-
     this.setState({
       subscriptionToEdit: subscriptionId,
-      selectedForce,
     });
   }
 
@@ -163,15 +162,17 @@ class ChannelsTable extends Component {
 
   addToChannel = () => {
 
-    let rowComplete = this.state.selectedTemplates.length > 0;
+    if (!this.state.selectedForce.value) return;
 
-    if (!rowComplete) return;
+    let templateIds = this.state.selectedTemplates.map((template) => ({_id: template.value}));
+    let templates = _.intersectionBy(this.props.messageTypes.messages, templateIds, (item) => item._id);
+    templates = templates.map((template) => ({label: template.title, value: template}));
 
     let recipient = {
       force: this.props.wargame.data.forces.forces.find((f) => f.uniqid === this.state.selectedForce.value).name,
       forceUniqid: this.props.wargame.data.forces.forces.find((f) => f.uniqid === this.state.selectedForce.value).uniqid,
       roles: this.state.selectedRoles,
-      templates: this.state.selectedTemplates,
+      templates,
       icon: this.props.wargame.data.forces.forces.find((f) => f.uniqid === this.state.selectedForce.value).icon,
     };
     this.props.dispatch(setTabUnsaved());
@@ -194,15 +195,13 @@ class ChannelsTable extends Component {
 
   render() {
 
-    let rowComplete = this.state.selectedTemplates.length > 0;
-
     return (
       <div className="flex-content">
         <table>
           <thead>
             <tr>
               <th>Force</th>
-              <th>Roles</th>
+              <th>Restrict access specific roles</th>
               <th>Templates</th>
             </tr>
           </thead>
@@ -211,6 +210,7 @@ class ChannelsTable extends Component {
               return data.subscriptionId === this.state.subscriptionToEdit ? <EditSubscriptionRow
                                                                                   key={data.subscriptionId}
                                                                                   data={data}
+                                                                                  messageTypes={this.props.messageTypes}
                                                                                   forceOptions={this.state.forceOptions}
                                                                                   roleOptions={this.state.roleOptions}
                                                                                   templateOptions={this.state.templateOptions}
@@ -231,7 +231,7 @@ class ChannelsTable extends Component {
                   value={this.state.selectedRoles}
                   options={this.state.roleOptions}
                   onChange={this.setSelectedRole}
-                  isDisabled={!this.state.selectedForce.value}
+                  // isDisabled={!this.state.selectedForce.value}
                   isMulti
                 />
               </td>
@@ -240,13 +240,16 @@ class ChannelsTable extends Component {
                   value={this.state.selectedTemplates}
                   options={this.state.templateOptions}
                   onChange={this.setSelectedTemplate}
-                  isDisabled={this.state.selectedRoles.length === 0}
+                  // isDisabled={this.state.selectedRoles.length === 0}
                   isMulti
                 />
               </td>
               <td>
-                <FontAwesomeIcon icon={faUndoAlt} onClick={this.clearChannelData} />
-                <FontAwesomeIcon icon={faCheck} className={classNames({"btn--disabled": !rowComplete})} onClick={this.addToChannel} />
+                <FontAwesomeIcon icon={faUndoAlt} title="Delete channel" onClick={this.clearChannelData} />
+                <FontAwesomeIcon
+                  icon={faCheck} title="Duplicate channel"
+                  className={classNames({"btn--disabled": !this.state.selectedForce.value})}
+                  onClick={this.addToChannel} />
               </td>
             </tr>
           </tbody>

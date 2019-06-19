@@ -5,13 +5,14 @@ import uniqId from "uniqid";
 import {
   forceTemplate,
   channelTemplate,
-  dbDefaultSettings,
-} from "../../api/consts";
+  dbDefaultSettings, serverPath,
+} from "../../consts";
 
 var initialState = {
   isLoading: false,
   wargameList: [],
   currentWargame: '',
+  exportMessagelist: [],
   wargameTitle: '',
   data: {...dbDefaultSettings.data},
   currentTab: Object.keys(dbDefaultSettings.data)[0],
@@ -51,6 +52,16 @@ export const wargamesReducer = (state = initialState, action) => {
 
       return newState;
 
+    case ActionConstant.SET_EXPORT_WARGAME:
+
+      newState.data = action.payload.data;
+      newState.currentWargame = action.payload.name;
+      newState.wargameTitle = action.payload.wargameTitle;
+      newState.exportMessagelist = action.payload.exportMessagelist;
+      newState.wargameInitiated = action.payload.wargameInitiated || false;
+
+      return newState;
+
     case ActionConstant.SET_WARGAME_NAME:
 
       listWithoutThis = [];
@@ -85,9 +96,13 @@ export const wargamesReducer = (state = initialState, action) => {
       let newForce = forceTemplate;
       newForce.name = action.payload.name;
       newForce.uniqid = action.payload.uniqid;
+      newForce.roles[0].password = `pass${uniqId.time()}`;
 
       newState.data[tab].forces.push(newForce);
+      break;
 
+    case ActionConstant.SET_FORCE_COLOR:
+      newState.data[tab].forces.find((force) => force.name === newState.data[tab].selectedForce.name).color = action.payload;
       break;
 
     case ActionConstant.SET_SELECTED_FORCE:
@@ -142,7 +157,7 @@ export const wargamesReducer = (state = initialState, action) => {
       break;
 
     case ActionConstant.UPDATE_ROLE_NAME:
-      index = newState.data[tab].forces.find((force) => force.name === action.payload.force).roles.findIndex((role) => role.name === action.payload.oldName)
+      index = newState.data[tab].forces.find((force) => force.name === action.payload.force).roles.findIndex((role) => role.name === action.payload.oldName);
       newState.data[tab].forces.find((force) => force.name === action.payload.force).roles.splice(index, 1, action.payload.role);
       break;
 
@@ -154,7 +169,7 @@ export const wargamesReducer = (state = initialState, action) => {
     case ActionConstant.ADD_ICON:
 
       selected = newState.data[tab].selectedForce.name;
-      newState.data[tab].forces.find((f) => f.name === selected).icon = action.icon;
+      newState.data[tab].forces.find((f) => f.name === selected).icon = serverPath + action.icon.slice(1);
       break;
 
     default:

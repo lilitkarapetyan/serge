@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import '../scss/App.scss';
+// import React, { Component } from 'react';
+// import '../scss/App.scss';
 import MessageListItem from "../Components/MessageListItem";
 
 class MessagesListChannel extends Component {
@@ -9,14 +9,19 @@ class MessagesListChannel extends Component {
     let messages = this.props.messages;
 
     return (
+
       messages.map((item, i) => {
+
+        if (item.infoType) {
+          return <p className="turn-marker" key={`${i}-turnmarker`}>Turn {item.gameTurn}</p>
+        }
+
         return (
           <MessageListItem
             detail={item}
-            curChannel={this.props.curChannel}
             key={`${i}-messageitem`}
-            openSection={this.props.openSection.bind(this, item)}
-            closeSection={this.props.closeSection.bind(this, item)}
+            openSection={this.props.openSection}
+            closeSection={this.props.closeSection}
           />
         );
       })

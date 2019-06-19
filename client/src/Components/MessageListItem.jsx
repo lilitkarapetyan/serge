@@ -10,39 +10,60 @@ import {
   faMinus,
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-
+import moment from "moment";
 import Collapsible from "react-collapsible";
 import MessagePreview from "../Components/MessagePreviewPlayerUi";
+
 class MessageListItem extends Component {
+
+  open = () => {
+    this.props.openSection(this.props.detail);
+    this.forceUpdate();
+  };
+
+  close = () => {
+    this.props.closeSection(this.props.detail);
+    this.forceUpdate();
+  };
 
   render() {
 
     let itemTitle;
-    if (this.props.detail.message.message.title) {
-      itemTitle = this.props.detail.message.message.title;
+    if (this.props.detail.message.title) {
+      itemTitle = this.props.detail.message.title;
+    } else if(this.props.detail.message.content) {
+      // yes, we have content (probably chat) use it
+      itemTitle = this.props.detail.message.content;
     } else {
-      itemTitle = this.props.detail.message.message.content;
+      // no content, just use message-type
+      itemTitle = this.props.detail.details.messageType
     }
 
     return (
-      <Collapsible
-        key={this.props.key}
-        trigger={
-          <>
-            <FontAwesomeIcon icon={this.props.detail.open ? faMinus : faPlus} size="1x" />
-            <div className="message-title">{itemTitle}</div>
-            <Badge pill variant="primary">{this.props.detail.message.details.from.role}</Badge>
-            <Badge pill variant="secondary">{this.props.detail.message.details.messageType}</Badge>
-          </>
-        }
-        transitionTime={200}
-        easing={'ease-in-out'}
-        open={this.props.detail.open}
-        onOpening={this.props.openSection}
-        onClosing={this.props.closeSection}
-      >
-        <div key={`${this.props.key}-preview`} className="message-preview-player wrap"><MessagePreview detail={this.props.detail.message.message} from={this.props.detail.message.details.from} /></div>
-      </Collapsible>
+      <React.Fragment key={this.props.key}>
+        <Collapsible
+          trigger={
+            <div className="message-title-wrap" style={{borderColor: this.props.detail.details.from.forceColor}}>
+              <FontAwesomeIcon icon={this.props.detail.isOpen ? faMinus : faPlus} size="1x" />
+              <div className="message-title">{itemTitle}</div>
+              <div className="info-wrap">
+                <span>{moment(this.props.detail.details.timestamp).format("HH:mm")}</span>
+                <Badge pill variant="dark">{this.props.detail.details.from.role}</Badge>
+                <Badge pill variant="secondary">{this.props.detail.details.messageType}</Badge>
+                {!this.props.detail.hasBeenRead && <Badge pill variant="warning">Unread</Badge>}
+              </div>
+            </div>
+          }
+          transitionTime={200}
+          easing={'ease-in-out'}
+          open={this.props.detail.isOpen}
+          onOpening={this.open}
+          onClosing={this.close}
+        >
+          <div key={`${this.props.key}-preview`} className="message-preview-player wrap"
+           style={{borderColor: this.props.detail.details.from.forceColor}}><MessagePreview detail={this.props.detail.message} from={this.props.detail.details.from} /></div>
+        </Collapsible>
+      </React.Fragment>
     )
   }
 }

@@ -2,7 +2,7 @@ import uniqid from "uniqid";
 
 import PouchDB from "pouchdb";
 import {  databasePath,
-          MSG_STORE} from "./consts";
+          MSG_STORE} from "../consts";
 
 
 var db = new PouchDB(databasePath+MSG_STORE);
@@ -73,23 +73,16 @@ export const duplicateMessageInDb = (id) => {
 };
 
 export const getAllMessagesFromDb = () => {
+
   return new Promise((resolve, reject) => {
-    return db.changes({
-      since: 0,
-      include_docs: true,
-      descending: true,
-    })
-      .then(function (changes) {
-
-        let results = changes.results.map((a) => a.doc);
+    db.allDocs({include_docs: true, descending: true})
+      .then((res) => {
+        let results = res.rows.map((a) => a.doc);
         results = results.filter((a) => !a.hasOwnProperty('_deleted') && a.hasOwnProperty('details'));
-
         resolve(results);
       })
-      .catch(function (err) {
-        // handle errors
+      .catch((err) => {
         reject(err);
-        console.log(err);
       });
   });
 };

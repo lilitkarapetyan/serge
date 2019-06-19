@@ -11,14 +11,13 @@ import ProgressBar from "../Components/ProgressBar/ProgressBar";
 
 import Link from "../Components/Link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowLeft, faSave} from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faSave, faHourglassStart } from "@fortawesome/free-solid-svg-icons";
 
  import _ from "lodash";
 import checkUnique from "../Helpers/checkUnique";
 
 import classNames from "classnames";
 import TextInput from "../Components/Inputs/TextInput";
-import {getAllMessageTypes} from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
 import {addNotification} from "../ActionsAndReducers/Notification/Notification_ActionCreators";
 
 class GameSetup extends Component {
@@ -29,10 +28,6 @@ class GameSetup extends Component {
     this.state = {
       newWargameName: null,
     };
-  }
-
-  componentWillMount() {
-    this.props.dispatch(getAllMessageTypes());
   }
 
   setCurrentTab = (tab) => {
@@ -123,6 +118,12 @@ class GameSetup extends Component {
             <ProgressBar>
               {this.createIndicators()}
             </ProgressBar>
+            {this.props.wargame.wargameInitiated &&
+              <div className="wargame-in-progress-warning">
+                <FontAwesomeIcon icon={faHourglassStart} size="1x" />
+                <h6>Wargame in progress</h6>
+              </div>
+            }
           </div>
           <TabbedView
             tabs={this.props.wargame.data}

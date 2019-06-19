@@ -11,7 +11,7 @@ import {
   refreshForce,
 } from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 import uniqid from "uniqid";
-import {forceTemplate} from "../../api/consts";
+import {forceTemplate} from "../../consts";
 
 class UnsavedForceModal extends Component {
 

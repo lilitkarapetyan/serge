@@ -1,5 +1,6 @@
 @import './dependencies/variables';
 
+
 .modal-bg {
   position: fixed;
   display: flex;
@@ -19,9 +20,12 @@
   width: auto;
   height: auto;
   margin: auto;
-  background: rgba(255,255,255,1);
+  background: #fafcff;
   border-radius: 2px;
 
+  .sketch-picker {
+    box-shadow: none !important;
+  }
 
   .buttons {
     display: flex;
@@ -29,16 +33,24 @@
     justify-content: flex-end;
     //padding: 0 20px 20px;
     position: relative;
-    right: -14px; // minus button margin
   }
 
   .display-text-wrapper {
     padding: 20px;
     order: 2;
 
+    #role-name,
+    #role-password {
+      width: 300px !important;
+    }
+
+    .input-label {
+      display: block;
+    }
+
     .modal-input {
       width: 100%;
-      margin: 20px 0 30px;
+      margin-bottom: 30px;
     }
 
     p.notification {
@@ -79,4 +91,44 @@
       object-fit: cover;
     }
   }
+}
+
+.lessons-modal {
+  max-width: 500px;
+
+  .title {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  svg {
+    color: $primaryColor;
+  }
+  h3 {
+    display: inline;
+    line-height: 1em;
+    font-weight: bold;
+    margin-left: .5em;
+    color: $primaryColor;
+    width: fit-content;
+  }
+
+  p {
+    font-size: 16px;
+    color: $primaryColor;
+  }
+
+  textarea {
+    resize: none;
+  }
+
+  .buttons {
+    margin-top: 12px;
+  }
+}
+
+.text-input-wrap {
+  display: flex;
+  flex-direction: column;
 }

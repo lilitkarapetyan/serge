@@ -15,7 +15,7 @@ import RemovableGroupItem from "../../Components/Layout/RemovableGroupItem";
 import TextInput from "../../Components/Inputs/TextInput";
 import uniqid from "uniqid";
 
-import {forceTemplate} from "../../api/consts";
+import {forceTemplate} from "../../consts";
 import _ from "lodash";
 import checkUnique from "../../Helpers/checkUnique";
 import {addNotification} from "../../ActionsAndReducers/Notification/Notification_ActionCreators";
@@ -141,6 +141,14 @@ class ForcesTab extends Component {
     this.props.dispatch(deleteSelectedForce(this.props.wargame.currentWargame, selectedForce));
   };
 
+  deleteForceFromList = (force) => {
+    let curTab = this.props.wargame.currentTab;
+    let isUmpire = this.props.wargame.data[curTab].forces.find((f) => f.uniqid === force).umpire;
+
+    if (isUmpire) return;
+    this.props.dispatch(deleteSelectedForce(this.props.wargame.currentWargame, force));
+  };
+
   updateForceName = (name) => {
     this.props.dispatch(setTabUnsaved());
     this.setState({
@@ -153,6 +161,10 @@ class ForcesTab extends Component {
     this.setState({
       newForceOverview: desc,
     })
+  };
+
+  toggleColorPicker = () => {
+    this.props.dispatch(modalAction.open("colorpicker"));
   };
 
   addNewRoleModal = () => {
@@ -173,7 +185,9 @@ class ForcesTab extends Component {
 
     let forceName = typeof this.state.newForceName === 'string' ? this.state.newForceName : selectedForce;
     let forceOverview = typeof this.state.newForceOverview === 'string' ? this.state.newForceOverview : this.props.wargame.data[curTab].forces.find((force) => force.name === selectedForce).overview;
-    let forceIcon = this.props.wargame.data[curTab].forces.find((force) => force.name === selectedForce).icon;
+    let force = this.props.wargame.data[curTab].forces.find((force) => force.name === selectedForce);
+    let forceIcon = force.icon;
+    let forceColor = force.color;
 
     return (
       <div className="flex-content--fill forcesTab">
@@ -186,6 +200,7 @@ class ForcesTab extends Component {
             data={forceName}
           />
 
+          <div className="force-color" style={{background: forceColor}} onClick={this.toggleColorPicker} />
           <img className="force-icon" src={forceIcon} alt="" />
 
           <div className="force-button-wrap">
@@ -207,7 +222,7 @@ class ForcesTab extends Component {
         <div className="flex-content">
           <div className="roles">
             {this.props.wargame.data[curTab].forces.find((force) => force.name === selectedForce).roles.map((role) => {
-              return (<RemovableGroupItem key={role.name} isControl={role.control}>{role.name}</RemovableGroupItem>)
+              return (<RemovableGroupItem key={role.name} data={role} isControl={role.control}>{role.name}</RemovableGroupItem>)
             })}
           </div>
         </div>
@@ -222,11 +237,12 @@ class ForcesTab extends Component {
 
     return (
       <div className="flex-content-wrapper">
-        <div className="flex-content">
+        <div className="flex-content searchlist-wrap">
           <span className="link link--noIcon" onClick={this.createForce}>Add a new force</span>
           <TabsSearchList listData={this.state.forcesList}
                           setSelected={this.setSelected}
                           selected={selectedForce}
+                          delete={this.deleteForceFromList}
           />
         </div>
 

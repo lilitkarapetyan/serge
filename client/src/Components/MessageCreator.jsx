@@ -7,7 +7,6 @@ import '../scss/App.scss';
 
 import {
   saveMessage,
-  getAllWargameMessages,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 class JsonCreator extends Component {
@@ -25,39 +24,52 @@ class JsonCreator extends Component {
 
   sendMessage = () => {
 
+    let curForce = this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce);
+
     let messageDetails = {
-      channel: this.props.playerUi.selectedChannel,
+      channel: this.props.curChannel,
       from: {
-        force: this.props.playerUi.selectedForce,
+        force: curForce.name,
+        forceColor: this.props.playerUi.forceColor,
         role: this.props.playerUi.selectedRole,
-        icon: this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).icon,
+        icon: curForce.icon,
       },
-      messageType: this.props.playerUi.messageSchema.title,
+      messageType: this.props.schema.title,
+      timestamp: new Date().toISOString(),
     };
 
     this.props.dispatch(saveMessage(this.props.playerUi.currentWargame, messageDetails, this.editor.getValue()));
-    this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
+
+    this.editor.destroy();
+    this.editor = null;
+    this.createEditor(this.props.schema);
   };
 
   componentWillReceiveProps(nextProps, nextContext) {
-    if (this.editor) {
+
+    if (
+      this.props.schema &&
+      this.props.schema.title !== nextProps.schema.title
+    ) {
       this.editor.destroy();
       this.editor = null;
     }
 
     if (nextProps.schema && nextProps.schema.type) {
-        if (this.editor) return;
-
-      this.editor = new JSONEditor(this.editorPreviewRef.current, {
-        schema: nextProps.schema,
-        theme: 'bootstrap4',
-        disable_collapse: true,
-        disable_edit_json: true,
-        disable_properties: true,
-      });
+      if (this.editor) return;
+      this.createEditor(nextProps.schema);
     }
   }
 
+  createEditor(schema) {
+    this.editor = new JSONEditor(this.editorPreviewRef.current, {
+      schema: schema,
+      theme: 'bootstrap4',
+      disable_collapse: true,
+      disable_edit_json: true,
+      disable_properties: true,
+    });
+  }
 
   render() {
     return (

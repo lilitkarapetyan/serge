@@ -6,44 +6,59 @@ import deepCopy from "../Helpers/copyStateHelper";
 import calcComplete from "../Helpers/calcComplete";
 
 import PouchDB from "pouchdb";
-import {  databasePath,
+import {
+  databasePath,
   serverPath,
   dbDefaultSettings,
   MSG_STORE,
-  MSG_TYPE_STORE
-} from "./consts";
+  MSG_TYPE_STORE,
+  PLANNING_PHASE,
+  ADJUDICATION_PHASE,
+  MAX_LISTENERS,
+} from "../consts";
 
 import {
-  setWargameMessages,
+  setLatestFeedbackMessage,
   setCurrentWargame,
-  setFilteredChannels,
+  setLatestWargameMessage,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 import moment from "moment";
 
-
 var wargameDbStore = [];
 
+const listenNewMessage = ({db, name, dispatch}) => {
 
-const changesListener = (db, name, dispatch) => {
-  db.changes({since: 'now', live: true, timeout: false, heartbeat: false})
-    .on('change', function () {
+  db.changes({since: 'now', live: true, timeout: false, heartbeat: false, include_docs: true})
+    .on('change', function (changes) {
       (async () => {
-        let messages = await getAllMessages(name);
-        let latestWargame = messages.find((message) => message.infoType);
-        dispatch(setCurrentWargame(latestWargame));
-        dispatch(setFilteredChannels(false));
 
-        messages = messages.filter((message) => !message.hasOwnProperty('infoType'));
-        dispatch(setWargameMessages(messages));
+        if (changes.doc.hasOwnProperty("infoType")) {
+          dispatch(setCurrentWargame(changes.doc));
+          dispatch(setLatestWargameMessage(changes.doc));
+          return;
+        }
 
+        if (changes.doc.hasOwnProperty("feedback")) {
+          dispatch(setLatestFeedbackMessage(changes.doc));
+        } else {
+          dispatch(setLatestWargameMessage(changes.doc));
+        }
       })();
     })
     .on('error', function (err) {
       console.log(err);
-      changesListener(db, name, dispatch);
+      listenNewMessage({db, name, dispatch});
     });
 };
+
+
+export const listenForWargameChanges = (name, dispatch) => {
+  let wargame = wargameDbStore.find((item) => item.name === name);
+  let db = wargame.db;
+  listenNewMessage({db, name, dispatch});
+};
+
 
 export const populateWargame = (dispatch) => {
   return fetch(serverPath+'allDbs')
@@ -51,20 +66,18 @@ export const populateWargame = (dispatch) => {
       return response.json();
     })
     .then((dbs) => {
-      let wargameNames = wargameDbStore.map((db) => db.name);
+      const wargameNames = wargameDbStore.map((db) => db.name);
       let toCreate = _.difference(dbs, wargameNames);
       toCreate = _.pull(toCreate, MSG_STORE, MSG_TYPE_STORE, "_replicator", "_users");
 
       toCreate.forEach((name) => {
-        var db = new PouchDB(databasePath+name);
-        db.setMaxListeners(15);
-
-        changesListener(db, name, dispatch);
+        const db = new PouchDB(databasePath+name);
+        db.setMaxListeners(MAX_LISTENERS);
 
         wargameDbStore.unshift({name, db});
       });
 
-      let promises = wargameDbStore.map((game) => {
+      const promises = wargameDbStore.map((game) => {
         return game.db.get(dbDefaultSettings._id)
           .then(function (res) {
             return {
@@ -90,44 +103,50 @@ export const clearWargames = () => {
     });
 };
 
+export const saveIcon = (file) => {
+  return fetch(serverPath+'saveIcon', {
+    method: 'POST',
+    "Content-Type": "image/png",
+    body: file,
+  })
+    .then((res) => res.json());
+};
+
 export const deleteWargame = (wargamePath) => {
 
-  let name = getNameFromPath(wargamePath);
+  const name = getNameFromPath(wargamePath);
 
   let wargame = wargameDbStore.find((item) => item.name === name);
-      wargame.db.destroy();
-        // .then(() => {
-        //   return fetch(serverPath+'deleteDb?db='+name);
-        // })
-        // .then((res) => {
-        //   console.log(res);
-        // })
-        // .catch((err) => {
-        //   console.log(err);
-        // });
+  wargame.db.destroy();
+  // .then(() => {
+  //   return fetch(serverPath+'deleteDb?db='+name);
+  // })
+  // .then((res) => {
+  //   console.log(res);
+  // })
+  // .catch((err) => {
+  //   console.log(err);
+  // });
 
 
-  let index = wargameDbStore.findIndex((item) => item.name === name);
+  const index = wargameDbStore.findIndex((item) => item.name === name);
   wargameDbStore.splice(index, 1);
 };
 
 export const createWargame = (dispatch) => {
-  let uniqId = uniqid.time();
+  const uniqId = uniqid.time();
 
-  var name = `wargame-${uniqId}`;
+  const name = `wargame-${uniqId}`;
 
   return new Promise((resolve, reject) => {
 
-    let db = new PouchDB(databasePath+name);
+    const db = new PouchDB(databasePath+name);
 
     db.setMaxListeners(15);
-    changesListener(db, name, dispatch);
 
     wargameDbStore.unshift({name, db});
 
-    let settings = {...dbDefaultSettings, name: name};
-
-    settings.wargameTitle = name;
+    const settings = {...dbDefaultSettings, name: name, wargameTitle: name};
 
     db.put(settings)
       .then(() => {
@@ -146,16 +165,15 @@ export const createWargame = (dispatch) => {
 export const checkIfWargameStarted = (dbName) => {
   return getAllMessages(dbName)
     .then((messages) => {
-      let latestWargame = messages.find((message) => message.infoType);
-      if (latestWargame) return true;
-      return false;
+      const latestWargame = messages.find((message) => message.infoType);
+      return !!latestWargame;
     })
 };
 
 export const getLatestWargameRevision = (dbName) => {
   return getAllMessages(dbName)
     .then((messages) => {
-      let latestWargame = messages.find((message) => message.infoType);
+      const latestWargame = messages.find((message) => message.infoType);
       if (latestWargame) return latestWargame;
       return getWargameLocalFromName(dbName);
     })
@@ -163,16 +181,16 @@ export const getLatestWargameRevision = (dbName) => {
 
 export const editWargame = (dbPath) => {
 
-  let dbName = getNameFromPath(dbPath);
+  const dbName = getNameFromPath(dbPath);
 
   return new Promise((resolve, reject) => {
     getAllMessages(dbName)
       .then((messages) => {
-        let latestWargame = messages.find((message) => message.infoType);
+        const latestWargame = messages.find((message) => message.infoType);
         if (latestWargame) {
           resolve(latestWargame);
         } else {
-          var db = wargameDbStore.find((db) => db.name === dbName).db;
+          const db = wargameDbStore.find((db) => db.name === dbName).db;
           db.get(dbDefaultSettings._id)
             .then((res) => {
               resolve(res);
@@ -185,13 +203,32 @@ export const editWargame = (dbPath) => {
   });
 };
 
+export const exportWargame = dbPath => {
+  const dbName = getNameFromPath(dbPath);
+
+  return getAllMessages(dbName).then(messages => {
+    const latestWargame = messages.find(message => message.infoType);
+
+    if(latestWargame) {
+      return {...latestWargame, exportMessagelist: messages};
+    }
+    else {
+      const db = wargameDbStore.find(db => db.name === dbName).db;
+
+      return db.get(dbDefaultSettings._id).then(res => {
+        return {...res, exportMessagelist: messages};
+      });
+    }
+  });
+}
+
 export const updateWargameTitle = (dbName, title) => {
 
   return getAllWargames()
     .then(function (games) {
       if (games.some((game) => game.title === title && getNameFromPath(game.name) !== dbName)) return 'Name already in use.';
 
-      var db = wargameDbStore.find((db) => db.name === dbName).db;
+      const db = wargameDbStore.find((db) => db.name === dbName).db;
 
       return new Promise((resolve, reject) => {
 
@@ -204,10 +241,12 @@ export const updateWargameTitle = (dbName, title) => {
               wargameTitle: title,
               data: res.data,
               gameTurn: res.gameTurn,
+              phase: res.phase,
               gameDate: res.gameDate,
               gameTurnTime: res.gameTurnTime,
               realtimeTurnTime: res.realtimeTurnTime,
-              turnEndTime: moment().add(res.realtimeTurnTime, 'minutes').format(),
+              timeWarning: res.timeWarning,
+              turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
               wargameInitiated: res.wargameInitiated,
             })
               .then(() => {
@@ -226,46 +265,45 @@ export const updateWargameTitle = (dbName, title) => {
 
 export const saveSettings = (dbName, data) => {
 
-  let db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
+  const db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
 
-  return new Promise((resolve, reject) => {
+  return getLatestWargameRevision(dbName)
+    .then(function (localDoc) {
+      let newDoc = deepCopy(localDoc);
+      newDoc.data.overview = data;
+      newDoc.data.overview.complete = calcComplete(data);
 
-    getWargameLocalFromName(dbName)
-      .then(function (localDoc) {
-        let newDoc = deepCopy(localDoc);
-        newDoc.data.overview = data;
-        newDoc.data.overview.complete = calcComplete(data);
-        return newDoc;
-      })
-      .then((res) => {
-        return db.put({
-          _id: res._id,
-          _rev: res._rev,
-          name: res.name,
-          wargameTitle: res.wargameTitle,
-          data: res.data,
-          gameTurn: res.gameTurn,
-          gameDate: data.startTime,
-          gameTurnTime: data.gameTurnTime,
-          realtimeTurnTime: data.realtimeTurnTime,
-          turnEndTime: moment().add(res.realtimeTurnTime, 'minutes').format(),
-          wargameInitiated: res.wargameInitiated,
-        })
-      })
-      .then(() => {
-        resolve(db.get(dbDefaultSettings._id));
-      })
-      .catch((err) => {
-        reject(err);
-      })
-  });
+      return new Promise((resolve, reject) => {
+        if (newDoc.wargameInitiated) {
+          resolve(createLatestWargameRevision(dbName, newDoc));
+        } else {
+          return db.put({
+            _id: newDoc._id,
+            _rev: newDoc._rev,
+            name: newDoc.name,
+            wargameTitle: newDoc.wargameTitle,
+            data: newDoc.data,
+            gameTurn: newDoc.gameTurn,
+            gameDate: data.startTime,
+            gameTurnTime: data.gameTurnTime,
+            realtimeTurnTime: data.realtimeTurnTime,
+            timeWarning: data.timeWarning,
+            turnEndTime: moment().add(data.realtimeTurnTime, 'ms').format(),
+            wargameInitiated: newDoc.wargameInitiated,
+          })
+            .then(() => {
+              resolve(db.get(dbDefaultSettings._id));
+            })
+        }
+      });
+    });
 };
 
 export const saveForce = (dbName, newName, newData, oldName) => {
 
-  let db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
+  const db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
 
-  return getWargameLocalFromName(dbName)
+  return getLatestWargameRevision(dbName)
     .then(function (localDoc) {
 
       let newDoc = deepCopy(localDoc);
@@ -296,27 +334,37 @@ export const saveForce = (dbName, newName, newData, oldName) => {
 
       return new Promise((resolve, reject) => {
 
-        db.get(dbDefaultSettings._id)
+        getLatestWargameRevision(dbName)
           .then((res) => {
-            db.put({
-              _id: dbDefaultSettings._id,
-              _rev: res._rev,
-              name: res.name,
-              wargameTitle: res.wargameTitle,
-              data: updatedData,
-              gameTurn: res.gameTurn,
-              gameDate: res.gameDate,
-              gameTurnTime: res.gameTurnTime,
-              realtimeTurnTime: res.realtimeTurnTime,
-              turnEndTime: moment().add(res.realtimeTurnTime, 'minutes').format(),
-              wargameInitiated: res.wargameInitiated,
-            })
-              .then(() => {
-                resolve(db.get(dbDefaultSettings._id));
+
+            let data = res;
+            data.data = updatedData;
+
+            if (res.wargameInitiated) {
+              resolve(createLatestWargameRevision(dbName, data));
+            } else {
+              db.put({
+                _id: dbDefaultSettings._id,
+                _rev: res._rev,
+                name: res.name,
+                wargameTitle: res.wargameTitle,
+                data: updatedData,
+                gameTurn: res.gameTurn,
+                phase: res.phase,
+                gameDate: res.gameDate,
+                gameTurnTime: res.gameTurnTime,
+                realtimeTurnTime: res.realtimeTurnTime,
+                timeWarning: res.timeWarning,
+                turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
+                wargameInitiated: res.wargameInitiated,
               })
-              .catch((err) => {
-                reject(err);
-              })
+                .then(() => {
+                  resolve(db.get(dbDefaultSettings._id));
+                })
+                .catch((err) => {
+                  reject(err);
+                })
+            }
           });
       });
     });
@@ -326,9 +374,9 @@ export const saveForce = (dbName, newName, newData, oldName) => {
 
 export const saveChannel = (dbName, newName, newData, oldName) => {
 
-  let db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
+  const db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
 
-  return getWargameLocalFromName(dbName)
+  return getLatestWargameRevision(dbName)
     .then(function (localDoc) {
 
       let newDoc = deepCopy(localDoc);
@@ -351,38 +399,49 @@ export const saveChannel = (dbName, newName, newData, oldName) => {
 
       return new Promise((resolve, reject) => {
 
-        db.get(dbDefaultSettings._id)
+        // db.get(dbDefaultSettings._id)
+        getLatestWargameRevision(dbName)
           .then((res) => {
-            db.put({
-              _id: dbDefaultSettings._id,
-              _rev: res._rev,
-              name: res.name,
-              wargameTitle: res.wargameTitle,
-              data: updatedData,
-              gameTurn: res.gameTurn,
-              gameDate: res.gameDate,
-              gameTurnTime: res.gameTurnTime,
-              realtimeTurnTime: res.realtimeTurnTime,
-              turnEndTime: moment().add(res.realtimeTurnTime, 'minutes').format(),
-              wargameInitiated: res.wargameInitiated,
-            })
-              .then(() => {
-                resolve(db.get(dbDefaultSettings._id));
+            if (res.wargameInitiated) {
+              let data = res;
+              data.data = updatedData;
+              createLatestWargameRevision(dbName, data)
+                .then((res) => {
+                  resolve(res);
+                })
+            } else {
+              db.put({
+                _id: dbDefaultSettings._id,
+                _rev: res._rev,
+                name: res.name,
+                wargameTitle: res.wargameTitle,
+                data: updatedData,
+                gameTurn: res.gameTurn,
+                phase: res.phase,
+                gameDate: res.gameDate,
+                gameTurnTime: res.gameTurnTime,
+                realtimeTurnTime: res.realtimeTurnTime,
+                timeWarning: res.timeWarning,
+                turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
+                wargameInitiated: res.wargameInitiated,
               })
-              .catch((err) => {
-                reject(err);
-              })
+                .then(() => {
+                  resolve(db.get(dbDefaultSettings._id));
+                })
+                .catch((err) => {
+                  reject(err);
+                })
+            }
           });
       });
     })
 };
 
+export const duplicateChannel = (dbName, channelUniqid) => {
 
-export const deleteChannel = (dbName, channelUniqid) => {
+  const db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
 
-  let db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
-  //
-  return getWargameLocalFromName(dbName)
+  return getLatestWargameRevision(dbName)
     .then(function (localDoc) {
 
       let newDoc = deepCopy(localDoc);
@@ -393,34 +452,111 @@ export const deleteChannel = (dbName, channelUniqid) => {
 
       let channelIndex = channels.findIndex((channel) => channel.uniqid === channelUniqid);
 
-        channels.splice(channelIndex, 1);
+      let duplicateChannel = deepCopy(channels[channelIndex]);
+
+      let uniq = uniqid.time();
+
+      duplicateChannel.name = duplicateChannel.name + `-${uniq}`;
+      duplicateChannel.uniqid = `channel-${uniq}`;
+
+      channels.splice(channelIndex, 0, duplicateChannel);
 
       updatedData.channels.channels = channels;
       updatedData.channels.complete = calcComplete(channels) && channels.length !== 0;
 
       return new Promise((resolve, reject) => {
 
-        db.get(dbDefaultSettings._id)
+        getLatestWargameRevision(dbName)
           .then((res) => {
-            db.put({
-              _id: dbDefaultSettings._id,
-              _rev: res._rev,
-              name: res.name,
-              wargameTitle: res.wargameTitle,
-              data: updatedData,
-              gameTurn: res.gameTurn,
-              gameDate: res.gameDate,
-              gameTurnTime: res.gameTurnTime,
-              realtimeTurnTime: res.realtimeTurnTime,
-              turnEndTime: moment().add(res.realtimeTurnTime, 'minutes').format(),
-              wargameInitiated: res.wargameInitiated,
-            })
-              .then(() => {
-                resolve(db.get(dbDefaultSettings._id));
+            if (res.wargameInitiated) {
+              let data = res;
+              data.data = updatedData;
+              createLatestWargameRevision(dbName, data)
+                .then((res) => {
+                  resolve(res);
+                })
+            } else {
+              db.put({
+                _id: dbDefaultSettings._id,
+                _rev: res._rev,
+                name: res.name,
+                wargameTitle: res.wargameTitle,
+                data: updatedData,
+                gameTurn: res.gameTurn,
+                phase: res.phase,
+                gameDate: res.gameDate,
+                gameTurnTime: res.gameTurnTime,
+                realtimeTurnTime: res.realtimeTurnTime,
+                timeWarning: res.timeWarning,
+                turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
+                wargameInitiated: res.wargameInitiated,
               })
-              .catch((err) => {
-                reject(err);
+                .then(() => {
+                  resolve(db.get(dbDefaultSettings._id));
+                })
+                .catch((err) => {
+                  reject(err);
+                })
+            }
+          });
+      });
+    });
+};
+
+export const deleteChannel = (dbName, channelUniqid) => {
+
+  const db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
+  //
+  return getLatestWargameRevision(dbName)
+    .then(function (localDoc) {
+
+      let newDoc = deepCopy(localDoc);
+
+      let updatedData = newDoc.data;
+
+      let channels = updatedData.channels.channels;
+
+      let channelIndex = channels.findIndex((channel) => channel.uniqid === channelUniqid);
+
+      channels.splice(channelIndex, 1);
+
+      updatedData.channels.channels = channels;
+      updatedData.channels.complete = calcComplete(channels) && channels.length !== 0;
+
+      return new Promise((resolve, reject) => {
+
+        getLatestWargameRevision(dbName)
+          .then((res) => {
+            if (res.wargameInitiated) {
+              let data = res;
+              data.data = updatedData;
+              createLatestWargameRevision(dbName, data)
+                .then((res) => {
+                  resolve(res);
+                })
+            } else {
+              db.put({
+                _id: dbDefaultSettings._id,
+                _rev: res._rev,
+                name: res.name,
+                wargameTitle: res.wargameTitle,
+                data: updatedData,
+                gameTurn: res.gameTurn,
+                phase: res.phase,
+                gameDate: res.gameDate,
+                gameTurnTime: res.gameTurnTime,
+                realtimeTurnTime: res.realtimeTurnTime,
+                timeWarning: res.timeWarning,
+                turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
+                wargameInitiated: res.wargameInitiated,
               })
+                .then(() => {
+                  resolve(db.get(dbDefaultSettings._id));
+                })
+                .catch((err) => {
+                  reject(err);
+                })
+            }
           });
       });
     })
@@ -428,9 +564,9 @@ export const deleteChannel = (dbName, channelUniqid) => {
 
 export const deleteForce = (dbName, forceName) => {
 
-  let db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
+  const db = wargameDbStore.find((wargame) => dbName === wargame.name).db;
   //
-  return getWargameLocalFromName(dbName)
+  return getLatestWargameRevision(dbName)
     .then(function (localDoc) {
 
       let newDoc = deepCopy(localDoc);
@@ -448,27 +584,38 @@ export const deleteForce = (dbName, forceName) => {
 
       return new Promise((resolve, reject) => {
 
-        db.get(dbDefaultSettings._id)
+        getLatestWargameRevision(dbName)
           .then((res) => {
-            db.put({
-              _id: dbDefaultSettings._id,
-              _rev: res._rev,
-              name: res.name,
-              wargameTitle: res.wargameTitle,
-              data: updatedData,
-              gameTurn: res.gameTurn,
-              gameDate: res.gameDate,
-              gameTurnTime: res.gameTurnTime,
-              realtimeTurnTime: res.realtimeTurnTime,
-              turnEndTime: moment().add(res.realtimeTurnTime, 'minutes').format(),
-              wargameInitiated: res.wargameInitiated,
-            })
-              .then(() => {
-                resolve(db.get(dbDefaultSettings._id));
+            if (res.wargameInitiated) {
+              let data = res;
+              data.data = updatedData;
+              createLatestWargameRevision(dbName, data)
+                .then((res) => {
+                  resolve(res);
+                })
+            } else {
+              db.put({
+                _id: dbDefaultSettings._id,
+                _rev: res._rev,
+                name: res.name,
+                wargameTitle: res.wargameTitle,
+                data: updatedData,
+                gameTurn: res.gameTurn,
+                phase: res.phase,
+                gameDate: res.gameDate,
+                gameTurnTime: res.gameTurnTime,
+                realtimeTurnTime: res.realtimeTurnTime,
+                timeWarning: res.timeWarning,
+                turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
+                wargameInitiated: res.wargameInitiated,
               })
-              .catch((err) => {
-                reject(err);
-              })
+                .then(() => {
+                  resolve(db.get(dbDefaultSettings._id));
+                })
+                .catch((err) => {
+                  reject(err);
+                })
+            }
           });
       });
     })
@@ -477,10 +624,10 @@ export const deleteForce = (dbName, forceName) => {
 
 export const duplicateWargame = (dbPath) => {
 
-  let dbName = getNameFromPath(dbPath);
+  const dbName = getNameFromPath(dbPath);
 
-  let db = wargameDbStore.find((db) => db.name === dbName).db;
-  let uniqId = uniqid.time();
+  const db = wargameDbStore.find((db) => db.name === dbName).db;
+  const uniqId = uniqid.time();
 
   return new Promise((resolve, reject) => {
 
@@ -499,10 +646,12 @@ export const duplicateWargame = (dbPath) => {
           wargameTitle: `${res.wargameTitle}-${uniqId}`,
           data: res.data,
           gameTurn: res.gameTurn,
+          phase: res.phase,
           gameDate: res.gameDate,
           gameTurnTime: res.gameTurnTime,
           realtimeTurnTime: res.realtimeTurnTime,
-          turnEndTime: moment().add(res.realtimeTurnTime, 'minutes').format(),
+          timeWarning: res.timeWarning,
+          turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
           wargameInitiated: res.wargameInitiated,
         })
           .then(() => {
@@ -525,7 +674,7 @@ export const duplicateWargame = (dbPath) => {
 
 export const getWargameLocalFromName = (dbName) => {
 
-  let game = wargameDbStore.find((wargame) => dbName === wargame.name);
+  const game = wargameDbStore.find((wargame) => dbName === wargame.name);
 
   return new Promise((resolve, reject) => {
     game.db.get(dbDefaultSettings._id)
@@ -542,9 +691,9 @@ export const getWargame = (gamePath) => {
 
   return (async () => {
 
-    let name = getNameFromPath(gamePath);
+    const name = getNameFromPath(gamePath);
 
-    let wargame = await getLatestWargameRevision(name);
+    const wargame = await getLatestWargameRevision(name);
 
     return wargame;
 
@@ -553,70 +702,75 @@ export const getWargame = (gamePath) => {
 
 export const initiateGame = (dbName) => {
 
-  let game = wargameDbStore.find((wargame) => dbName === wargame.name);
+  const game = wargameDbStore.find((wargame) => dbName === wargame.name);
 
   return new Promise((resolve, reject) => {
 
-        return game.db.get(dbDefaultSettings._id)
+    return game.db.get(dbDefaultSettings._id)
 
-          .then((res) => {
-            return game.db.put({
-              _id: dbDefaultSettings._id,
-              _rev: res._rev,
-              name: res.name,
-              wargameTitle: res.wargameTitle,
-              data: res.data,
-              gameTurn: res.gameTurn,
-              gameDate: res.gameDate,
-              gameTurnTime: res.gameTurnTime,
-              realtimeTurnTime: res.realtimeTurnTime,
-              turnEndTime: moment().add(res.realtimeTurnTime, 'minutes').format(),
-              wargameInitiated: true,
-            })
-          })
-          .then(() => {
-            return game.db.get(dbDefaultSettings._id)
-          })
-          .then((res) => {
-            return game.db.put({
-              _id: `${uniqid.time()}`,
-              infoType: true,
-              name: res.name,
-              wargameTitle: res.wargameTitle,
-              data: res.data,
-              gameTurn: res.gameTurn,
-              gameDate: res.gameDate,
-              gameTurnTime: res.gameTurnTime,
-              realtimeTurnTime: res.realtimeTurnTime,
-              turnEndTime: moment().add(res.realtimeTurnTime, 'minutes').format(),
-              wargameInitiated: res.wargameInitiated,
-            })
-          })
-          .then(() => {
-            return game.db.get(dbDefaultSettings._id)
-          })
-          .then((res) => {
-            resolve(res);
-          })
-          .catch((err) => {
-            console.log(err);
-            reject(err);
-          })
+      .then((res) => {
+        return game.db.put({
+          _id: dbDefaultSettings._id,
+          _rev: res._rev,
+          name: res.name,
+          wargameTitle: res.wargameTitle,
+          data: res.data,
+          gameTurn: res.gameTurn,
+          phase: PLANNING_PHASE,
+          gameDate: res.gameDate,
+          gameTurnTime: res.gameTurnTime,
+          realtimeTurnTime: res.realtimeTurnTime,
+          timeWarning: res.timeWarning,
+          turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
+          wargameInitiated: true,
+        })
+      })
+      .then(() => {
+        return game.db.get(dbDefaultSettings._id)
+      })
+      .then((res) => {
+        return game.db.put({
+          _id: new Date().toISOString(),
+          infoType: true,
+          name: res.name,
+          wargameTitle: res.wargameTitle,
+          data: res.data,
+          gameTurn: res.gameTurn,
+          phase: res.phase,
+          gameDate: res.gameDate,
+          gameTurnTime: res.gameTurnTime,
+          realtimeTurnTime: res.realtimeTurnTime,
+          timeWarning: res.timeWarning,
+          turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
+          wargameInitiated: res.wargameInitiated,
+        })
+      })
+      .then(() => {
+        return game.db.get(dbDefaultSettings._id)
+      })
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
+      })
   })
 };
 
 export const createLatestWargameRevision = (dbName, wargameData) => {
 
-  delete wargameData._id;
-  delete wargameData._rev;
+  let copiedData = deepCopy(wargameData);
+  delete copiedData._id;
+  delete copiedData._rev;
 
-  let game = wargameDbStore.find((wargame) => dbName === wargame.name);
+  const game = wargameDbStore.find((wargame) => dbName === wargame.name);
 
   return new Promise((resolve, reject) => {
     game.db.put({
-      _id: `${uniqid.time()}`,
+      _id: new Date().toISOString(),
       infoType: true,
-      ...wargameData,
+      ...copiedData,
     })
       .then((res) => {
         resolve(getLatestWargameRevision(dbName));
@@ -647,11 +801,23 @@ export const nextGameTurn = (dbName) => {
   return new Promise((resolve, reject) => {
     getLatestWargameRevision(dbName)
       .then((res) => {
+        console.log('latest got');
+        let phase = res.phase;
 
-        res.gameTurn += 1;
-        res.gameDate = moment(res.gameDate).add(res.gameTurnTime, 'hours').format("YYYY-MM-DDTHH:mm");
-        res.turnEndTime = moment().add(res.realtimeTurnTime, 'minutes').format();
-
+        switch (phase) {
+          case PLANNING_PHASE:
+            res.phase = ADJUDICATION_PHASE;
+            res.turnEndTime = 0;
+            break;
+          case ADJUDICATION_PHASE:
+            res.phase = PLANNING_PHASE;
+            res.gameTurn += 1;
+            res.gameDate = moment(res.gameDate).add(res.gameTurnTime, 'ms').format("YYYY-MM-DDTHH:mm");
+            res.turnEndTime = moment().add(res.realtimeTurnTime, 'ms').format();
+            break;
+          default:
+            break;
+        }
         return createLatestWargameRevision(dbName, res);
       })
       .then((res) => {
@@ -664,9 +830,30 @@ export const nextGameTurn = (dbName) => {
   });
 };
 
+export const postFeedback = (dbName, playerInfo, message) => {
+
+  const db = wargameDbStore.find((db) => db.name === dbName).db;
+
+  return new Promise((resolve, reject) => {
+    db.put({
+      _id: new Date().toISOString(),
+      playerInfo,
+      message,
+      feedback: true,
+    })
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
+      })
+  });
+};
+
 export const postNewMessage = (dbName, details, message) => {
 
-  let db = wargameDbStore.find((db) => db.name === dbName).db;
+  const db = wargameDbStore.find((db) => db.name === dbName).db;
 
   return new Promise((resolve, reject) => {
 
@@ -680,29 +867,23 @@ export const postNewMessage = (dbName, details, message) => {
       })
       .catch((err) => {
         console.log(err);
-      })
-  });
-};
-
-export const getAllMessages = (dbName) => {
-
-  let db = wargameDbStore.find((db) => db.name === dbName).db;
-
-  return new Promise((resolve, reject) => {
-
-    db.allDocs({include_docs: true, descending: true})
-      .then((res) => {
-        resolve(res.rows.map((a) => a.doc));
-      })
-      .catch((err) => {
         reject(err);
-      });
+      })
   });
 };
 
-export var getAllWargames = function () {
+export const getAllMessages = dbName => {
 
-  let promises = wargameDbStore.map((game) => {
+  const db = wargameDbStore.find(db => db.name === dbName).db;
+
+  return db.allDocs({include_docs: true, descending: true})
+    .then(res => res.rows.map(a => a.doc))
+};
+
+
+export const getAllWargames = function () {
+
+  const promises = wargameDbStore.map((game) => {
     return game.db.get(dbDefaultSettings._id)
       .then(function (res) {
         return {
@@ -717,7 +898,7 @@ export var getAllWargames = function () {
   return Promise.all(promises);
 };
 
-var getNameFromPath = function (dbPath) {
+const getNameFromPath = function (dbPath) {
   let path = new URL(dbPath).pathname;
   let index = path.lastIndexOf('/');
   return path.substring(index + 1);

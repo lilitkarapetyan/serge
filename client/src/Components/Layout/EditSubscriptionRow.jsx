@@ -8,6 +8,7 @@ import {
   faUndoAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import _ from "lodash";
 
 class EditSubscriptionRow extends Component {
 
@@ -20,6 +21,8 @@ class EditSubscriptionRow extends Component {
       editSubscriptionRoles: this.props.data.roles,
       editSubscriptionTemplates: this.props.data.templates,
     };
+
+    console.log(this.props.data.templates);
   }
 
   updateSubscriptionForce = (option) => {
@@ -42,11 +45,21 @@ class EditSubscriptionRow extends Component {
 
   updateChannel = () => {
 
+    let templateIds = this.state.editSubscriptionTemplates.map(function(template) {
+      if (typeof template.value === "string") {
+        return {_id: template.value};
+      }
+      return {_id: template.value._id};
+    });
+    let templates = _.intersectionBy(this.props.messageTypes.messages, templateIds, (item) => item._id);
+        templates = templates.map((template) => ({label: template.title, value: template}));
+
     let subscriptionData = {
       force: this.state.editSubscriptionForce.label,
       roles: this.state.editSubscriptionRoles,
-      templates: this.state.editSubscriptionTemplates,
+      templates,
       forceUniqid: this.props.data.forceUniqid,
+      icon: this.props.data.icon,
     };
     this.props.updateRecipient(this.state.subscriptionId, subscriptionData);
     this.props.cancelEdit();
@@ -83,8 +96,8 @@ class EditSubscriptionRow extends Component {
           />
         </td>
         <td>
-          <FontAwesomeIcon icon={faUndoAlt} onClick={this.cancelEdit} />
-          <FontAwesomeIcon icon={faCheck} onClick={this.updateChannel} />
+          <FontAwesomeIcon icon={faUndoAlt} title="Cancel" onClick={this.cancelEdit} />
+          <FontAwesomeIcon icon={faCheck} title="Save" onClick={this.updateChannel} />
         </td>
       </tr>
     )

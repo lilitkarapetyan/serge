@@ -2,68 +2,97 @@ import uniqid from "uniqid";
 
 import PouchDB from "pouchdb";
 import { databasePath,
-         MSG_TYPE_STORE } from "./consts";
+         MSG_TYPE_STORE } from "../consts";
 
 import machineryFailure from '../Schemas/machinery_failure.json';
 import weatherForecast from '../Schemas/weather_forecase.json';
 import chat from '../Schemas/chat.json';
 import message from '../Schemas/message.json';
+import link from '../Schemas/link.json';
+import dailyIntentions from '../Schemas/DailyIntentions.json';
+import stateofworld from '../Schemas/StateOfWorld.json';
 
 var db = new PouchDB(databasePath+MSG_TYPE_STORE);
 
 export const populateDb = () => {
 
-  return new Promise((resolve, reject) => {
+  let promises = [];
 
     db.allDocs().then(entries => {
       if (entries.rows.length === 0) {
+
         var machine = {
-          _id: new Date().toISOString(),
+          _id: uniqid.time(),
           lastUpdated: new Date().toISOString(),
           title: 'Machinery failure',
           details: machineryFailure,
           completed: false
         };
-        db.put(machine);
 
-        setTimeout(function () {
-          var weather = {
-            _id: new Date().toISOString(),
-            lastUpdated: new Date().toISOString(),
-            title: 'Weather forecast',
-            details: weatherForecast,
-            completed: false
-          };
-          db.put(weather);
-        }, 1000);
+        promises.push(db.put(machine));
 
-        setTimeout(function () {
-          var messageInput = {
-            _id: new Date().toISOString(),
-            lastUpdated: new Date().toISOString(),
-            title: 'Message',
-            details: message,
-            completed: false
-          };
-          db.put(messageInput);
-        }, 2000);
+        var weather = {
+          _id: uniqid.time(),
+          lastUpdated: new Date().toISOString(),
+          title: 'Weather forecast',
+          details: weatherForecast,
+          completed: false
+        };
 
-        setTimeout(function () {
-          var chatInput = {
-            _id: new Date().toISOString(),
-            lastUpdated: new Date().toISOString(),
-            title: 'Chat',
-            details: chat,
-            completed: false
-          };
-          db.put(chatInput).then(() => {
-            resolve(true);
-          });
-        }, 3000);
+        promises.push(db.put(weather));
+
+        var messageInput = {
+          _id: uniqid.time(),
+          lastUpdated: new Date().toISOString(),
+          title: 'Message',
+          details: message,
+          completed: false
+        };
+        promises.push(db.put(messageInput));
+
+        var chatInput = {
+          _id: uniqid.time(),
+          lastUpdated: new Date().toISOString(),
+          title: 'Chat',
+          details: chat,
+          completed: false
+        };
+
+        promises.push(db.put(chatInput));
+
+        var linkInput = {
+          _id: uniqid.time(),
+          lastUpdated: new Date().toISOString(),
+          title: 'Link',
+          details: link,
+          completed: false
+        };
+
+        promises.push(db.put(linkInput));
+
+        var dailyInput = {
+          _id: uniqid.time(),
+          lastUpdated: new Date().toISOString(),
+          title: 'Daily intentions',
+          details: dailyIntentions,
+          completed: false
+        };
+
+        promises.push(db.put(dailyInput));
+
+        var sowInput = {
+          _id: uniqid.time(),
+          lastUpdated: new Date().toISOString(),
+          title: 'State of World',
+          details: stateofworld,
+          completed: false
+        };
+        promises.push(db.put(sowInput));
+
+        Promise.all(promises).then(() => true);
       } else {
-        resolve(false);
+        return false;
       }
-    });
   });
 };
 
@@ -188,24 +217,13 @@ export const deleteMessageFromDb = (id) => {
 };
 
 export const getAllMessagesFromDb = () => {
-
   return new Promise((resolve, reject) => {
-    return db.changes({
-      since: 1,
-      include_docs: true,
-      descending: true,
-    })
-      .then(function (changes) {
-
-        let results = changes.results.map((a) => a.doc);
-        results = results.filter((a) => !a.hasOwnProperty('_deleted') && a.hasOwnProperty('details'));
-
-        resolve(results);
+    db.allDocs({include_docs: true, descending: true})
+      .then((res) => {
+        resolve(res.rows.map((a) => a.doc));
       })
-      .catch(function (err) {
-        // handle errors
+      .catch((err) => {
         reject(err);
-        console.log(err);
       });
   });
 };
