@@ -31,8 +31,12 @@ class MessageListItem extends Component {
     let itemTitle;
     if (this.props.detail.message.title) {
       itemTitle = this.props.detail.message.title;
-    } else {
+    } else if(this.props.detail.message.content) {
+      // yes, we have content (probably chat) use it
       itemTitle = this.props.detail.message.content;
+    } else {
+      // no content, just use message-type
+      itemTitle = this.props.detail.details.messageType
     }
 
     return (
