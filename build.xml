@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<project name="Collate_Serge_Deploy" default="do_zip" basedir=".">
+
+    <property name="dest_file" location="../serge_deploy.zip" />
+
+    <target name="clean">
+        <delete file="${dest_file}"/>
+    </target>
+
+    <target name="do_zip" depends="clean">
+        <zip destfile="${dest_file}"
+        basedir="."
+        excludes="node_modules/**,.git/**,client/node_modules/**"/>
+
+    </target>
+</project>
