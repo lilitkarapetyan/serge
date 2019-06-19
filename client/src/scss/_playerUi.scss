@@ -144,6 +144,28 @@
       text-align: right;
       padding-right: 10px;
     }
+
+    .detail-rows span{
+      font-size: 0.8em;
+    }
+
+    p.detail-row
+    {
+      margin-left: 16px;
+      margin-bottom: 0px;
+      border-bottom: 2px solid $grey2;
+    }
+
+    span.detail
+    {
+      background-color: #ddd;
+      color:#000;
+      padding: 2px;
+    }
+
+    span.detail-title {
+      text-decoration: underline;
+    }
   }
 
   .Collapsible {
@@ -269,9 +291,6 @@
     }
   }
 
-  .detail {
-    font-style: italic;
-  }
   .data {
     padding: 0 6px 0 2px;
     word-break: break-word;
