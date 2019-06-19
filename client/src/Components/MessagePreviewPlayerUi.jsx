@@ -130,7 +130,7 @@ class MessagePreview extends Component {
               </span>
               <span className="data">
                 {`${this.props.from.force} ${this.props.from.role} `}
-              </span>
+              </span><br/>
             </>
             : false }
 
@@ -139,7 +139,7 @@ class MessagePreview extends Component {
             </span>
             <span className="data">
               {pair[1]}
-            </span>
+            </span><br/>
         </Fragment>
       );
 
