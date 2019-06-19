@@ -108,7 +108,7 @@ class TurnProgression extends Component {
       <>
         <div className="flex-content wargame-title">
           <h3>{this.props.playerUi.wargameTitle}</h3>
-          {!this.props.playerUi.controlUi && <FontAwesomeIcon icon={faCommentAlt} size="2x" onClick={this.showLessonsModal} />}
+          { <FontAwesomeIcon icon={faCommentAlt} size="2x" onClick={this.showLessonsModal} />}
         </div>
         <div className={classNames({"flex-content-wrapper": true, "turn-progression-ui": true, "adjunction-phase": adjunctionPhase})}>
           <div>

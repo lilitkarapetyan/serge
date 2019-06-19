@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Badge from "react-bootstrap/Badge";
 import { connect } from "react-redux";
 import {
   getAllWargameFeedback,
@@ -34,10 +35,13 @@ class InsightsChannel extends Component {
         {this.props.playerUi.feedbackMessages.map((message, i) => {
           return (
             <React.Fragment key={`feedback${i}`}>
-              <h6>{message.playerInfo.force}</h6>
-              <p>{message.playerInfo.role}</p>
-              {message.playerInfo.name && <p>{message.playerInfo.name}</p>}
-              <p>{message.message}</p>
+              <div className="info-wrap">
+                <Badge pill variant="primary">{message.playerInfo.force}</Badge> 
+                <Badge pill variant="secondary">{message.playerInfo.role}</Badge>
+                {message.playerInfo.name && <Badge pill variant="warning">{message.playerInfo.name}</Badge>}
+              </div>
+              {message.message}
+              <p className="feedback-marker"  style={{borderColor: message.playerInfo.forceColor}}></p>
             </React.Fragment>
           )
         })

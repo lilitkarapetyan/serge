@@ -40,6 +40,7 @@ class InsightsModal extends Component {
     let forceName = this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).name;
     let playerInfo = {
       force: forceName,
+      forceColor: this.props.playerUi.forceColor,
       role: this.props.playerUi.selectedRole,
       name: this.state.name,
     };
