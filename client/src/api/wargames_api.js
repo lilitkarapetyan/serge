@@ -43,7 +43,7 @@ const listenNewMessage = ({db, name, dispatch}) => {
           dispatch(setLatestFeedbackMessage(changes.doc));
         } else {
           dispatch(setLatestWargameMessage(changes.doc));
-        };
+        }
       })();
     })
     .on('error', function (err) {

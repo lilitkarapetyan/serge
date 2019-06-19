@@ -105,7 +105,8 @@ export const playerUiReducer = (state = initialState, action) => {
             delete newState.channels[channelId];
           } else {
             let channelActive = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
-            if (!channelActive && !newState.isObserver) delete newState.channels[channelId];
+            let allRoles = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.length === 0);
+            if (!channelActive && !allRoles && !newState.isObserver) delete newState.channels[channelId];
           }
         }
 
@@ -122,14 +123,15 @@ export const playerUiReducer = (state = initialState, action) => {
             !newState.channels[channel.uniqid].messages.find((prevMessage) => prevMessage.gameTurn === message.gameTurn)
           ) {
             newState.channels[channel.uniqid].messages.unshift(message);
+            return;
           }
 
           // if no channel created yet
           if (
             (channelActive || allRoles) &&
             !newState.channels[channel.uniqid]
-          ) {
-
+          )
+          {
             let participatingRole = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
             let participatingForce = channel.participants.find((p) => p.forceUniqid === newState.selectedForce);
 
