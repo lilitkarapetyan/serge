@@ -60,7 +60,7 @@ class MessagePreview extends Component {
     const that = this;
     return (
       <Fragment key={`${pair[0]}-group`}><br/>
-        <span className="detail detail-title">{pair[0]}</span><p className="detail-row">
+        <span className="detail detail-title">{pair[0]}:</span><p className="detail-row">
         {pair[1].map((item) => {
           // CHECK NAME PROP ON EVERY OBJ
           return (

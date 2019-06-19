@@ -149,8 +149,16 @@
       font-size: 0.8em;
     }
 
-    .detail-title {
+    span.detail
+    {
+      background-color: #777;
+      color:#eee;
+    }
+
+    span.detail-title {
       text-decoration: underline;
+      background-color: #fff;
+      color:#000;
     }
   }
 
