@@ -31,8 +31,12 @@ class MessageListItem extends Component {
     let itemTitle;
     if (this.props.detail.message.title) {
       itemTitle = this.props.detail.message.title;
-    } else {
+    } else if(this.props.detail.message.content) {
+      // yes, we have content (probably chat) use it
       itemTitle = this.props.detail.message.content;
+    } else {
+      // no content, just use message-type
+      itemTitle = this.props.detail.details.messageType
     }
 
     return (
@@ -56,7 +60,8 @@ class MessageListItem extends Component {
           onOpening={this.open}
           onClosing={this.close}
         >
-          <div key={`${this.props.key}-preview`} className="message-preview-player wrap"><MessagePreview detail={this.props.detail.message} from={this.props.detail.details.from} /></div>
+          <div key={`${this.props.key}-preview`} className="message-preview-player wrap"
+           style={{borderColor: this.props.detail.details.from.forceColor}}><MessagePreview detail={this.props.detail.message} from={this.props.detail.details.from} /></div>
         </Collapsible>
       </React.Fragment>
     )
