@@ -24,12 +24,15 @@ class JsonCreator extends Component {
 
   sendMessage = () => {
 
+    let curForce = this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce);
+
     let messageDetails = {
       channel: this.props.playerUi.chatChannel.name,
       from: {
-        force: this.props.playerUi.selectedForce,
+        force: curForce.name,
+        forceColor: this.props.playerUi.forceColor,
         role: this.props.playerUi.selectedRole,
-        icon: this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).icon,
+        icon: curForce.icon,
       },
       messageType: this.props.schema.title,
       timestamp: new Date().toISOString(),

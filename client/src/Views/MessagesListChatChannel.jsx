@@ -13,7 +13,7 @@ class MessagesListChatChannel extends Component {
     return (
       messages.map((item, i) => {
         return (
-          <div key={`${i}-preview`} className="message-preview-player wrap">
+          <div key={`${i}-preview`} className="message-preview-player wrap" style={{borderColor: item.message.details.from.forceColor}}>
             <MessagePreview detail={item.message.message} from={item.message.details.from} />
             <div className="info-wrap">
               <span>{moment(item.message.details.timestamp).format("HH:mm")}</span>

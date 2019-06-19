@@ -1,8 +1,11 @@
 @import 'dependencies/variables';
 
 .message-preview-player {
-  padding-top: 16px;
+  margin-top: 12px;
   margin-bottom: 12px;
+  margin-left: 16px;
+  border-left-style: solid;
+  border-left-width: 4px;
 
   h3 {
     font-size: 1.4em;
