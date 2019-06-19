@@ -139,7 +139,7 @@ class MessagePreview extends Component {
             </span>
             <span className="data">
               {pair[1]}
-            </span>ccc
+            </span>
         </Fragment>
       );
 
