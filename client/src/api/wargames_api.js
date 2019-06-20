@@ -840,7 +840,7 @@ export const postFeedback = (dbName, fromDetails, message) => {
       details: {
         channel: "Feedback",
         from: fromDetails,
-        messageType: "Feedback",
+        messageType: "Chat",
         timestamp: new Date().toISOString(),
       },
       message: {
