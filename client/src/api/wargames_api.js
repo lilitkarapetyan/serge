@@ -652,7 +652,7 @@ export const duplicateWargame = (dbPath) => {
           realtimeTurnTime: res.realtimeTurnTime,
           timeWarning: res.timeWarning,
           turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
-          wargameInitiated: res.wargameInitiated,
+          wargameInitiated: false,
         })
           .then(() => {
             return res;
