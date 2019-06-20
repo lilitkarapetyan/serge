@@ -33,15 +33,17 @@ class InsightsChannel extends Component {
     return (
       <div className="message-list">
         {this.props.playerUi.feedbackMessages.map((message, i) => {
+
+          console.log(message);
           return (
             <React.Fragment key={`feedback${i}`}>
               <div className="info-wrap">
-                <Badge pill variant="primary">{message.playerInfo.force}</Badge> 
-                <Badge pill variant="secondary">{message.playerInfo.role}</Badge>
-                {message.playerInfo.name && <Badge pill variant="warning">{message.playerInfo.name}</Badge>}
+                <Badge pill variant="primary">{message.messageDetails.from.force}</Badge>
+                <Badge pill variant="secondary">{message.messageDetails.from.role}</Badge>
+                {message.messageDetails.name && <Badge pill variant="warning">{message.messageDetails.from.name}</Badge>}
               </div>
               {message.message}
-              <p className="feedback-marker"  style={{borderColor: message.playerInfo.forceColor}}></p>
+              <p className="feedback-marker"  style={{borderColor: message.messageDetails.from.forceColor}}></p>
             </React.Fragment>
           )
         })

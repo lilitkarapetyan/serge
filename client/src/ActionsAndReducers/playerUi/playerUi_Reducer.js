@@ -146,8 +146,6 @@ export const playerUiReducer = (state = initialState, action) => {
             !!newState.channels[channel.uniqid] &&
             !newState.channels[channel.uniqid].messages.find((prevMessage) => prevMessage.gameTurn === message.gameTurn)
           ) {
-            console.log('already created');
-            console.log(newState.isObserver);
             newState.channels[channel.uniqid].messages.unshift(message);
             return;
           }
