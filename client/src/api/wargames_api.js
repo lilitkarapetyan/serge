@@ -839,6 +839,7 @@ export const postFeedback = (dbName, messageDetails, message) => {
       _id: new Date().toISOString(),
       messageDetails,
       message,
+      timestamp: new Date().toISOString(),
       feedback: true,
     })
       .then((res) => {
