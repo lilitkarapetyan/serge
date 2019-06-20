@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 
-import {
-  getAllWargameMessages
-} from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
-
 import MessageCreatorChatChannel from "../Components/MessageCreatorChatChannel";
 import MessagesListChatChannel from "./MessagesListChatChannel";
 
