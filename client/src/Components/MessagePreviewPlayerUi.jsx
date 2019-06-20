@@ -106,56 +106,66 @@ class MessagePreview extends Component {
     const that = this;
     const keyPropPairs = Object.entries(this.props.detail);
 
-    return keyPropPairs.map((pair, i) => {
+    return (
+      <>
+        {keyPropPairs.map((pair, i) => {
 
-      if (i===0 && keyPropPairs.length > 1) return (
-        <Fragment key={'from-force'}>
-          { this.props.from.force && this.props.from.role ? <>
-            <span className="detail">
-              From:
-            </span>
-            <span className="data">
-              {`${this.props.from.force} ${this.props.from.role}`}
-            </span></>
-          : false }
-        </Fragment>
-      );
+          if (i === 0 && keyPropPairs.length > 1) return (
+            <Fragment key={'from-force'}>
+              {this.props.from.force && this.props.from.role ? <>
+                <span className="detail">
+                  From:
+                </span>
+                  <span className="data">
+                  {`${this.props.from.force} ${this.props.from.role}`}
+                </span></>
+                : false}
+            </Fragment>
+          );
 
-      if (i===0 && keyPropPairs.length === 1) return (
-        <Fragment key={'from-force'}>
-          { this.props.from.force && this.props.from.role ?
-            <>
+          if (i === 0 && keyPropPairs.length === 1) return (
+            <Fragment key={'from-force'}>
+              {this.props.from.force && this.props.from.role ?
+                <>
+                  <span className="detail">
+                    From:
+                  </span>
+                  <span className="data">
+                    {`${this.props.from.force} ${this.props.from.role} `}
+                  </span><br/>
+                </>
+                : false}
+
               <span className="detail">
-                From:
-              </span>
+                  {`${this.capitalize(pair[0])}:`}
+                </span>
               <span className="data">
-                {`${this.props.from.force} ${this.props.from.role} `}
-              </span><br/>
-            </>
-            : false }
+                  {pair[1]}
+                </span><br/>
+            </Fragment>
+          );
 
-            <span className="detail">
-              {`${this.capitalize(pair[0])}:`}
-            </span>
-            <span className="data">
-              {pair[1]}
-            </span><br/>
-        </Fragment>
-      );
+          if (check.object(pair[1])) return that.createObjItem(pair);
+          if (check.array.of.object(pair[1])) return that.deconstructArr(pair);
+          if (check.boolean(pair[1])) return that.createBoolItem(pair);
+          if (isValidUrl(pair[1])) return that.createUrlItem(pair);
+          if (moment(pair[1], moment.ISO_8601, true).isValid()) return that.createTimeItem(pair);
 
-      if (check.object(pair[1])) return that.createObjItem(pair);
-      if (check.array.of.object(pair[1])) return that.deconstructArr(pair);
-      if (check.boolean(pair[1])) return that.createBoolItem(pair);
-      if (isValidUrl(pair[1])) return that.createUrlItem(pair);
-      if (moment(pair[1], moment.ISO_8601, true).isValid()) return that.createTimeItem(pair);
-
-      return (
-        <Fragment key={`${pair[0]}-${pair[1]}`}>
-          <span className="detail">{this.capitalize(pair[0])}: </span>
-          <span className="data">{pair[1]}</span>
-        </Fragment>
-      )
-    });
+          return (
+            <Fragment key={`${pair[0]}-${pair[1]}`}>
+              <span className="detail">{this.capitalize(pair[0])}: </span>
+              <span className="data">{pair[1]}</span>
+            </Fragment>
+          );
+        })}
+        {this.props.privateMessage && (
+          <>
+            <span className="detail">Private:</span>
+            <span className="data">{this.props.privateMessage}</span>
+          </>
+        )}
+      </>
+    )
   }
 }
 
