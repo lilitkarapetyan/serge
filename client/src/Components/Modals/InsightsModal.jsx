@@ -39,17 +39,14 @@ class InsightsModal extends Component {
   send = () => {
     let forceName = this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).name;
 
-    let messageDetails = {
-      from: {
-        force: forceName,
-        forceColor: this.props.playerUi.forceColor,
-        role: this.props.playerUi.selectedRole,
-        name: this.state.name,
-      },
-      timestamp: new Date().toISOString(),
+    let from = {
+      force: forceName,
+      forceColor: this.props.playerUi.forceColor,
+      role: this.props.playerUi.selectedRole,
+      name: this.state.name,
     };
 
-    this.props.dispatch(sendFeedbackMessage(this.props.playerUi.currentWargame, messageDetails, this.state.message))
+    this.props.dispatch(sendFeedbackMessage(this.props.playerUi.currentWargame, from, this.state.message))
   };
 
   render() {

@@ -622,7 +622,7 @@ export const deleteForce = (dbName, forceName) => {
 };
 
 
-export const duplicateWargame = (dbPath) => {
+export const cleanWargame = (dbPath) => {
 
   const dbName = getNameFromPath(dbPath);
 
@@ -652,7 +652,7 @@ export const duplicateWargame = (dbPath) => {
           realtimeTurnTime: res.realtimeTurnTime,
           timeWarning: res.timeWarning,
           turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
-          wargameInitiated: res.wargameInitiated,
+          wargameInitiated: false,
         })
           .then(() => {
             return res;
@@ -830,16 +830,22 @@ export const nextGameTurn = (dbName) => {
   });
 };
 
-export const postFeedback = (dbName, messageDetails, message) => {
+export const postFeedback = (dbName, fromDetails, message) => {
 
   const db = wargameDbStore.find((db) => db.name === dbName).db;
 
   return new Promise((resolve, reject) => {
     db.put({
       _id: new Date().toISOString(),
-      messageDetails,
-      message,
-      timestamp: new Date().toISOString(),
+      details: {
+        channel: "Feedback",
+        from: fromDetails,
+        messageType: "Feedback",
+        timestamp: new Date().toISOString(),
+      },
+      message: {
+        content: message,
+      },
       feedback: true,
     })
       .then((res) => {

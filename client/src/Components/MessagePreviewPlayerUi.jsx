@@ -5,13 +5,11 @@ import '../scss/App.scss';
 import check from "check-types";
 import moment from "moment";
 import isValidUrl from "../Helpers/isValidUrl";
-
 import {
   faUserSecret
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-
-
+import {umpireForceTemplate} from "../consts";
 const Fragment = React.Fragment;
 
 class MessagePreview extends Component {
@@ -165,7 +163,7 @@ class MessagePreview extends Component {
             </Fragment>
           );
         })}
-        {this.props.privateMessage && (
+        {this.props.playerUi.selectedForce === umpireForceTemplate.uniqid && (
           <>
             <span className="detail"><FontAwesomeIcon size="2x" icon={faUserSecret}/>
 Private:</span>
@@ -177,5 +175,8 @@ Private:</span>
   }
 }
 
+const mapStateToProps = ({ playerUi }) => ({
+  playerUi
+});
 
-export default connect()(MessagePreview);
+export default connect(mapStateToProps)(MessagePreview);
