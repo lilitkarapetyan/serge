@@ -13,7 +13,7 @@ import {
 import {setCurrentViewFromURI} from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
 
 import {
-  faClone,
+  faBath,
   faPencilAlt,
   faTrash,
   faFileDownload,
@@ -123,7 +123,7 @@ class WargameSearchList extends Component {
                 {that.state.activeTitle === db.title &&
                   <>
                     <FontAwesomeIcon icon={faPencilAlt} title="Edit wargame" onClick={that.setSelectedWargame.bind(that, db.name)} />
-                    <FontAwesomeIcon icon={faClone} title="Duplicate wargame" onClick={that.duplicateWargame.bind(that, db.name)} />
+                    <FontAwesomeIcon icon={faBath} title="Save clean copy of wargame (no messages)" onClick={that.duplicateWargame.bind(that, db.name)} />
                     <FontAwesomeIcon icon={faTrash} title="Delete wargame" onClick={that.deleteWargame.bind(that, db.name)} />
                     <FontAwesomeIcon icon={faFileDownload} title="Export wargame" onClick={that.exportWargame.bind(that, db.name)} />
                   </>
