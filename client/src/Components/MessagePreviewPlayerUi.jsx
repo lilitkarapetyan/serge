@@ -5,6 +5,10 @@ import '../scss/App.scss';
 import check from "check-types";
 import moment from "moment";
 import isValidUrl from "../Helpers/isValidUrl";
+import {
+  faUserSecret
+} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {umpireForceTemplate} from "../consts";
 const Fragment = React.Fragment;
 
@@ -161,8 +165,9 @@ class MessagePreview extends Component {
         })}
         {this.props.playerUi.selectedForce === umpireForceTemplate.uniqid && (
           <>
-            <span className="detail">Private:</span>
-            <span className="data">{this.props.privateMessage.split('\n').map( (it, i) => <div key={'x'+i}>{it}</div> )}</span>
+            <span className="detail"><FontAwesomeIcon size="2x" icon={faUserSecret}/>
+Private:</span>
+            <span className="data private-message">{this.props.privateMessage.split('\n').map( (it, i) => <div key={'x'+i}>{it}</div> )}</span>
           </>
         )}
       </>
