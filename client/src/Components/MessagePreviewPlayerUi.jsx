@@ -169,7 +169,7 @@ class MessagePreview extends Component {
           <>
             <span className="detail"><FontAwesomeIcon size="2x" icon={faUserSecret}/>
 Private:</span>
-            <span className="data">{this.props.privateMessage.split('\n').map( (it, i) => <div key={'x'+i}>{it}</div> )}</span>
+            <span className="data private-message">{this.props.privateMessage.split('\n').map( (it, i) => <div key={'x'+i}>{it}</div> )}</span>
           </>
         )}
       </>

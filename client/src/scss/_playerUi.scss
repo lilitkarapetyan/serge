@@ -103,7 +103,15 @@
   #private-message-input {
     height: 65px;
     background: $greyBg;
+    font-style: italic;
     resize: none;
+  }
+
+  .private-message, .private-message div
+  {
+    font-style: italic;
+    background: $grey;
+    color:#fff;
   }
 
   .forces-in-channel {
