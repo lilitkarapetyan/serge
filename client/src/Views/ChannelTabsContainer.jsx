@@ -65,17 +65,14 @@ class ChannelTabsContainer extends Component {
     let channelsToRename = _.differenceBy(matchingChannels, modelTabs, (item) => item.name);
 
     if (channelsToRename.length > 0) {
-      console.log('rename');
       this.renameTabs(channelsToRename);
     }
 
     if (newChannels.length > 0) {
-      console.log('add new');
       this.addToTabs(newChannels);
     }
 
     if (channelsToRemove.length > 0) {
-      console.log('remove old');
       this.removeFromTabs(channelsToRemove);
     }
   }
@@ -83,10 +80,14 @@ class ChannelTabsContainer extends Component {
 
   addToTabs(newChannels) {
 
+    let modelTabs = Object.values(this.model._idMap);
+
+    let tabsetMatch = modelTabs.find((tab) => tab._attributes.type === "tabset");
+    let tabsetId = tabsetMatch._attributes.id;
     newChannels.forEach((channel) => {
       if (!this.model._idMap[channel.id]) {
         this.model.doAction(
-          FlexLayout.Actions.addNode({type: "tab", component: channel.name, name: channel.name, id: channel.id}, "#2", FlexLayout.DockLocation.CENTER, -1)
+          FlexLayout.Actions.addNode({type: "tab", component: channel.name, name: channel.name, id: channel.id}, tabsetId, FlexLayout.DockLocation.CENTER, -1)
         );
       }
     });
@@ -101,6 +102,14 @@ class ChannelTabsContainer extends Component {
         );
       }
     });
+
+    let modelTabs = Object.values(this.model._idMap)
+      .filter((node) => node._attributes.type === "tab")
+      .map((node) => ({ id: node._attributes.id, name: node._attributes.name }));
+
+    if (modelTabs.length === 0) {
+      this.addToTabs([{id: "default", name: "No subscriptions"}]);
+    }
   }
 
   renameTabs(nameChanges) {
@@ -141,6 +150,15 @@ class ChannelTabsContainer extends Component {
   };
 
   render() {
+
+    // if (_.isEmpty(this.props.playerUi.channels)) {
+    //   return (
+    //     <div className="no-channel-notification">
+    //       <h1>No Channels subscribed to.</h1>
+    //     </div>
+    //   )
+    // }
+
     return (
       <>
         <FlexLayout.Layout

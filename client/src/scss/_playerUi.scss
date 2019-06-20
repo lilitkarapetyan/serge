@@ -112,6 +112,17 @@
     }
   }
 
+  .no-channel-notification {
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 100%;
+    h1 {
+      text-align: center;
+      width: 100%;
+    }
+  }
+
   &.out-of-game-feed {
     .message-list {
       max-height: calc(100vh - 400px);
