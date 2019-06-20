@@ -5,6 +5,7 @@ import '../scss/App.scss';
 import check from "check-types";
 import moment from "moment";
 import isValidUrl from "../Helpers/isValidUrl";
+import {umpireForceTemplate} from "../consts";
 const Fragment = React.Fragment;
 
 class MessagePreview extends Component {
@@ -158,7 +159,7 @@ class MessagePreview extends Component {
             </Fragment>
           );
         })}
-        {this.props.privateMessage && (
+        {this.props.playerUi.selectedForce === umpireForceTemplate.uniqid && (
           <>
             <span className="detail">Private:</span>
             <span className="data">{this.props.privateMessage.split('\n').map( (it, i) => <div key={'x'+i}>{it}</div> )}</span>
@@ -169,5 +170,8 @@ class MessagePreview extends Component {
   }
 }
 
+const mapStateToProps = ({ playerUi }) => ({
+  playerUi
+});
 
-export default connect()(MessagePreview);
+export default connect(mapStateToProps)(MessagePreview);
