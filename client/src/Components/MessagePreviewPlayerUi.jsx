@@ -140,7 +140,7 @@ class MessagePreview extends Component {
                   {`${this.capitalize(pair[0])}:`}
                 </span>
               <span className="data">
-                  {pair[1]}
+                  {pair[1].split('\n').map( (it, i) => <div key={'x'+i}>{it}</div> )}
                 </span><br/>
             </Fragment>
           );
@@ -154,14 +154,14 @@ class MessagePreview extends Component {
           return (
             <Fragment key={`${pair[0]}-${pair[1]}`}>
               <span className="detail">{this.capitalize(pair[0])}: </span>
-              <span className="data">{pair[1]}</span>
+              <span className="data">{pair[1].split('\n').map( (it, i) => <div key={'x'+i}>{it}</div> )}</span>
             </Fragment>
           );
         })}
         {this.props.privateMessage && (
           <>
             <span className="detail">Private:</span>
-            <span className="data">{this.props.privateMessage}</span>
+            <span className="data">{this.props.privateMessage.split('\n').map( (it, i) => <div key={'x'+i}>{it}</div> )}</span>
           </>
         )}
       </>
