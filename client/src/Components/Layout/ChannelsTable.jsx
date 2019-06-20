@@ -210,6 +210,7 @@ class ChannelsTable extends Component {
               return data.subscriptionId === this.state.subscriptionToEdit ? <EditSubscriptionRow
                                                                                   key={data.subscriptionId}
                                                                                   data={data}
+                                                                                  forcesList={this.props.wargame.data.forces.forces}
                                                                                   messageTypes={this.props.messageTypes}
                                                                                   forceOptions={this.state.forceOptions}
                                                                                   roleOptions={this.state.roleOptions}

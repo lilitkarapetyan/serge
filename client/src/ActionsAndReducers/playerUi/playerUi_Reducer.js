@@ -106,7 +106,7 @@ export const playerUiReducer = (state = initialState, action) => {
           } else {
             let channelActive = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
             let allRoles = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.length === 0);
-            if (!channelActive && !allRoles && !newState.isObserver) delete newState.channels[channelId];
+            if ((!channelActive || !allRoles) && !newState.isObserver) delete newState.channels[channelId];
           }
         }
 
@@ -115,6 +115,30 @@ export const playerUiReducer = (state = initialState, action) => {
 
           let channelActive = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
           let allRoles = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.length === 0);
+
+
+          // rename channel
+          if (
+            (channelActive || allRoles) &&
+            !!newState.channels[channel.uniqid]
+          ) {
+            newState.channels[channel.uniqid].name = channel.name;
+          }
+
+          // update observing status when observer removed from channel participants
+          if (
+            (!channelActive && !allRoles) &&
+            newState.isObserver &&
+            !!newState.channels[channel.uniqid]
+          ) {
+            newState.channels[channel.uniqid].observing = true;
+          } else if (
+            (channelActive || allRoles) &&
+            newState.isObserver &&
+            !!newState.channels[channel.uniqid]
+          ) {
+            newState.channels[channel.uniqid].observing = false;
+          }
 
           // if channel already created
           if (
@@ -167,7 +191,7 @@ export const playerUiReducer = (state = initialState, action) => {
                 observing,
               };
             }
-            newState.channels = channels;
+            newState.channels = _.defaults(channels, newState.channels);
           }
 
         });

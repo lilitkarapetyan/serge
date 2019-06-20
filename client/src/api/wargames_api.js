@@ -830,14 +830,14 @@ export const nextGameTurn = (dbName) => {
   });
 };
 
-export const postFeedback = (dbName, playerInfo, message) => {
+export const postFeedback = (dbName, messageDetails, message) => {
 
   const db = wargameDbStore.find((db) => db.name === dbName).db;
 
   return new Promise((resolve, reject) => {
     db.put({
       _id: new Date().toISOString(),
-      playerInfo,
+      messageDetails,
       message,
       timestamp: new Date().toISOString(),
       feedback: true,

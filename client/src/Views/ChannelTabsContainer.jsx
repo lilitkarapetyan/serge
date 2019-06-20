@@ -35,70 +35,88 @@ class ChannelTabsContainer extends Component {
 
     let model = this.localStorage.getItem(modelName);
 
-    // this.model = model ? FlexLayout.Model.fromJson(JSON.parse(model)) : FlexLayout.Model.fromJson(json);
-    this.model = FlexLayout.Model.fromJson(json);
+    this.model = model ? FlexLayout.Model.fromJson(JSON.parse(model)) : FlexLayout.Model.fromJson(json);
+
+    this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
 
     this.state = {
       modelName,
-      channelNames: [],
-      isSavedModel: !!model,
     };
   }
 
-  componentWillMount() {
-    this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
-  }
 
   componentWillReceiveProps(nextProps, nextContext) {
 
-    let channelLength = Object.keys(this.props.playerUi.channels).length;
-    let nextChannelLength = Object.keys(nextProps.playerUi.channels).length;
+    let channels = nextProps.playerUi.channels;
+    let channelNames = [];
 
-    // if (this.state.isSavedModel) {
-    //   return;
-    // }
-
-    if (channelLength < nextChannelLength) {
-      this.addToTabs(nextProps);
+    for (let channelId in channels) {
+      channelNames.push({id: channelId, name: channels[channelId].name});
     }
 
-    if (channelLength > nextChannelLength) {
-      this.removeFromTabs(nextProps);
+    let modelTabs = Object.values(this.model._idMap)
+      .filter((node) => node._attributes.type === "tab")
+      .map((node) => ({ id: node._attributes.id, name: node._attributes.name }));
+
+    let newChannels = _.differenceBy(channelNames, modelTabs, (channel) => channel.id);
+    let channelsToRemove = _.differenceBy(modelTabs, channelNames, (channel) => channel.id);
+
+    let matchingChannels = _.intersectionBy(channelNames, modelTabs, (item) => item.id);
+    let channelsToRename = _.differenceBy(matchingChannels, modelTabs, (item) => item.name);
+
+    if (channelsToRename.length > 0) {
+      this.renameTabs(channelsToRename);
+    }
+
+    if (newChannels.length > 0) {
+      this.addToTabs(newChannels);
+    }
+
+    if (channelsToRemove.length > 0) {
+      this.removeFromTabs(channelsToRemove);
     }
   }
 
 
-  addToTabs(nextProps) {
+  addToTabs(newChannels) {
 
-    let channelNames = Object.values(nextProps.playerUi.channels).map((channel) => channel.name);
+    let modelTabs = Object.values(this.model._idMap);
 
-    let newChannels = _.difference(channelNames, this.state.channelNames);
-
-    newChannels.forEach((channelName) => {
-      this.model.doAction(
-        FlexLayout.Actions.addNode({type: "tab", component: channelName, name: channelName, id: channelName}, "#2", FlexLayout.DockLocation.CENTER, -1)
-      );
+    let tabsetMatch = modelTabs.find((tab) => tab._attributes.type === "tabset");
+    let tabsetId = tabsetMatch._attributes.id;
+    newChannels.forEach((channel) => {
+      if (!this.model._idMap[channel.id]) {
+        this.model.doAction(
+          FlexLayout.Actions.addNode({type: "tab", component: channel.name, name: channel.name, id: channel.id}, tabsetId, FlexLayout.DockLocation.CENTER, -1)
+        );
+      }
     });
-
-    this.setState({
-      channelNames,
-    })
   }
 
-  removeFromTabs(nextProps) {
+  removeFromTabs(channelsToRemove) {
 
-    let channelNames = Object.values(nextProps.playerUi.channels).map((channel) => channel.name);
-
-    let channelsToRemove = _.difference(this.state.channelNames, channelNames);
-
-    channelsToRemove.forEach((channelName) => {
-      this.model.doAction(
-        FlexLayout.Actions.deleteTab(channelName)
-      );
+    channelsToRemove.forEach((channel) => {
+      if (this.model._idMap[channel.id]) {
+        this.model.doAction(
+          FlexLayout.Actions.deleteTab(channel.id)
+        );
+      }
     });
 
-    this.setState({
-      channelNames,
+    let modelTabs = Object.values(this.model._idMap)
+      .filter((node) => node._attributes.type === "tab")
+      .map((node) => ({ id: node._attributes.id, name: node._attributes.name }));
+
+    if (modelTabs.length === 0) {
+      this.addToTabs([{id: "default", name: "No subscriptions"}]);
+    }
+  }
+
+  renameTabs(nameChanges) {
+    nameChanges.forEach((channel) => {
+      this.model.doAction(
+        FlexLayout.Actions.updateNodeAttributes(channel.id, {name: channel.name})
+      )
     })
   }
 
@@ -116,6 +134,8 @@ class ChannelTabsContainer extends Component {
 
   tabRender = (node) => {
 
+    if (_.isEmpty(this.props.playerUi.channels)) return;
+
     let channel = Object.entries(this.props.playerUi.channels).find((entry) => entry[1].name === node.getName())[1];
 
     if (node._attributes.className !== "unread" && channel.unreadMessageCount > 0) {
@@ -130,6 +150,15 @@ class ChannelTabsContainer extends Component {
   };
 
   render() {
+
+    // if (_.isEmpty(this.props.playerUi.channels)) {
+    //   return (
+    //     <div className="no-channel-notification">
+    //       <h1>No Channels subscribed to.</h1>
+    //     </div>
+    //   )
+    // }
+
     return (
       <>
         <FlexLayout.Layout
