@@ -622,7 +622,7 @@ export const deleteForce = (dbName, forceName) => {
 };
 
 
-export const duplicateWargame = (dbPath) => {
+export const cleanWargame = (dbPath) => {
 
   const dbName = getNameFromPath(dbPath);
 
