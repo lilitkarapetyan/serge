@@ -94,10 +94,10 @@ export const initiateGame = (dbName) => {
 };
 
 
-export const sendFeedbackMessage = (dbName, messageDetails, message) => {
+export const sendFeedbackMessage = (dbName, fromDetails, message) => {
   return async (dispatch) => {
 
-    await wargamesApi.postFeedback(dbName, messageDetails, message);
+    await wargamesApi.postFeedback(dbName, fromDetails, message);
 
     dispatch(modalAction.close());
   }
