@@ -90,7 +90,7 @@ class JsonCreator extends Component {
         {
           this.props.privateMessage && (
             <div className="flex-content">
-              <label htmlFor="" className="material-label" id="private-message-input-label"><FontAwesomeIcon icon={faUserSecret}/>Private message</label>
+              <label htmlFor="" className="material-label" id="private-message-input-label"><FontAwesomeIcon size="2x" icon={faUserSecret}/>Private message</label>
               <textarea id="private-message-input" className="material-input" ref={this.privateMessageRef} />
             </div>
           )
