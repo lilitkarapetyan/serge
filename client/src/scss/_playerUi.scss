@@ -96,6 +96,16 @@
     }
   }
 
+  #private-message-input-label {
+    background: $greyBg;
+  }
+
+  #private-message-input {
+    height: 65px;
+    background: $greyBg;
+    resize: none;
+  }
+
   .forces-in-channel {
     display: flex;
     flex-direction: row;

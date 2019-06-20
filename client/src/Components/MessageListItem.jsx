@@ -61,7 +61,7 @@ class MessageListItem extends Component {
           onClosing={this.close}
         >
           <div key={`${this.props.key}-preview`} className="message-preview-player wrap"
-           style={{borderColor: this.props.detail.details.from.forceColor}}><MessagePreview detail={this.props.detail.message} from={this.props.detail.details.from} /></div>
+           style={{borderColor: this.props.detail.details.from.forceColor}}><MessagePreview detail={this.props.detail.message} from={this.props.detail.details.from} privateMessage={this.props.detail.details.privateMessage} /></div>
         </Collapsible>
       </React.Fragment>
     )

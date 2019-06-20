@@ -66,6 +66,7 @@ class NewMessage extends Component {
           <MessageCreator
             schema={this.state.selectedSchema}
             curChannel={this.props.curChannel}
+            privateMessage={this.props.privateMessage}
           />
         </Collapsible>
       </div>
@@ -75,6 +76,8 @@ class NewMessage extends Component {
 
 NewMessage.propTypes = {
   templates: PropTypes.array.isRequired,
+  curChannel: PropTypes.string.isRequired,
+  privateMessage: PropTypes.bool.isRequired,
 };
 
 export default NewMessage;
