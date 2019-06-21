@@ -107,11 +107,22 @@
     resize: none;
   }
 
+  div.message-creator
+  {
+    font-family: Courier;
+    background-color: #f00;
+  }
+
   .private-message, .private-message div
   {
     font-style: italic;
     background: $grey;
     color:#fff;
+  }
+
+  span.private div
+  {
+    font-style: italic;
   }
 
   .forces-in-channel {

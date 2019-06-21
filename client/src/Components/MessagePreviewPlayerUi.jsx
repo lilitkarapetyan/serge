@@ -171,7 +171,7 @@ class MessagePreview extends Component {
                 <FontAwesomeIcon size="1x" icon={faUserSecret}/>
                 Private:
               </span>
-              <span className="data">{lineBreak(this.props.privateMessage)}</span>
+              <span className="data private">{lineBreak(this.props.privateMessage)}</span>
             </>
           )
         }
