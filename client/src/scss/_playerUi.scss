@@ -98,19 +98,15 @@
 
   #private-message-input-label {
     background: $greyBg;
+    font-family: 'Courier New', Courier, monospace;
   }
 
   #private-message-input {
     height: 65px;
+    font-family: 'Courier New', Courier, monospace;
     background: $greyBg;
     font-style: italic;
     resize: none;
-  }
-
-  div.message-creator
-  {
-    font-family: Courier;
-    background-color: #f00;
   }
 
   .private-message, .private-message div
@@ -165,7 +161,7 @@
     flex-grow: 2;
 
     .wrap {
-      padding: 16px;
+      // padding: 16px;
     }
 
     .turn-marker {
@@ -310,12 +306,12 @@
     }
 
     #message-creator {
-      font-family: "Segoe UI", sans-serif;
+      font-family: Courier;
       font-weight: bold;
       color: $secondaryColor;
 
       h3 {
-        display: none;
+       // display: none;
       }
 
       .bg-light {
