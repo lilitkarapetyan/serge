@@ -116,41 +116,6 @@ class MessagePreview extends Component {
       <>
         {keyPropPairs.map((pair, i) => {
 
-          if (i === 0 && keyPropPairs.length > 1) return (
-            <Fragment key={'from-force'}>
-              {this.props.from.force && this.props.from.role ? <>
-                <span className="detail">
-                  From:
-                </span>
-                  <span className="data">
-                  {`${this.props.from.force} ${this.props.from.role}`}
-                </span></>
-                : false}
-            </Fragment>
-          );
-
-          if (i === 0 && keyPropPairs.length === 1) return (
-            <Fragment key={'from-force'}>
-              {this.props.from.force && this.props.from.role ?
-                <>
-                  <span className="detail">
-                    From:
-                  </span>
-                  <span className="data">
-                    {`${this.props.from.force} ${this.props.from.role} `}
-                  </span><br/>
-                </>
-                : false}
-
-              <span className="detail">
-                  {`${this.capitalize(pair[0])}:`}
-                </span>
-              <span className="data">
-                  {lineBreak(pair[1])}
-                </span><br/>
-            </Fragment>
-          );
-
           if (check.object(pair[1])) return that.createObjItem(pair);
           if (check.array.of.object(pair[1])) return that.deconstructArr(pair);
           if (check.boolean(pair[1])) return that.createBoolItem(pair);
