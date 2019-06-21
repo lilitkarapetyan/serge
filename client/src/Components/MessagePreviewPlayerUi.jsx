@@ -5,6 +5,7 @@ import '../scss/App.scss';
 import check from "check-types";
 import moment from "moment";
 import isValidUrl from "../Helpers/isValidUrl";
+import lineBreak from "../Helpers/splitNewLineBreak";
 import {umpireForceTemplate} from "../consts";
 const Fragment = React.Fragment;
 
@@ -141,7 +142,7 @@ class MessagePreview extends Component {
                   {`${this.capitalize(pair[0])}:`}
                 </span>
               <span className="data">
-                  {pair[1].split('\n').map( (it, i) => <div key={'x'+i}>{it}</div> )}
+                  {lineBreak(pair[1])}
                 </span><br/>
             </Fragment>
           );
@@ -155,16 +156,18 @@ class MessagePreview extends Component {
           return (
             <Fragment key={`${pair[0]}-${pair[1]}`}>
               <span className="detail">{this.capitalize(pair[0])}: </span>
-              <span className="data">{pair[1].split('\n').map( (it, i) => <div key={'x'+i}>{it}</div> )}</span>
+              <span className="data">{lineBreak(pair[1])}</span>
             </Fragment>
           );
         })}
-        {this.props.playerUi.selectedForce === umpireForceTemplate.uniqid && (
-          <>
-            <span className="detail">Private:</span>
-            <span className="data">{this.props.privateMessage.split('\n').map( (it, i) => <div key={'x'+i}>{it}</div> )}</span>
-          </>
-        )}
+        {this.props.privateMessage &&
+         this.props.playerUi.selectedForce === umpireForceTemplate.uniqid && (
+            <>
+              <span className="detail">Private:</span>
+              <span className="data">{lineBreak(this.props.privateMessage)}</span>
+            </>
+          )
+        }
       </>
     )
   }
