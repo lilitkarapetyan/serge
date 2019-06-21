@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import '../scss/App.scss';
-import {connect} from "react-redux";
 
 import MessageCreator from "../Components/MessageCreator.jsx";
 import Collapsible from "react-collapsible";

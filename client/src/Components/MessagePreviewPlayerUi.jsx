@@ -6,6 +6,10 @@ import check from "check-types";
 import moment from "moment";
 import isValidUrl from "../Helpers/isValidUrl";
 import lineBreak from "../Helpers/splitNewLineBreak";
+import {
+  faUserSecret
+} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {umpireForceTemplate} from "../consts";
 const Fragment = React.Fragment;
 
@@ -163,7 +167,10 @@ class MessagePreview extends Component {
         {this.props.privateMessage &&
          this.props.playerUi.selectedForce === umpireForceTemplate.uniqid && (
             <>
-              <span className="detail">Private:</span>
+              <span className="detail">
+                <FontAwesomeIcon size="1x" icon={faUserSecret}/>
+                Private:
+              </span>
               <span className="data">{lineBreak(this.props.privateMessage)}</span>
             </>
           )

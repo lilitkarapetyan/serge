@@ -7,7 +7,6 @@ import {
   setForce,
   setRole,
   initiateGame,
-  getAllWargameMessages,
   showHideObjectives,
   startListening,
   setAllTemplates,
