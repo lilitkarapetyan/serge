@@ -1,11 +1,12 @@
 @import 'dependencies/variables';
 
 .message-preview-player {
-  margin-top: 12px;
-  margin-bottom: 12px;
+  margin-top: 0px;
+  margin-bottom: 0px;
   margin-left: 16px;
   border-left-style: solid;
   border-left-width: 4px;
+  padding-left: 30px;
 
   h3 {
     font-size: 1.4em;
@@ -98,10 +99,12 @@
 
   #private-message-input-label {
     background: $greyBg;
+    font-family: 'Courier New', Courier, monospace;
   }
 
   #private-message-input {
     height: 65px;
+    font-family: 'Courier New', Courier, monospace;
     background: $greyBg;
     font-style: italic;
     resize: none;
@@ -112,6 +115,11 @@
     font-style: italic;
     background: $grey;
     color:#fff;
+  }
+
+  span.private div
+  {
+    font-style: italic;
   }
 
   .forces-in-channel {
@@ -154,7 +162,7 @@
     flex-grow: 2;
 
     .wrap {
-      padding: 16px;
+      // padding: 16px;
     }
 
     .turn-marker {
@@ -199,10 +207,11 @@
 
   .Collapsible {
     position: relative;
+    padding-bottom: 16px;
 
     &__trigger {
       display: block;
-      padding: 16px 0;
+      padding: 0;
       font-size: 1.45em;
       font-family: monospace;
       line-height: 1.75em;
@@ -299,7 +308,7 @@
     }
 
     #message-creator {
-      font-family: "Segoe UI", sans-serif;
+      font-family: Courier;
       font-weight: bold;
       color: $secondaryColor;
 

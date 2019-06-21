@@ -47,8 +47,8 @@ class MessageListItem extends Component {
               <FontAwesomeIcon icon={this.props.detail.isOpen ? faMinus : faPlus} size="1x" />
               <div className="message-title">{itemTitle}</div>
               <div className="info-wrap">
-                <span>{moment(this.props.detail.details.timestamp).format("HH:mm")}</span>
-                <Badge pill variant="dark">{this.props.detail.details.from.role}</Badge>
+                <Badge pill variant="primary">{moment(this.props.detail.details.timestamp).format("HH:mm")}</Badge>
+                <Badge pill variant="dark">{this.props.detail.details.from.force} // {this.props.detail.details.from.role}</Badge>
                 <Badge pill variant="secondary">{this.props.detail.details.messageType}</Badge>
                 {!this.props.detail.hasBeenRead && <Badge pill variant="warning">Unread</Badge>}
               </div>
