@@ -122,6 +122,7 @@ class AddRoleModal extends Component {
                 updateStore={this.setNewRoleName}
                 data={this.state.roleName}
                 options={{numInput: false}}
+                autoFocus={true}
               />
             </div>
             <div className="flex-content">
