@@ -12,6 +12,8 @@ import EditTemplate from '../Views/EditTemplate';
 import CreateTemplate from '../Views/CreateTemplate';
 import GameSetup from "../Views/GameSetup";
 import ExportMessages from "../Views/ExportMessages";
+import ExportForces from "../Views/ExportForces";
+import ExportPrint from "../Views/ExportPrint";
 import PlayerUi from "../Views/PlayerUi";
 
 import '../scss/App.scss';
@@ -38,7 +40,14 @@ class Router extends Component {
         ]
       },
       { path: '/client/gameSetup', action: () => <GameSetup /> },
-      { path: '/client/export', action: () => <ExportMessages /> },
+      { path: '/client/export', children:
+        [
+          { path: '', action: () => <ExportMessages /> },
+          { path: '/messages', action: () => <ExportMessages /> },
+          { path: '/forces', action: () => <ExportForces /> },
+          { path: '/print/:id', action: () => <ExportPrint /> },
+        ]
+      },
       { path: '/client/playerUi', action: () => <PlayerUi /> },
     ];
 
