@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 
-import Link from "../Components/Link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { getAllMessageTypes } from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
 import { createExportItem } from "../ActionsAndReducers/ExportItems/ExportItems_ActionsCreators";
 import ExcelExport from '../Components/ExcelExport';

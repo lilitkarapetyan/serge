@@ -4,9 +4,6 @@ import { connect } from "react-redux";
 import Link from "../Components/Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { getAllMessageTypes } from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
-import { createExportItem } from "../ActionsAndReducers/ExportItems/ExportItems_ActionsCreators";
-import ExcelExport from '../Components/ExcelExport';
 import { setCurrentViewFromURI } from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
 
 class ExportView extends Component {
@@ -25,12 +22,11 @@ class ExportView extends Component {
   checkTab = tab => (tab.url === this.props.currentViewURI || tab.urlalt === this.props.currentViewURI ? "active-tab" : '')
 
   render() {
-    console.log(this.props);
     return (
       <div className="view-wrapper view-wrapper-gamesetup">
         <ul className="tab-nav">
-          {this.state.tabs.map(tab => (
-            <li className={this.checkTab(tab)} onClick={() => { this.props.setTab(tab.url) }}>{tab.title}</li>
+          {this.state.tabs.map((tab, key) => (
+            <li key={key} className={this.checkTab(tab)} onClick={() => { this.props.setTab(tab.url) }}>{tab.title}</li>
           ))}
         </ul>
         <div id="sidebar">

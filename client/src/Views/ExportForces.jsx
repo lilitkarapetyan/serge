@@ -1,10 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from "react-redux";
 
-import Link from "../Components/Link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { getAllMessageTypes } from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
 import { createExportItem } from "../ActionsAndReducers/ExportItems/ExportItems_ActionsCreators";
 import ExportView from "./ExportView";
 import ExportItem from "../Components//ExportItem";
@@ -66,7 +62,7 @@ const ExportForces = ({ wargame, savExportItem, exportItems }) => {
         {exportItems.map((item, key) => (
           <ExportItem item={item} key={key}>
             <ExcelExport exp={item} index={key}/>
-            <HtmlExport id={key}/>
+            <HtmlExport id={item.id}/>
           </ExportItem>
         ))}
       </ul>
@@ -75,7 +71,8 @@ const ExportForces = ({ wargame, savExportItem, exportItems }) => {
 }
 
 const mapStateToProps = ({ wargame, exportItems }) => ({
-  wargame, exportItems: exportItems.filter(item => item.type === 'forces')
+  wargame,
+  exportItems: exportItems.map((item, key) => ({...item, id: key})).filter(item => item.type === 'forces')
 });
 
 
