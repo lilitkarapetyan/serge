@@ -139,6 +139,7 @@ class AddRoleModal extends Component {
                 label="Is Observer"
                 updateStore={this.setRoleObserver}
                 isChecked={this.state.isObserver}
+                title="Role gains read-only view of channels not currently a member of"
               />
             </div>
             <div className="flex-content">
@@ -147,6 +148,7 @@ class AddRoleModal extends Component {
                 label="Can view insights"
                 updateStore={this.setInsightViewer}
                 isChecked={this.state.isInsightViewer}
+                title="Role has view of all submitted feedback"
               />
             </div>
           </div>
