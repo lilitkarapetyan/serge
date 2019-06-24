@@ -47,8 +47,8 @@ class MessageListItem extends Component {
               <FontAwesomeIcon icon={this.props.detail.isOpen ? faMinus : faPlus} size="1x" />
               <div className="message-title">{itemTitle}</div>
               <div className="info-wrap">
-                <span>{moment(this.props.detail.details.timestamp).format("HH:mm")}</span>
-                <Badge pill variant="dark">{this.props.detail.details.from.role}</Badge>
+                <Badge pill variant="primary">{moment(this.props.detail.details.timestamp).format("HH:mm")}</Badge>
+                <Badge pill variant="dark">{this.props.detail.details.from.force} // {this.props.detail.details.from.role}</Badge>
                 <Badge pill variant="secondary">{this.props.detail.details.messageType}</Badge>
                 {!this.props.detail.hasBeenRead && <Badge pill variant="warning">Unread</Badge>}
               </div>
@@ -61,7 +61,7 @@ class MessageListItem extends Component {
           onClosing={this.close}
         >
           <div key={`${this.props.key}-preview`} className="message-preview-player wrap"
-           style={{borderColor: this.props.detail.details.from.forceColor}}><MessagePreview detail={this.props.detail.message} from={this.props.detail.details.from} /></div>
+           style={{borderColor: this.props.detail.details.from.forceColor}}><MessagePreview detail={this.props.detail.message} from={this.props.detail.details.from} privateMessage={this.props.detail.details.privateMessage} /></div>
         </Collapsible>
       </React.Fragment>
     )

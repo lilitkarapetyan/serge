@@ -22,6 +22,7 @@ class MessagesListChannel extends Component {
             key={`${i}-messageitem`}
             openSection={this.props.openSection}
             closeSection={this.props.closeSection}
+
           />
         );
       })

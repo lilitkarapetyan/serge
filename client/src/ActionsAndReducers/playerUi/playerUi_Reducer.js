@@ -125,6 +125,21 @@ export const playerUiReducer = (state = initialState, action) => {
             newState.channels[channel.uniqid].name = channel.name;
           }
 
+          // update observing status when observer removed from channel participants
+          if (
+            (!channelActive && !allRoles) &&
+            newState.isObserver &&
+            !!newState.channels[channel.uniqid]
+          ) {
+            newState.channels[channel.uniqid].observing = true;
+          } else if (
+            (channelActive || allRoles) &&
+            newState.isObserver &&
+            !!newState.channels[channel.uniqid]
+          ) {
+            newState.channels[channel.uniqid].observing = false;
+          }
+
           // if channel already created
           if (
             (channelActive || allRoles) &&

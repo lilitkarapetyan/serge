@@ -6,6 +6,7 @@ import * as messagesApi from "../../../api/messages_api";
 import machineryFailure from "../../../Schemas/machinery_failure.json";
 import ActionConstant from "../../../ActionsAndReducers/ActionConstants";
 import {messagesReducer} from "../../../ActionsAndReducers/dbMessages/messages_Reducer";
+import {ADMIN_ROUTE, MESSAGE_LIBRARY_ROUTE} from "../../../consts";
 
 const mockStore = configureStore([thunk]);
 
@@ -65,7 +66,7 @@ describe('message actions', () => {
       },
       { type: ActionConstant.DB_MESSAGE_SAVED, payload: [{message: 'message'}] },
       { type: ActionConstant.DB_MESSAGE_CREATION_LOADING, isLoading: false },
-      { type: ActionConstant.SET_CURRENT_VIEW_FROM_URI, payload: "/client/umpireMenu/library"}
+      { type: ActionConstant.SET_CURRENT_VIEW_FROM_URI, payload: MESSAGE_LIBRARY_ROUTE}
     ];
 
     const store = mockStore({});
@@ -109,7 +110,7 @@ describe('message actions', () => {
       { type: ActionConstant.DB_RETURNED_MESSAGE, payload: {} },
       { type: ActionConstant.DB_MESSAGE_SAVED, payload: [{message: 'message'}] },
       { type: ActionConstant.DB_MESSAGE_CREATION_LOADING, isLoading: false },
-      { type: ActionConstant.SET_CURRENT_VIEW_FROM_URI, payload: "/client/umpireMenu/library"}
+      { type: ActionConstant.SET_CURRENT_VIEW_FROM_URI, payload: MESSAGE_LIBRARY_ROUTE}
     ];
 
     const store = mockStore({});

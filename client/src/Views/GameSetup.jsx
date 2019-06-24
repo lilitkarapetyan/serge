@@ -19,6 +19,7 @@ import checkUnique from "../Helpers/checkUnique";
 import classNames from "classnames";
 import TextInput from "../Components/Inputs/TextInput";
 import {addNotification} from "../ActionsAndReducers/Notification/Notification_ActionCreators";
+import {ADMIN_ROUTE} from "../consts";
 
 class GameSetup extends Component {
 
@@ -100,7 +101,7 @@ class GameSetup extends Component {
             <Link
               disable={!this.checkAllSaved()}
               class={classNames({"link--disabled": !this.checkAllSaved()})}
-              onClickHandler={this.notSavedNotification} href="/client/umpireMenu" id="home-btn"><FontAwesomeIcon icon={faArrowLeft} size="2x" /></Link>
+              onClickHandler={this.notSavedNotification} href={ADMIN_ROUTE} id="home-btn"><FontAwesomeIcon icon={faArrowLeft} size="2x" /></Link>
           </div>
           <div className="flex-content-wrapper flex-content-wrapper--distribute" id="game-setup-head">
             <div className="flex-content flex-content--row">

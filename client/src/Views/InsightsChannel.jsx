@@ -5,6 +5,7 @@ import {
   getAllWargameFeedback,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 import '../scss/App.scss';
+import moment from "moment";
 
 class InsightsChannel extends Component {
 
@@ -36,12 +37,13 @@ class InsightsChannel extends Component {
           return (
             <React.Fragment key={`feedback${i}`}>
               <div className="info-wrap">
-                <Badge pill variant="primary">{message.playerInfo.force}</Badge> 
-                <Badge pill variant="secondary">{message.playerInfo.role}</Badge>
-                {message.playerInfo.name && <Badge pill variant="warning">{message.playerInfo.name}</Badge>}
+                <Badge pill variant="primary">{message.details.from.force}</Badge>
+                <Badge pill variant="secondary">{message.details.from.role}</Badge>
+                {message.details.from.name && <Badge pill variant="warning">{message.details.from.name}</Badge>}
+                <span>{moment(message.details.timestamp).format("YYYY-MMM-DD HH:mm")}</span>
               </div>
-              {message.message}
-              <p className="feedback-marker"  style={{borderColor: message.playerInfo.forceColor}}></p>
+              {message.message.content}
+              <p className="feedback-marker" style={{borderColor: message.details.from.forceColor}}></p>
             </React.Fragment>
           )
         })
