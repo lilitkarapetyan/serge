@@ -75,7 +75,7 @@ class EditMessage extends Component {
                         filter={this.filterMessages}
                         selected={this.props.umpireMenu.selectedSchemaID}
                         setSelected={this.setSelectedSchemaId}
-                        placeholder={'Select template'}
+                        placeholder={'Select message'}
             />
           </div>
           <div id="preview" className="flex-content flex-content--big">
