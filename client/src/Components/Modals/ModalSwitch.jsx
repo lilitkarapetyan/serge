@@ -9,6 +9,7 @@ import UnsavedChannelModal from "./UnsavedChannelModal";
 import AddIconModal from "./AddIconModal";
 import LessonsModal from "./InsightsModal";
 import ColorPickerModal from "./ColorPickerModal";
+import AddLogoModal from "./AddLogoModal";
 
 class ModalSwitch extends Component {
 
@@ -48,6 +49,10 @@ class ModalSwitch extends Component {
 
       case "colorpicker":
         modal = <ColorPickerModal />;
+        break;
+
+      case "uploadLogo":
+        modal = <AddLogoModal />;
         break;
 
       default:

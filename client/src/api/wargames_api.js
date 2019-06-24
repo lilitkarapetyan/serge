@@ -15,6 +15,7 @@ import {
   PLANNING_PHASE,
   ADJUDICATION_PHASE,
   MAX_LISTENERS,
+  SERGE_INFO,
 } from "../consts";
 
 import {
@@ -68,7 +69,7 @@ export const populateWargame = (dispatch) => {
     .then((dbs) => {
       const wargameNames = wargameDbStore.map((db) => db.name);
       let toCreate = _.difference(dbs, wargameNames);
-      toCreate = _.pull(toCreate, MSG_STORE, MSG_TYPE_STORE, "_replicator", "_users");
+      toCreate = _.pull(toCreate, MSG_STORE, MSG_TYPE_STORE, SERGE_INFO, "_replicator", "_users");
 
       toCreate.forEach((name) => {
         const db = new PouchDB(databasePath+name);
@@ -82,7 +83,8 @@ export const populateWargame = (dispatch) => {
           .then(function (res) {
             return {
               name: game.db.name,
-              title: res.wargameTitle
+              title: res.wargameTitle,
+              initiated: res.wargameInitiated,
             }
           })
           .catch((err) => {
@@ -715,7 +717,7 @@ export const initiateGame = (dbName) => {
           name: res.name,
           wargameTitle: res.wargameTitle,
           data: res.data,
-          gameTurn: res.gameTurn,
+          gameTurn: 1,
           phase: PLANNING_PHASE,
           gameDate: res.gameDate,
           gameTurnTime: res.gameTurnTime,
@@ -801,7 +803,7 @@ export const nextGameTurn = (dbName) => {
   return new Promise((resolve, reject) => {
     getLatestWargameRevision(dbName)
       .then((res) => {
-        console.log('latest got');
+
         let phase = res.phase;
 
         switch (phase) {
@@ -895,7 +897,8 @@ export const getAllWargames = function () {
       .then(function (res) {
         return {
           name: game.db.name,
-          title: res.wargameTitle
+          title: res.wargameTitle,
+          initiated: res.wargameInitiated,
         }
       })
       .catch((err) => {

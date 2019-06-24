@@ -7,6 +7,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { getAllMessageTypes } from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
 import { createExportItem } from "../ActionsAndReducers/ExportItems/ExportItems_ActionsCreators";
 import ExcelExport from '../Components/ExcelExport';
+import {ADMIN_ROUTE} from "../consts";
 
 class ExportMessages extends Component {
 
@@ -106,7 +107,7 @@ class ExportMessages extends Component {
     return (
       <div className="view-wrapper view-wrapper-gamesetup">
         <div id="sidebar">
-          <Link onClickHandler={this.notSavedNotification} href="/client/umpireMenu" id="home-btn"><FontAwesomeIcon icon={faArrowLeft} size="2x" /></Link>
+          <Link onClickHandler={this.notSavedNotification} href={ADMIN_ROUTE} id="home-btn"><FontAwesomeIcon icon={faArrowLeft} size="2x" /></Link>
         </div>
         <div className="export-container">
           <h2>Export messages</h2>

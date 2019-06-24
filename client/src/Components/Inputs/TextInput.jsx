@@ -32,7 +32,16 @@ class TextInput extends Component {
     return (
       <>
         { this.props.label && <label className="material-label" htmlFor={this.props.id}>{this.props.label}</label> }
-        <input ref={this.textInput} className={this.props.className || ""} id={this.props.id ? this.props.id : null} type={this.state.type} onChange={this.onChange} value={this.props.data ? this.props.data : ""} />
+        <input  ref={this.textInput} 
+          className={this.props.className || ""}
+          id={this.props.id ? this.props.id : null}
+          type={this.state.type}
+          onChange={this.onChange}
+          value={this.props.data ? this.props.data : ""}
+          onMouseOver={this.props.onMouseOver}
+          onMouseOut={this.props.onMouseOut}
+          title={this.props.title}
+        />
       </>
     );
   }

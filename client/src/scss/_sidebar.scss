@@ -10,3 +10,18 @@
 
   background-color: $primaryColor;
 }
+
+#sidebar_admin {
+  position: fixed;
+  width: 20vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  padding-top: 6vh;
+
+  background-color: $primaryColor;
+
+  a, span {
+    margin-bottom: 1.15em;
+  }
+}
