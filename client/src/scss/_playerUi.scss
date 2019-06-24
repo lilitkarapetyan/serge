@@ -8,8 +8,8 @@
 }
 
 .message-preview-player {
-  margin-top: 0px;
-  margin-bottom: 0px;
+  margin-top: 0;
+  margin-bottom: 0;
   margin-left: 16px;
   border-left-style: solid;
   border-left-width: 4px;
@@ -196,7 +196,7 @@
     p.detail-row
     {
       margin-left: 16px;
-      margin-bottom: 0px;
+      margin-bottom: 0;
       border-bottom: 2px solid $grey2;
     }
 

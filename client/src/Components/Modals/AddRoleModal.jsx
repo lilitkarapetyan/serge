@@ -24,6 +24,7 @@ class AddRoleModal extends Component {
       roleName: this.props.currentModal.data ? this.props.currentModal.data.name : '',
       rolePassword: this.props.currentModal.data ? this.props.currentModal.data.password : `pass${uniqId.time()}`,
       isObserver: this.props.currentModal.data ? this.props.currentModal.data.isObserver : false,
+      isInsightViewer: this.props.currentModal.data ? this.props.currentModal.data.isInsightViewer : false,
     };
   }
 
@@ -33,6 +34,7 @@ class AddRoleModal extends Component {
       roleName: '',
       rolePassword: '',
       isObserver: false,
+      isInsightViewer: false,
     });
 
     this.props.dispatch(modalAction.close());
@@ -64,6 +66,14 @@ class AddRoleModal extends Component {
     });
   };
 
+  setInsightViewer = (value) => {
+    console.log(value);
+    this.setState({
+      isInsightViewer: value
+    });
+  };
+
+
   addRole = () => {
     let selectedForce = this.props.wargame.data.forces.selectedForce.name;
 
@@ -71,6 +81,7 @@ class AddRoleModal extends Component {
       name: this.state.roleName,
       password: this.state.rolePassword,
       isObserver: this.state.isObserver,
+      isInsightViewer: this.state.isInsightViewer,
       control: this.props.currentModal.data ? this.props.currentModal.data.control : false,
     };
 
@@ -111,6 +122,7 @@ class AddRoleModal extends Component {
                 updateStore={this.setNewRoleName}
                 data={this.state.roleName}
                 options={{numInput: false}}
+                autoFocus={true}
               />
             </div>
             <div className="flex-content">
@@ -128,6 +140,16 @@ class AddRoleModal extends Component {
                 label="Is Observer"
                 updateStore={this.setRoleObserver}
                 isChecked={this.state.isObserver}
+                title="Role gains read-only view of channels not currently a member of"
+              />
+            </div>
+            <div className="flex-content">
+              <Checkbox
+                id="c2"
+                label="Can view insights"
+                updateStore={this.setInsightViewer}
+                isChecked={this.state.isInsightViewer}
+                title="Role has view of all submitted feedback"
               />
             </div>
           </div>
