@@ -19,8 +19,8 @@ const ExportPrint = ({ exportItem, notFound }) => {
 
   return (
     <div className='print-canvas'>
-      {exportItem.data.map(data => (
-        <div className='print-page'>
+      {exportItem.data.map((data, pageIndex) => (
+        <section key={pageIndex}>
           <h2>{exportItem.wargame}</h2>
           <h4>{exportItem.type}</h4>
           <hr/>
@@ -28,12 +28,12 @@ const ExportPrint = ({ exportItem, notFound }) => {
             <tbody>
               {data.items.map((row, key) => (
                 <tr key={key}>
-                  {row.map(col => ( key ? (<td>{col}</td>) : (<th>{col}</th>) ))}
+                  {row.map(col => ( key ? (<td key={key}>{col}</td>) : (<th key={key}>{col}</th>) ))}
                 </tr>
               ))}
             </tbody>
           </table>
-        </div>
+        </section>
       ))}
     </div>
   )

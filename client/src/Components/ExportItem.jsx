@@ -2,12 +2,14 @@ import React from 'react';
 
 const ExportItem = ({ children, item }) => {
 
-  let itemsHeadline = "Message Types"
+  let itemsHeadline;
 
   switch (item.type) {
     case 'forces':
-      itemsHeadline = "Forces"
+      itemsHeadline = "Forces";
       break;
+    default:
+      itemsHeadline = 'Message Types';
   }
 
   return (
