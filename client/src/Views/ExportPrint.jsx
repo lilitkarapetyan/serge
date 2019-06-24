@@ -42,7 +42,7 @@ const mapStateToProps = ({exportItems, currentViewURI}) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  notFound: () => { dispatch(setCurrentViewFromURI('/client/export')) }
+  notFound: () => { dispatch(setCurrentViewFromURI('/serge/export')) }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExportPrint);
