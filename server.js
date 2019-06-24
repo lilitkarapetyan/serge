@@ -67,7 +67,6 @@ app.get('/deleteDb', (req, res) => {
 });
 
 app.use('/saveIcon', bodyParser.raw({type: 'image/png', limit: '20kb'}));
-
 app.post('/saveIcon', (req, res) => {
 
   let image = `${imgDir}/${uniqid.time('icon-')}.png`;
@@ -77,6 +76,18 @@ app.post('/saveIcon', (req, res) => {
   res.status(200).send({path: image});
 
 });
+
+app.use('/saveLogo', bodyParser.raw({type: 'image/png', limit: '100kb'}));
+app.post('/saveLogo', (req, res) => {
+
+  let image = `${imgDir}/${uniqid.time('logo-')}.png`;
+
+  fs.writeFile(image, req.body, (err) => console.log(err));
+
+  res.status(200).send({path: image});
+
+});
+
 
 app.use(express.static(path.join(__dirname)));
 

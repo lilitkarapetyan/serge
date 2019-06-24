@@ -109,6 +109,10 @@ span.link {
     padding: .6em 1em;
   }
 
+  &--active {
+    font-size: calc(#{$titleSize * 1.25})
+  }
+
   &--secondary {
     //margin-bottom: 1.15em;
     color: $primaryTriadColor;

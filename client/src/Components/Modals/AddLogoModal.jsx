@@ -3,17 +3,17 @@ import ModalWrapper from './ModalWrapper';
 import "../../scss/App.scss";
 import { connect } from 'react-redux';
 import DropZone from "../Inputs/DropZone";
-import {saveIcon} from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
+import {saveSergeLogo} from "../../ActionsAndReducers/sergeInfo/sergeInfo_ActionCreators";
 
-class AddIconModal extends Component {
+class AddLogoModal extends Component {
 
   hideModal = () => {
     this.props.dispatch(modalAction.close());
   };
 
-  saveIcon = (file) => {
-    this.props.dispatch(saveIcon(file));
+  saveLogo = (file) => {
+    this.props.dispatch(saveSergeLogo(file));
   };
 
   render() {
@@ -23,10 +23,10 @@ class AddIconModal extends Component {
     return (
       <ModalWrapper>
         <div className="display-text-wrapper">
-          <h3>Add an icon</h3>
+          <h3>Add an image</h3>
           <DropZone
-            maxSize={20000}
-            saveHandler={this.saveIcon}
+            maxSize={100000}
+            saveHandler={this.saveLogo}
           />
         </div>
       </ModalWrapper>
@@ -38,4 +38,4 @@ const mapStateToProps = ({ currentModal }) => ({
   currentModal
 });
 
-export default connect(mapStateToProps)(AddIconModal);
+export default connect(mapStateToProps)(AddLogoModal);

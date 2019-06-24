@@ -11,7 +11,7 @@ import {
   startListening,
   setAllTemplates,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
-
+import lineBreak from "../Helpers/splitNewLineBreak";
 import {
   addNotification,
 } from "../ActionsAndReducers/Notification/Notification_ActionCreators";
@@ -19,6 +19,9 @@ import {
 import DropdownInput from "../Components/Inputs/DropdownInput";
 import AwaitingStart from "../Components/AwaitingStart";
 import GameChannels from "./GameChannels";
+import TextInput from "../Components/Inputs/TextInput";
+import {getSergeGameInformation} from "../ActionsAndReducers/sergeInfo/sergeInfo_ActionCreators";
+import {umpireForceTemplate} from "../consts";
 
 class PlayerUi extends Component {
 
@@ -26,13 +29,18 @@ class PlayerUi extends Component {
     super(props);
 
     this.state = {
+      landingScreen: true,
+      selectedWargame: '',
+      wargameAccessCode: '',
       rolePassword: '',
     };
+
+    this.props.dispatch(getSergeGameInformation());
   };
 
-
-  updateSelectedWargame = (wargamePath) => {
-    this.props.dispatch(getWargame(wargamePath));
+  updateSelectedWargame = (selectedWargame) => {
+    this.setState({selectedWargame});
+    this.props.dispatch(getWargame(selectedWargame));
   };
 
   goBack = () => {
@@ -83,37 +91,74 @@ class PlayerUi extends Component {
     this.props.dispatch(showHideObjectives());
   };
 
+  enterSerge = () => {
+    this.setState({
+      landingScreen: false,
+    })
+  };
+
   render() {
 
+    if (this.state.landingScreen) {
+      return (
+        <div className="flex-content-wrapper flex-content-wrapper--welcome">
+          <div className="flex-content flex-content--welcome">
+            <div className="flex-content--center">
+              <img className="serge-logo" src={this.props.gameInfo.imageUrl} alt="Serge gaming" />
+              <h1>{this.props.gameInfo.title}</h1>
+              {lineBreak(this.props.gameInfo.description)}
+              <button name="play" className="btn btn-action btn-action--primary" onClick={this.enterSerge}>Play</button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    if (this.props.playerUi.selectedForce === umpireForceTemplate.uniqid && !this.props.playerUi.wargameInitiated) {
+      return (
+        <div className="flex-content-wrapper">
+          <div className="pre-start-screen">
+            <button name="initate game" className="btn btn-action btn-action--primary" onClick={this.initiateGameplay}>Initiate Game</button>
+          </div>
+        </div>
+      )
+    }
+
+    if (this.props.playerUi.selectedForce && this.props.playerUi.selectedRole) {
+      return (
+        <div className="flex-content-wrapper">
+          <div className="flex-content flex-content--fill">
+            <GameChannels />
+          </div>
+        </div>
+      )
+    }
+
     return (
-      <div className="flex-content-wrapper">
-
-        <div className="flex-content flex-content--fill">
-
-          {!this.props.playerUi.currentWargame &&
+      <div className="flex-content-wrapper flex-content-wrapper--welcome">
+        <div className="flex-content flex-content--welcome">
+          {!this.props.playerUi.selectedForce && !this.props.playerUi.selectedRole &&
             <div className="flex-content--center">
               <h1>Set wargame</h1>
               <DropdownInput
+                data={this.state.selectedWargame}
                 updateStore={this.updateSelectedWargame}
                 selectOptions={this.props.wargame.wargameList.map((wargame) => ({option: wargame.title, value: wargame.name}))}
               />
-            </div>
-          }
-
-          {this.props.playerUi.currentWargame && !this.props.playerUi.selectedForce &&
-            <div className="flex-content--center">
-              <h1>Access code</h1>
-              <input
-                autoFocus
-                className="modal-input"
-                type="text"
-                onChange={this.setRolePassword}
-                value={this.state.rolePassword || ''}
-              />
-              <div className="demo-passwords">
-                <h3>Not visible in production</h3>
-                {this.roleOptions().map((force) => {
-                  return (
+              <div className="flex-content">
+                <TextInput
+                  label="Access code"
+                  className="material-input"
+                  updateStore={this.setRolePassword}
+                  options={{numInput: false}}
+                  data={this.state.rolePassword || ''}
+                />
+              </div>
+              {this.state.selectedWargame &&
+                <div className="demo-passwords">
+                  <h3>Not visible in production</h3>
+                  {this.roleOptions().map((force) => {
+                    return (
                       <React.Fragment key={force.name}>
                         <h4>{force.name}</h4>
                         <ul>
@@ -122,34 +167,23 @@ class PlayerUi extends Component {
                       </React.Fragment>
                     )
                   })
-                }
-              </div>
+                  }
+                </div>
+              }
               <button name="add" disabled={!this.state.rolePassword} className="btn btn-action btn-action--primary" onClick={this.checkPassword}>Enter</button>
             </div>
           }
-
-          {this.props.playerUi.selectedForce && this.props.playerUi.selectedRole && this.props.playerUi.wargameInitiated &&
-            <GameChannels />
-          }
-
-          {this.props.playerUi.selectedForce && this.props.playerUi.selectedRole && !this.props.playerUi.wargameInitiated &&
-            <div className="pre-start-screen">
-              {this.props.playerUi.controlUi ?
-                <button name="delete" className="btn btn-action btn-action--primary" onClick={this.initiateGameplay}>Start Game</button>
-              : <AwaitingStart description={this.props.playerUi.gameDescription} />}
-            </div>
-          }
-
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ playerUi, wargame, messageTypes }) => ({
+const mapStateToProps = ({ playerUi, wargame, messageTypes, gameInfo }) => ({
   playerUi,
   wargame,
   messageTypes,
+  gameInfo,
 });
 
 export default connect(mapStateToProps)(PlayerUi);
