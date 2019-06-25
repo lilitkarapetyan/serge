@@ -105,6 +105,11 @@ export const clearWargames = () => {
     });
 };
 
+export const getIpAddress = () => {
+  return fetch(serverPath+'getIp')
+    .then((res) => res.json());
+};
+
 export const saveIcon = (file) => {
   return fetch(serverPath+'saveIcon', {
     method: 'POST',

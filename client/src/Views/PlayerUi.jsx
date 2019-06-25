@@ -9,7 +9,7 @@ import {
   initiateGame,
   showHideObjectives,
   startListening,
-  setAllTemplates,
+  setAllTemplates, failedLoginFeedbackMessage,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 import lineBreak from "../Helpers/splitNewLineBreak";
 import {
@@ -51,9 +51,9 @@ class PlayerUi extends Component {
     this.props.dispatch(initiateGame(this.props.playerUi.currentWargame));
   };
 
-  setRolePassword = (e) => {
+  setRolePassword = (value) => {
     this.setState({
-      rolePassword: e.target.value,
+      rolePassword: value,
     });
   };
 
@@ -72,6 +72,7 @@ class PlayerUi extends Component {
 
     if (force === undefined) {
       this.props.dispatch(addNotification("Access code incorrect", "warning"));
+      this.props.dispatch(failedLoginFeedbackMessage(this.props.playerUi.currentWargame, pass));
       return;
     }
 

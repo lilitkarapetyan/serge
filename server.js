@@ -66,6 +66,10 @@ app.get('/deleteDb', (req, res) => {
   });
 });
 
+app.get('/getIp', (req, res) => {
+  res.status(200).send({ip: req.ip});
+});
+
 app.use('/saveIcon', bodyParser.raw({type: 'image/png', limit: '20kb'}));
 app.post('/saveIcon', (req, res) => {
 
