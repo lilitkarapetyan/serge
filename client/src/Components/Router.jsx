@@ -13,6 +13,8 @@ import EditTemplate from '../Views/EditTemplate';
 import CreateTemplate from '../Views/CreateTemplate';
 import GameSetup from "../Views/GameSetup";
 import ExportMessages from "../Views/ExportMessages";
+import ExportForces from "../Views/ExportForces";
+import ExportPrint from "../Views/ExportPrint";
 import PlayerUi from "../Views/PlayerUi";
 import EditWelcomeScreen from "../Views/EditWelcomeScreen";
 import {
@@ -51,6 +53,14 @@ class Router extends Component {
           { path: EDIT_TEMPLATE_ROUTE, action: () => <EditTemplate /> },
           { path: CREATE_MESSAGE_ROUTE, action: () => <CreateMessage /> },
           { path: EDIT_MESSAGE_ROUTE, action: () => <EditMessage /> },
+        ]
+      },
+      { path: '/client/export', children:
+        [
+          { path: '', action: () => <ExportMessages /> },
+          { path: '/messages', action: () => <ExportMessages /> },
+          { path: '/forces', action: () => <ExportForces /> },
+          { path: '/print/:id', action: () => <ExportPrint /> },
         ]
       },
       { path: GAME_SETUP_ROUTE, action: () => <GameSetup /> },

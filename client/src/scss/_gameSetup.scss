@@ -138,6 +138,11 @@
         }
 
         &.fa-eye {
+          margin-right: 2px;
+          color: $primaryColor;
+        }
+
+        &.fa-comments {
           margin-right: 5px;
           color: $primaryColor;
         }

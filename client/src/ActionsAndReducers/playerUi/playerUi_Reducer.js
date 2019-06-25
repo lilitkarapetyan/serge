@@ -70,6 +70,7 @@ export const playerUiReducer = (state = initialState, action) => {
       newState.selectedRole = action.payload.name;
       newState.controlUi = action.payload.control;
       newState.isObserver = action.payload.isObserver;
+      newState.isInsightViewer = action.payload.isInsightViewer;
       break;
 
     case ActionConstant.SET_ALL_TEMPLATES_PLAYERUI:
