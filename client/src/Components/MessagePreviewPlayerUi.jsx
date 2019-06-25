@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {umpireForceTemplate} from "../consts";
+import classNames from "classnames";
 const Fragment = React.Fragment;
 
 class MessagePreview extends Component {
@@ -125,7 +126,7 @@ class MessagePreview extends Component {
           return (
             <Fragment key={`${pair[0]}-${pair[1]}`}>
               <span className="detail">{this.capitalize(pair[0])}: </span>
-              <span className="data">{lineBreak(pair[1])}</span>
+              <span className={"data"}>{lineBreak(pair[1])}</span>
             </Fragment>
           );
         })}

@@ -20,7 +20,7 @@ class MessagesListRenderProp extends Component {
       });
     }
 
-    let nextMessagesInChannel = nextProps.messages.map((item) => ({ message: item, open: false, hasBeenRead: false }));
+    let nextMessagesInChannel = nextProps.messages.map((message) => ({ ...message, open: false, hasBeenRead: false }));
 
     if (
       this.props.messages.length !== 0 &&
@@ -42,7 +42,7 @@ class MessagesListRenderProp extends Component {
       (this.props.curChannel !== nextProps.curChannel)
     ) {
       this.setState({
-        messages: nextProps.messages.map((item) => ({ message: item, open: false, hasBeenRead: nextProps.allMarkedRead }))
+        messages: nextProps.messages.map((message) => ({ ...message, open: false, hasBeenRead: nextProps.allMarkedRead }))
       });
     }
   }
@@ -51,7 +51,7 @@ class MessagesListRenderProp extends Component {
 
     el.open = true;
     el.hasBeenRead = true;
-    let index = this.state.messages.findIndex((item) => item.message._id === el.message._id);
+    let index = this.state.messages.findIndex((message) => message._id === el._id);
     let messages = this.state.messages;
 
     messages.splice(index, 1, el);
@@ -65,7 +65,7 @@ class MessagesListRenderProp extends Component {
   closeSection = (el) => {
 
     el.open = false;
-    let index = this.state.messages.findIndex((item) => item.message._id === el.message._id);
+    let index = this.state.messages.findIndex((message) => message._id === el._id);
     let messages = this.state.messages;
 
     messages.splice(index, 1, el);
