@@ -661,9 +661,52 @@ export const cleanWargame = (dbPath) => {
           turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
           wargameInitiated: false,
         })
-          .then(() => {
-            return res;
-          })
+      })
+      .then(() => {
+        wargameDbStore.unshift({name: newDbName, db: newDb});
+        return getAllWargames();
+      })
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((err) => {
+        reject(err);
+        console.log(err);
+      })
+  });
+};
+
+export const duplicateWargame = (dbPath) => {
+
+  const dbName = getNameFromPath(dbPath);
+
+  const db = wargameDbStore.find((db) => db.name === dbName).db;
+  const uniqId = uniqid.time();
+
+  return new Promise((resolve, reject) => {
+
+    var newDbName = `wargame-${uniqId}`;
+    var newDb = new PouchDB(databasePath+newDbName);
+
+    return db.replicate.to(newDb)
+      .then(() => {
+        return db.get(dbDefaultSettings._id)
+      })
+      .then((res) => {
+        return newDb.put({
+          _id: dbDefaultSettings._id,
+          name: newDbName,
+          wargameTitle: `${res.wargameTitle}-${uniqId}`,
+          data: res.data,
+          gameTurn: res.gameTurn,
+          phase: res.phase,
+          gameDate: res.gameDate,
+          gameTurnTime: res.gameTurnTime,
+          realtimeTurnTime: res.realtimeTurnTime,
+          timeWarning: res.timeWarning,
+          turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
+          wargameInitiated: res.wargameInitiated,
+        })
       })
       .then(() => {
         wargameDbStore.unshift({name: newDbName, db: newDb});

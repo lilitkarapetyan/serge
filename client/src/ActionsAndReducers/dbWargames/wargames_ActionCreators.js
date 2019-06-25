@@ -326,3 +326,12 @@ export const cleanWargame = (dbName) => {
     dispatch(saveAllWargameNames(games));
   }
 };
+
+export const duplicateWargame = (dbName) => {
+  return async (dispatch) => {
+
+    var games = await wargamesApi.duplicateWargame(dbName);
+
+    dispatch(saveAllWargameNames(games));
+  }
+};

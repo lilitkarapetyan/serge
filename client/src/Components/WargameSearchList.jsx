@@ -7,7 +7,7 @@ import _ from "lodash";
 import {
   editWargame,
   cleanWargame,
-  exportWargame
+  exportWargame, duplicateWargame
 } from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
 import {setCurrentViewFromURI} from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
@@ -69,6 +69,10 @@ class WargameSearchList extends Component {
 
   cleanWargame = (name) => {
     this.props.dispatch(cleanWargame(name));
+  };
+
+  duplicateWargame = (name) => {
+    this.props.dispatch(duplicateWargame(name));
   };
 
   deleteWargame = (name) => {
@@ -147,6 +151,7 @@ class WargameSearchList extends Component {
                     hideMenu={that.hideWargameMenu}
                     dbName={db.name}
                     cleanWargame={that.cleanWargame}
+                    duplicateWargame={that.duplicateWargame}
                     exportWargame={that.exportWargame}
                     deleteWargame={that.deleteWargame}
                   />

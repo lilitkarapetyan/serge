@@ -1,7 +1,7 @@
 import React, {Component}  from 'react';
 import { connect } from 'react-redux';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBath, faFileDownload, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faBath, faFileDownload, faTrash, faClone} from "@fortawesome/free-solid-svg-icons";
 
 class WargameOptionMenu extends Component {
 
@@ -12,6 +12,11 @@ class WargameOptionMenu extends Component {
   cleanWargame = () => {
     this.props.hideMenu();
     this.props.cleanWargame(this.props.dbName);
+  };
+
+  duplicateWargame = () => {
+    this.props.hideMenu();
+    this.props.duplicateWargame(this.props.dbName);
   };
 
   exportWargame = () => {
@@ -32,6 +37,10 @@ class WargameOptionMenu extends Component {
           <span onClick={this.cleanWargame}>
             <FontAwesomeIcon icon={faBath} title="Save clean copy of wargame (no messages)" />
             Clean copy
+          </span>
+          <span onClick={this.duplicateWargame}>
+            <FontAwesomeIcon icon={faClone} title="Duplicate wargame" />
+            Duplicate
           </span>
           <span onClick={this.exportWargame}>
             <FontAwesomeIcon icon={faFileDownload} title="Export wargame" />
