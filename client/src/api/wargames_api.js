@@ -241,7 +241,7 @@ export const updateWargameTitle = (dbName, title) => {
 
         db.get(dbDefaultSettings._id)
           .then((res) => {
-            db.put({
+            return db.put({
               _id: dbDefaultSettings._id,
               _rev: res._rev,
               name: dbName,
@@ -256,13 +256,21 @@ export const updateWargameTitle = (dbName, title) => {
               turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
               wargameInitiated: res.wargameInitiated,
             })
-              .then(() => {
-                resolve(db.get(dbDefaultSettings._id));
-              })
-              .catch((err) => {
-                reject(err);
-              })
-          });
+          })
+          .then(() => {
+            return getLatestWargameRevision(dbName)
+          })
+          .then((res) => {
+            let data = res;
+            data.wargameTitle = title;
+            return createLatestWargameRevision(dbName, data);
+          })
+          .then(() => {
+            resolve(db.get(dbDefaultSettings._id));
+          })
+          .catch((err) => {
+            reject(err);
+          })
       });
     })
     .catch(function (err) {
@@ -680,7 +688,7 @@ export const duplicateWargame = (dbPath) => {
 
   const dbName = getNameFromPath(dbPath);
 
-  const db = wargameDbStore.find((db) => db.name === dbName).db;
+  const dbInStore = wargameDbStore.find((db) => db.name === dbName);
   const uniqId = uniqid.time();
 
   return new Promise((resolve, reject) => {
@@ -688,9 +696,12 @@ export const duplicateWargame = (dbPath) => {
     var newDbName = `wargame-${uniqId}`;
     var newDb = new PouchDB(databasePath+newDbName);
 
-    return db.replicate.to(newDb)
+    return dbInStore.db.replicate.to(newDb)
       .then(() => {
-        return db.get(dbDefaultSettings._id)
+        return wargameDbStore.unshift({name: newDbName, db: newDb});
+      })
+      .then(() => {
+        return getLatestWargameRevision(dbName)
       })
       .then((res) => {
         return newDb.put({
@@ -707,9 +718,6 @@ export const duplicateWargame = (dbPath) => {
           turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
           wargameInitiated: res.wargameInitiated,
         })
-      })
-      .then(() => {
-        wargameDbStore.unshift({name: newDbName, db: newDb});
       })
       .then(() => {
         return newDb.get(dbDefaultSettings._id);
