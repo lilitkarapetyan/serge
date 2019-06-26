@@ -105,9 +105,18 @@ export const playerUiReducer = (state = initialState, action) => {
           if (!matchedChannel) {
             delete newState.channels[channelId];
           } else {
-            let channelActive = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
+            let thisRole = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
             let allRoles = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.length === 0);
-            if ((!channelActive || !allRoles) && !newState.isObserver) delete newState.channels[channelId];
+            console.log("checking access. thisRole:" + thisRole + " allRoles:" + allRoles + " isObserver:" + newState.isObserver);
+            if (thisRole || allRoles || newState.isObserver) 
+            {
+              // ok, this is a channel we wish to display
+            }
+            else
+            {
+              // no, we no longer need to display this channel
+              delete newState.channels[channelId];
+            }
           }
         }
 
