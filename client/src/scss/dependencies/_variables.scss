@@ -22,6 +22,8 @@ $successColor: rgba(171,199,97,1);
 $warningColor: #fff3cd;
 $errorColor: #A33730;
 $notificationColor: #4e895d;
+$linkColor: #2f86c5;
+$actionSecondaryColor: #3ef1ea;
 
 $lightBg: #fafcff;
 
@@ -34,6 +36,10 @@ $backgroundCustomDarken: #00c8a8;
 
 @mixin primaryShadow {
   box-shadow: 0 2px 10px 1px rgba(20, 38, 46, 0.5);
+}
+
+@mixin primaryContentShadow {
+  box-shadow: 0 2px 10px -2px rgba(20, 38, 46, 0.5);
 }
 
 @mixin activeShadow() {

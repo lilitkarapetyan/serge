@@ -1,7 +1,7 @@
 @import 'dependencies/variables';
 
-@mixin panel-item-wrap {
-  border-radius: 0 4px 4px 0;
+@mixin panel-item-wrap($radius) {
+  border-radius: $radius;
   background-color: $backgroundAlphaPrimary;
   @include primaryShadow;
 }
@@ -10,7 +10,7 @@
   margin-left: 16px;
   border-left-style: solid;
   border-left-width: 4px;
-  @include panel-item-wrap;
+  @include panel-item-wrap(0 0 4px 0);
 
   h3 {
     font-size: 1.4em;
@@ -18,7 +18,7 @@
   }
 
   span {
-    font-size: 1.25em;
+    font-size: 14px;
     opacity: .8;
   }
 }
@@ -35,6 +35,7 @@
 .info-wrap {
   display: flex;
   align-items: center;
+  padding-left: 22px;
 
   .info-body {
     font-size: 11px;
@@ -42,6 +43,7 @@
     margin-right: 6px;
     display: inline-block;
     opacity: .5;
+    line-height: 1;
   }
 }
 
@@ -91,16 +93,18 @@
 
   .unread {
     &:after {
-      position: absolute;
-      top: -.5em;
       content: 'new';
-      font-size: .45em;
+      font-size: 10px;
+      display: inline-block;
+      margin-left: 5px;
+      color: rgba(255, 255, 255, 0.7);
     }
   }
 
   .forces-in-channel {
     display: flex;
     flex-direction: row;
+    padding: 0 28px 0 16px;
 
     button {
       margin-left: auto;
@@ -127,16 +131,18 @@
     flex-grow: 2;
 
     .wrap {
-      padding: 16px;
+      padding: 2px 16px 16px 32px;
     }
 
     .turn-marker {
+      display: block;
       width: 100%;
-      border-bottom: 1px solid $grey2;
-      color: $grey2;
+      color: rgba(255, 255, 255, 0.3);
       text-align: right;
       padding-right: 10px;
-      padding-top: 18px;
+      padding-top: 4px;
+      font-size: 12px;
+      font-weight: 600;
     }
 
     .feedback-marker {
@@ -158,13 +164,6 @@
       border-bottom: 2px solid $grey2;
     }
 
-    span.detail
-    {
-      background-color: #ddd;
-      color:#000;
-      padding: 2px;
-    }
-
     span.detail-title {
       text-decoration: underline;
     }
@@ -173,6 +172,7 @@
   .Collapsible {
     position: relative;
     color: #ffffff;
+    padding-right: 12px;
 
     &__trigger {
       display: block;
@@ -181,11 +181,11 @@
 
       .message-title-wrap {
         display: block;
-        padding: 12px 16px;
+        padding: 6px 12px 12px;
         margin-left: 16px;
         border-left-width: 4px;
         border-left-style: solid;
-        @include panel-item-wrap;
+        @include panel-item-wrap(0 4px 4px 0);
       }
 
       .message-title {
@@ -194,13 +194,15 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 600;
+        color: $actionSecondaryColor;
       }
 
       svg {
-        margin-right: 10px;
-        padding: 2px;
+        margin-right: 8px;
+        padding: 4px 2px 2px;
+        color: $actionSecondaryColor;
       }
 
       img {
@@ -213,6 +215,11 @@
       &.is-open {
         .message-title-wrap {
           box-shadow: none;
+          border-radius: 0 4px 0 0;
+        }
+
+        & ~ .Collapsible__contentOuter {
+          @include primaryContentShadow;
         }
       }
     }
@@ -223,12 +230,16 @@
   }
 
   .badge {
-    font-size: 11px;
+    font-size: 8px;
     width: fit-content;
     height: auto;
     margin-top: 2px;
-    line-height: 1.5em;
-    padding: 0 6px;
+    line-height: 1;
+    padding: 3px 8px;
+
+    & + .badge {
+      margin-left: 4px;
+    }
   }
 
   .new-message-orderable {
@@ -288,8 +299,7 @@
     word-break: break-word;
 
     a {
-      display: inline;
-      font-weight: bold;
+      color: #ffffff;
     }
   }
 }
