@@ -8,6 +8,13 @@
   flex-grow: 1;
   align-items: flex-start;
 
+  #root > & {
+    height: 100%;
+    background-image: url("dependencies/images/rectangle-copy.jpg");
+    background-size: cover;
+    color: #ffffff;
+  }
+
   &--column {
     display: flex;
     flex-direction: column;
@@ -48,8 +55,6 @@
     }
 
     &--sml {
-      //flex-grow: 1;
-      //min-width: 32%;
       justify-content: center;
     }
 
@@ -59,7 +64,6 @@
     }
 
     &--big {
-      //flex-grow: 2;
       min-width: 45%;
       margin: 0 2.5%;
     }
@@ -72,13 +76,11 @@
     }
 
     &--left50 {
-      //flex-grow: 2;
       min-width: 47.5%;
       margin-right: 2.5%;
     }
 
     &--right50 {
-      //flex-grow: 2;
       min-width: 47.5%;
       margin-left: 2.5%;
     }

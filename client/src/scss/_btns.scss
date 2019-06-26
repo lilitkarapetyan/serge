@@ -110,10 +110,9 @@ span.link {
   }
 
   &--secondary {
-    //margin-bottom: 1.15em;
     color: $primaryTriadColor;
-    background: none;
-    box-shadow: none;
+    background-color: $backgroundAlphaPrimary;
+    @include primaryShadow;
 
     &:hover {
       background: $primaryTriadColorTransparent;
@@ -144,7 +143,6 @@ button {
   display: block;
   width: fit-content;
   padding: 8px 14px;
-  //margin-left: 6px;
   font-size: 16px;
   font-weight: 500;
   border-radius: 2px;
@@ -152,9 +150,8 @@ button {
 
   &--primary {
     color: $lightBlue;
-    background: $primaryTriadColor;
-
-    @include shadow();
+    background-color: $backgroundAlphaPrimary;
+    @include primaryShadow;
     @include transition();
 
     &:hover {

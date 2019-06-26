@@ -1,7 +1,7 @@
 @import "dependencies/variables";
 
 .wargame-title {
-  background: $lightBg;
+  background: $backgroundCustom;
   flex-grow: 0;
   justify-content: space-between !important;
   align-items: center;
@@ -10,7 +10,9 @@
 
   h3 {
     width: fit-content;
-    color: $primaryTriadColor;
+    color: #000000;
+    font-size: 14px;
+    text-transform: uppercase;
   }
 
   svg {
@@ -20,7 +22,8 @@
 }
 
 .turn-progression-ui {
-  background: $primaryTriadColor;
+  background: $backgroundCustomDarken;
+  color: #000000;
   flex-grow: 0;
   justify-content: space-between;
   padding: $umpireMenuMargin;
