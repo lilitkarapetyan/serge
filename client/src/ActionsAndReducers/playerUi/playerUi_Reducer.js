@@ -1,7 +1,9 @@
 import ActionConstant from '../ActionConstants';
 import chat from "../../Schemas/chat.json";
 import copyState from "../../Helpers/copyStateHelper";
-import {CHAT_CHANNEL_ID} from "../../consts";
+import {
+  CHAT_CHANNEL_ID
+} from "../../consts";
 import _ from "lodash";
 import uniqId from "uniqid";
 
@@ -107,10 +109,9 @@ export const playerUiReducer = (state = initialState, action) => {
           } else {
             let isParticipant = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
             let allRolesIncluded = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.length === 0);
-            if (isParticipant || allRolesIncluded || newState.isObserver){
+            if (isParticipant || allRolesIncluded || newState.isObserver) {
               // ok, this is a channel we wish to display
-            }
-            else{
+            } else {
               // no, we no longer need to display this channel
               delete newState.channels[channelId];
             }
@@ -161,8 +162,7 @@ export const playerUiReducer = (state = initialState, action) => {
           if (
             (channelActive || allRoles) &&
             !newState.channels[channel.uniqid]
-          )
-          {
+          ) {
             let participatingRole = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
             let participatingForce = channel.participants.find((p) => p.forceUniqid === newState.selectedForce);
 
@@ -176,8 +176,7 @@ export const playerUiReducer = (state = initialState, action) => {
             if (isParticipant || allRolesIncluded) {
               if (chosenTemplates.length === 0) {
                 templates = newState.allTemplates.filter((template) => template.title === "Chat");
-              }
-              else {
+              } else {
                 templates = chosenTemplates.map((template) => template.value);
               }
             }
@@ -205,13 +204,14 @@ export const playerUiReducer = (state = initialState, action) => {
 
       } else if (!action.payload.hasOwnProperty('infoType')) {
 
-        if (action.payload.details.channel === CHAT_CHANNEL_ID)
-        {
+        if (action.payload.details.channel === CHAT_CHANNEL_ID) {
           newState.chatChannel.messages.unshift(action.payload);
-        }
-        else if (!!newState.channels[action.payload.details.channel])
-        {
-          newState.channels[action.payload.details.channel].messages.unshift({...action.payload, hasBeenRead: false, isOpen: false});
+        } else if (!!newState.channels[action.payload.details.channel]) {
+          newState.channels[action.payload.details.channel].messages.unshift({
+            ...action.payload,
+            hasBeenRead: false,
+            isOpen: false
+          });
           newState.channels[action.payload.details.channel].unreadMessageCount++;
         }
       }
@@ -230,7 +230,11 @@ export const playerUiReducer = (state = initialState, action) => {
             gameTurn: message.gameTurn,
           }
         }
-        return {...message, hasBeenRead: false, isOpen: false};
+        return {
+          ...message,
+          hasBeenRead: false,
+          isOpen: false
+        };
       });
 
       let reduceTurnMarkers = (message) => {
@@ -266,8 +270,7 @@ export const playerUiReducer = (state = initialState, action) => {
         if (isParticipant || allRolesIncluded) {
           if (chosenTemplates.length === 0) {
             templates = newState.allTemplates.filter((template) => template.title === "Chat");
-          }
-          else {
+          } else {
             templates = chosenTemplates.map((template) => template.value);
           }
         }
@@ -280,7 +283,7 @@ export const playerUiReducer = (state = initialState, action) => {
 
         if (!newState.isObserver && !isParticipant && !allRolesIncluded) return;
 
-        console.log("Checking channel:" + channel.uniqid + " allRoles:" + allRolesIncluded + " isParticipant:" + isParticipant + " isObserver:" + newState.isObserver) 
+        console.log("Checking channel:" + channel.uniqid + " allRoles:" + allRolesIncluded + " isParticipant:" + isParticipant + " isObserver:" + newState.isObserver)
 
         if (allRolesIncluded || isParticipant || newState.isObserver) {
           channels[channel.uniqid] = {
