@@ -710,6 +710,14 @@ export const duplicateWargame = (dbPath) => {
       })
       .then(() => {
         wargameDbStore.unshift({name: newDbName, db: newDb});
+      })
+      .then(() => {
+        return newDb.get(dbDefaultSettings._id);
+      })
+      .then((res) => {
+        return createLatestWargameRevision(newDbName, res);
+      })
+      .then(() => {
         return getAllWargames();
       })
       .then((res) => {
