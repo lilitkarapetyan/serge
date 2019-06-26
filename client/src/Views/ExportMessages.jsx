@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-
+import flatten from 'flat';
 import { getAllMessageTypes } from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
 import { createExportItem } from "../ActionsAndReducers/ExportItems/ExportItems_ActionsCreators";
 import ExcelExport from '../Components/ExcelExport';
 import ExportItem from '../Components/ExportItem';
 import ExportView from "./ExportView";
-import {ADMIN_ROUTE} from "../consts";
 
 class ExportMessages extends Component {
 
   componentWillMount() {
-    this.props.dispatch(getAllMessageTypes());
+    this.props.getMessageTypes();
   }
 
   createExportItem = () => {
@@ -28,79 +27,86 @@ class ExportMessages extends Component {
       }
     }
 
-    this.props.dispatch(createExportItem({
-      title: `Export ${new Date().toISOString().slice(0, 19).replace('T', ' ')}`,
-      wargame: this.props.wargame.currentWargame ? this.props.wargame.wargameTitle : 'Not Selected',
-      data: this.props.messageTypes.messages.map(messageType => ({
-        title: messageType.title,
-        details: messageType.details,
-        items: this.filterAndMapMessagesByType(messageType, this.props.wargame.exportMessagelist, channelTitles)
-      })),
-      type: 'messages'
-    }));
+    this.props.savExportItem({
+      wargame: this.props.wargame.currentWargame,
+      data: this.exportDataGrouped(this.props.messageTypes.messages, this.props.wargame.exportMessagelist, channelTitles),
+    });
   }
 
-  filterAndMapMessagesByType(type, messages, channelTitles) {
-    //all excel keys/titles for current tab
-    let fields = [];
-    //rows under titles
-    let rows = [];
+  messageFilterByType = (type) => {
+    return msg => msg.details && msg.details.messageType === type
+  };
 
-    const messagesFiltered = messages.filter(msg => (msg.details && msg.details.messageType === type.title));
+  exportDataGrouped(messageTypes, messages, channelTitles) {
+    let data = [];
 
-    //loop on filtered messages
-    for(let msg of messagesFiltered) {
-      //check message channel
-      if(msg.details && msg.details.channel && channelTitles[msg.details.channel]) {
-        msg.details.channel = channelTitles[msg.details.channel];
-      }
+    for (var messageType of messageTypes) {
+      const messagesFiltered = messages.filter(this.messageFilterByType(messageType.title));
 
-      //get message object keys as array
-      const keys = Object.keys(msg);
-      //reate row with empty items equal to current fields length
-      let row = Array(fields.length).fill("");
+      if (messagesFiltered.length) {
+        let fields = [];
+        let rows = [];
 
-      //loop on message keys
-      for(const key of keys) {
-        //if message[key] is object then do loop for that object keys
-        if(typeof msg[key] === 'object') {
-          for(const key2 of Object.keys(msg[key])) {
-            if(typeof msg[key][key2] === 'object') {
-              for(const key3 of Object.keys(msg[key][key2])) {
-                if(typeof msg[key][key2][key3] !== 'object') {
-                  if(!fields.includes(key3)) {
-                    fields.push(key3);
-                  }
-                  row[fields.indexOf(key3)] = msg[key][key2][key3];
-                }
-              }
-            }
-            else {
-              //check if fields/titles have no current key then add
-              if(!fields.includes(key2)) {
-                fields.push(key2);
-              }
-              //check position for field then add value to rigth position in row
-              row[fields.indexOf(key2)] = msg[key][key2];
-            }
+        for(let msg of messagesFiltered) {
+
+          if(msg.details && msg.details.channel && channelTitles[msg.details.channel]) {
+            msg.details.channel = channelTitles[msg.details.channel];
           }
-        }
-        else {
-          //check if fields/titles have no current key then add
-          if(!fields.includes(key)) {
-            fields.push(key);
-          }
-          //check position for field then add value to rigth position in row
-          row[fields.indexOf(key)] = msg[key];
-        }
-      }
 
-      rows.push(row);
+          const flatMsg = this.keysSimplyfy(flatten(msg));
+          let row = Array(fields.length).fill("");
+
+          for(let key of Object.keys(flatMsg)) {
+            //check if fields/titles have no current key then add
+            if(!fields.includes(key)) {
+              fields.push(key);
+            }
+            //check position for field then add value to rigth position in row
+            row[fields.indexOf(key)] = flatMsg[key];
+          }
+
+          rows.push(row);
+        }
+
+        data.push({
+          title: messageType.title,
+          items: [
+            fields.map(field => (field.toUpperCase())),
+            ...rows
+          ]
+        })
+      }
     }
-    return [
-      fields.map(field => (field.toUpperCase())),
-      ...rows
-    ];
+
+    return data;
+  }
+
+  keysSimplyfy(row) {
+    let newRow = {};
+
+    for(let key of Object.keys(row)) {
+      let subkeys = key.split('.');
+      let mainKey = subkeys[subkeys.length - 1];
+      let newKey = [];
+
+      if(!isNaN(mainKey)) {
+        mainKey = "";
+      }
+
+      for (var i = 0; i < subkeys.length; i++) {
+        if(!isNaN(subkeys[i])) {
+          newKey.push(`${subkeys[i-1] || 'messages'}_${subkeys[i]}`);
+        }
+      }
+
+      if(mainKey) {
+        newKey.push(mainKey);
+      }
+
+      newRow[newKey.join(" ")] = row[key];
+    }
+
+    return newRow;
   }
 
   render() {
@@ -120,9 +126,19 @@ class ExportMessages extends Component {
   }
 }
 
-// temp use allMessages
+const mapDispatchToProps = dispatch => ({
+  savExportItem: data => {
+    dispatch(createExportItem({
+      type: 'messages',
+      title: `Export ${new Date().toISOString().slice(0, 19).replace('T', ' ')}`,
+      ...data,
+    }));
+  },
+  getMessageTypes: () => { dispatch(getAllMessageTypes()) }
+});
+
 const mapStateToProps = ({ wargame, messageTypes, exportItems }) => ({
   wargame, messageTypes, exportItems: exportItems.filter(item => item.type === 'messages')
 });
 
-export default connect(mapStateToProps)(ExportMessages);
+export default connect(mapStateToProps, mapDispatchToProps)(ExportMessages);

@@ -30,6 +30,9 @@ export const EDIT_MESSAGE_ROUTE = '/edit/message';
 export const GAME_SETUP_ROUTE = '/serge/gameSetup';
 export const WELCOME_SCREEN_EDIT_ROUTE = '/serge/editWelcomeScreen';
 export const EXPORT_ROUTE = '/serge/export';
+export const EXPORT_MESSAGES_SUBROUTE = '/messages';
+export const EXPORT_FORCES_SUBROUTE = '/foeces';
+export const EXPORT_PRINT_SUBROUTE = '/print/:id';
 export const PLAYERUI_ROUTE = '/serge/player';
 
 export const MAX_LISTENERS = 82;
