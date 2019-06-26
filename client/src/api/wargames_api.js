@@ -299,7 +299,7 @@ export const saveSettings = (dbName, data) => {
             wargameTitle: newDoc.wargameTitle,
             data: newDoc.data,
             gameTurn: newDoc.gameTurn,
-            gameDate: data.startTime,
+            gameDate: data.gameDate,
             gameTurnTime: data.gameTurnTime,
             realtimeTurnTime: data.realtimeTurnTime,
             timeWarning: data.timeWarning,

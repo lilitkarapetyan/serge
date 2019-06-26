@@ -1,4 +1,5 @@
 import uniqId from "uniqid";
+import moment from "moment";
 
 export const serverPath = process.env.REACT_APP_SERVER_PATH;
 // export const serverPath = 'http://localhost:8080/';
@@ -104,12 +105,12 @@ export const dbDefaultSettings = {
       realtimeTurnTime: 300000,
       timeWarning: 60000,
       // turnStrategy: '',
-      startTime: new Date().toISOString(),
+      gameDate: moment(new Date(), moment.ISO_8601).format(),
       complete: false,
       // mark page as dirty the first time it's opened,
       // in order to overwrite existing time
       // values with the above defaults
-      dirty: true,
+      dirty: false,
     },
     forces: {
       name: "Forces",
@@ -129,7 +130,7 @@ export const dbDefaultSettings = {
   wargameInitiated: false,
   gameTurn: 0,
   phase: '',
-  gameDate: null,
+  gameDate: moment(new Date(), moment.ISO_8601).format(),
   gameTurnTime: null,
   realtimeTurnTime: null,
   turnEndTime: null,

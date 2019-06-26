@@ -90,7 +90,7 @@ class SettingsTab extends Component {
 
   updateStartDate = (value) => {
     let date = moment(value[0], moment.ISO_8601).format();
-    this.props.dispatch(setGameData({startTime: date, dirty: true}));
+    this.props.dispatch(setGameData({gameDate: date, dirty: true}));
   };
 
   render() {
@@ -195,7 +195,7 @@ class SettingsTab extends Component {
               <label htmlFor="" className="material-label">Start time</label>
               <div className="flex-content flex-content--fill">
                 <Flatpickr
-                  value={this.props.wargame.data[this.props.wargame.currentTab].startTime}
+                  value={this.props.wargame.data[this.props.wargame.currentTab].gameDate}
                   onChange={this.updateStartDate}
                   options={{
                     enableTime: true,
