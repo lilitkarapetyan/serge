@@ -107,12 +107,10 @@ export const playerUiReducer = (state = initialState, action) => {
           } else {
             let isParticipant = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
             let allRolesIncluded = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.length === 0);
-            if (isParticipant || allRolesIncluded || newState.isObserver) 
-            {
+            if (isParticipant || allRolesIncluded || newState.isObserver){
               // ok, this is a channel we wish to display
             }
-            else
-            {
+            else{
               // no, we no longer need to display this channel
               delete newState.channels[channelId];
             }
