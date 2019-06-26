@@ -131,7 +131,7 @@ export const dbDefaultSettings = {
   gameTurn: 0,
   phase: '',
   gameDate: moment(new Date(), moment.ISO_8601).format(),
-  gameTurnTime: null,
-  realtimeTurnTime: null,
+  gameTurnTime: 43200000,
+  realtimeTurnTime: 300000,
   turnEndTime: null,
 };
