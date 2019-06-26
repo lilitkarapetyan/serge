@@ -105,9 +105,9 @@ export const playerUiReducer = (state = initialState, action) => {
           if (!matchedChannel) {
             delete newState.channels[channelId];
           } else {
-            let thisRole = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
-            let allRoles = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.length === 0);
-            if (thisRole || allRoles || newState.isObserver) 
+            let isParticipant = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
+            let allRolesIncluded = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.length === 0);
+            if (isParticipant || allRolesIncluded || newState.isObserver) 
             {
               // ok, this is a channel we wish to display
             }
@@ -282,6 +282,7 @@ export const playerUiReducer = (state = initialState, action) => {
 
         if (!newState.isObserver && !isParticipant && !allRolesIncluded) return;
 
+        console.log("Checking channel:" + channel.uniqid + " allRoles:" + allRolesIncluded + " isParticipant:" + isParticipant + " isObserver:" + newState.isObserver) 
 
         if (allRolesIncluded || isParticipant || newState.isObserver) {
           channels[channel.uniqid] = {
