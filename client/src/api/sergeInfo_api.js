@@ -32,6 +32,7 @@ export const getGameInformation = () => {
 };
 
 export const saveGameInformation = ({title, description, imageUrl}) => {
+
   return new Promise((resolve, reject) => {
 
     db.get(LOCAL_DOC)
@@ -39,9 +40,9 @@ export const saveGameInformation = ({title, description, imageUrl}) => {
         return db.put({
           _id: res._id,
           _rev: res._rev,
-          title,
-          description,
-          imageUrl: new URL(imageUrl).pathname,
+          title: title !== undefined ? title : res.title,
+          description: description !== undefined ? description : res.description,
+          imageUrl: imageUrl !== undefined ? new URL(imageUrl).pathname : res.imageUrl,
         });
       })
       .then(() => {
@@ -50,7 +51,6 @@ export const saveGameInformation = ({title, description, imageUrl}) => {
       .then((res) => {
         delete res._id;
         delete res._rev;
-        console.log(res);
         resolve(res);
       })
       .catch((err) => {

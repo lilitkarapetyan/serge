@@ -53,10 +53,11 @@ export const playerUiReducer = (state = initialState, action) => {
       newState.wargameInitiated = action.payload.wargameInitiated;
       newState.currentTurn = action.payload.gameTurn;
       newState.phase = action.payload.phase;
-      newState.gameDate = action.payload.gameDate;
-      newState.gameTurnTime = action.payload.gameTurnTime;
-      newState.realtimeTurnTime = action.payload.realtimeTurnTime;
-      newState.timeWarning = action.payload.timeWarning;
+      newState.showAccessCodes = action.payload.data.overview.showAccessCodes;
+      newState.gameDate = action.payload.data.overview.gameDate;
+      newState.gameTurnTime = action.payload.data.overview.gameTurnTime;
+      newState.realtimeTurnTime = action.payload.data.overview.realtimeTurnTime;
+      newState.timeWarning = action.payload.data.overview.timeWarning;
       newState.turnEndTime = action.payload.turnEndTime;
       newState.gameDescription = action.payload.data.overview.gameDescription;
       newState.allChannels = action.payload.data.channels.channels;

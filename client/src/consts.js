@@ -51,6 +51,7 @@ export const defaultGameInfo = {
   These insights could relate to the current doctrine being explored, the performance of your force, or how the game is being organised / facilitated.\n
   Thanks in advance for your participation.\n
   Maj Duncan Dare, PO1 Gaming`,
+  showAccessCodes: false,
 };
 
 export const forceTemplate = {
@@ -106,10 +107,8 @@ export const dbDefaultSettings = {
       timeWarning: 60000,
       // turnStrategy: '',
       gameDate: moment(new Date(), moment.ISO_8601).format(),
+      showAccessCodes: false,
       complete: false,
-      // mark page as dirty the first time it's opened,
-      // in order to overwrite existing time
-      // values with the above defaults
       dirty: false,
     },
     forces: {
@@ -130,8 +129,5 @@ export const dbDefaultSettings = {
   wargameInitiated: false,
   gameTurn: 0,
   phase: '',
-  gameDate: moment(new Date(), moment.ISO_8601).format(),
-  gameTurnTime: 43200000,
-  realtimeTurnTime: 300000,
   turnEndTime: null,
 };
