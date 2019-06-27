@@ -36,6 +36,8 @@ class Router extends Component {
     //
     if (path !== GAME_SETUP_ROUTE) {
       this.props.dispatch(setCurrentViewFromURI(path));
+    } else {
+      this.props.dispatch(setCurrentViewFromURI(ADMIN_ROUTE));
     }
 
     window.onbeforeunload = function() {
