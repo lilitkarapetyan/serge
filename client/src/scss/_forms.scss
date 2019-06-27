@@ -8,7 +8,11 @@
   }
 
   .form-control-label {
-    display: none;
+    line-height: 1;
+    color: #ffffff;
+    font-size: 12px;
+    margin-bottom: 8px;
+    text-transform: capitalize;
   }
 }
 

@@ -120,7 +120,20 @@
 
   #private-message-input-label {
     background: $greyBg;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Squares, monospace;
+    margin-left: 0;
+    border-radius: 4px 4px 0 0;
+    padding: 10px 15px;
+    border: 2px solid #415b76;
+    border-bottom: none;
+    margin-bottom: -2px;
+
+    .svg-inline--fa {
+      display: inline-block;
+      vertical-align: middle;
+      margin-top: -10px;
+      margin-right: 15px;
+    }
   }
 
   #private-message-input {
@@ -431,7 +444,7 @@
       }
 
       .bg-light {
-        background-color: transparent;
+        background-color: transparent!important;
       }
 
       .card {
