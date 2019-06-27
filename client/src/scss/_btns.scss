@@ -85,14 +85,12 @@
 
 #function {
   padding-left: 1.15em;
-  height: fit-content;
 }
 
 a.link,
 span.link {
   display: inline-block;
   width: fit-content;
-  height: fit-content;
   padding: 8px 14px 8px 6px;
   font-size: 16px;
   font-weight: 500;
@@ -150,12 +148,14 @@ span.link {
 
   &--next-turn {
     margin-top: 20px;
+    font-family: Squares, "monospace";
+    font-size: 12px;
+    height: auto;
   }
 }
 
 button {
   width: fit-content;
-  height: fit-content;
   border: none;
 }
 

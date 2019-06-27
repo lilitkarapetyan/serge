@@ -123,20 +123,6 @@ class MessagePreview extends Component {
 
       if (i===0 && keyPropPairs.length === 1) return (
         <Fragment key={'from-force'}>
-          { this.props.from.force && this.props.from.role ?
-            <>
-              <span className="detail">
-                From:
-              </span>
-              <span className="data">
-                {`${this.props.from.force} ${this.props.from.role} `}
-              </span><br/>
-            </>
-            : false }
-
-            <span className="detail">
-              {`${this.capitalize(pair[0])}:`}
-            </span>
             <span className="data">
               {pair[1]}
             </span><br/>

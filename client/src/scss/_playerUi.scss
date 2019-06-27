@@ -45,6 +45,21 @@
     opacity: .5;
     line-height: 1;
   }
+
+  .out-of-game-feed & {
+    padding-left: 0;
+    display: block;
+    overflow: hidden;
+
+    time {
+      font-size: 11px;
+      color: rgba(7, 89, 134, 0.5);
+      display: inline-block;
+      margin-right: 12px;
+      margin-top: 2px;
+      vertical-align: middle;
+    }
+  }
 }
 
 #title-editable {
@@ -74,11 +89,6 @@
     position: relative;
     display: flex;
     flex-grow: 2;
-  }
-
-  span {
-    font-size: .85em;
-    font-family: "Segoe UI", sans-serif;
   }
 }
 
@@ -125,14 +135,61 @@
       padding: 16px;
 
       .message-preview-player {
-        border-color: rgb(0, 0, 255);
         margin-left: 0;
         display: inline-block;
         border-left: none;
         width: auto;
         box-shadow: none;
-        background-color: #ecf2fa;
-        border-radius: 30px;
+        padding: 0 0 0 16px;
+        position: relative;
+
+        .data {
+          font-size: 13px;
+        }
+
+        .message-bullet {
+          display: inline-block;
+          width: 6px;
+          height: 6px;
+          background-color: $lightGrey;
+          position: absolute;
+          left: 0;
+          top: 10px
+        }
+
+        &.own-message {
+          background-color: #ecf2fa;
+          border-radius: 30px 30px 0 30px;
+          padding: 6px 24px 12px;
+          float: right;
+
+          &:after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-top: 15px solid #ecf2fa;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            margin-bottom: -15px;
+          }
+
+          time,
+          .badge {
+            float: right;
+          }
+
+          time {
+            margin-left: 12px;
+            margin-right: 0;
+          }
+        }
+
+        + .message-preview-player {
+          margin-top: 20px;
+        }
       }
     }
 
@@ -257,6 +314,7 @@
     margin-top: 2px;
     line-height: 1;
     padding: 3px 8px;
+    text-transform: uppercase;
 
     & + .badge {
       margin-left: 4px;
