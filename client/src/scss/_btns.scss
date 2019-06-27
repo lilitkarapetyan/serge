@@ -128,12 +128,21 @@ span.link {
     background-color: $backgroundAlphaPrimary;
     @include primaryShadow;
 
-    .view-wrapper & {
+    .view-wrapper &,
+    .out-of-game-feed & {
       background-color: $secondaryColor;
 
       &:hover {
         background-color: $secondaryColor;
       }
+    }
+
+    .out-of-game-feed & {
+      padding: 4px 16px;
+      font-size: 10px;
+      font-family: Squares, "monospace";
+      margin-bottom: 8px;
+      display: block;
     }
 
     &:hover {

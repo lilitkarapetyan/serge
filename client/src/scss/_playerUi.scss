@@ -179,12 +179,16 @@
 
       .message-preview-player {
         margin-left: 0;
-        display: inline-block;
+        margin-bottom: 20px;
+        display: block;
         border-left: none;
         width: auto;
         box-shadow: none;
         padding: 0 0 0 16px;
         position: relative;
+        font-family: 'Open Sans', 'sans-serif';
+        font-size: 13px;
+        clear: both;
 
         .data {
           font-size: 13px;
@@ -194,7 +198,7 @@
           display: inline-block;
           width: 6px;
           height: 6px;
-          background-color: $lightGrey;
+          background-color: $grey2;
           position: absolute;
           left: 0;
           top: 10px
@@ -205,6 +209,8 @@
           border-radius: 30px 30px 0 30px;
           padding: 6px 24px 12px;
           float: right;
+          display: inline-block;
+          width: auto;
 
           &:after {
             content: '';
@@ -228,10 +234,6 @@
             margin-left: 12px;
             margin-right: 0;
           }
-        }
-
-        + .message-preview-player {
-          margin-top: 20px;
         }
       }
     }
