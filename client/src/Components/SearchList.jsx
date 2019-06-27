@@ -30,7 +30,10 @@ class SearchList extends Component {
 
             let active = item._id === that.props.selected ? 'active' : null;
 
-            let title = item.details.title;
+            // following line includes a workaround, for when a message type doesn't include
+            // a title field
+            let title = item.details.title ? item.details.title : '[Title missing]';
+
             let date = moment(item.lastUpdated).format('DD/MM/YY');
             return <span className={classNames({"searchlist-title": true, active})} href="#" onClick={that.setSelected.bind(that, item)} key={item._id}>{title} - {date}</span>
           })

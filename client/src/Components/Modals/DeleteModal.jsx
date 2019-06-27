@@ -6,6 +6,7 @@ import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators
 import { deleteMessage } from "../../ActionsAndReducers/dbMessages/messages_ActionCreators";
 import { deleteMessageType } from "../../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
 import {setPreviewSchema, setSelectedSchema} from "../../ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators";
+import {MESSAGE_TEMPLATE_ROUTE} from "../../consts";
 
 class DeleteModal extends Component {
 
@@ -18,7 +19,7 @@ class DeleteModal extends Component {
   };
 
   deleteMessage = () => {
-    if (this.props.currentViewURI === "/client/umpireMenu/templates") {
+    if (this.props.currentViewURI === MESSAGE_TEMPLATE_ROUTE) {
       this.props.dispatch(deleteMessageType(this.props.umpireMenu.selectedSchemaID));
       this.props.dispatch(setPreviewSchema(""));
       this.props.dispatch(setSelectedSchema(""));

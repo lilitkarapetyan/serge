@@ -15,6 +15,7 @@ import {
   PLANNING_PHASE,
   ADJUDICATION_PHASE,
   MAX_LISTENERS,
+  SERGE_INFO,
 } from "../consts";
 
 import {
@@ -68,7 +69,7 @@ export const populateWargame = (dispatch) => {
     .then((dbs) => {
       const wargameNames = wargameDbStore.map((db) => db.name);
       let toCreate = _.difference(dbs, wargameNames);
-      toCreate = _.pull(toCreate, MSG_STORE, MSG_TYPE_STORE, "_replicator", "_users");
+      toCreate = _.pull(toCreate, MSG_STORE, MSG_TYPE_STORE, SERGE_INFO, "_replicator", "_users");
 
       toCreate.forEach((name) => {
         const db = new PouchDB(databasePath+name);
@@ -82,7 +83,8 @@ export const populateWargame = (dispatch) => {
           .then(function (res) {
             return {
               name: game.db.name,
-              title: res.wargameTitle
+              title: res.wargameTitle,
+              initiated: res.wargameInitiated,
             }
           })
           .catch((err) => {
@@ -101,6 +103,11 @@ export const clearWargames = () => {
     .then(() => {
       window.location.reload(true);
     });
+};
+
+export const getIpAddress = () => {
+  return fetch(serverPath+'getIp')
+    .then((res) => res.json());
 };
 
 export const saveIcon = (file) => {
@@ -234,7 +241,7 @@ export const updateWargameTitle = (dbName, title) => {
 
         db.get(dbDefaultSettings._id)
           .then((res) => {
-            db.put({
+            return db.put({
               _id: dbDefaultSettings._id,
               _rev: res._rev,
               name: dbName,
@@ -249,13 +256,21 @@ export const updateWargameTitle = (dbName, title) => {
               turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
               wargameInitiated: res.wargameInitiated,
             })
-              .then(() => {
-                resolve(db.get(dbDefaultSettings._id));
-              })
-              .catch((err) => {
-                reject(err);
-              })
-          });
+          })
+          .then(() => {
+            return getLatestWargameRevision(dbName)
+          })
+          .then((res) => {
+            let data = res;
+            data.wargameTitle = title;
+            return createLatestWargameRevision(dbName, data);
+          })
+          .then(() => {
+            resolve(db.get(dbDefaultSettings._id));
+          })
+          .catch((err) => {
+            reject(err);
+          })
       });
     })
     .catch(function (err) {
@@ -284,7 +299,7 @@ export const saveSettings = (dbName, data) => {
             wargameTitle: newDoc.wargameTitle,
             data: newDoc.data,
             gameTurn: newDoc.gameTurn,
-            gameDate: data.startTime,
+            gameDate: data.gameDate,
             gameTurnTime: data.gameTurnTime,
             realtimeTurnTime: data.realtimeTurnTime,
             timeWarning: data.timeWarning,
@@ -622,7 +637,7 @@ export const deleteForce = (dbName, forceName) => {
 };
 
 
-export const duplicateWargame = (dbPath) => {
+export const cleanWargame = (dbPath) => {
 
   const dbName = getNameFromPath(dbPath);
 
@@ -652,14 +667,65 @@ export const duplicateWargame = (dbPath) => {
           realtimeTurnTime: res.realtimeTurnTime,
           timeWarning: res.timeWarning,
           turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
-          wargameInitiated: res.wargameInitiated,
+          wargameInitiated: false,
         })
-          .then(() => {
-            return res;
-          })
       })
       .then(() => {
         wargameDbStore.unshift({name: newDbName, db: newDb});
+        return getAllWargames();
+      })
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((err) => {
+        reject(err);
+        console.log(err);
+      })
+  });
+};
+
+export const duplicateWargame = (dbPath) => {
+
+  const dbName = getNameFromPath(dbPath);
+
+  const dbInStore = wargameDbStore.find((db) => db.name === dbName);
+  const uniqId = uniqid.time();
+
+  return new Promise((resolve, reject) => {
+
+    var newDbName = `wargame-${uniqId}`;
+    var newDb = new PouchDB(databasePath+newDbName);
+
+    return dbInStore.db.replicate.to(newDb)
+      .then(() => {
+        return wargameDbStore.unshift({name: newDbName, db: newDb});
+      })
+      .then(() => {
+        return getLatestWargameRevision(dbName)
+      })
+      .then((res) => {
+        return newDb.put({
+          _id: dbDefaultSettings._id,
+          name: newDbName,
+          wargameTitle: `${res.wargameTitle}-${uniqId}`,
+          data: res.data,
+          gameTurn: res.gameTurn,
+          phase: res.phase,
+          gameDate: res.gameDate,
+          gameTurnTime: res.gameTurnTime,
+          realtimeTurnTime: res.realtimeTurnTime,
+          timeWarning: res.timeWarning,
+          turnEndTime: moment().add(res.realtimeTurnTime, 'ms').format(),
+          wargameInitiated: res.wargameInitiated,
+        })
+      })
+      .then(() => {
+        return newDb.get(dbDefaultSettings._id);
+      })
+      .then((res) => {
+        return createLatestWargameRevision(newDbName, res);
+      })
+      .then(() => {
         return getAllWargames();
       })
       .then((res) => {
@@ -715,7 +781,7 @@ export const initiateGame = (dbName) => {
           name: res.name,
           wargameTitle: res.wargameTitle,
           data: res.data,
-          gameTurn: res.gameTurn,
+          gameTurn: 1,
           phase: PLANNING_PHASE,
           gameDate: res.gameDate,
           gameTurnTime: res.gameTurnTime,
@@ -801,7 +867,7 @@ export const nextGameTurn = (dbName) => {
   return new Promise((resolve, reject) => {
     getLatestWargameRevision(dbName)
       .then((res) => {
-        console.log('latest got');
+
         let phase = res.phase;
 
         switch (phase) {
@@ -830,15 +896,22 @@ export const nextGameTurn = (dbName) => {
   });
 };
 
-export const postFeedback = (dbName, playerInfo, message) => {
+export const postFeedback = (dbName, fromDetails, message) => {
 
   const db = wargameDbStore.find((db) => db.name === dbName).db;
 
   return new Promise((resolve, reject) => {
     db.put({
       _id: new Date().toISOString(),
-      playerInfo,
-      message,
+      details: {
+        channel: "Feedback",
+        from: fromDetails,
+        messageType: "Chat",
+        timestamp: new Date().toISOString(),
+      },
+      message: {
+        content: message,
+      },
       feedback: true,
     })
       .then((res) => {
@@ -888,7 +961,8 @@ export const getAllWargames = function () {
       .then(function (res) {
         return {
           name: game.db.name,
-          title: res.wargameTitle
+          title: res.wargameTitle,
+          initiated: res.wargameInitiated,
         }
       })
       .catch((err) => {

@@ -4,7 +4,13 @@ import {connect} from "react-redux";
 import Link from "../Components/Link";
 
 import '../scss/App.scss';
-// import SearchList from "../Components/SearchList";
+import {
+  ADMIN_ROUTE,
+  GAME_SETUP_ROUTE,
+  MESSAGE_LIBRARY_ROUTE,
+  MESSAGE_TEMPLATE_ROUTE,
+  WELCOME_SCREEN_EDIT_ROUTE,
+} from "../consts";
 
 import {
   createNewWargameDB,
@@ -12,8 +18,6 @@ import {
 } from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
 import WargameSearchList from "../Components/WargameSearchList";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 
 class GameDesignerInterface extends Component {
 
@@ -28,22 +32,21 @@ class GameDesignerInterface extends Component {
   render() {
     return (
       <div id="umpire" className="flex-content-wrapper">
-        <div id="sidebar">
-          <Link href="/client" id="home-btn"><FontAwesomeIcon icon={faArrowLeft} size="2x" /></Link>
-        </div>
-        <div className="flex-content flex-content--big flex-content--first">
-          <Link href="/client/umpireMenu/templates" class="link link--secondary link--large">Message Templates</Link>
-          <Link href="/client/umpireMenu/library" class="link link--secondary link--large">Message Library</Link>
+        <div id="sidebar_admin">
+          <Link href={ADMIN_ROUTE} class="link link--large link--active">Games</Link>
+          <Link href={MESSAGE_TEMPLATE_ROUTE} class="link link--large">Message Templates</Link>
+          <Link href={MESSAGE_LIBRARY_ROUTE} class="link link--large">Message Library</Link>
+          <Link href={WELCOME_SCREEN_EDIT_ROUTE} class="link link--large">Welcome Screen</Link>
         </div>
         <div className="flex-content flex-content--big flex-content--last">
           <h2>Games</h2>
           <Link
-            href="/client/gameSetup"
+            href={GAME_SETUP_ROUTE}
             class="link link--noIcon"
             onClickHandler={this.createWargame}
           >Create</Link>
           <Link
-            href="/client/umpireMenu"
+            href={ADMIN_ROUTE}
             class="link link--noIcon link--secondary"
             onClickHandler={this.clearWargames}
           >Clear wargames</Link>

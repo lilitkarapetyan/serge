@@ -12,6 +12,8 @@ import {
   markAllAsRead,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
+import { umpireForceTemplate } from "../consts";
+
 class Channel extends Component {
 
   componentWillMount() {
@@ -65,6 +67,7 @@ class Channel extends Component {
           <NewMessage
             orderableChannel={true}
             curChannel={curChannel}
+            privateMessage={this.props.playerUi.selectedForce === umpireForceTemplate.uniqid}
             templates={this.props.playerUi.channels[curChannel].templates}
           />
         }

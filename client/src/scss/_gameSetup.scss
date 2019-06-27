@@ -138,6 +138,11 @@
         }
 
         &.fa-eye {
+          margin-right: 2px;
+          color: $primaryColor;
+        }
+
+        &.fa-comments {
           margin-right: 5px;
           color: $primaryColor;
         }
@@ -220,4 +225,56 @@ input#editable-title {
       width: 10%
     }
   }
+}
+
+.welcome-page {
+  padding-left: 20vw;
+  padding-top: 5vh;
+  min-width: 75% !important;
+
+  .welcome-screen-save {
+    margin-left: auto;
+  }
+
+  .image-upload-link {
+    margin-left: 45px;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .section {
+    position: relative;
+    width: fit-content;
+    margin-bottom: 20px;
+  }
+
+  .description {
+    position: relative;
+    width: 70%;
+
+    .description-edit {
+      width: 100%;
+      border: none;
+      margin-bottom: 20px;
+    }
+
+    span.link {
+      margin-left: auto;
+    }
+  }
+
+  .edit-hover-icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .paragraph {
+    padding-bottom: 1.25em;
+  }
+}
+
+.serge-custom-logo {
+  width: 300px;
+  height: auto;
 }

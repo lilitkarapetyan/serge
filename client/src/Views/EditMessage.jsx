@@ -13,6 +13,7 @@ import Link from "../Components/Link";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
+import {ADMIN_ROUTE} from "../consts";
 
 class EditMessage extends Component {
 
@@ -61,7 +62,7 @@ class EditMessage extends Component {
     return (
       <div className="view-wrapper">
         <div id="sidebar">
-          <Link href="/client/umpireMenu" id="home-btn"><FontAwesomeIcon icon={faArrowLeft} size="2x" /></Link>
+          <Link href={ADMIN_ROUTE} id="home-btn"><FontAwesomeIcon icon={faArrowLeft} size="2x" /></Link>
         </div>
         <h1>Message library</h1>
         <div className="flex-content-wrapper">

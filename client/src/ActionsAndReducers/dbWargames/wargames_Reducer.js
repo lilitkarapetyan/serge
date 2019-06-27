@@ -5,7 +5,8 @@ import uniqId from "uniqid";
 import {
   forceTemplate,
   channelTemplate,
-  dbDefaultSettings, serverPath,
+  dbDefaultSettings,
+  serverPath,
 } from "../../consts";
 
 var initialState = {

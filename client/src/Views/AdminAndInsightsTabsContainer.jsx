@@ -51,7 +51,7 @@ class AdminAndInsightsTabsContainer extends Component {
       FlexLayout.Actions.addNode({type: "tab", component: this.state.gameAdmin, name: this.state.gameAdmin, id: this.state.gameAdmin}, "#2", FlexLayout.DockLocation.CENTER, -1)
     );
 
-    if (this.props.playerUi.controlUi) {
+    if (this.props.playerUi.isInsightViewer) {
       this.state.model.doAction(
         FlexLayout.Actions.addNode({type: "tab", component: this.state.insights, name: this.state.insights, id: this.state.insights}, "#2", FlexLayout.DockLocation.CENTER, -1)
       );

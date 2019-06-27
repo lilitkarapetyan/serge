@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import Badge from "react-bootstrap/Badge";
-import MessagePreview from "../Components/MessagePreviewPlayerUi";
 import '../scss/App.scss';
 import moment from "moment";
+import classNames from "classnames"
 
 class MessagesListChatChannel extends Component {
   constructor(props) {
@@ -32,14 +32,23 @@ class MessagesListChatChannel extends Component {
         const { details, message } = item.message;
         const listItemClass = name === details.from.force ? 'own-message' : '';
         return (
-          <div key={`${i}-preview`} className={`message-preview-player wrap ${listItemClass}`}>
-            <span className="message-bullet" style={{ backgroundColor: details.from.forceColor }}>&nbsp;</span>
-            <MessagePreview detail={message} from={details.from} />
-            <div className="info-wrap">
-              <time dateTime={details.timestamp}>{moment(details.timestamp).format("HH:mm")}</time>
-              <Badge pill variant="primary">{details.from.role}</Badge>
-            </div>
-          </div>
+          <>
+            <span className="link link--noIcon link--secondary" onClick={this.props.markAllAsRead}>Mark all as read</span>
+              {messages.map((item, i) => {
+                  return (
+                  <div key={`preview-${i}`} className={`message-preview-player wrap ${listItemClass}`}>
+                      <span className="message-bullet" style={{ backgroundColor: details.from.forceColor }}>&nbsp;</span>
+                      <div className={classNames({"bold": !item.hasBeenRead})}>
+                          {message.content}
+                      </div>
+                      <div className="info-wrap">
+                          <time dateTime={details.timestamp}>{moment(details.timestamp).format("HH:mm")}</time>
+                          <Badge pill variant="secondary">{details.from.role}</Badge>
+                      </div>
+                  </div>
+                  );
+              })}
+          </>
         );
       })
     );

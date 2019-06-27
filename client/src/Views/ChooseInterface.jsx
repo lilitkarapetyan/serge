@@ -10,18 +10,9 @@ import {
   getAllMessageTypes,
   populateMessageTypesDb
 } from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
+import {ADMIN_ROUTE, PLAYERUI_ROUTE} from "../consts";
 
 class UmpireMenu extends Component {
-
-  constructor(props) {
-    super(props);
-
-    window.onbeforeunload = function() {
-      return;
-      // return "Please avoid reloading Serge. Are you sure you need to reload?";
-    };
-  }
-
 
   componentWillMount() {
     this.props.dispatch(populateMessageTypesDb());
@@ -48,8 +39,8 @@ class UmpireMenu extends Component {
     return (
       <div id="umpire" className="flex-content-wrapper">
         <div className="flex-content flex-content--fill">
-          <Link href="/client/umpireMenu" class="link link--secondary link--large">Umpire Menu</Link>
-          <Link href="/client/playerUi" disabled={!activeGames} class={classNames("link", "link--secondary", "link--large", {"link--disabled": !activeGames})}>Player UI</Link>
+          <Link href={ADMIN_ROUTE} class="link link--secondary link--large">Admin</Link>
+          <Link href={PLAYERUI_ROUTE} disabled={!activeGames} class={classNames("link", "link--secondary", "link--large", {"link--disabled": !activeGames})}>Player UI</Link>
           { !activeGames ? <p>At least one wargame needed to access player ui</p> : false }
         </div>
       </div>

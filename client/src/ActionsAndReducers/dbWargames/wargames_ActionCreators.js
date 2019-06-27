@@ -318,6 +318,15 @@ export const deleteSelectedForce = (dbName, force) => {
 };
 
 
+export const cleanWargame = (dbName) => {
+  return async (dispatch) => {
+
+    var games = await wargamesApi.cleanWargame(dbName);
+
+    dispatch(saveAllWargameNames(games));
+  }
+};
+
 export const duplicateWargame = (dbName) => {
   return async (dispatch) => {
 

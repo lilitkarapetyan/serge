@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 
-import {
-  getAllWargameMessages
-} from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
-
 import MessageCreatorChatChannel from "../Components/MessageCreatorChatChannel";
 import MessagesListChatChannel from "./MessagesListChatChannel";
 
@@ -21,17 +17,26 @@ class GameAdmin extends Component {
 
     this.state = {
       activeTab: Object.keys(this.props.playerUi.channels)[0],
+      allMarkedRead: false,
       showObjectives: false,
     };
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    let channelLength = Object.keys(this.props.playerUi.channels).length;
-    let nextChannelLength = Object.keys(nextProps.playerUi.channels).length;
+    let channelLength = Object.keys(this.props.playerUi.chatChannel.messages).length;
+    let nextChannelLength = Object.keys(nextProps.playerUi.chatChannel.messages).length;
 
-    if (channelLength !== nextChannelLength) this.forceUpdate();
+    if (channelLength !== nextChannelLength) {
+      this.setState({allMarkedRead: false});
+    }
 
   }
+
+  markAllAsRead = () => {
+    this.setState({
+      allMarkedRead: true,
+    })
+  };
 
 
   render() {
@@ -41,9 +46,11 @@ class GameAdmin extends Component {
         <MessagesListRenderProp
           curChannel={CHAT_CHANNEL_ID}
           messages={this.props.playerUi.chatChannel.messages}
+          allMarkedRead={this.state.allMarkedRead}
           render={messages => (
             <MessagesListChatChannel
               messages={messages}
+              markAllAsRead={this.markAllAsRead}
             />
           )}
         />

@@ -8,11 +8,8 @@
   flex-grow: 1;
   align-items: flex-start;
 
-  #root > & {
-    height: 100%;
-    background-image: url("dependencies/images/rectangle-copy.jpg");
-    background-size: cover;
-    color: #ffffff;
+  &--welcome {
+    height: 100vh;
   }
 
   &--column {
@@ -25,12 +22,25 @@
     flex-grow: 0;
   }
 
+  #root > & {
+    height: 100%;
+    background-image: url("dependencies/images/rectangle-copy.jpg");
+    background-size: cover;
+    color: #ffffff;
+  }
+
   .flex-content {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: flex-start;
     min-width: 25%;
+
+    &--welcome {
+      width: 100%;
+      height: 100vh;
+      justify-content: center;
+    }
 
     &--rowend {
       flex-direction: row-reverse !important;

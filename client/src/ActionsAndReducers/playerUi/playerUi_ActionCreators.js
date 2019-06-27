@@ -94,17 +94,33 @@ export const initiateGame = (dbName) => {
 };
 
 
-export const sendFeedbackMessage = (dbName, playerInfo, message) => {
+export const sendFeedbackMessage = (dbName, fromDetails, message) => {
   return async (dispatch) => {
 
-    await wargamesApi.postFeedback(dbName, playerInfo, message);
+    await wargamesApi.postFeedback(dbName, fromDetails, message);
 
     dispatch(modalAction.close());
   }
 };
 
+export const failedLoginFeedbackMessage = (dbName, password) => {
+  return async () => {
+
+    let address = await wargamesApi.getIpAddress();
+
+    let from = {
+      force: address.ip,
+      forceColor: '#970000',
+      role: '',
+      name: password,
+    };
+    await wargamesApi.postFeedback(dbName, from, "A failed login attempt has been made.")
+
+  }
+};
+
 export const saveMessage = (dbName, details, message) => {
-  return async (dispatch) => {
+  return async () => {
 
     await wargamesApi.postNewMessage(dbName, details, message);
 

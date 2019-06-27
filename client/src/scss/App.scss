@@ -24,6 +24,7 @@
 @import 'version';
 @import 'turnProgresion';
 @import 'export';
+@import 'print';
 
 #root {
   height: 100%;
@@ -46,11 +47,7 @@
 #umpire {
   width: 100vw;
   height: 100vh;
-  padding: 15vh 12vw;
-
-  a, span {
-    margin-bottom: 1.15em;
-  }
+  padding: 15vh 0 15vh 22vw;
   h2 {
     margin-bottom: 1em;
   }

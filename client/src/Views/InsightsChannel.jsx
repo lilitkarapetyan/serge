@@ -5,6 +5,9 @@ import {
   getAllWargameFeedback,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 import '../scss/App.scss';
+import moment from "moment";
+import MessagesListInsightsChannel from "./MessagesListInsightsChannel";
+import MessagesListRenderProp from "./MessagesListRenderProp";
 
 class InsightsChannel extends Component {
 
@@ -13,14 +16,17 @@ class InsightsChannel extends Component {
 
     this.state = {
       activeTab: Object.keys(this.props.playerUi.channels)[0],
+      allMarkedRead: false,
     };
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    let channelLength = Object.keys(this.props.playerUi.channels).length;
-    let nextChannelLength = Object.keys(nextProps.playerUi.channels).length;
+    let channelLength = Object.keys(this.props.playerUi.feedbackMessages).length;
+    let nextChannelLength = Object.keys(nextProps.playerUi.feedbackMessages).length;
 
-    if (channelLength !== nextChannelLength) this.forceUpdate();
+    if (channelLength !== nextChannelLength) {
+      this.setState({allMarkedRead: false});
+    }
 
   }
 
@@ -28,25 +34,25 @@ class InsightsChannel extends Component {
     this.props.dispatch(getAllWargameFeedback(this.props.playerUi.currentWargame));
   }
 
-  render() {
+  markAllAsRead = () => {
+    this.setState({
+      allMarkedRead: true,
+    })
+  };
 
+  render() {
     return (
-      <div className="message-list">
-        {this.props.playerUi.feedbackMessages.map((message, i) => {
-          return (
-            <React.Fragment key={`feedback${i}`}>
-              <div className="info-wrap">
-                <Badge pill variant="primary">{message.playerInfo.force}</Badge> 
-                <Badge pill variant="secondary">{message.playerInfo.role}</Badge>
-                {message.playerInfo.name && <Badge pill variant="warning">{message.playerInfo.name}</Badge>}
-              </div>
-              {message.message}
-              <p className="feedback-marker"  style={{borderColor: message.playerInfo.forceColor}}></p>
-            </React.Fragment>
-          )
-        })
-        }
-      </div>
+      <MessagesListRenderProp
+        curChannel={"feedback_messages"}
+        messages={this.props.playerUi.feedbackMessages}
+        allMarkedRead={this.state.allMarkedRead}
+        render={messages => (
+          <MessagesListInsightsChannel
+            messages={messages}
+            markAllAsRead={this.markAllAsRead}
+          />
+        )}
+      />
     );
   }
 }

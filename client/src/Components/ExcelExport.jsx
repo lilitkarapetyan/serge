@@ -18,12 +18,12 @@ const ExcelExport = ({ exp, index }) => {
       anchor: ids[format],
       filename: exp.title,
       format: format,
-    }, exp.data.filter(dataItem => dataItem.messages.length > 1).map(dataItem => {
+    }, exp.data.filter(dataItem => dataItem.items.length > 1).map(dataItem => {
       return ({
-        name: dataItem.type,
+        name: dataItem.title,
         from: {
           arrayHasHeader: true,
-          array: dataItem.messages
+          array: dataItem.items
         }
       });
     }));

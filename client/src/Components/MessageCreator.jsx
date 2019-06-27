@@ -9,6 +9,11 @@ import {
   saveMessage,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
+import {
+  faUserSecret
+} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+
 class JsonCreator extends Component {
 
   constructor(props) {
@@ -16,6 +21,8 @@ class JsonCreator extends Component {
 
     this.editor = null;
     this.editorPreviewRef = React.createRef();
+    this.privateMessageRef = React.createRef();
+
 
     this.state = {
       selectedSchema: ''
@@ -26,7 +33,7 @@ class JsonCreator extends Component {
 
     let curForce = this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce);
 
-    let messageDetails = {
+    let details = {
       channel: this.props.curChannel,
       from: {
         force: curForce.name,
@@ -38,7 +45,12 @@ class JsonCreator extends Component {
       timestamp: new Date().toISOString(),
     };
 
-    this.props.dispatch(saveMessage(this.props.playerUi.currentWargame, messageDetails, this.editor.getValue()));
+    if (this.props.privateMessage) {
+      details.privateMessage = this.privateMessageRef.current.value;
+      this.privateMessageRef.current.value = "";
+    }
+
+    this.props.dispatch(saveMessage(this.props.playerUi.currentWargame, details, this.editor.getValue()));
 
     this.editor.destroy();
     this.editor = null;
@@ -75,11 +87,19 @@ class JsonCreator extends Component {
     return (
       <>
         <div className="form-group" id="message-creator" ref={this.editorPreviewRef}></div>
-        <div className="form-group">
-          <button name="send" className="btn btn-action btn-action--form" onClick={this.sendMessage}>
-            <span>Send Message</span>
-          </button>
-        </div>
+        {
+          this.props.privateMessage && (
+            <div className="flex-content">
+              <label htmlFor="" className="material-label" id="private-message-input-label"><FontAwesomeIcon size="2x" icon={faUserSecret}/>Private message</label>
+              <textarea id="private-message-input" className="material-input" ref={this.privateMessageRef} />
+            </div>
+          )
+        }
+          <div className="form-group">
+              <button name="send" className="btn btn-action btn-action--form" onClick={this.sendMessage}>
+                  <span>Send Message</span>
+              </button>
+          </div>
       </>
     );
   }
