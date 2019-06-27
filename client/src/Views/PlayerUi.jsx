@@ -9,7 +9,8 @@ import {
   initiateGame,
   showHideObjectives,
   startListening,
-  setAllTemplates, failedLoginFeedbackMessage,
+  setAllTemplates,
+  failedLoginFeedbackMessage,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 import lineBreak from "../Helpers/splitNewLineBreak";
 import {
@@ -17,11 +18,12 @@ import {
 } from "../ActionsAndReducers/Notification/Notification_ActionCreators";
 
 import DropdownInput from "../Components/Inputs/DropdownInput";
-import AwaitingStart from "../Components/AwaitingStart";
 import GameChannels from "./GameChannels";
 import TextInput from "../Components/Inputs/TextInput";
 import {getSergeGameInformation} from "../ActionsAndReducers/sergeInfo/sergeInfo_ActionCreators";
 import {umpireForceTemplate} from "../consts";
+import {populateWargameStore} from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
+import {populateMessageTypesDb} from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
 
 class PlayerUi extends Component {
 
@@ -35,6 +37,8 @@ class PlayerUi extends Component {
       rolePassword: '',
     };
 
+    this.props.dispatch(populateMessageTypesDb());
+    this.props.dispatch(populateWargameStore());
     this.props.dispatch(getSergeGameInformation());
   };
 

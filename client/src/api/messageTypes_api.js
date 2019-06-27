@@ -18,7 +18,10 @@ export const populateDb = () => {
 
   let promises = [];
 
+  return new Promise((resolve, reject) => {
+
     db.allDocs().then(entries => {
+
       if (entries.rows.length === 0) {
 
         var machine = {
@@ -89,10 +92,13 @@ export const populateDb = () => {
         };
         promises.push(db.put(sowInput));
 
-        Promise.all(promises).then(() => true);
+        Promise.all(promises).then(() => {
+          resolve(true);
+        });
       } else {
-        return false;
+        resolve(false);
       }
+    });
   });
 };
 
