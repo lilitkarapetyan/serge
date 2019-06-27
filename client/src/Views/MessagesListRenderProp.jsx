@@ -7,7 +7,14 @@ class MessagesListRenderProp extends Component {
     super(props);
 
     this.state = {
-      messages: this.props.messages.map((item) => ({ message: item, open: false, hasBeenRead: this.props.allMarkedRead })),
+      messages: this.props.messages.map((message) => {
+        let hasBeenRead = window.localStorage.getItem(this.props.currentWargame + message._id) === "read";
+        return {
+          ...message,
+          open: false,
+          hasBeenRead,
+        }
+      }),
     };
   }
 
@@ -41,8 +48,16 @@ class MessagesListRenderProp extends Component {
       (this.props.messages.length === 0) ||
       (this.props.curChannel !== nextProps.curChannel)
     ) {
+
       this.setState({
-        messages: nextProps.messages.map((message) => ({ ...message, open: false, hasBeenRead: nextProps.allMarkedRead }))
+        messages: nextProps.messages.map((message) => {
+          let hasBeenRead = window.localStorage.getItem(this.props.currentWargame + message._id) === "read";
+          return {
+            ...message,
+            open: false,
+            hasBeenRead,
+          };
+        }),
       });
     }
   }

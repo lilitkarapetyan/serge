@@ -33,6 +33,9 @@ class GameAdmin extends Component {
   }
 
   markAllAsRead = () => {
+    this.props.playerUi.chatChannel.messages.forEach((message) => {
+      window.localStorage.setItem(this.props.playerUi.currentWargame + message._id, "read");
+    });
     this.setState({
       allMarkedRead: true,
     })
@@ -46,6 +49,7 @@ class GameAdmin extends Component {
         <MessagesListRenderProp
           curChannel={CHAT_CHANNEL_ID}
           messages={this.props.playerUi.chatChannel.messages}
+          currentWargame={this.props.playerUi.currentWargame}
           allMarkedRead={this.state.allMarkedRead}
           render={messages => (
             <MessagesListChatChannel

@@ -125,7 +125,7 @@ class EditWelcomeScreen extends Component {
               <h5>Image</h5>
               <span className="image-upload-link" onClick={this.uploadImage}>Upload new image</span>
             </div>
-            <img className="serge-custom-logo" src={this.props.gameInfo.imageUrl} />
+            <img alt="Serge logo" className="serge-custom-logo" src={this.props.gameInfo.imageUrl} />
             <div className="section">
               <h5>Title</h5>
               <TextInput

@@ -331,15 +331,6 @@ export const playerUiReducer = (state = initialState, action) => {
 
       break;
 
-    case ActionConstant.MARK_ALL_AS_READ:
-
-      newState.channels[action.payload].messages.forEach((message) => {
-        if (message.hasOwnProperty("hasBeenRead")) message.hasBeenRead = true;
-      });
-      newState.channels[action.payload].unreadMessageCount = 0;
-
-      break;
-
     default:
       return newState;
   }
