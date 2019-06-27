@@ -34,6 +34,11 @@
   }
 }
 
+.btn-block {
+  display: block!important;
+  width: 100% !important;
+}
+
 .btn-secondary {
   // override bootstrap specificity
   margin-bottom: 0;
@@ -67,6 +72,14 @@
 
   i {
     color: $primaryTriadColor;
+  }
+
+  .view-wrapper & {
+    background-color: $secondaryColor;
+
+    &:hover {
+      background-color: $secondaryColor;
+    }
   }
 }
 
@@ -167,6 +180,26 @@ button {
     }
   }
 
+  &--form {
+    display: inline-block;
+    padding: 1px 0;
+    background-image: linear-gradient(to bottom, #3fb7ac, #9dfff1 36%, rgba(2, 37, 96, 0));
+    box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.4);
+    border-radius: 6px;
+    font-family: Squares, monospace;
+    font-size: 12px;
+    text-align: center;
+    color: #ffffff;
+
+    > span {
+      display: block;
+      border-radius: 4px;
+      border: none;
+      padding: 6px 20px;
+      background-color: $backgroundField;
+    }
+  }
+
   &--secondary {
     color: $actionSecondaryColor;
     background: none;
@@ -177,6 +210,16 @@ button {
     &:hover {
       color: $primaryTriadColor;
     }
+  }
+
+  &--complimentary {
+    font-family: 'Squares', monospace;
+    font-size: 12px;
+    color: #ffffff;
+    text-transform: uppercase;
+    background-color: $backgroundCustom;
+    border-radius: 4px;
+    padding: 10px 14px;
   }
 }
 

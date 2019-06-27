@@ -3,7 +3,12 @@
   "properties": {
     "content": {
       "type": "string",
-      "format": "textarea"
+      "format": "textarea",
+      "options": {
+        "inputAttributes": {
+          "placeholder": "Input the text"
+        }
+      }
     }
   },
   "title": "Chat",

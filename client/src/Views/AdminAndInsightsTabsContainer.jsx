@@ -83,10 +83,10 @@ class AdminAndInsightsTabsContainer extends Component {
           model={this.state.model}
           factory={this.factory}
         />
-        <div className="role-info" style={{borderBottom: this.props.playerUi.forceColor, borderBottomWidth: "6px", borderBottomStyle: "solid"}}>
+        <div className="role-info">
           <span className="role-type">{ this.props.playerUi.selectedRole }</span>
           <span className="force-type">{ force.name }</span>
-          <img src={force.icon} alt="" onClick={this.showHideForceObjectives} />
+          <img className="role-icon" src={force.icon} alt="" onClick={this.showHideForceObjectives} />
         </div>
       </>
     );

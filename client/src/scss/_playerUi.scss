@@ -108,6 +108,7 @@
 
     button {
       margin-left: auto;
+      margin-right: -16px;
       font-size: 12px;
     }
 
@@ -121,6 +122,26 @@
   &.out-of-game-feed {
     .message-list {
       max-height: calc(100vh - 400px);
+      padding: 16px;
+
+      .message-preview-player {
+        border-color: rgb(0, 0, 255);
+        margin-left: 0;
+        display: inline-block;
+        border-left: none;
+        width: auto;
+        box-shadow: none;
+        background-color: #ecf2fa;
+        border-radius: 30px;
+      }
+    }
+
+    .new-message-creator {
+      background-image: none;
+      border-radius: 0;
+      box-shadow: none;
+      border-top: 2px solid $borderFieldAdmin;
+      padding: 8px 16px 16px;
     }
   }
 
@@ -254,14 +275,38 @@
     width: 100%;
     border-radius: 4px 4px 0 0;
     box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.4);
-    border-style: solid;
-    border-width: 1px;
-    border-image-source: linear-gradient(to bottom, #3fb7ac, #9dfff1 36%, rgba(2, 37, 96, 0));
-    border-image-slice: 1;
-    background-color: $backgroundActionHead;
+    padding: 1px;
+    background-image: linear-gradient(to bottom, #3fb7ac, #9dfff1 36%, rgba(2, 37, 96, 0));
 
     .Collapsible {
       padding: 8px 16px;
+      background: $backgroundActionHead;
+      border-radius: 4px 4px 0 0;
+
+      &__trigger {
+        font-family: Squares, 'monospace';
+        font-size: 12px;
+        text-align: center;
+        color: #ffffff;
+        line-height: 1;
+        padding: 6px 0 3px;
+        position: relative;
+
+        &:after {
+          content: '';
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+          background-image: url('dependencies/images/arrow-open.png');
+          margin-left: 4px;
+          margin-top: -6px;
+          vertical-align: middle;
+        }
+
+        &.is-open:after {
+          background-image: url('dependencies/images/arrow-close.png');
+        }
+      }
     }
 
     .message-input {
@@ -273,17 +318,19 @@
     }
 
     #message-creator {
-      font-family: "Segoe UI", sans-serif;
+      font-family: "Open Sans", sans-serif;
       font-weight: bold;
       color: $secondaryColor;
+      padding-top: 8px;
 
       h3 {
         display: none;
       }
 
       .bg-light {
-        background-color: #f5f5f5 !important;
+        background-color: transparent;
       }
+
       .card {
         border: none;
 
@@ -333,24 +380,31 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 14px 20px;
-  background: $greyBg;
+  padding: 14px 60px 14px 16px;
+  position: relative;
+  background: #000000;
 
   .role-type {
-    font-size: 20px;
+    font-size: 12px;
     font-weight: 500;
+    color: rgba(255,255,255,.5);
   }
 
   .force-type {
-    font-size: 26px;
-    font-weight: 500;
+    font-size: 12px;
     margin-left: auto;
+    text-transform: uppercase;
+    font-family: Squares, monospace;
+    color: $forceDefaultColor;
   }
 
-  img {
-    width: auto;
-    height: 36px;
-    margin-left: 12px;
+  .role-icon {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 36px;
+    height: auto;
+    transform: translate3d(0, -50%, 0);
     cursor: pointer;
   }
 }

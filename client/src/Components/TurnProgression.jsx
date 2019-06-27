@@ -108,16 +108,20 @@ class TurnProgression extends Component {
       <>
         <div className="flex-content wargame-title">
           <h3>{this.props.playerUi.wargameTitle}</h3>
-          { <FontAwesomeIcon icon={faCommentAlt} size="2x" onClick={this.showLessonsModal} />}
+          {
+            <span onClick={this.showLessonsModal} className="wargame-title-icon">
+              <strong className="sr-only">Show lesson</strong>
+            </span>
+          }
         </div>
         <div className={classNames({"flex-content-wrapper": true, "turn-progression-ui": true, "adjunction-phase": adjunctionPhase})}>
-          <div>
+          <div className="turn-info-phase">
             <h5>Turn {this.props.playerUi.currentTurn} - {this.props.playerUi.phase} phase</h5>
-            <h5>{moment(this.props.playerUi.gameDate).format("DD/MM/YYYY HH:mm")}</h5>
+            <time dateTime={this.props.playerUi.gameDate}>{moment(this.props.playerUi.gameDate).format("DD/MM/YYYY HH:mm")}</time>
           </div>
-          <div>
-            <h3 className={classNames({"time-left": true, "ended": this.state.ended, "warning": this.state.warning})}>{this.state.minutesLeft}:{this.state.secondsLeft}</h3>
-            <h6>Time left</h6>
+          <div className="turn-info-remaining">
+            <span className={classNames({"time-left": true, "ended": this.state.ended, "warning": this.state.warning})}>{this.state.minutesLeft}:{this.state.secondsLeft}</span>
+            <span className="info-helper">Time left</span>
             {this.props.playerUi.controlUi ? <GameControls /> : false}
           </div>
         </div>

@@ -64,8 +64,10 @@ class JsonCreator extends Component {
   render() {
     return (
       <>
-        <div id="message-creator" ref={this.editorPreviewRef}></div>
-        <button name="send" className="btn btn-action btn-action--primary" onClick={this.sendMessage}>Send</button>
+        <div className="form-group" id="message-creator" ref={this.editorPreviewRef}></div>
+        <div className="form-group">
+          <button name="send" className="btn btn-block btn-action btn-action--complimentary" onClick={this.sendMessage}>Send</button>
+        </div>
       </>
     );
   }
