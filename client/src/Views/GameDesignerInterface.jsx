@@ -15,11 +15,21 @@ import {
 import {
   createNewWargameDB,
   clearWargames,
+  populateWargameStore,
 } from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
 import WargameSearchList from "../Components/WargameSearchList";
+import {
+  getAllMessageTypes,
+  populateMessageTypesDb
+} from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
 
 class GameDesignerInterface extends Component {
+
+  componentWillMount() {
+    this.props.dispatch(populateMessageTypesDb());
+    this.props.dispatch(populateWargameStore());
+  }
 
   createWargame = () => {
     this.props.dispatch(createNewWargameDB());
@@ -30,6 +40,19 @@ class GameDesignerInterface extends Component {
   };
 
   render() {
+
+    let loading = Object.values(this.props.dbLoading).some((loading) => loading );
+
+    if (loading) {
+      return (
+        <div id="loading">
+          <div>
+            <div id="loader"></div>
+          </div>
+        </div>
+      )
+    }
+
     return (
       <div id="umpire" className="flex-content-wrapper">
         <div id="sidebar_admin">
@@ -60,8 +83,9 @@ class GameDesignerInterface extends Component {
 }
 
 // empty mapStateToProps is here for react-redux to wire up the dispatch function to props so firing actions is possible.
-const mapStateToProps = ({wargame}) => ({
-  wargame
+const mapStateToProps = ({wargame, dbLoading}) => ({
+  wargame,
+  dbLoading
 });
 
 
