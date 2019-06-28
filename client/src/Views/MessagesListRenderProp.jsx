@@ -8,7 +8,7 @@ class MessagesListRenderProp extends Component {
 
     this.state = {
       messages: this.props.messages.map((message) => {
-        let hasBeenRead = window.localStorage.getItem(`${this.props.playerUi.wargameTitle}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}${message._id}`) === "read";
+        let hasBeenRead = window.localStorage.getItem(`${this.props.userId}${message._id}`) === "read";
         return {
           ...message,
           open: false,
@@ -51,7 +51,7 @@ class MessagesListRenderProp extends Component {
 
       this.setState({
         messages: nextProps.messages.map((message) => {
-          let hasBeenRead = window.localStorage.getItem(`${this.props.playerUi.wargameTitle}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}${message._id}`) === "read";
+          let hasBeenRead = window.localStorage.getItem(`${this.props.userId}${message._id}`) === "read";
           return {
             ...message,
             open: false,

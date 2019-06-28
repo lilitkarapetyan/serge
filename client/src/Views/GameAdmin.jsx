@@ -49,7 +49,7 @@ class GameAdmin extends Component {
         <MessagesListRenderProp
           curChannel={CHAT_CHANNEL_ID}
           messages={this.props.playerUi.chatChannel.messages}
-          currentWargame={this.props.playerUi.currentWargame}
+          userId={`${this.props.playerUi.wargameTitle}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}`}
           allMarkedRead={this.state.allMarkedRead}
           render={messages => (
             <MessagesListChatChannel

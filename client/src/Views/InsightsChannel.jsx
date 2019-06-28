@@ -46,7 +46,7 @@ class InsightsChannel extends Component {
       <MessagesListRenderProp
         curChannel={"feedback_messages"}
         messages={this.props.playerUi.feedbackMessages}
-        currentWargame={this.props.playerUi.currentWargame}
+        userId={`${this.props.playerUi.wargameTitle}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}`}
         allMarkedRead={this.state.allMarkedRead}
         render={messages => (
           <MessagesListInsightsChannel
