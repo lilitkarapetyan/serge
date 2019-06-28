@@ -31,10 +31,10 @@ class GameChannels extends Component {
 
     return (
       <div className="flex-content flex-content--row-wrap">
-        <div className="message-feed">
+        <div className="message-feed" data-tour="fourth-step">
           <ChannelTabsContainer />
         </div>
-        <div className={classNames({"message-feed": true, "out-of-game-feed": true, "umpire-feed": this.props.playerUi.controlUi})}>
+        <div className={classNames({"message-feed": true, "out-of-game-feed": true, "umpire-feed": this.props.playerUi.controlUi})} data-tour="fifth-step">
           <TurnProgression />
           <AdminAndInsightsTabsContainer />
         </div>

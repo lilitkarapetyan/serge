@@ -59,7 +59,7 @@ class GameAdmin extends Component {
           )}
         />
 
-        <div className="new-message-creator wrap">
+        <div className="new-message-creator wrap" data-tour="seventh-step">
           <Collapsible
             trigger={"New Message"}
             transitionTime={200}
