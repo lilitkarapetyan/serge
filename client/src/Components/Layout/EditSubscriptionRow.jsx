@@ -92,8 +92,8 @@ class EditSubscriptionRow extends Component {
       force: this.state.editSubscriptionForce.label,
       roles: this.state.editSubscriptionRoles,
       templates,
-      forceUniqid: this.props.data.forceUniqid,
-      icon: this.props.data.icon,
+      forceUniqid: this.state.editSubscriptionForce.value,
+      icon: this.props.forcesList.find((force) => this.state.editSubscriptionForce.value === force.uniqid).icon,
     };
     this.props.updateRecipient(this.state.subscriptionId, subscriptionData);
     this.props.cancelEdit();
