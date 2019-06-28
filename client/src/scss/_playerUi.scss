@@ -310,6 +310,10 @@
     color: #ffffff;
     padding-right: 12px;
 
+    + .Collapsible {
+      margin-top: 8px;
+    }
+
     &__trigger {
       display: block;
       line-height: 1.75em;
@@ -358,10 +362,6 @@
           @include primaryContentShadow;
         }
       }
-    }
-
-    &:nth-of-type(even) {
-      background: $lightGrey;
     }
   }
 
