@@ -45,18 +45,17 @@ input.material-input {
 
 label.material-label {
   width: fit-content;
-  background: $lightBg;
-  padding: 4px;
+  background: transparent;
+  padding: 0 0 0 6px;
   font-size: 12px;
-  margin-bottom: -12px;
-  margin-left: 5px;
-  font-family: "Segoe UI", sans-serif;
-  color: $primaryColor;
+  margin-top: 12px;
+  font-family: "Open Sans", sans-serif;
+  color: #ffffff;
   z-index: 2;
 }
 
 .flatpickr-input {
-  font-family: "Segoe UI", sans-serif;
+  font-family: "Open Sans", sans-serif;
   padding: 4px;
   border: 2px solid $primaryColor;
   border-radius: 4px;
