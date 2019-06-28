@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import Badge from "react-bootstrap/Badge";
 import { connect } from "react-redux";
 import {
   getAllWargameFeedback,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 import '../scss/App.scss';
-import moment from "moment";
 import MessagesListInsightsChannel from "./MessagesListInsightsChannel";
 import MessagesListRenderProp from "./MessagesListRenderProp";
 
@@ -35,6 +33,9 @@ class InsightsChannel extends Component {
   }
 
   markAllAsRead = () => {
+    this.props.playerUi.feedbackMessages.forEach((message) => {
+      window.localStorage.setItem(this.props.playerUi.currentWargame + message._id, "read");
+    });
     this.setState({
       allMarkedRead: true,
     })
@@ -45,6 +46,7 @@ class InsightsChannel extends Component {
       <MessagesListRenderProp
         curChannel={"feedback_messages"}
         messages={this.props.playerUi.feedbackMessages}
+        currentWargame={this.props.playerUi.currentWargame}
         allMarkedRead={this.state.allMarkedRead}
         render={messages => (
           <MessagesListInsightsChannel

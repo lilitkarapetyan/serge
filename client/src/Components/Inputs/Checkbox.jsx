@@ -16,7 +16,7 @@ class Checkbox extends Component {
           id={this.props.id}
           type="checkbox"
           onChange={this.onChange}
-          defaultChecked={this.props.isChecked}
+          checked={this.props.isChecked}
           title={this.props.title}
         />
         <label title={this.props.title} htmlFor={this.props.id}>{this.props.label}</label>

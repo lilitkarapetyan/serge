@@ -11,7 +11,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {umpireForceTemplate} from "../consts";
-import classNames from "classnames";
 const Fragment = React.Fragment;
 
 class MessagePreview extends Component {

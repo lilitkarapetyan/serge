@@ -53,10 +53,11 @@ export const playerUiReducer = (state = initialState, action) => {
       newState.wargameInitiated = action.payload.wargameInitiated;
       newState.currentTurn = action.payload.gameTurn;
       newState.phase = action.payload.phase;
-      newState.gameDate = action.payload.gameDate;
-      newState.gameTurnTime = action.payload.gameTurnTime;
-      newState.realtimeTurnTime = action.payload.realtimeTurnTime;
-      newState.timeWarning = action.payload.timeWarning;
+      newState.showAccessCodes = action.payload.data.overview.showAccessCodes;
+      newState.gameDate = action.payload.data.overview.gameDate;
+      newState.gameTurnTime = action.payload.data.overview.gameTurnTime;
+      newState.realtimeTurnTime = action.payload.data.overview.realtimeTurnTime;
+      newState.timeWarning = action.payload.data.overview.timeWarning;
       newState.turnEndTime = action.payload.turnEndTime;
       newState.gameDescription = action.payload.data.overview.gameDescription;
       newState.allChannels = action.payload.data.channels.channels;
@@ -327,15 +328,6 @@ export const playerUiReducer = (state = initialState, action) => {
       index = messages.findIndex((item) => item._id === action.payload.message._id);
       messages.splice(index, 1, action.payload.message);
       newState.channels[action.payload.channel].messages = messages;
-
-      break;
-
-    case ActionConstant.MARK_ALL_AS_READ:
-
-      newState.channels[action.payload].messages.forEach((message) => {
-        if (message.hasOwnProperty("hasBeenRead")) message.hasBeenRead = true;
-      });
-      newState.channels[action.payload].unreadMessageCount = 0;
 
       break;
 

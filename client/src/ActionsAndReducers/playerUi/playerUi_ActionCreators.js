@@ -51,11 +51,6 @@ export const closeMessage = (channel, message) => ({
   payload: {channel, message},
 });
 
-export const markAllAsRead = (channel) => ({
-  type: ActionConstant.MARK_ALL_AS_READ,
-  payload: channel,
-});
-
 export const setAllTemplates = (templates) => ({
   type: ActionConstant.SET_ALL_TEMPLATES_PLAYERUI,
   payload: templates,

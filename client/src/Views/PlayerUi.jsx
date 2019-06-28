@@ -159,7 +159,7 @@ class PlayerUi extends Component {
                   data={this.state.rolePassword || ''}
                 />
               </div>
-              {this.state.selectedWargame &&
+              {this.state.selectedWargame && this.props.playerUi.showAccessCodes &&
                 <div className="demo-passwords">
                   <h3>Not visible in production</h3>
                   {this.roleOptions().map((force) => {

@@ -20,7 +20,6 @@ import {
 
 import WargameSearchList from "../Components/WargameSearchList";
 import {
-  getAllMessageTypes,
   populateMessageTypesDb
 } from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
 
