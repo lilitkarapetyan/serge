@@ -41,6 +41,7 @@ export const playerUiReducer = (state = initialState, action) => {
   let newState = copyState(state);
 
   let messages;
+  let message;
   let index;
   let channels = {};
 
@@ -206,10 +207,10 @@ export const playerUiReducer = (state = initialState, action) => {
       } else if (!action.payload.hasOwnProperty('infoType')) {
 
         if (action.payload.details.channel === CHAT_CHANNEL_ID) {
-          newState.chatChannel.messages.unshift(action.payload);
+          newState.chatChannel.messages.unshift(copyState(action.payload));
         } else if (!!newState.channels[action.payload.details.channel]) {
           newState.channels[action.payload.details.channel].messages.unshift({
-            ...action.payload,
+            ...copyState(action.payload),
             hasBeenRead: false,
             isOpen: false
           });
@@ -305,10 +306,10 @@ export const playerUiReducer = (state = initialState, action) => {
 
       messages = newState.channels[action.payload.channel].messages;
 
-      action.payload.message.isOpen = true;
-      action.payload.message.hasBeenRead = true;
+      message = copyState(action.payload.message);
+      message.isOpen = true;
       index = messages.findIndex((item) => item._id === action.payload.message._id);
-      messages.splice(index, 1, action.payload.message);
+      messages.splice(index, 1, message);
       newState.channels[action.payload.channel].messages = messages;
 
       let unreadMessages = newState.channels[action.payload.channel].messages.filter((message) => {
@@ -322,9 +323,11 @@ export const playerUiReducer = (state = initialState, action) => {
     case ActionConstant.CLOSE_MESSAGE:
 
       messages = newState.channels[action.payload.channel].messages;
-      action.payload.message.isOpen = false;
+
+      message = copyState(action.payload.message);
+      message.isOpen = false;
       index = messages.findIndex((item) => item._id === action.payload.message._id);
-      messages.splice(index, 1, action.payload.message);
+      messages.splice(index, 1, message);
       newState.channels[action.payload.channel].messages = messages;
 
       break;

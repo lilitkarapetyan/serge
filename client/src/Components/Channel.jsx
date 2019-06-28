@@ -29,7 +29,7 @@ class Channel extends Component {
 
   markAllRead = () => {
     this.props.playerUi.channels[this.props.channel].messages.forEach((message) => {
-      window.localStorage.setItem(this.props.playerUi.currentWargame + message._id, "read");
+      window.localStorage.setItem(`${this.props.playerUi.currentWargame}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}${message._id}`, "read");
     });
     this.setState({
       allMarkedRead: true,
@@ -67,7 +67,7 @@ class Channel extends Component {
                 detail={item}
                 key={`${i}-messageitem`}
                 allMarkedRead={this.state.allMarkedRead}
-                currentWargame={this.props.playerUi.currentWargame}
+                userId={`${this.props.playerUi.currentWargame}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}`}
                 open={this.openMessage}
                 close={this.closeMessage}
               />

@@ -19,7 +19,7 @@ class MessageListItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hasBeenRead: !!window.localStorage.getItem(this.props.currentWargame + this.props.detail._id),
+      hasBeenRead: !!window.localStorage.getItem(this.props.userId + this.props.detail._id),
     }
   }
 
@@ -36,7 +36,7 @@ class MessageListItem extends Component {
     if (
       !this.state.hasBeenRead &&
       this.props.detail._id === nextProps.detail._id &&
-      window.localStorage.getItem(this.props.currentWargame + nextProps.detail._id) === "read"
+      window.localStorage.getItem(this.props.userId + nextProps.detail._id) === "read"
     ) {
       this.setState({
         hasBeenRead: true,
@@ -45,25 +45,27 @@ class MessageListItem extends Component {
 
     if (
       this.props.detail._id !== nextProps.detail._id &&
-      window.localStorage.getItem(this.props.currentWargame + nextProps.detail._id) === "read"
+      window.localStorage.getItem(this.props.userId + nextProps.detail._id) === "read"
     ) {
       this.setState({
         hasBeenRead: true,
-      })
+      });
+      this.forceUpdate();
     }
     if (
       this.props.detail._id !== nextProps.detail._id &&
-      window.localStorage.getItem(this.props.currentWargame + nextProps.detail._id) === null
+      window.localStorage.getItem(this.props.userId + nextProps.detail._id) === null
     ) {
       this.setState({
         hasBeenRead: false,
-      })
+      });
+      this.forceUpdate();
     }
   }
 
   open = () => {
     this.props.open(this.props.detail);
-    window.localStorage.setItem(this.props.currentWargame + this.props.detail._id, "read");
+    window.localStorage.setItem(this.props.userId + this.props.detail._id, "read");
     this.setState({
       hasBeenRead: true,
     });
