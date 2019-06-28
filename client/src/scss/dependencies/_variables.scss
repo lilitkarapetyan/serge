@@ -78,3 +78,11 @@ $textFieldAdmin: #3a3a3a;
 @mixin transitionPadding() {
   transition: padding 0.3s cubic-bezier(.25,.8,.25,1);
 }
+
+@mixin typo-primary {
+  font-family: 'Open Sans', 'sans-serif';
+}
+
+@mixin typo-secondary {
+  font-family: 'Alegreya Sans', 'sans-serif';
+}

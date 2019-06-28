@@ -109,11 +109,11 @@
     float: left;
     vertical-align: top;
     box-sizing: border-box;
-    font-family: Squares, 'sans-serif';
-    font-size: 10px;
+    font-size: 12px;
     font-weight: bold;
     text-align: center;
     color: $linkColor;
+    @include typo-secondary;
 }
 
 .flexlayout__tab_button--selected {

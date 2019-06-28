@@ -120,13 +120,13 @@
 
   #private-message-input-label {
     background: $greyBg;
-    font-family: Squares, monospace;
     margin-left: 0;
     border-radius: 4px 4px 0 0;
     padding: 10px 15px;
     border: 2px solid #415b76;
     border-bottom: none;
     margin-bottom: -2px;
+    @include typo-secondary;
 
     .svg-inline--fa {
       display: inline-block;
@@ -400,13 +400,14 @@
       border-radius: 4px 4px 0 0;
 
       &__trigger {
-        font-family: Squares, 'monospace';
-        font-size: 12px;
+        font-size: 14px;
         text-align: center;
+        text-transform: uppercase;
         color: #ffffff;
         line-height: 1;
         padding: 6px 0 3px;
         position: relative;
+        @include typo-secondary;
 
         &:after {
           content: '';
@@ -515,8 +516,8 @@
     font-size: 12px;
     margin-left: auto;
     text-transform: uppercase;
-    font-family: Squares, monospace;
     color: $forceDefaultColor;
+    @include typo-secondary;
   }
 
   .role-icon {

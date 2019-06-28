@@ -47,3 +47,35 @@
   font-weight: 700;
   font-style: italic;
 }
+
+@font-face {
+  font-family: 'Alegreya Sans';
+  src: url('dependencies/font-files/alegreyasanssc-regular-webfont.woff2') format('woff2'),
+  url('dependencies/font-files/alegreyasanssc-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Alegreya Sans';
+  src: url('dependencies/font-files/alegreyasanssc-italic-webfont.woff2') format('woff2'),
+  url('dependencies/font-files/alegreyasanssc-italic-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Alegreya Sans';
+  src: url('dependencies/font-files/alegreyasanssc-bold-webfont.woff2') format('woff2'),
+  url('dependencies/font-files/alegreyasanssc-bold-webfont.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Alegreya Sans';
+  src: url('dependencies/font-files/alegreyasanssc-bolditalic-webfont.woff2') format('woff2'),
+  url('dependencies/font-files/alegreyasanssc-bolditalic-webfont.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
+}

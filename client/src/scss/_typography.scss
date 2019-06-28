@@ -64,5 +64,5 @@ a {
 }
 
 .typo-mono {
-  font-family: 'Squares', 'monospace';
+  @include typo-secondary;
 }
