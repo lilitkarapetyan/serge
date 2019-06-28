@@ -112,6 +112,7 @@ class MessageListItem extends Component {
           open={expanded}
           onOpening={this.open}
           onClosing={this.close}
+          className={ !this.state.hasBeenRead ? 'message-item-unread' : '' }
         >
           <div key={`${this.props.key}-preview`} className="message-preview-player wrap"
            style={{borderColor: this.props.detail.details.from.forceColor}}><MessagePreview detail={this.props.detail.message} from={this.props.detail.details.from} privateMessage={this.props.detail.details.privateMessage} /></div>

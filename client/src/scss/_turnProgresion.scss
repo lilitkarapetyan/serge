@@ -1,7 +1,6 @@
 @import "dependencies/variables";
 
 .wargame-title {
-  background: $backgroundCustom;
   flex-grow: 0;
   justify-content: space-between !important;
   align-items: center;
@@ -10,8 +9,8 @@
 
   h3 {
     width: fit-content;
-    color: #000000;
-    font-size: 14px;
+    color: $adminColor;
+    font-size: 20px;
     text-transform: uppercase;
     @include typo-secondary;
   }
@@ -26,18 +25,20 @@
   display: inline-block;
   width: 16px;
   height: 16px;
-  background-image: url('dependencies/images/chat.png');
+  background-image: url('dependencies/images/chat-blue.png');
 }
 
 .turn-info-phase {
+  @include typo-primary;
+
   h5 {
-    color: #ffffff;
-    font-size: 13px;
+    color: $actionSecondaryColor;
+    font-size: 14px;
+    font-weight: 700;
   }
 
   time {
-    font-size: 11px;
-    color: $turnTimeColor;
+    font-size: 12px;
   }
 }
 
@@ -52,17 +53,20 @@
   .info-helper {
     font-size: 10px;
     font-weight: 600;
-    color: rgba(0, 0, 0, 0.3);
+    color: rgba(255, 255, 255, 0.4);
     display: block;
   }
 }
 
 .turn-progression-ui {
-  background: $backgroundCustomDarken;
-  color: #000000;
+  background: $backgroundProgression;
+  color: #ffffff;
   flex-grow: 0;
   justify-content: space-between;
   padding: $umpireMenuMargin;
+  margin: $umpireMenuMargin;
+  margin-top: 0;
+  border-radius: 4px;
 
   &.adjunction-phase {
     background: $grey;
