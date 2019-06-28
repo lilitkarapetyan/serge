@@ -31,7 +31,7 @@ class ChannelTabsContainer extends Component {
 
     this.localStorage = window.localStorage;
 
-    let modelName = `FlexLayout-model-${this.props.playerUi.wargameTitle}`;
+    let modelName = `FlexLayout-model-${this.props.playerUi.wargameTitle}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}`;
 
     let model = this.localStorage.getItem(modelName);
 
