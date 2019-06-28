@@ -10,13 +10,14 @@ import {
   markAllAsRead,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
+import {LOCAL_STORAGE_TIMEOUT, expiredStorage} from "../consts";
+
 import { umpireForceTemplate } from "../consts";
 
 class Channel extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       allMarkedRead: false,
     };
@@ -33,7 +34,7 @@ class Channel extends Component {
     this.props.dispatch(markAllAsRead(this.props.channel));
 
     this.props.playerUi.channels[this.props.channel].messages.forEach((message) => {
-      window.localStorage.setItem(`${this.props.playerUi.currentWargame}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}${message._id}`, "read");
+      expiredStorage.setItem(`${this.props.playerUi.currentWargame}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}${message._id}`, "read", LOCAL_STORAGE_TIMEOUT);
     });
     this.setState({
       allMarkedRead: true,

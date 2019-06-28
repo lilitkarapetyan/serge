@@ -7,6 +7,8 @@ import '../scss/App.scss';
 import MessagesListInsightsChannel from "./MessagesListInsightsChannel";
 import MessagesListRenderProp from "./MessagesListRenderProp";
 
+import {LOCAL_STORAGE_TIMEOUT, expiredStorage} from "../consts";
+
 class InsightsChannel extends Component {
 
   constructor(props) {
@@ -34,7 +36,7 @@ class InsightsChannel extends Component {
 
   markAllAsRead = () => {
     this.props.playerUi.feedbackMessages.forEach((message) => {
-      window.localStorage.setItem(this.props.playerUi.currentWargame + message._id, "read");
+      expiredStorage.setItem(this.props.playerUi.currentWargame + message._id, "read", LOCAL_STORAGE_TIMEOUT);
     });
     this.setState({
       allMarkedRead: true,

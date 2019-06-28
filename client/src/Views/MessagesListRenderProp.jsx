@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import '../scss/App.scss';
 
+import {
+  expiredStorage
+} from "../consts";
+
 class MessagesListRenderProp extends Component {
 
   constructor(props) {
@@ -8,7 +12,7 @@ class MessagesListRenderProp extends Component {
 
     this.state = {
       messages: this.props.messages.map((message) => {
-        let hasBeenRead = window.localStorage.getItem(`${this.props.userId}${message._id}`) === "read";
+        let hasBeenRead = expiredStorage.getItem(`${this.props.userId}${message._id}`) === "read";
         return {
           ...message,
           open: false,
@@ -51,7 +55,7 @@ class MessagesListRenderProp extends Component {
 
       this.setState({
         messages: nextProps.messages.map((message) => {
-          let hasBeenRead = window.localStorage.getItem(`${this.props.userId}${message._id}`) === "read";
+          let hasBeenRead = expiredStorage.getItem(`${this.props.userId}${message._id}`) === "read";
           return {
             ...message,
             open: false,

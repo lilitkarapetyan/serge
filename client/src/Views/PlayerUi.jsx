@@ -15,15 +15,15 @@ import lineBreak from "../Helpers/splitNewLineBreak";
 import {
   addNotification,
 } from "../ActionsAndReducers/Notification/Notification_ActionCreators";
-
 import DropdownInput from "../Components/Inputs/DropdownInput";
 import GameChannels from "./GameChannels";
 import TextInput from "../Components/Inputs/TextInput";
 import {getSergeGameInformation} from "../ActionsAndReducers/sergeInfo/sergeInfo_ActionCreators";
-import {umpireForceTemplate} from "../consts";
+import {umpireForceTemplate, expiredStorage, LOCAL_STORAGE_TIMEOUT} from "../consts";
 import {populateWargameStore} from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 import {populateMessageTypesDb} from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
 import Tour from "reactour";
+
 
 class PlayerUi extends Component {
 
@@ -35,7 +35,6 @@ class PlayerUi extends Component {
       selectedWargame: '',
       wargameAccessCode: '',
       rolePassword: '',
-      isTourOpen: window.localStorage.getItem(`${this.props.playerUi.wargameTitle}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}-tourDone`) !== "done",
     };
 
 
@@ -43,6 +42,14 @@ class PlayerUi extends Component {
     this.props.dispatch(populateWargameStore());
     this.props.dispatch(getSergeGameInformation());
   };
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (nextProps.playerUi.selectedForce && nextProps.playerUi.selectedRole && this.state.isTourOpen === undefined) {
+      this.setState({
+        isTourOpen: expiredStorage.getItem(`${nextProps.playerUi.wargameTitle}-${nextProps.playerUi.selectedForce}-${nextProps.playerUi.selectedRole}-tourDone`) !== "done",
+      })
+    }
+  }
 
   updateSelectedWargame = (selectedWargame) => {
     this.setState({selectedWargame});
@@ -101,7 +108,7 @@ class PlayerUi extends Component {
   };
 
   closeTour = () => {
-    window.localStorage.setItem(`${this.props.playerUi.wargameTitle}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}-tourDone`, "done");
+    expiredStorage.setItem(`${this.props.playerUi.wargameTitle}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}-tourDone`, "done", LOCAL_STORAGE_TIMEOUT);
     this.setState({
       isTourOpen: false,
     })

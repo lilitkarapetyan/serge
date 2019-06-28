@@ -1,5 +1,6 @@
 import uniqId from "uniqid";
 import moment from "moment";
+import ExpiredStorage from "expired-storage";
 
 export const serverPath = process.env.REACT_APP_SERVER_PATH;
 // export const serverPath = 'http://localhost:8080/';
@@ -35,6 +36,9 @@ export const GAME_SETUP_ROUTE = '/serge/gameSetup';
 export const WELCOME_SCREEN_EDIT_ROUTE = '/serge/editWelcomeScreen';
 export const EXPORT_ROUTE = '/serge/export';
 export const PLAYERUI_ROUTE = '/serge/player';
+
+export const expiredStorage = new ExpiredStorage();
+export const LOCAL_STORAGE_TIMEOUT = 2592000; // one month
 
 export const MAX_LISTENERS = 82;
 

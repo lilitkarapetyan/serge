@@ -7,6 +7,8 @@ import "../scss/dependencies/flexlayout-react.scss";
 import '../scss/App.scss';
 import {getAllWargameMessages} from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
+import {expiredStorage, LOCAL_STORAGE_TIMEOUT} from "../consts";
+
 var json = {
   global: {
     tabSetTabStripHeight: 45,
@@ -29,11 +31,9 @@ class ChannelTabsContainer extends Component {
   constructor(props) {
     super(props);
 
-    this.localStorage = window.localStorage;
-
     let modelName = `FlexLayout-model-${this.props.playerUi.wargameTitle}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}`;
 
-    let model = this.localStorage.getItem(modelName);
+    let model = expiredStorage.getItem(modelName);
 
     this.model = model ? FlexLayout.Model.fromJson(JSON.parse(model)) : FlexLayout.Model.fromJson(json);
 
@@ -129,7 +129,7 @@ class ChannelTabsContainer extends Component {
   };
 
   modelChanged = () => {
-    this.localStorage.setItem(this.state.modelName, JSON.stringify(this.model.toJson()));
+    expiredStorage.setItem(this.state.modelName, JSON.stringify(this.model.toJson()), LOCAL_STORAGE_TIMEOUT);
   };
 
   tabRender = (node) => {

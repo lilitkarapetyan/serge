@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import MessageCreatorChatChannel from "../Components/MessageCreatorChatChannel";
 import MessagesListChatChannel from "./MessagesListChatChannel";
 
-import {CHAT_CHANNEL_ID} from "../consts";
+import {CHAT_CHANNEL_ID, expiredStorage, LOCAL_STORAGE_TIMEOUT} from "../consts";
 import '../scss/App.scss';
 import Collapsible from "react-collapsible";
 import MessagesListRenderProp from "./MessagesListRenderProp";
@@ -34,7 +34,7 @@ class GameAdmin extends Component {
 
   markAllAsRead = () => {
     this.props.playerUi.chatChannel.messages.forEach((message) => {
-      window.localStorage.setItem(this.props.playerUi.currentWargame + message._id, "read");
+      expiredStorage.setItem(this.props.playerUi.currentWargame + message._id, "read", LOCAL_STORAGE_TIMEOUT);
     });
     this.setState({
       allMarkedRead: true,

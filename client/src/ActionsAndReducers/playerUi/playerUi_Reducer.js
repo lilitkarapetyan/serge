@@ -2,7 +2,8 @@ import ActionConstant from '../ActionConstants';
 import chat from "../../Schemas/chat.json";
 import copyState from "../../Helpers/copyStateHelper";
 import {
-  CHAT_CHANNEL_ID
+  CHAT_CHANNEL_ID,
+  expiredStorage
 } from "../../consts";
 import _ from "lodash";
 import uniqId from "uniqid";
@@ -293,7 +294,7 @@ export const playerUiReducer = (state = initialState, action) => {
             messages: messages.filter((message) => message.details.channel === channel.uniqid || message.infoType === true),
             unreadMessageCount: messages.filter((message) => {
                 return (
-                  window.localStorage.getItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${message._id}`) === null &&
+                  expiredStorage.getItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${message._id}`) === null &&
                   message.details.channel === channel.uniqid
                 )
             }).length,
@@ -318,7 +319,7 @@ export const playerUiReducer = (state = initialState, action) => {
       newState.channels[action.payload.channel].messages = messages;
 
       newState.channels[action.payload.channel].unreadMessageCount = messages.filter((message) => {
-        return window.localStorage.getItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${message._id}`) === null
+        return expiredStorage.getItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${message._id}`) === null
       }).length;
 
       break;
