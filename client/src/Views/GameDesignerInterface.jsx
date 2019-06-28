@@ -16,7 +16,7 @@ import {
   createNewWargameDB,
   clearWargames,
   populateWargameStore,
-  checkAdminPassword,
+  checkAdminAccess,
 } from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
 import WargameSearchList from "../Components/WargameSearchList";
@@ -56,7 +56,7 @@ class GameDesignerInterface extends Component {
   };
 
   checkPassword = () => {
-    this.props.dispatch(checkAdminPassword(this.state.password));
+    this.props.dispatch(checkAdminAccess(this.state.password));
   };
 
   render() {

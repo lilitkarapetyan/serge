@@ -117,13 +117,13 @@ export const loginAdmin = () => ({
   type: ActionConstant.LOGIN_ADMIN,
 });
 
-export const checkAdminPassword = (password) => {
+export const checkAdminAccess = (phrase) => {
 
   return (dispatch) => {
-    if (password === DEFAULT_SERVER) {
+    if (phrase === DEFAULT_SERVER) {
       dispatch(loginAdmin())
     } else {
-      dispatch(addNotification("Password did not match", "warning"));
+      dispatch(addNotification("Access code did not match", "warning"));
     }
   }
 };
