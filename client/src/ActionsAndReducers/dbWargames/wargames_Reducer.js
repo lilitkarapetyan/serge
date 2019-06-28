@@ -6,7 +6,7 @@ import {
   forceTemplate,
   channelTemplate,
   dbDefaultSettings,
-  serverPath,
+  serverPath, DEFAULT_SERVER,
 } from "../../consts";
 
 var initialState = {
@@ -18,6 +18,7 @@ var initialState = {
   data: {...dbDefaultSettings.data},
   currentTab: Object.keys(dbDefaultSettings.data)[0],
   wargameInitiated: false,
+  adminNotLoggedIn: true,
 };
 
 var getNameFromPath = function (dbPath) {
@@ -171,6 +172,11 @@ export const wargamesReducer = (state = initialState, action) => {
 
       selected = newState.data[tab].selectedForce.name;
       newState.data[tab].forces.find((f) => f.name === selected).icon = serverPath + action.icon.slice(1);
+      break;
+
+    case ActionConstant.LOGIN_ADMIN:
+
+      newState.adminNotLoggedIn = false;
       break;
 
     default:

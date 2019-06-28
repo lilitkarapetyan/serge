@@ -4,6 +4,7 @@ import _ from "lodash";
 
 import * as wargamesApi from "../../api/wargames_api";
 import { addNotification } from "../Notification/Notification_ActionCreators";
+import {DEFAULT_SERVER} from "../../consts";
 
 export const setCurrentTab = (tab) => ({
   type: ActionConstant.SET_CURRENT_GAME_SETUP_TAB,
@@ -110,6 +111,22 @@ export const addIcon = (icon) => ({
   type: ActionConstant.ADD_ICON,
   icon,
 });
+
+
+export const loginAdmin = () => ({
+  type: ActionConstant.LOGIN_ADMIN,
+});
+
+export const checkAdminPassword = (password) => {
+
+  return (dispatch) => {
+    if (password === DEFAULT_SERVER) {
+      dispatch(loginAdmin())
+    } else {
+      dispatch(addNotification("Password did not match", "warning"));
+    }
+  }
+};
 
 export const saveIcon = (file) => {
 

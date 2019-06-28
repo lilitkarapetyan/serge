@@ -11,6 +11,8 @@ REACT_APP_SERVER_PATH='http://localhost:8080/'
 
 export const databasePath = `${serverPath}db/`;
 
+export const DEFAULT_SERVER = "Nelson";
+
 export const MSG_STORE = "messages";
 export const MSG_TYPE_STORE = "message_types";
 export const SERGE_INFO = "serge_info";
