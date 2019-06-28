@@ -6,7 +6,6 @@ import {
   getWargame,
   setForce,
   setRole,
-  initiateGame,
   showHideObjectives,
   startListening,
   setAllTemplates,
@@ -49,10 +48,6 @@ class PlayerUi extends Component {
 
   goBack = () => {
     this.props.dispatch(setForce(""));
-  };
-
-  initiateGameplay = () => {
-    this.props.dispatch(initiateGame(this.props.playerUi.currentWargame));
   };
 
   setRolePassword = (value) => {
@@ -117,16 +112,6 @@ class PlayerUi extends Component {
           </div>
         </div>
       );
-    }
-
-    if (this.props.playerUi.selectedForce === umpireForceTemplate.uniqid && !this.props.playerUi.wargameInitiated) {
-      return (
-        <div className="flex-content-wrapper">
-          <div className="pre-start-screen">
-            <button name="initate game" className="btn btn-action btn-action--primary" onClick={this.initiateGameplay}>Initiate Game</button>
-          </div>
-        </div>
-      )
     }
 
     if (this.props.playerUi.selectedForce && this.props.playerUi.selectedRole) {

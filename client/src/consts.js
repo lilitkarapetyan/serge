@@ -131,6 +131,6 @@ export const dbDefaultSettings = {
   },
   wargameInitiated: false,
   gameTurn: 0,
-  phase: '',
+  phase: ADJUDICATION_PHASE,
   turnEndTime: null,
 };

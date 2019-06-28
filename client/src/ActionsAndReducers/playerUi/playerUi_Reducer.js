@@ -284,8 +284,6 @@ export const playerUiReducer = (state = initialState, action) => {
 
         if (!newState.isObserver && !isParticipant && !allRolesIncluded) return;
 
-        console.log("Checking channel:" + channel.uniqid + " allRoles:" + allRolesIncluded + " isParticipant:" + isParticipant + " isObserver:" + newState.isObserver)
-
         if (allRolesIncluded || isParticipant || newState.isObserver) {
           channels[channel.uniqid] = {
             name: channel.name,

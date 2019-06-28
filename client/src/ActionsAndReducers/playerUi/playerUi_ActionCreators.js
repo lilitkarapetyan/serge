@@ -79,16 +79,6 @@ export const nextGameTurn = (dbName) => {
 };
 
 
-export const initiateGame = (dbName) => {
-  return async (dispatch) => {
-
-    let wargame = await wargamesApi.initiateGame(dbName);
-
-    dispatch(setCurrentWargame(wargame));
-  }
-};
-
-
 export const sendFeedbackMessage = (dbName, fromDetails, message) => {
   return async (dispatch) => {
 

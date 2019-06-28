@@ -17,7 +17,6 @@ class EditSubscriptionRow extends Component {
     let roleOptions = [];
 
     let matchedForce = this.props.forcesList.find((f) => f.uniqid === this.props.data.forceUniqid);
-    console.log(matchedForce);
 
     if (matchedForce) {
       matchedForce.roles.forEach((role) => {

@@ -157,7 +157,7 @@ export const createWargame = (dispatch) => {
 
     db.put(settings)
       .then(() => {
-        return db.get(settings._id);
+        return db.get(dbDefaultSettings._id);
       })
       .then((res) => {
         resolve(res);
@@ -193,22 +193,7 @@ export const editWargame = (dbPath) => {
   return new Promise((resolve, reject) => {
 
     resolve(getLatestWargameRevision(dbName));
-    // getAllMessages(dbName)
-    //   .then((messages) => {
-    //     const latestWargame = messages.find((message) => message.infoType);
-    //     if (latestWargame) {
-    //       resolve(latestWargame);
-    //     } else {
-    //       const db = wargameDbStore.find((db) => db.name === dbName).db;
-    //       db.get(dbDefaultSettings._id)
-    //         .then((res) => {
-    //           resolve(res);
-    //         });
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     reject(err);
-    //   })
+
   });
 };
 
@@ -293,6 +278,7 @@ export const saveSettings = (dbName, data) => {
             wargameTitle: newDoc.wargameTitle,
             data: newDoc.data,
             gameTurn: newDoc.gameTurn,
+            phase: newDoc.phase,
             turnEndTime: moment().add(newDoc.data.overview.realtimeTurnTime, 'ms').format(),
             wargameInitiated: newDoc.wargameInitiated,
           })
@@ -702,55 +688,6 @@ export const getWargame = (gamePath) => {
   })();
 };
 
-export const initiateGame = (dbName) => {
-
-  const game = wargameDbStore.find((wargame) => dbName === wargame.name);
-
-  return new Promise((resolve, reject) => {
-
-    return game.db.get(dbDefaultSettings._id)
-
-      .then((res) => {
-        return game.db.put({
-          _id: dbDefaultSettings._id,
-          _rev: res._rev,
-          name: res.name,
-          wargameTitle: res.wargameTitle,
-          data: res.data,
-          gameTurn: 1,
-          phase: PLANNING_PHASE,
-          turnEndTime: moment().add(res.data.overview.realtimeTurnTime, 'ms').format(),
-          wargameInitiated: true,
-        })
-      })
-      .then(() => {
-        return game.db.get(dbDefaultSettings._id)
-      })
-      .then((res) => {
-        return game.db.put({
-          _id: new Date().toISOString(),
-          infoType: true,
-          name: res.name,
-          wargameTitle: res.wargameTitle,
-          data: res.data,
-          gameTurn: res.gameTurn,
-          phase: res.phase,
-          turnEndTime: moment().add(res.data.overview.realtimeTurnTime, 'ms').format(),
-          wargameInitiated: res.wargameInitiated,
-        })
-      })
-      .then(() => {
-        return game.db.get(dbDefaultSettings._id)
-      })
-      .then((res) => {
-        resolve(res);
-      })
-      .catch((err) => {
-        console.log(err);
-        reject(err);
-      })
-  })
-};
 
 export const createLatestWargameRevision = (dbName, wargameData) => {
 
@@ -796,9 +733,9 @@ export const nextGameTurn = (dbName) => {
     getLatestWargameRevision(dbName)
       .then((res) => {
 
-        let phase = res.phase;
+        res.wargameInitiated = res.gameTurn > 0;
 
-        switch (phase) {
+        switch (res.phase) {
           case PLANNING_PHASE:
             res.phase = ADJUDICATION_PHASE;
             res.turnEndTime = 0;
