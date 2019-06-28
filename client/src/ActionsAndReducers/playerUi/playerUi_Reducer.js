@@ -291,7 +291,12 @@ export const playerUiReducer = (state = initialState, action) => {
             templates,
             forceIcons: channel.participants.filter((participant) => participant.forceUniqid !== newState.selectedForce).map((participant) => participant.icon),
             messages: messages.filter((message) => message.details.channel === channel.uniqid || message.infoType === true),
-            unreadMessageCount: messages.filter((message) => message.details.channel === channel.uniqid).length,
+            unreadMessageCount: messages.filter((message) => {
+                return (
+                  window.localStorage.getItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${message._id}`) === null &&
+                  message.details.channel === channel.uniqid
+                )
+            }).length,
             observing,
           };
         }
@@ -312,11 +317,9 @@ export const playerUiReducer = (state = initialState, action) => {
       messages.splice(index, 1, message);
       newState.channels[action.payload.channel].messages = messages;
 
-      let unreadMessages = newState.channels[action.payload.channel].messages.filter((message) => {
-        return !message.hasOwnProperty("infoType") && !message.hasBeenRead;
-      });
-
-      newState.channels[action.payload.channel].unreadMessageCount = unreadMessages.length;
+      newState.channels[action.payload.channel].unreadMessageCount = messages.filter((message) => {
+        return window.localStorage.getItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${message._id}`) === null
+      }).length;
 
       break;
 
@@ -330,6 +333,11 @@ export const playerUiReducer = (state = initialState, action) => {
       messages.splice(index, 1, message);
       newState.channels[action.payload.channel].messages = messages;
 
+      break;
+
+    case ActionConstant.MARK_ALL_AS_READ:
+
+      newState.channels[action.channel].unreadMessageCount = 0;
       break;
 
     default:

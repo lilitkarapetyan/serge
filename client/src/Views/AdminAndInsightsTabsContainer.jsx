@@ -10,6 +10,7 @@ import '../scss/App.scss';
 import {
   showHideObjectives
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
+import _ from "lodash";
 
 var json = {
   global: {
@@ -35,7 +36,7 @@ class AdminAndInsightsTabsContainer extends Component {
     super(props);
 
     this.state = {
-      gameAdmin: 'GameAdmin',
+      gameAdmin: 'Game Admin',
       insights: 'Insights',
       model: FlexLayout.Model.fromJson(json),
       channelNames: [],

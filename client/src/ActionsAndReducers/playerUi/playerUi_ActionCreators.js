@@ -56,6 +56,11 @@ export const setAllTemplates = (templates) => ({
   payload: templates,
 });
 
+export const markAllAsRead = (channel) => ({
+  type: ActionConstant.MARK_ALL_AS_READ,
+  channel,
+});
+
 
 export const startListening = (dbName) => {
   return (dispatch) => {

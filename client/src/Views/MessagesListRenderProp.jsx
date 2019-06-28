@@ -8,7 +8,7 @@ class MessagesListRenderProp extends Component {
 
     this.state = {
       messages: this.props.messages.map((message) => {
-        let hasBeenRead = window.localStorage.getItem(this.props.currentWargame + message._id) === "read";
+        let hasBeenRead = window.localStorage.getItem(`${this.props.playerUi.wargameTitle}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}${message._id}`) === "read";
         return {
           ...message,
           open: false,
@@ -51,7 +51,7 @@ class MessagesListRenderProp extends Component {
 
       this.setState({
         messages: nextProps.messages.map((message) => {
-          let hasBeenRead = window.localStorage.getItem(this.props.currentWargame + message._id) === "read";
+          let hasBeenRead = window.localStorage.getItem(`${this.props.playerUi.wargameTitle}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}${message._id}`) === "read";
           return {
             ...message,
             open: false,
@@ -62,42 +62,11 @@ class MessagesListRenderProp extends Component {
     }
   }
 
-  openSection = (el) => {
-
-    el.open = true;
-    el.hasBeenRead = true;
-    let index = this.state.messages.findIndex((message) => message._id === el._id);
-    let messages = this.state.messages;
-
-    messages.splice(index, 1, el);
-
-    this.setState({
-      messages
-    });
-
-  };
-
-  closeSection = (el) => {
-
-    el.open = false;
-    let index = this.state.messages.findIndex((message) => message._id === el._id);
-    let messages = this.state.messages;
-
-    messages.splice(index, 1, el);
-
-    this.setState({
-      messages
-    });
-  };
-
   render() {
-
-    let openSection = this.openSection;
-    let closeSection = this.closeSection;
 
     return (
       <div className="message-list">
-        {this.props.render(this.state.messages, {openSection, closeSection})}
+        {this.props.render(this.state.messages)}
       </div>
     );
   }
