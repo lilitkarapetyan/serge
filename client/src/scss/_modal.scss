@@ -95,6 +95,7 @@
 
 .lessons-modal {
   max-width: 500px;
+  background: $adminColor;
 
   .title {
     display: flex;
@@ -112,6 +113,7 @@
     margin-left: .5em;
     color: $primaryColor;
     width: fit-content;
+    background-color: transparent;
   }
 
   p {

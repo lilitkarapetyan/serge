@@ -262,7 +262,7 @@
 
   &.out-of-game-feed {
     .message-list {
-      max-height: calc(100vh - 400px);
+      max-height: calc(100vh - 132px);
       padding: 16px;
 
       .message-preview-player {
@@ -328,6 +328,7 @@
 
     .new-message-creator {
       background-image: none;
+      background-color: #ffffff;
       border-radius: 0;
       box-shadow: none;
       border-top: 2px solid $borderFieldAdmin;
