@@ -6,7 +6,6 @@ import {
   getWargame,
   setForce,
   setRole,
-  initiateGame,
   showHideObjectives,
   startListening,
   setAllTemplates,
@@ -16,14 +15,15 @@ import lineBreak from "../Helpers/splitNewLineBreak";
 import {
   addNotification,
 } from "../ActionsAndReducers/Notification/Notification_ActionCreators";
-
 import DropdownInput from "../Components/Inputs/DropdownInput";
 import GameChannels from "./GameChannels";
 import TextInput from "../Components/Inputs/TextInput";
 import {getSergeGameInformation} from "../ActionsAndReducers/sergeInfo/sergeInfo_ActionCreators";
-import {umpireForceTemplate} from "../consts";
+import {umpireForceTemplate, expiredStorage, LOCAL_STORAGE_TIMEOUT} from "../consts";
 import {populateWargameStore} from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 import {populateMessageTypesDb} from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
+import Tour from "reactour";
+
 
 class PlayerUi extends Component {
 
@@ -37,10 +37,19 @@ class PlayerUi extends Component {
       rolePassword: '',
     };
 
+
     this.props.dispatch(populateMessageTypesDb());
     this.props.dispatch(populateWargameStore());
     this.props.dispatch(getSergeGameInformation());
   };
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (nextProps.playerUi.selectedForce && nextProps.playerUi.selectedRole && this.state.isTourOpen === undefined) {
+      this.setState({
+        isTourOpen: expiredStorage.getItem(`${nextProps.playerUi.wargameTitle}-${nextProps.playerUi.selectedForce}-${nextProps.playerUi.selectedRole}-tourDone`) !== "done",
+      })
+    }
+  }
 
   updateSelectedWargame = (selectedWargame) => {
     this.setState({selectedWargame});
@@ -49,10 +58,6 @@ class PlayerUi extends Component {
 
   goBack = () => {
     this.props.dispatch(setForce(""));
-  };
-
-  initiateGameplay = () => {
-    this.props.dispatch(initiateGame(this.props.playerUi.currentWargame));
   };
 
   setRolePassword = (value) => {
@@ -102,6 +107,13 @@ class PlayerUi extends Component {
     })
   };
 
+  closeTour = () => {
+    expiredStorage.setItem(`${this.props.playerUi.wargameTitle}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}-tourDone`, "done", LOCAL_STORAGE_TIMEOUT);
+    this.setState({
+      isTourOpen: false,
+    })
+  };
+
   render() {
 
     if (this.state.landingScreen) {
@@ -119,23 +131,61 @@ class PlayerUi extends Component {
       );
     }
 
-    if (this.props.playerUi.selectedForce === umpireForceTemplate.uniqid && !this.props.playerUi.wargameInitiated) {
-      return (
-        <div className="flex-content-wrapper">
-          <div className="pre-start-screen">
-            <button name="initate game" className="btn btn-action btn-action--primary" onClick={this.initiateGameplay}>Initiate Game</button>
+    const steps = [
+      {
+        selector: '[data-tour="first-step"]',
+        content: "Take a short guided tour to familiarise yourself with the main features of the War Game interface."
+      },
+      {
+        selector: '[data-tour="second-step"]',
+        content: "Check your force objectives by clicking on the target icon."
+      },
+      {
+        selector: '[data-tour="third-step"]',
+        content: "Give feedback at any time by clicking on the speech bubble."
+      },
+      {
+        selector: '[data-tour="fourth-step"]',
+        content: "In-game channels are on the left. Access is limited to specific forces and roles."
+      },
+      {
+        selector: '[data-tour="fifth-step"]',
+        content: "Game admin is on the right. All players can read and write in the channel."
+      },
+      {
+        selector: '[data-tour="sixth-step"]',
+        content: "This panel will indicate whether you are in a planning or adjudication phase, and how much time is left when in a planning phase."
+      },
+      {
+        selector: '[data-tour="seventh-step"]',
+        content: "Send out-of-game messages and questions here. They are visible by all players and umpires."
+      },
+      {
+        selector: '[data-tour="fourth-step"]',
+        content: () => (
+          <div>
+            Drag and drop a tab to create a new column and re-organize your channels. And use the vertical bars to resize the area occupied by channels.
+            <span className="link link--noIcon" onClick={this.closeTour}>Close the tour</span>
           </div>
-        </div>
-      )
-    }
+        ),
+      },
+    ];
 
     if (this.props.playerUi.selectedForce && this.props.playerUi.selectedRole) {
       return (
-        <div className="flex-content-wrapper">
-          <div className="flex-content flex-content--fill">
-            <GameChannels />
+        <>
+          <div className="flex-content-wrapper" data-tour="first-step">
+            <div className="flex-content flex-content--fill">
+              <GameChannels />
+            </div>
           </div>
-        </div>
+          {/* GUIDED TOUR */}
+          <Tour
+            steps={steps}
+            isOpen={this.state.isTourOpen}
+            onRequestClose={this.closeTour}
+          />
+        </>
       )
     }
 

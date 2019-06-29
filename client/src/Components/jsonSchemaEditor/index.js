@@ -65,19 +65,17 @@ class SchemaEditor extends Component {
   }
 
   updatePreviewSchema(schema) {
-    console.log("preview update");
+
     this.setState({previewSchema: schema});
 
     this.props.dispatch(setPreviewSchema(schema));
   }
 
   updateOptions(options) {
-    console.log("options update");
     this.setState({options: options});
   }
 
   updateMetaSchema(schema) {
-    console.log("editor update");
     this.setState({metaschema: schema});
   }
 

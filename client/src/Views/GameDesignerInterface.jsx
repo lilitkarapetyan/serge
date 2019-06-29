@@ -16,14 +16,25 @@ import {
   createNewWargameDB,
   clearWargames,
   populateWargameStore,
+  checkAdminAccess,
 } from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
 import WargameSearchList from "../Components/WargameSearchList";
 import {
   populateMessageTypesDb
 } from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
+import TextInput from "../Components/Inputs/TextInput";
 
 class GameDesignerInterface extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      password: "",
+    }
+  }
+
 
   componentWillMount() {
     this.props.dispatch(populateMessageTypesDb());
@@ -38,6 +49,16 @@ class GameDesignerInterface extends Component {
     this.props.dispatch(clearWargames());
   };
 
+  updatePassword = (password) => {
+    this.setState({
+      password,
+    })
+  };
+
+  checkPassword = () => {
+    this.props.dispatch(checkAdminAccess(this.state.password));
+  };
+
   render() {
 
     let loading = Object.values(this.props.dbLoading).some((loading) => loading );
@@ -47,6 +68,24 @@ class GameDesignerInterface extends Component {
         <div id="loading">
           <div>
             <div id="loader"></div>
+          </div>
+        </div>
+      )
+    }
+
+    if (this.props.wargame.adminNotLoggedIn) {
+      return (
+        <div id="umpire" className="flex-content-wrapper">
+          <div className="flex-content flex-content--center">
+            <h2>Password</h2>
+            <TextInput
+              className="material-input"
+              label="Password"
+              data={this.state.password}
+              updateStore={this.updatePassword}
+              options={{numInput: false, password: true}}
+            />
+            <span className="link link--noIcon" onClick={this.checkPassword}>Enter</span>
           </div>
         </div>
       )

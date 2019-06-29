@@ -50,6 +50,8 @@ class JsonCreator extends Component {
       this.privateMessageRef.current.value = "";
     }
 
+    if (this.editor.getValue().content === "") return;
+
     this.props.dispatch(saveMessage(this.props.playerUi.currentWargame, details, this.editor.getValue()));
 
     this.editor.destroy();

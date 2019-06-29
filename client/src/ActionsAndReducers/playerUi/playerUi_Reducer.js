@@ -2,7 +2,8 @@ import ActionConstant from '../ActionConstants';
 import chat from "../../Schemas/chat.json";
 import copyState from "../../Helpers/copyStateHelper";
 import {
-  CHAT_CHANNEL_ID
+  CHAT_CHANNEL_ID,
+  expiredStorage
 } from "../../consts";
 import _ from "lodash";
 import uniqId from "uniqid";
@@ -41,6 +42,7 @@ export const playerUiReducer = (state = initialState, action) => {
   let newState = copyState(state);
 
   let messages;
+  let message;
   let index;
   let channels = {};
 
@@ -206,10 +208,10 @@ export const playerUiReducer = (state = initialState, action) => {
       } else if (!action.payload.hasOwnProperty('infoType')) {
 
         if (action.payload.details.channel === CHAT_CHANNEL_ID) {
-          newState.chatChannel.messages.unshift(action.payload);
+          newState.chatChannel.messages.unshift(copyState(action.payload));
         } else if (!!newState.channels[action.payload.details.channel]) {
           newState.channels[action.payload.details.channel].messages.unshift({
-            ...action.payload,
+            ...copyState(action.payload),
             hasBeenRead: false,
             isOpen: false
           });
@@ -284,15 +286,18 @@ export const playerUiReducer = (state = initialState, action) => {
 
         if (!newState.isObserver && !isParticipant && !allRolesIncluded) return;
 
-        console.log("Checking channel:" + channel.uniqid + " allRoles:" + allRolesIncluded + " isParticipant:" + isParticipant + " isObserver:" + newState.isObserver)
-
         if (allRolesIncluded || isParticipant || newState.isObserver) {
           channels[channel.uniqid] = {
             name: channel.name,
             templates,
             forceIcons: channel.participants.filter((participant) => participant.forceUniqid !== newState.selectedForce).map((participant) => participant.icon),
             messages: messages.filter((message) => message.details.channel === channel.uniqid || message.infoType === true),
-            unreadMessageCount: messages.filter((message) => message.details.channel === channel.uniqid).length,
+            unreadMessageCount: messages.filter((message) => {
+                return (
+                  expiredStorage.getItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${message._id}`) === null &&
+                  message.details.channel === channel.uniqid
+                )
+            }).length,
             observing,
           };
         }
@@ -307,28 +312,33 @@ export const playerUiReducer = (state = initialState, action) => {
 
       messages = newState.channels[action.payload.channel].messages;
 
-      action.payload.message.isOpen = true;
-      action.payload.message.hasBeenRead = true;
+      message = copyState(action.payload.message);
+      message.isOpen = true;
       index = messages.findIndex((item) => item._id === action.payload.message._id);
-      messages.splice(index, 1, action.payload.message);
+      messages.splice(index, 1, message);
       newState.channels[action.payload.channel].messages = messages;
 
-      let unreadMessages = newState.channels[action.payload.channel].messages.filter((message) => {
-        return !message.hasOwnProperty("infoType") && !message.hasBeenRead;
-      });
-
-      newState.channels[action.payload.channel].unreadMessageCount = unreadMessages.length;
+      newState.channels[action.payload.channel].unreadMessageCount = messages.filter((message) => {
+        return expiredStorage.getItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${message._id}`) === null
+      }).length;
 
       break;
 
     case ActionConstant.CLOSE_MESSAGE:
 
       messages = newState.channels[action.payload.channel].messages;
-      action.payload.message.isOpen = false;
+
+      message = copyState(action.payload.message);
+      message.isOpen = false;
       index = messages.findIndex((item) => item._id === action.payload.message._id);
-      messages.splice(index, 1, action.payload.message);
+      messages.splice(index, 1, message);
       newState.channels[action.payload.channel].messages = messages;
 
+      break;
+
+    case ActionConstant.MARK_ALL_AS_READ:
+
+      newState.channels[action.channel].unreadMessageCount = 0;
       break;
 
     default:

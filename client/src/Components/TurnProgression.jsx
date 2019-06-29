@@ -109,12 +109,12 @@ class TurnProgression extends Component {
         <div className="flex-content wargame-title">
           <h3>{this.props.playerUi.wargameTitle}</h3>
           {
-            <span onClick={this.showLessonsModal} className="wargame-title-icon">
+            <span onClick={this.showLessonsModal} className="wargame-title-icon" data-tour="third-step">
               <strong className="sr-only">Show lesson</strong>
             </span>
           }
         </div>
-        <div className={classNames({"flex-content-wrapper": true, "turn-progression-ui": true, "adjunction-phase": adjunctionPhase})}>
+        <div className={classNames({"flex-content-wrapper": true, "turn-progression-ui": true, "adjunction-phase": adjunctionPhase})} data-tour="sixth-step">
           <div className="turn-info-phase">
             <h5>Turn {this.props.playerUi.currentTurn} - {this.props.playerUi.phase} phase</h5>
             <time dateTime={this.props.playerUi.gameDate}>{moment(this.props.playerUi.gameDate).format("DD/MM/YYYY HH:mm")}</time>

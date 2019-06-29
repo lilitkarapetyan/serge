@@ -56,6 +56,11 @@ export const setAllTemplates = (templates) => ({
   payload: templates,
 });
 
+export const markAllAsRead = (channel) => ({
+  type: ActionConstant.MARK_ALL_AS_READ,
+  channel,
+});
+
 
 export const startListening = (dbName) => {
   return (dispatch) => {
@@ -75,16 +80,6 @@ export const getWargame = (gamePath) => {
 export const nextGameTurn = (dbName) => {
   return async (dispatch) => {
     await wargamesApi.nextGameTurn(dbName);
-  }
-};
-
-
-export const initiateGame = (dbName) => {
-  return async (dispatch) => {
-
-    let wargame = await wargamesApi.initiateGame(dbName);
-
-    dispatch(setCurrentWargame(wargame));
   }
 };
 

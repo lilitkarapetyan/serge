@@ -96,7 +96,7 @@ class GameSetup extends Component {
 
     return (
       <>
-        <div className="view-wrapper view-wrapper-gamesetup">
+        <div className="view-wrapper view-wrapper-gamesetup first-step">
           <div id="sidebar">
             <Link
               disable={!this.checkAllSaved()}

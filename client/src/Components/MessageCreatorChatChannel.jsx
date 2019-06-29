@@ -38,6 +38,8 @@ class JsonCreator extends Component {
       timestamp: new Date().toISOString(),
     };
 
+    if (this.editor.getValue().content === "") return;
+
     this.props.dispatch(saveMessage(this.props.playerUi.currentWargame, messageDetails, this.editor.getValue()));
   };
 

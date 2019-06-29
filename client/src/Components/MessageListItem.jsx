@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-
 import '../scss/App.scss';
-
 import Badge from "react-bootstrap/Badge";
-
+import {expiredStorage, LOCAL_STORAGE_TIMEOUT} from "../consts";
 import {
   faPlus,
   faMinus,
@@ -19,8 +17,8 @@ class MessageListItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      hasBeenRead: !!expiredStorage.getItem(this.props.userId + this.props.detail._id),
       collapsed: true,
-      hasBeenRead: !!window.localStorage.getItem(this.props.currentWargame + this.props.detail._id),
     }
   }
 
@@ -37,7 +35,7 @@ class MessageListItem extends Component {
     if (
       !this.state.hasBeenRead &&
       this.props.detail._id === nextProps.detail._id &&
-      window.localStorage.getItem(this.props.currentWargame + nextProps.detail._id) === "read"
+      expiredStorage.getItem(this.props.userId + nextProps.detail._id) === "read"
     ) {
       this.setState({
         hasBeenRead: true,
@@ -46,25 +44,27 @@ class MessageListItem extends Component {
 
     if (
       this.props.detail._id !== nextProps.detail._id &&
-      window.localStorage.getItem(this.props.currentWargame + nextProps.detail._id) === "read"
+      expiredStorage.getItem(this.props.userId + nextProps.detail._id) === "read"
     ) {
       this.setState({
         hasBeenRead: true,
-      })
+      });
+      this.forceUpdate();
     }
     if (
       this.props.detail._id !== nextProps.detail._id &&
-      window.localStorage.getItem(this.props.currentWargame + nextProps.detail._id) === null
+      expiredStorage.getItem(this.props.userId + nextProps.detail._id) === null
     ) {
       this.setState({
         hasBeenRead: false,
-      })
+      });
+      this.forceUpdate();
     }
   }
 
   open = () => {
     this.props.open(this.props.detail);
-    window.localStorage.setItem(this.props.currentWargame + this.props.detail._id, "read");
+    expiredStorage.setItem(this.props.userId + this.props.detail._id, "read", LOCAL_STORAGE_TIMEOUT);
     this.setState({
       collapsed: false,
       hasBeenRead: true,
