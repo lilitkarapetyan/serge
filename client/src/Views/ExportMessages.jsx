@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import flatten from 'flat';
-import { getAllMessageTypes } from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
 import { createExportItem } from "../ActionsAndReducers/ExportItems/ExportItems_ActionsCreators";
 import ExcelExport from '../Components/ExcelExport';
 import ExportItem from '../Components/ExportItem';
 import ExportView from "./ExportView";
 
 class ExportMessages extends Component {
-
-  componentWillMount() {
-    this.props.getMessageTypes();
-  }
 
   createExportItem = () => {
     const infoTypeMessages = this.props.wargame.exportMessagelist.filter(({infoType, data}) => (
@@ -29,7 +24,7 @@ class ExportMessages extends Component {
 
     this.props.savExportItem({
       wargame: this.props.wargame.currentWargame,
-      data: this.exportDataGrouped(this.props.messageTypes.messages, this.props.wargame.exportMessagelist, channelTitles),
+      data: this.exportDataGrouped(this.props.wargame.exportMessagelist, channelTitles),
     });
   }
 
@@ -37,13 +32,16 @@ class ExportMessages extends Component {
     return msg => msg.details && msg.details.messageType === type
   };
 
-  exportDataGrouped(messageTypes, messages, channelTitles) {
+  exportDataGrouped(messages, channelTitles) {
     let data = [];
+    let messageTypes = {};
 
-    for (var messageType of messageTypes) {
-      const messagesFiltered = messages.filter(this.messageFilterByType(messageType.title));
+    for(let message of messages) {
+      if(message.details && message.details.messageType && !messageTypes[message.details.messageType]) {
+        messageTypes[message.details.messageType] = true;
 
-      if (messagesFiltered.length) {
+        const messagesFiltered = messages.filter(this.messageFilterByType(message.details.messageType));
+
         let fields = [];
         let rows = [];
 
@@ -69,7 +67,7 @@ class ExportMessages extends Component {
         }
 
         data.push({
-          title: messageType.title,
+          title: message.details.messageType,
           items: [
             fields.map(field => (field.toUpperCase())),
             ...rows
@@ -133,12 +131,11 @@ const mapDispatchToProps = dispatch => ({
       title: `Export ${new Date().toISOString().slice(0, 19).replace('T', ' ')}`,
       ...data,
     }));
-  },
-  getMessageTypes: () => { dispatch(getAllMessageTypes()) }
+  }
 });
 
-const mapStateToProps = ({ wargame, messageTypes, exportItems }) => ({
-  wargame, messageTypes, exportItems: exportItems.filter(item => item.type === 'messages')
+const mapStateToProps = ({ wargame, exportItems }) => ({
+  wargame, exportItems: exportItems.filter(item => item.type === 'messages')
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExportMessages);
