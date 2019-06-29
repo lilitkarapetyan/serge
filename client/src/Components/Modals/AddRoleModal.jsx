@@ -20,7 +20,7 @@ class AddRoleModal extends Component {
 
     this.state = {
       roleName: this.props.currentModal.data ? this.props.currentModal.data.name : '',
-      rolePassword: this.props.currentModal.data ? this.props.currentModal.data.password : `pass${uniqId.time()}`,
+      rolePassword: this.props.currentModal.data ? this.props.currentModal.data.password : `p${uniqId.time()}`,
       isObserver: this.props.currentModal.data ? this.props.currentModal.data.isObserver : false,
       isInsightViewer: this.props.currentModal.data ? this.props.currentModal.data.isInsightViewer : false,
     };
