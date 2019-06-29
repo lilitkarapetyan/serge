@@ -119,7 +119,7 @@ class TurnProgression extends Component {
             <h5>Turn {this.props.playerUi.currentTurn} - {this.props.playerUi.phase} phase</h5>
             <time dateTime={this.props.playerUi.gameDate}>{moment(this.props.playerUi.gameDate).format("DD/MM/YYYY HH:mm")}</time>
           </div>
-          <div className="turn-info-remaining">
+          <div className="turn-info-remaining text-center">
             <span className={classNames({"time-left": true, "ended": this.state.ended, "warning": this.state.warning})}>{this.state.minutesLeft}:{this.state.secondsLeft}</span>
             <span className="info-helper">Time left</span>
             {this.props.playerUi.controlUi ? <GameControls /> : false}

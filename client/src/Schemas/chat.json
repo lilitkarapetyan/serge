@@ -6,7 +6,7 @@
       "format": "textarea",
       "options": {
         "inputAttributes": {
-          "placeholder": "Input the text"
+          "placeholder": "type the text"
         }
       }
     }

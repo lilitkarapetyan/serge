@@ -142,6 +142,7 @@ span.link {
       font-size: 10px;
       margin-bottom: 16px;
       display: block;
+      box-shadow: none;
       @include typo-secondary;
     }
 

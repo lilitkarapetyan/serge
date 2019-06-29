@@ -127,6 +127,11 @@
 
     .out-of-game-feed & {
         background-color: $backgroundActionHead;
+        box-shadow: none;
+        border-image-source: none;
+        border: none;
+        border-radius: 4px 4px 0 0;
+        height: auto!important;
     }
 }
 
@@ -200,11 +205,14 @@
     top: 0;
     bottom: 0;
     width: 10000px;
-    font-family: "Segoe UI", sans-serif;
     font-size: 16px;
     font-weight: 500;
     text-transform: uppercase;
     line-height: 2em;
+
+    .out-of-game-feed & {
+        transform: translate3d(16px, 0, 0);
+    }
 }
 
 .flexlayout__tab_toolbar {
@@ -231,10 +239,6 @@
     border:none;
     outline-width: 0;
     background: transparent url("./images/restore.png") no-repeat center;
-}
-
-.flexlayout__popup_menu {
-
 }
 
 .flexlayout__popup_menu_item {

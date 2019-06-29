@@ -255,7 +255,22 @@
       border-radius: 0;
       box-shadow: none;
       border-top: 2px solid $borderFieldAdmin;
-      padding: 8px 16px 16px;
+      padding: 8px 16px;
+
+      .form-control-label {
+        display: none;
+      }
+
+      .btn-action {
+        width: 32px;
+        height: 32px;
+        background-image: url('dependencies/images/send.png');
+        background-color: $buttonActionAdmin;
+        background-size: 24px 24px;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 100%;
+      }
     }
   }
 
@@ -523,37 +538,66 @@
 }
 
 .role-info {
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  justify-content: space-between;
+  display: block;
   align-items: center;
-  padding: 14px 60px 14px 16px;
+  padding: 8px 0 8px 16px;
   position: relative;
-  background: #000000;
+  background: $forceDefaultColor;
 
   .role-type {
-    font-size: 12px;
-    font-weight: 500;
-    color: rgba(255,255,255,.5);
+    font-size: 13px;
+    font-weight: 600;
+    font-style: italic;
+    color: $adminColor;
   }
 
-  .force-type {
-    font-size: 12px;
-    margin-left: auto;
-    text-transform: uppercase;
-    color: $forceDefaultColor;
-    @include typo-secondary;
-  }
-
-  .role-icon {
+  .contain-force-skin {
     position: absolute;
+    border-bottom: 48px solid $forceDefaultColor;
+    border-left: 26px solid transparent;
+    margin: -8px 0 0;
+    width: 50%;
     right: 0;
-    top: 50%;
-    width: 36px;
-    height: auto;
-    transform: translate3d(0, -50%, 0);
-    cursor: pointer;
+    top: 0;
+    bottom: 0;
+  }
+
+  .force-skin {
+    position: absolute;
+    border-bottom: 48px solid $adminColor;
+    border-left: 26px solid transparent;
+    margin-left: -25px;
+    right: 0;
+    top: 1px;
+    left: 0;
+
+    .force-type {
+      position: absolute;
+      left: 0;
+      top: 26px;
+      font-size: 14px;
+      margin-left: auto;
+      text-transform: uppercase;
+      color: #ffffff;
+      width: 85%;
+      transform: translate3d(0,-50%,0);
+      display: block;
+      letter-spacing: .015em;
+      padding-left: 12px;
+      @include typo-secondary;
+    }
+
+    .role-icon {
+      position: absolute;
+      top: 26px;
+      right: 16px;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      border-radius: 100%;
+      border: 1px solid $forceDefaultColor;
+      transform: translate3d(0,-50%,0);
+    }
   }
 }
 

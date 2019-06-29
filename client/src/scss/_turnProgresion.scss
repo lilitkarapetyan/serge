@@ -11,8 +11,9 @@
     width: fit-content;
     color: $adminColor;
     font-size: 20px;
+    font-weight: 600;
     text-transform: uppercase;
-    @include typo-secondary;
+    @include typo-primary;
   }
 
   svg {
@@ -23,9 +24,11 @@
 
 .wargame-title-icon {
   display: inline-block;
-  width: 16px;
-  height: 16px;
-  background-image: url('dependencies/images/chat-blue.png');
+  width: 20px;
+  height: 20px;
+  background-image: url('dependencies/images/chat-blue@2x.png');
+  background-size: 20px 20px;
+  background-position: center;
 }
 
 .turn-info-phase {
@@ -39,6 +42,10 @@
 
   time {
     font-size: 12px;
+    font-weight: 600;
+    font-family: 'Open Sans', 'sans-serif';
+    display: inline-block;
+    padding-top: 8px;
   }
 }
 

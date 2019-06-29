@@ -85,8 +85,12 @@ class AdminAndInsightsTabsContainer extends Component {
         />
         <div className="role-info">
           <span className="role-type">{ this.props.playerUi.selectedRole }</span>
-          <span className="force-type">{ force.name }</span>
-          <img className="role-icon" src={force.icon} alt="" onClick={this.showHideForceObjectives} />
+          <div className="contain-force-skin">
+            <div className="force-skin">
+              <span className="force-type">{ force.name }</span>
+              <img className="role-icon" src={force.icon} alt="" onClick={this.showHideForceObjectives} />
+            </div>
+          </div>
         </div>
       </>
     );
