@@ -183,13 +183,14 @@ button {
   text-transform: uppercase;
 
   &--primary {
-    color: $lightBlue;
-    background-color: $backgroundAlphaPrimary;
+    color: #ffffff;
+    background-color: $backgroundActionHead;
     @include primaryShadow;
     @include transition();
 
     &:hover {
       color: $lightBlue;
+      background-color: $backgroundField;
       @include btnDown();
     }
   }

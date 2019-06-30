@@ -201,6 +201,8 @@
     border: 2px solid #415b76;
     border-bottom: none;
     margin-bottom: -2px;
+    color: $adminColor;
+    font-size: 14px;
     @include typo-secondary;
 
     .svg-inline--fa {
@@ -583,7 +585,6 @@
   }
 
   .data {
-    padding: 0 6px 0 2px;
     word-break: break-word;
 
     a {
@@ -606,12 +607,16 @@
 
 .demo-passwords {
   position: absolute;
-  top: 10px;
+  top: 50%;
   left: 50px;
+  background: rgba(0,0,0, .5);
+  border-radius: 4px;
+  padding: 16px;
+  transform: translate3d(0, -50%, 0);
 
   li {
     cursor: pointer;
-    color: blue;
+    color: $linkColor;
     text-decoration: underline;
   }
 }
@@ -687,8 +692,10 @@
   width: 750px;
   height: 550px;
   padding: 14px;
-  border: 5px solid $primaryColor;
-  background: $lightBg;
+  border: 1px solid $forceDefaultColor;
+  border-right: none;
+  border-radius: 4px 0 0 0;
+  background: $adminColor;
   overflow: hidden;
 
   .objective-text {
