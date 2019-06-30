@@ -20,7 +20,8 @@
   width: auto;
   height: auto;
   margin: auto;
-  background: #fafcff;
+  background: $adminColor;
+  color: #ffffff;
   border-radius: 2px;
 
   .sketch-picker {
@@ -95,7 +96,6 @@
 
 .lessons-modal {
   max-width: 500px;
-  background: $adminColor;
 
   .title {
     display: flex;
@@ -111,14 +111,12 @@
     line-height: 1em;
     font-weight: bold;
     margin-left: .5em;
-    color: $primaryColor;
     width: fit-content;
     background-color: transparent;
   }
 
   p {
     font-size: 16px;
-    color: $primaryColor;
   }
 
   textarea {

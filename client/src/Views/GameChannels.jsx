@@ -42,12 +42,17 @@ class GameChannels extends Component {
           <div className="force-objectives" style={{borderColor: this.props.playerUi.forceColor}}>
             <h3>Objectives</h3>
             <div className="objective-text">
-              {this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).overview}
+              {force.overview}
             </div>
 
             <div className="role-info">
-              <span className="force-type">{ this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).name }</span>
-              <img src={this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).icon} alt="" onClick={this.showHideForceObjectives} />
+                <span className="role-type">&nbsp;</span>
+                <div className="contain-force-skin">
+                    <div className="force-skin">
+                        <span className="force-type">{ force.name }</span>
+                        <img className="role-icon" src={force.icon} alt="" onClick={this.showHideForceObjectives} />
+                    </div>
+                </div>
             </div>
           </div>
         }
