@@ -66,8 +66,8 @@ export const forceTemplate = {
   uniqid: null,
   overview: 'An overview written here..',
   roles: [{
-    name: 'General',
-    password: `pass${uniqId.time()}`,
+    name: 'CO',
+    password: `p${uniqId.time()}`,
     control: false,
     isObserver: false,
     isInsightViewer: false,
@@ -84,7 +84,7 @@ export const umpireForceTemplate = {
   overview: 'Umpire force.',
   roles: [{
     name: 'Game Control',
-    password: `pass${uniqId.time()}`,
+    password: `p${uniqId.time()}`,
     control: true,
     isObserver: true,
     isInsightViewer: true,
