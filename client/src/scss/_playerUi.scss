@@ -236,6 +236,7 @@
   .forces-in-channel {
     display: flex;
     flex-direction: row;
+    align-items: center;
     padding: 0 28px 0 16px;
 
     button {
@@ -247,7 +248,10 @@
     .force-indicator {
       width: 24px;
       height: 24px;
-      margin-left: 10px;
+
+      + .force-indicator {
+        margin-left: 10px;
+      }
     }
   }
 
@@ -675,14 +679,17 @@
       position: absolute;
       top: 26px;
       right: 16px;
-      width: 16px;
-      height: 16px;
       cursor: pointer;
-      border-radius: 100%;
-      border: 1px solid $forceDefaultColor;
       transform: translate3d(0,-50%,0);
     }
   }
+}
+
+.role-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 100%;
+  border: 1px solid $forceDefaultColor;
 }
 
 .force-objectives {
@@ -697,6 +704,7 @@
   border-radius: 4px 0 0 0;
   background: $adminColor;
   overflow: hidden;
+  z-index: 9;
 
   .objective-text {
     margin-top: 15px;
@@ -709,5 +717,46 @@
     bottom: 0;
     left: 0;
     right: 0;
+  }
+}
+
+#message-creator {
+  .card.card-body {
+    & > div > div {
+      .row + .row {
+        margin-top: 16px;
+      }
+    }
+  }
+
+  .table-bordered {
+    margin-bottom: 16px;
+
+    thead {
+      td,
+      th {
+        border-bottom-width: 1px;
+        background: #dee2e6;
+        font-size: 12px;
+        vertical-align: middle;
+      }
+    }
+
+    tbody {
+      td {
+        vertical-align: top;
+        padding: 4px;
+      }
+    }
+  }
+
+  .btn-group {
+    & > .btn {
+      border-radius: 0!important;
+
+      + .btn {
+        margin-left: 1px;
+      }
+    }
   }
 }

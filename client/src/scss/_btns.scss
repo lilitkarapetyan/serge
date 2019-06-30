@@ -40,25 +40,7 @@
 }
 
 .btn-secondary {
-  // override bootstrap specificity
-  margin-bottom: 0;
-  background: none;
-  border: none;
-  box-shadow: none;
-  border-radius: 2px !important;
-
-  &:hover {
-    background: $primaryTriadColorTransparent;
-  }
-
-  &:active,
-  &:focus,
-  &:visited {
-    color: $primaryTriadColor !important;
-    background: none !important;
-    border: none !important;
-    box-shadow: none !important;
-  }
+  font-size: 12px;
 
   &:disabled {
     background: none !important;

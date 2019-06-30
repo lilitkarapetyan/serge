@@ -57,14 +57,24 @@ label.material-label {
 .flatpickr-input {
   font-family: "Open Sans", sans-serif;
   padding: 4px;
-  border: 2px solid $primaryColor;
   border-radius: 4px;
-  background: $lightBg;
 }
 
 input.material-input,
 .flatpickr-input {
   max-width: 50%;
+}
+
+.input-group {
+  & > .input-group-prepend {
+    & >.btn {
+      margin-left: 1px;
+
+      &:last-child {
+        border-radius: 0 4px 4px 0;
+      }
+    }
+  }
 }
 
 // checkboxes
