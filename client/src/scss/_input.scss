@@ -52,6 +52,10 @@ label.material-label {
   font-family: "Open Sans", sans-serif;
   color: #ffffff;
   z-index: 2;
+
+  .view-wrapper & {
+    color: $adminColor;
+  }
 }
 
 .flatpickr-input {
