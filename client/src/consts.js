@@ -90,7 +90,7 @@ export const umpireForceTemplate = {
     isInsightViewer: true,
   }],
   icon: serverPath+'default_img/umpireDefault.png',
-  color: '#FFFFFF',
+  color: '#FCFBEE',
   umpire: true,
   dirty: false,
 };
