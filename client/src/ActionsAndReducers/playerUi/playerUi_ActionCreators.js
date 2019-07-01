@@ -61,6 +61,11 @@ export const markAllAsRead = (channel) => ({
   channel,
 });
 
+export const openTour = (isOpen) => ({
+  type: ActionConstant.OPEN_TOUR,
+  isOpen,
+});
+
 
 export const startListening = (dbName) => {
   return (dispatch) => {

@@ -30,6 +30,7 @@ class ColorPickerModal extends Component {
         <SketchPicker
           color={currentForce.color}
           onChangeComplete={this.handleChange}
+          presetColors={["#F84248", "#79FC74", "#F86AF8", "#51D1FC", "#B16827", "#FEED59", "#FCFBEE"]}
         />
         <div className="buttons">
           <button name="cancel" className="btn btn-action btn-action--secondary" onClick={this.hideModal}>Close</button>

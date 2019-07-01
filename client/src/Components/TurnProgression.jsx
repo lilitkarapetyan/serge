@@ -5,10 +5,11 @@ import GameControls from "../Components/GameControls";
 import _ from "lodash";
 import classNames from "classnames";
 import moment from "moment";
-import {faCommentAlt} from "@fortawesome/free-solid-svg-icons";
+import {faCommentAlt, faShoePrints} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { modalAction } from "../ActionsAndReducers/Modal/Modal_ActionCreators";
 import {ADJUDICATION_PHASE, PLANNING_PHASE} from "../consts";
+import {openTour} from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 class TurnProgression extends Component {
 
@@ -99,6 +100,9 @@ class TurnProgression extends Component {
     this.props.dispatch(modalAction.open("lessons"));
   };
 
+  openTour = () => {
+    this.props.dispatch(openTour(true));
+  };
 
   render() {
 
@@ -113,6 +117,7 @@ class TurnProgression extends Component {
               <strong className="sr-only">Show lesson</strong>
             </span>
           }
+          <FontAwesomeIcon icon={faShoePrints} size="2x" onClick={this.openTour} data-tour="third-step" />
         </div>
         <div className={classNames({"flex-content-wrapper": true, "turn-progression-ui": true, "adjunction-phase": adjunctionPhase})} data-tour="sixth-step">
           <div className="turn-info-phase">
