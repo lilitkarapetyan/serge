@@ -72,7 +72,7 @@
   font-family: "Segoe UI", sans-serif;
   font-size: 1.85em;
   font-weight: 500;
-  color: $secondaryColor;
+  color: rgba(255,255,255,.7);
   border: none;
   background: transparent;
   text-overflow: ellipsis;
@@ -107,89 +107,62 @@
   max-height: 100vh;
   overflow: hidden;
 
-  .unread {
+  .unread,
+  .flexlayout__tab_button[class*="unread"]{
     &:after {
       content: 'new';
       font-size: 10px;
       display: inline-block;
       margin-left: 5px;
+      margin-top: -5px;
+      vertical-align: middle;
       color: rgba(255, 255, 255, 0.7);
     }
   }
 
   .unread-1 {
     &:after {
-      position: absolute;
-      top: -.5em;
       content: '(1)';
-      font-size: .65em;
     }
   }
   .unread-2 {
     &:after {
-      position: absolute;
-      top: -.5em;
       content: '(2)';
-      font-size: .65em;
     }
   }
   .unread-3 {
     &:after {
-      position: absolute;
-      top: -.5em;
       content: '(3)';
-      font-size: .65em;
     }
   }
   .unread-4 {
     &:after {
-      position: absolute;
-      top: -.5em;
       content: '(4)';
-      font-size: .65em;
     }
   }
   .unread-5 {
     &:after {
-      position: absolute;
-      top: -.5em;
       content: '(5)';
-      font-size: .65em;
     }
   }
   .unread-6 {
     &:after {
-      position: absolute;
-      top: -.5em;
       content: '(6)';
-      font-size: .65em;
     }
   }
   .unread-7 {
     &:after {
-      position: absolute;
-      top: -.5em;
       content: '(7)';
-      font-size: .65em;
     }
   }
   .unread-8 {
     &:after {
-      display: inline-block;
-      margin-left: 5px;
-      color: rgba(255, 255, 255, 0.7);
-      position: absolute;
-      top: -.5em;
       content: '(8)';
-      font-size: .65em;
     }
   }
   .unread-9plus {
     &:after {
-      position: absolute;
-      top: -.5em;
       content: '(9+)';
-      font-size: .65em;
     }
   }
 
