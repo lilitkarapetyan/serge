@@ -10,6 +10,7 @@ import {
   startListening,
   setAllTemplates,
   failedLoginFeedbackMessage,
+  openTour,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 import lineBreak from "../Helpers/splitNewLineBreak";
 import {
@@ -109,9 +110,7 @@ class PlayerUi extends Component {
 
   closeTour = () => {
     expiredStorage.setItem(`${this.props.playerUi.wargameTitle}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}-tourDone`, "done", LOCAL_STORAGE_TIMEOUT);
-    this.setState({
-      isTourOpen: false,
-    })
+    this.props.dispatch(openTour(false));
   };
 
   render() {
@@ -182,8 +181,9 @@ class PlayerUi extends Component {
           {/* GUIDED TOUR */}
           <Tour
             steps={steps}
-            isOpen={this.state.isTourOpen}
+            isOpen={this.props.playerUi.tourIsOpen}
             onRequestClose={this.closeTour}
+            startAt={0}
           />
         </>
       )

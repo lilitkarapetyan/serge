@@ -35,6 +35,7 @@ const initialState = {
   showObjective: false,
   wargameInitiated: false,
   feedbackMessages: [],
+  tourIsOpen: false,
 };
 
 export const playerUiReducer = (state = initialState, action) => {
@@ -342,6 +343,12 @@ export const playerUiReducer = (state = initialState, action) => {
       break;
 
     default:
+
+    case ActionConstant.OPEN_TOUR:
+
+      newState.tourIsOpen = action.isOpen;
+      break;
+
       return newState;
   }
 
