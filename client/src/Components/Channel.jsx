@@ -7,12 +7,24 @@ import {
   closeMessage,
   getAllWargameMessages,
   openMessage,
-  markAllAsRead,
+  markAllAsRead, saveMessage, bulkPost,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 import {LOCAL_STORAGE_TIMEOUT, expiredStorage} from "../consts";
-
 import { umpireForceTemplate } from "../consts";
+
+import {LoremIpsum} from "lorem-ipsum";
+
+const lorem = new LoremIpsum({
+  sentencesPerParagraph: {
+    max: 8,
+    min: 4
+  },
+  wordsPerSentence: {
+    max: 16,
+    min: 4
+  }
+});
 
 class Channel extends Component {
 
@@ -49,6 +61,34 @@ class Channel extends Component {
     this.props.dispatch(closeMessage(this.props.channel, message));
   };
 
+  sendMultiple = () => {
+
+    let count = 0;
+    const tenMessages = setInterval(() => {
+      count++;
+      let details = {
+        channel: this.props.channel,
+        from: {
+          force: this.props.playerUi.selectedForce.name,
+          forceColor: this.props.playerUi.forceColor,
+          role: this.props.playerUi.selectedRole,
+          icon: "",
+        },
+        messageType: "Volume test",
+        timestamp: new Date().toISOString(),
+      };
+
+      let message = {
+        content: lorem.generateSentences(Math.floor(Math.random()*10))
+      };
+
+      this.props.dispatch(saveMessage(this.props.playerUi.currentWargame, details, message));
+
+      if (count === 100) clearInterval(tenMessages);
+
+    }, 100);
+  };
+
   render() {
 
     let curChannel = this.props.channel;
@@ -58,6 +98,7 @@ class Channel extends Component {
         <div className="forces-in-channel">
           {this.props.playerUi.channels[curChannel].forceIcons.map((url, i) => <img key={`indicator${i}`} className="force-indicator" src={url} alt="" />)}
           <button name="mark as read" className="btn btn-action btn-action--secondary" onClick={this.markAllRead}>Mark all read</button>
+          <button name="Send 10 messages" className="btn btn-action btn-action--secondary" onClick={this.sendMultiple}>Send Multiple</button>
         </div>
 
         <div className="message-list">
