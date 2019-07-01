@@ -23,7 +23,6 @@ export const CHAT_CHANNEL_ID = "game-admin";
 export const PLANNING_PHASE = 'planning';
 export const ADJUDICATION_PHASE = 'adjudication';
 
-export const BASE_ROUTE = '/serge';
 export const ADMIN_ROUTE = '/serge/admin';
 export const MESSAGE_TEMPLATE_ROUTE = '/serge/messageTemplates';
 export const MESSAGE_LIBRARY_ROUTE = '/serge/messageLibrary';
@@ -140,4 +139,5 @@ export const dbDefaultSettings = {
   gameTurn: 0,
   phase: ADJUDICATION_PHASE,
   turnEndTime: null,
+  adjudicationStartTime: moment().format(),
 };

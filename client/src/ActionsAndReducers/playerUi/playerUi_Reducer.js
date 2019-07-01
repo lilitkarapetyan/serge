@@ -20,6 +20,7 @@ const initialState = {
   gameTurnTime: 0,
   realtimeTurnTime: 0,
   turnEndTime: '',
+  adjudicationStartTime: 0,
   gameDescription: '',
   currentWargame: '',
   wargameTitle: '',
@@ -59,6 +60,7 @@ export const playerUiReducer = (state = initialState, action) => {
       newState.showAccessCodes = action.payload.data.overview.showAccessCodes;
       newState.gameDate = action.payload.data.overview.gameDate;
       newState.gameTurnTime = action.payload.data.overview.gameTurnTime;
+      newState.adjudicationStartTime = action.payload.adjudicationStartTime;
       newState.realtimeTurnTime = action.payload.data.overview.realtimeTurnTime;
       newState.timeWarning = action.payload.data.overview.timeWarning;
       newState.turnEndTime = action.payload.turnEndTime;

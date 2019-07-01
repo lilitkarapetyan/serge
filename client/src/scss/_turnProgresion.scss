@@ -25,7 +25,7 @@
   justify-content: space-between;
   padding: $umpireMenuMargin;
 
-  &.adjunction-phase {
+  &.adjudication-phase {
     background: $grey;
   }
 
@@ -48,17 +48,20 @@
   //  line-height: 1.5em;
   //}
 
-  h3.ended {
+  h2.ended {
     &:before {
       content: "-";
     }
   }
 
   .time-left {
-   font-family:monospace;
+    color: $lightBlue;
+    font-family:monospace;
+    text-align: center;
+    line-height: 1.5em;
   }
 
-  h3.warning {
+  h2.warning {
     animation: blink 1s infinite;
   }
 

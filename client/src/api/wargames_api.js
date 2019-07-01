@@ -233,6 +233,7 @@ export const initiateGame = (dbName) => {
           data: res.data,
           gameTurn: 0,
           phase: ADJUDICATION_PHASE,
+          adjudicationStartTime: moment().format(),
           turnEndTime: moment().add(res.data.overview.realtimeTurnTime, 'ms').format(),
           wargameInitiated: true,
         })
@@ -249,6 +250,7 @@ export const initiateGame = (dbName) => {
           data: res.data,
           gameTurn: res.gameTurn,
           phase: res.phase,
+          adjudicationStartTime: res.adjudicationStartTime,
           turnEndTime: moment().add(res.data.overview.realtimeTurnTime, 'ms').format(),
           wargameInitiated: res.wargameInitiated,
         })
@@ -292,6 +294,7 @@ export const updateWargameTitle = (dbName, title) => {
                 gameTurn: doc.gameTurn,
                 phase: doc.phase,
                 timeWarning: doc.timeWarning,
+                adjudicationStartTime: doc.adjudicationStartTime,
                 turnEndTime: moment().add(doc.data.overview.realtimeTurnTime, 'ms').format(),
                 wargameInitiated: doc.wargameInitiated,
               })
@@ -329,6 +332,7 @@ export const saveSettings = (dbName, data) => {
             data: newDoc.data,
             gameTurn: newDoc.gameTurn,
             phase: newDoc.phase,
+            adjudicationStartTime: newDoc.adjudicationStartTime,
             turnEndTime: moment().add(newDoc.data.overview.realtimeTurnTime, 'ms').format(),
             wargameInitiated: newDoc.wargameInitiated,
           })
@@ -385,6 +389,7 @@ export const saveForce = (dbName, newName, newData, oldName) => {
             data: updatedData,
             gameTurn: res.gameTurn,
             phase: res.phase,
+            adjudicationStartTime: res.adjudicationStartTime,
             turnEndTime: moment().add(res.data.overview.realtimeTurnTime, 'ms').format(),
             wargameInitiated: res.wargameInitiated,
           })
@@ -437,6 +442,7 @@ export const saveChannel = (dbName, newName, newData, oldName) => {
             data: updatedData,
             gameTurn: res.gameTurn,
             phase: res.phase,
+            adjudicationStartTime: res.adjudicationStartTime,
             turnEndTime: moment().add(res.data.overview.realtimeTurnTime, 'ms').format(),
             wargameInitiated: res.wargameInitiated,
           })
@@ -495,6 +501,7 @@ export const duplicateChannel = (dbName, channelUniqid) => {
             data: updatedData,
             gameTurn: res.gameTurn,
             phase: res.phase,
+            adjudicationStartTime: res.adjudicationStartTime,
             turnEndTime: moment().add(res.data.overview.realtimeTurnTime, 'ms').format(),
             wargameInitiated: res.wargameInitiated,
           })
@@ -547,6 +554,7 @@ export const deleteChannel = (dbName, channelUniqid) => {
             data: updatedData,
             gameTurn: res.gameTurn,
             phase: res.phase,
+            adjudicationStartTime: res.adjudicationStartTime,
             turnEndTime: moment().add(res.data.overview.realtimeTurnTime, 'ms').format(),
             wargameInitiated: res.wargameInitiated,
           })
@@ -599,6 +607,7 @@ export const deleteForce = (dbName, forceName) => {
             data: updatedData,
             gameTurn: res.gameTurn,
             phase: res.phase,
+            adjudicationStartTime: res.adjudicationStartTime,
             turnEndTime: moment().add(res.data.overview.realtimeTurnTime, 'ms').format(),
             wargameInitiated: res.wargameInitiated,
           })
@@ -639,6 +648,7 @@ export const cleanWargame = (dbPath) => {
           data: res.data,
           gameTurn: res.gameTurn,
           phase: res.phase,
+          adjudicationStartTime: res.adjudicationStartTime,
           turnEndTime: moment().add(res.data.overview.realtimeTurnTime, 'ms').format(),
           wargameInitiated: false,
         })
@@ -684,6 +694,7 @@ export const duplicateWargame = (dbPath) => {
           data: res.data,
           gameTurn: res.gameTurn,
           phase: res.phase,
+          adjudicationStartTime: res.adjudicationStartTime,
           turnEndTime: moment().add(res.data.overview.realtimeTurnTime, 'ms').format(),
           wargameInitiated: res.wargameInitiated,
         })
@@ -784,6 +795,7 @@ export const nextGameTurn = (dbName) => {
           case PLANNING_PHASE:
             res.phase = ADJUDICATION_PHASE;
             res.turnEndTime = 0;
+            res.adjudicationStartTime = moment().format();
             break;
           case ADJUDICATION_PHASE:
             res.phase = PLANNING_PHASE;
