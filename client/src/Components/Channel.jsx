@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-
-// import MessagesListChannel from "../Views/MessagesListChannel";
 import MessageListItem from "../Components/MessageListItem";
 import NewMessage from "./NewMessage";
 import '../scss/App.scss';
@@ -12,9 +10,18 @@ import {
   markAllAsRead,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
+import {LOCAL_STORAGE_TIMEOUT, expiredStorage} from "../consts";
+
 import { umpireForceTemplate } from "../consts";
 
 class Channel extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      allMarkedRead: false,
+    };
+  }
 
   componentWillMount() {
     if (this.props.playerUi.channels[this.props.channel].messages.length === 0) {
@@ -23,15 +30,23 @@ class Channel extends Component {
   }
 
   markAllRead = () => {
+
     this.props.dispatch(markAllAsRead(this.props.channel));
+
+    this.props.playerUi.channels[this.props.channel].messages.forEach((message) => {
+      expiredStorage.setItem(`${this.props.playerUi.currentWargame}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}${message._id}`, "read", LOCAL_STORAGE_TIMEOUT);
+    });
+    this.setState({
+      allMarkedRead: true,
+    })
   };
 
-  openSection = (el) => {
-    this.props.dispatch(openMessage(this.props.channel, el));
+  openMessage = (message) => {
+    this.props.dispatch(openMessage(this.props.channel, message));
   };
 
-  closeSection = (el) => {
-    this.props.dispatch(closeMessage(this.props.channel, el));
+  closeMessage = (message) => {
+    this.props.dispatch(closeMessage(this.props.channel, message));
   };
 
   render() {
@@ -56,8 +71,10 @@ class Channel extends Component {
               <MessageListItem
                 detail={item}
                 key={`${i}-messageitem`}
-                openSection={this.openSection}
-                closeSection={this.closeSection}
+                allMarkedRead={this.state.allMarkedRead}
+                userId={`${this.props.playerUi.currentWargame}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}`}
+                open={this.openMessage}
+                close={this.closeMessage}
               />
             );
           })}

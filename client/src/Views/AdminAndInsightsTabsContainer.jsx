@@ -10,6 +10,7 @@ import '../scss/App.scss';
 import {
   showHideObjectives
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
+import _ from "lodash";
 
 var json = {
   global: {
@@ -35,7 +36,7 @@ class AdminAndInsightsTabsContainer extends Component {
     super(props);
 
     this.state = {
-      gameAdmin: 'GameAdmin',
+      gameAdmin: 'Game Admin',
       insights: 'Insights',
       model: FlexLayout.Model.fromJson(json),
       channelNames: [],
@@ -83,7 +84,7 @@ class AdminAndInsightsTabsContainer extends Component {
           model={this.state.model}
           factory={this.factory}
         />
-        <div className="role-info" style={{borderBottom: this.props.playerUi.forceColor, borderBottomWidth: "6px", borderBottomStyle: "solid"}}>
+        <div className="role-info" style={{borderBottom: this.props.playerUi.forceColor, borderBottomWidth: "6px", borderBottomStyle: "solid"}}  data-tour="second-step">
           <span className="role-type">{ this.props.playerUi.selectedRole }</span>
           <span className="force-type">{ force.name }</span>
           <img src={force.icon} alt="" onClick={this.showHideForceObjectives} />

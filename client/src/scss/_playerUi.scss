@@ -9,7 +9,7 @@
 
 .message-preview-player {
   margin-top: 0;
-  margin-bottom: 0;
+  margin-bottom: 6px;
   margin-left: 16px;
   border-left-style: solid;
   border-left-width: 4px;
@@ -95,12 +95,76 @@
   max-height: 100vh;
   overflow: hidden;
 
-  .unread {
+  .unread-1 {
     &:after {
       position: absolute;
       top: -.5em;
-      content: 'new';
-      font-size: .45em;
+      content: '(1)';
+      font-size: .65em;
+    }
+  }
+  .unread-2 {
+    &:after {
+      position: absolute;
+      top: -.5em;
+      content: '(2)';
+      font-size: .65em;
+    }
+  }
+  .unread-3 {
+    &:after {
+      position: absolute;
+      top: -.5em;
+      content: '(3)';
+      font-size: .65em;
+    }
+  }
+  .unread-4 {
+    &:after {
+      position: absolute;
+      top: -.5em;
+      content: '(4)';
+      font-size: .65em;
+    }
+  }
+  .unread-5 {
+    &:after {
+      position: absolute;
+      top: -.5em;
+      content: '(5)';
+      font-size: .65em;
+    }
+  }
+  .unread-6 {
+    &:after {
+      position: absolute;
+      top: -.5em;
+      content: '(6)';
+      font-size: .65em;
+    }
+  }
+  .unread-7 {
+    &:after {
+      position: absolute;
+      top: -.5em;
+      content: '(7)';
+      font-size: .65em;
+    }
+  }
+  .unread-8 {
+    &:after {
+      position: absolute;
+      top: -.5em;
+      content: '(8)';
+      font-size: .65em;
+    }
+  }
+  .unread-9plus {
+    &:after {
+      position: absolute;
+      top: -.5em;
+      content: '(9+)';
+      font-size: .65em;
     }
   }
 

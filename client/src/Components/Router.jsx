@@ -36,6 +36,8 @@ class Router extends Component {
     //
     if (path !== GAME_SETUP_ROUTE) {
       this.props.dispatch(setCurrentViewFromURI(path));
+    } else {
+      this.props.dispatch(setCurrentViewFromURI(ADMIN_ROUTE));
     }
 
     window.onbeforeunload = function() {
@@ -45,7 +47,7 @@ class Router extends Component {
 
     this.routes = [
       { path: BASE_ROUTE, action: () => <ChooseInterface /> },
-      { path: ADMIN_ROUTE, action: () => <GameDesignerInterface/> },
+      { path: ADMIN_ROUTE, action: () => <GameDesignerInterface /> },
       { path: MESSAGE_TEMPLATE_ROUTE, action: () => <MessageTemplates /> },
       { path: MESSAGE_LIBRARY_ROUTE, action: () => <MessageLibrary /> },
       { path: MESSAGE_CREATOR_BASE_ROUTE, children: [

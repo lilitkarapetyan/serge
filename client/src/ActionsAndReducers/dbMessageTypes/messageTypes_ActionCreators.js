@@ -41,6 +41,10 @@ export const populateMessageTypesDb = () => {
 
     await messageTypesApi.populateDb();
 
+    let messages = await messageTypesApi.getAllMessagesFromDb();
+
+    dispatch(DBSaveMessageArray(messages));
+
     dispatch(populatingDb(false));
   }
 };

@@ -15,6 +15,7 @@ import TextArea from "../../Components/Inputs/TextArea";
 import 'flatpickr/dist/themes/material_blue.css';
 import Flatpickr from "react-flatpickr";
 import moment from "moment";
+import Checkbox from "../../Components/Inputs/Checkbox";
 
 class SettingsTab extends Component {
 
@@ -90,7 +91,11 @@ class SettingsTab extends Component {
 
   updateStartDate = (value) => {
     let date = moment(value[0], moment.ISO_8601).format();
-    this.props.dispatch(setGameData({startTime: date, dirty: true}));
+    this.props.dispatch(setGameData({gameDate: date, dirty: true}));
+  };
+
+  updateShowAccessCodes = (showCodes) => {
+    this.props.dispatch(setGameData({showAccessCodes: showCodes, dirty: true}));
   };
 
   render() {
@@ -195,7 +200,7 @@ class SettingsTab extends Component {
               <label htmlFor="" className="material-label">Start time</label>
               <div className="flex-content flex-content--fill">
                 <Flatpickr
-                  value={this.props.wargame.data[this.props.wargame.currentTab].startTime}
+                  value={this.props.wargame.data[this.props.wargame.currentTab].gameDate}
                   onChange={this.updateStartDate}
                   options={{
                     enableTime: true,
@@ -204,6 +209,16 @@ class SettingsTab extends Component {
               </div>
             </Row>
 
+            <Row>
+              <div className="flex-content flex-content--fill">
+                <Checkbox
+                  id="show-access-codes"
+                  label="Show Access codes"
+                  isChecked={this.props.wargame.data[this.props.wargame.currentTab].showAccessCodes}
+                  updateStore={this.updateShowAccessCodes}
+                />
+              </div>
+            </Row>
           </div>
         </div>
       </>
@@ -212,7 +227,7 @@ class SettingsTab extends Component {
 }
 
 const mapStateToProps = ({ wargame }) => ({
-  wargame,
+  wargame
 });
 
 export default connect(mapStateToProps)(SettingsTab);

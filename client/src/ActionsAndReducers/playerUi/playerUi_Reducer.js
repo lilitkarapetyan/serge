@@ -1,7 +1,10 @@
 import ActionConstant from '../ActionConstants';
 import chat from "../../Schemas/chat.json";
 import copyState from "../../Helpers/copyStateHelper";
-import {CHAT_CHANNEL_ID} from "../../consts";
+import {
+  CHAT_CHANNEL_ID,
+  expiredStorage
+} from "../../consts";
 import _ from "lodash";
 import uniqId from "uniqid";
 
@@ -39,6 +42,7 @@ export const playerUiReducer = (state = initialState, action) => {
   let newState = copyState(state);
 
   let messages;
+  let message;
   let index;
   let channels = {};
 
@@ -51,10 +55,11 @@ export const playerUiReducer = (state = initialState, action) => {
       newState.wargameInitiated = action.payload.wargameInitiated;
       newState.currentTurn = action.payload.gameTurn;
       newState.phase = action.payload.phase;
-      newState.gameDate = action.payload.gameDate;
-      newState.gameTurnTime = action.payload.gameTurnTime;
-      newState.realtimeTurnTime = action.payload.realtimeTurnTime;
-      newState.timeWarning = action.payload.timeWarning;
+      newState.showAccessCodes = action.payload.data.overview.showAccessCodes;
+      newState.gameDate = action.payload.data.overview.gameDate;
+      newState.gameTurnTime = action.payload.data.overview.gameTurnTime;
+      newState.realtimeTurnTime = action.payload.data.overview.realtimeTurnTime;
+      newState.timeWarning = action.payload.data.overview.timeWarning;
       newState.turnEndTime = action.payload.turnEndTime;
       newState.gameDescription = action.payload.data.overview.gameDescription;
       newState.allChannels = action.payload.data.channels.channels;
@@ -105,9 +110,14 @@ export const playerUiReducer = (state = initialState, action) => {
           if (!matchedChannel) {
             delete newState.channels[channelId];
           } else {
-            let channelActive = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
-            let allRoles = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.length === 0);
-            if ((!channelActive || !allRoles) && !newState.isObserver) delete newState.channels[channelId];
+            let isParticipant = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
+            let allRolesIncluded = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.length === 0);
+            if (isParticipant || allRolesIncluded || newState.isObserver) {
+              // ok, this is a channel we wish to display
+            } else {
+              // no, we no longer need to display this channel
+              delete newState.channels[channelId];
+            }
           }
         }
 
@@ -155,8 +165,7 @@ export const playerUiReducer = (state = initialState, action) => {
           if (
             (channelActive || allRoles) &&
             !newState.channels[channel.uniqid]
-          )
-          {
+          ) {
             let participatingRole = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
             let participatingForce = channel.participants.find((p) => p.forceUniqid === newState.selectedForce);
 
@@ -170,8 +179,7 @@ export const playerUiReducer = (state = initialState, action) => {
             if (isParticipant || allRolesIncluded) {
               if (chosenTemplates.length === 0) {
                 templates = newState.allTemplates.filter((template) => template.title === "Chat");
-              }
-              else {
+              } else {
                 templates = chosenTemplates.map((template) => template.value);
               }
             }
@@ -199,13 +207,14 @@ export const playerUiReducer = (state = initialState, action) => {
 
       } else if (!action.payload.hasOwnProperty('infoType')) {
 
-        if (action.payload.details.channel === CHAT_CHANNEL_ID)
-        {
-          newState.chatChannel.messages.unshift(action.payload);
-        }
-        else if (!!newState.channels[action.payload.details.channel])
-        {
-          newState.channels[action.payload.details.channel].messages.unshift({...action.payload, hasBeenRead: false, isOpen: false});
+        if (action.payload.details.channel === CHAT_CHANNEL_ID) {
+          newState.chatChannel.messages.unshift(copyState(action.payload));
+        } else if (!!newState.channels[action.payload.details.channel]) {
+          newState.channels[action.payload.details.channel].messages.unshift({
+            ...copyState(action.payload),
+            hasBeenRead: false,
+            isOpen: false
+          });
           newState.channels[action.payload.details.channel].unreadMessageCount++;
         }
       }
@@ -224,7 +233,11 @@ export const playerUiReducer = (state = initialState, action) => {
             gameTurn: message.gameTurn,
           }
         }
-        return {...message, hasBeenRead: false, isOpen: false};
+        return {
+          ...message,
+          hasBeenRead: false,
+          isOpen: false
+        };
       });
 
       let reduceTurnMarkers = (message) => {
@@ -260,8 +273,7 @@ export const playerUiReducer = (state = initialState, action) => {
         if (isParticipant || allRolesIncluded) {
           if (chosenTemplates.length === 0) {
             templates = newState.allTemplates.filter((template) => template.title === "Chat");
-          }
-          else {
+          } else {
             templates = chosenTemplates.map((template) => template.value);
           }
         }
@@ -274,14 +286,18 @@ export const playerUiReducer = (state = initialState, action) => {
 
         if (!newState.isObserver && !isParticipant && !allRolesIncluded) return;
 
-
         if (allRolesIncluded || isParticipant || newState.isObserver) {
           channels[channel.uniqid] = {
             name: channel.name,
             templates,
             forceIcons: channel.participants.filter((participant) => participant.forceUniqid !== newState.selectedForce).map((participant) => participant.icon),
             messages: messages.filter((message) => message.details.channel === channel.uniqid || message.infoType === true),
-            unreadMessageCount: messages.filter((message) => message.details.channel === channel.uniqid).length,
+            unreadMessageCount: messages.filter((message) => {
+                return (
+                  expiredStorage.getItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${message._id}`) === null &&
+                  message.details.channel === channel.uniqid
+                )
+            }).length,
             observing,
           };
         }
@@ -296,37 +312,33 @@ export const playerUiReducer = (state = initialState, action) => {
 
       messages = newState.channels[action.payload.channel].messages;
 
-      action.payload.message.isOpen = true;
-      action.payload.message.hasBeenRead = true;
+      message = copyState(action.payload.message);
+      message.isOpen = true;
       index = messages.findIndex((item) => item._id === action.payload.message._id);
-      messages.splice(index, 1, action.payload.message);
+      messages.splice(index, 1, message);
       newState.channels[action.payload.channel].messages = messages;
 
-      let unreadMessages = newState.channels[action.payload.channel].messages.filter((message) => {
-        return !message.hasOwnProperty("infoType") && !message.hasBeenRead;
-      });
-
-      newState.channels[action.payload.channel].unreadMessageCount = unreadMessages.length;
+      newState.channels[action.payload.channel].unreadMessageCount = messages.filter((message) => {
+        return expiredStorage.getItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${message._id}`) === null
+      }).length;
 
       break;
 
     case ActionConstant.CLOSE_MESSAGE:
 
       messages = newState.channels[action.payload.channel].messages;
-      action.payload.message.isOpen = false;
+
+      message = copyState(action.payload.message);
+      message.isOpen = false;
       index = messages.findIndex((item) => item._id === action.payload.message._id);
-      messages.splice(index, 1, action.payload.message);
+      messages.splice(index, 1, message);
       newState.channels[action.payload.channel].messages = messages;
 
       break;
 
     case ActionConstant.MARK_ALL_AS_READ:
 
-      newState.channels[action.payload].messages.forEach((message) => {
-        if (message.hasOwnProperty("hasBeenRead")) message.hasBeenRead = true;
-      });
-      newState.channels[action.payload].unreadMessageCount = 0;
-
+      newState.channels[action.channel].unreadMessageCount = 0;
       break;
 
     default:

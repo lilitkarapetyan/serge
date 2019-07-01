@@ -5,6 +5,7 @@ import '../scss/App.scss';
 
 import Badge from "react-bootstrap/Badge";
 
+import {expiredStorage, LOCAL_STORAGE_TIMEOUT} from "../consts";
 import {
   faPlus,
   faMinus,
@@ -16,14 +17,63 @@ import MessagePreview from "../Components/MessagePreviewPlayerUi";
 
 class MessageListItem extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      hasBeenRead: !!expiredStorage.getItem(this.props.userId + this.props.detail._id),
+    }
+  }
+
+  componentWillUpdate(nextProps, nextState, nextContext) {
+
+    if (!this.props.allMarkedRead && nextProps.allMarkedRead) {
+      this.setState({
+        hasBeenRead: true,
+      });
+    }
+    // react reuses the component with different data when the messages array updates.
+    // perform check against component detail _id to see if it's a new message and set
+    // hasBeenRead correctly.
+    if (
+      !this.state.hasBeenRead &&
+      this.props.detail._id === nextProps.detail._id &&
+      expiredStorage.getItem(this.props.userId + nextProps.detail._id) === "read"
+    ) {
+      this.setState({
+        hasBeenRead: true,
+      })
+    }
+
+    if (
+      this.props.detail._id !== nextProps.detail._id &&
+      expiredStorage.getItem(this.props.userId + nextProps.detail._id) === "read"
+    ) {
+      this.setState({
+        hasBeenRead: true,
+      });
+      this.forceUpdate();
+    }
+    if (
+      this.props.detail._id !== nextProps.detail._id &&
+      expiredStorage.getItem(this.props.userId + nextProps.detail._id) === null
+    ) {
+      this.setState({
+        hasBeenRead: false,
+      });
+      this.forceUpdate();
+    }
+  }
+
   open = () => {
-    this.props.openSection(this.props.detail);
-    this.forceUpdate();
+    this.props.open(this.props.detail);
+    expiredStorage.setItem(this.props.userId + this.props.detail._id, "read", LOCAL_STORAGE_TIMEOUT);
+    this.setState({
+      hasBeenRead: true,
+    });
   };
 
   close = () => {
-    this.props.closeSection(this.props.detail);
-    this.forceUpdate();
+    this.props.close(this.props.detail);
   };
 
   render() {
@@ -36,7 +86,7 @@ class MessageListItem extends Component {
       itemTitle = this.props.detail.message.content;
     } else {
       // no content, just use message-type
-      itemTitle = this.props.detail.details.messageType
+      itemTitle = this.props.detail.details.messageType;
     }
 
     return (
@@ -50,7 +100,7 @@ class MessageListItem extends Component {
                 <Badge pill variant="primary">{moment(this.props.detail.details.timestamp).format("HH:mm")}</Badge>
                 <Badge pill variant="dark">{this.props.detail.details.from.force} \\ {this.props.detail.details.from.role}</Badge>
                 <Badge pill variant="secondary">{this.props.detail.details.messageType}</Badge>
-                {!this.props.detail.hasBeenRead && <Badge pill variant="warning">Unread</Badge>}
+                {!this.state.hasBeenRead && <Badge pill variant="warning">Unread</Badge>}
               </div>
             </div>
           }

@@ -7,6 +7,8 @@ import "../scss/dependencies/flexlayout-react.scss";
 import '../scss/App.scss';
 import {getAllWargameMessages} from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
+import {expiredStorage, LOCAL_STORAGE_TIMEOUT} from "../consts";
+
 var json = {
   global: {
     tabSetTabStripHeight: 45,
@@ -29,11 +31,9 @@ class ChannelTabsContainer extends Component {
   constructor(props) {
     super(props);
 
-    this.localStorage = window.localStorage;
+    let modelName = `FlexLayout-model-${this.props.playerUi.wargameTitle}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}`;
 
-    let modelName = `FlexLayout-model-${this.props.playerUi.wargameTitle}`;
-
-    let model = this.localStorage.getItem(modelName);
+    let model = expiredStorage.getItem(modelName);
 
     this.model = model ? FlexLayout.Model.fromJson(JSON.parse(model)) : FlexLayout.Model.fromJson(json);
 
@@ -129,7 +129,7 @@ class ChannelTabsContainer extends Component {
   };
 
   modelChanged = () => {
-    this.localStorage.setItem(this.state.modelName, JSON.stringify(this.model.toJson()));
+    expiredStorage.setItem(this.state.modelName, JSON.stringify(this.model.toJson()), LOCAL_STORAGE_TIMEOUT);
   };
 
   tabRender = (node) => {
@@ -138,14 +138,35 @@ class ChannelTabsContainer extends Component {
 
     let channel = Object.entries(this.props.playerUi.channels).find((entry) => entry[1].name === node.getName())[1];
 
-    if (node._attributes.className !== "unread" && channel.unreadMessageCount > 0) {
-      //   // node.getModel().doAction(FlexLayout.Actions.renameTab(node.getId(), `${node.getName()} (${channel.unreadMessageCount})`));
-      node.getModel().doAction(FlexLayout.Actions.updateNodeAttributes(node.getId(), {className: "unread"}));
-    }
-
-    if (node._attributes.className === "unread" && channel.unreadMessageCount === 0) {
-      //   // node.getModel().doAction(FlexLayout.Actions.renameTab(node.getId(), `${node.getName()} (${channel.unreadMessageCount})`));
+    if (node._attributes.className !== "" && channel.unreadMessageCount === 0) {
       node.getModel().doAction(FlexLayout.Actions.updateNodeAttributes(node.getId(), {className: ""}));
+    }
+    if (node._attributes.className !== "unread-1" && channel.unreadMessageCount === 1) {
+      node.getModel().doAction(FlexLayout.Actions.updateNodeAttributes(node.getId(), {className: "unread-1"}));
+    }
+    if (node._attributes.className !== "unread-2" && channel.unreadMessageCount === 2) {
+      node.getModel().doAction(FlexLayout.Actions.updateNodeAttributes(node.getId(), {className: "unread-2"}));
+    }
+    if (node._attributes.className !== "unread-3" && channel.unreadMessageCount === 3) {
+      node.getModel().doAction(FlexLayout.Actions.updateNodeAttributes(node.getId(), {className: "unread-3"}));
+    }
+    if (node._attributes.className !== "unread-4" && channel.unreadMessageCount === 4) {
+      node.getModel().doAction(FlexLayout.Actions.updateNodeAttributes(node.getId(), {className: "unread-4"}));
+    }
+    if (node._attributes.className !== "unread-5" && channel.unreadMessageCount === 5) {
+      node.getModel().doAction(FlexLayout.Actions.updateNodeAttributes(node.getId(), {className: "unread-5"}));
+    }
+    if (node._attributes.className !== "unread-6" && channel.unreadMessageCount === 6) {
+      node.getModel().doAction(FlexLayout.Actions.updateNodeAttributes(node.getId(), {className: "unread-6"}));
+    }
+    if (node._attributes.className !== "unread-7" && channel.unreadMessageCount === 7) {
+      node.getModel().doAction(FlexLayout.Actions.updateNodeAttributes(node.getId(), {className: "unread-7"}));
+    }
+    if (node._attributes.className !== "unread-8" && channel.unreadMessageCount === 8) {
+      node.getModel().doAction(FlexLayout.Actions.updateNodeAttributes(node.getId(), {className: "unread-8"}));
+    }
+    if (node._attributes.className !== "unread-9plus" && channel.unreadMessageCount >= 9) {
+      node.getModel().doAction(FlexLayout.Actions.updateNodeAttributes(node.getId(), {className: "unread-9plus"}));
     }
   };
 

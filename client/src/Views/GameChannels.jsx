@@ -18,12 +18,23 @@ class GameChannels extends Component {
 
   render() {
 
+    let force = this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce);
+
+    if (!force) {
+      return (
+        <div className="flex-content--center">
+          <h1>Chosen force not in game</h1>
+          <h4>Please reload and select a force</h4>
+        </div>
+      )
+    }
+
     return (
       <div className="flex-content flex-content--row-wrap">
-        <div className="message-feed">
+        <div className="message-feed" data-tour="fourth-step">
           <ChannelTabsContainer />
         </div>
-        <div className={classNames({"message-feed": true, "out-of-game-feed": true, "umpire-feed": this.props.playerUi.controlUi})}>
+        <div className={classNames({"message-feed": true, "out-of-game-feed": true, "umpire-feed": this.props.playerUi.controlUi})} data-tour="fifth-step">
           <TurnProgression />
           <AdminAndInsightsTabsContainer />
         </div>
