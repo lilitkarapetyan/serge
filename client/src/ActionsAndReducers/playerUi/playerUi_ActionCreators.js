@@ -73,6 +73,16 @@ export const startListening = (dbName) => {
   }
 };
 
+export const initiateGame = (dbName) => {
+  return async (dispatch) => {
+
+    let wargame = await wargamesApi.initiateGame(dbName);
+
+    dispatch(setCurrentWargame(wargame));
+  }
+};
+
+
 export const getWargame = (gamePath) => {
   return async (dispatch) => {
 
@@ -121,6 +131,7 @@ export const saveMessage = (dbName, details, message) => {
 
   }
 };
+
 
 export const getAllWargameFeedback = (dbName) => {
   return async (dispatch) => {

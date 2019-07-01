@@ -30,6 +30,11 @@ class NewMessage extends Component {
         selectedSchema: null,
       })
     }
+    if (nextProps.templates.length === 1) {
+      this.setState({
+        selectedSchema: nextProps.templates[0].details,
+      })
+    }
   }
 
   setTemplate = (val) => {

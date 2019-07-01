@@ -216,6 +216,56 @@ export const exportWargame = dbPath => {
   });
 };
 
+export const initiateGame = (dbName) => {
+
+  const game = wargameDbStore.find((wargame) => dbName === wargame.name);
+
+  return new Promise((resolve, reject) => {
+
+    return game.db.get(dbDefaultSettings._id)
+
+      .then((res) => {
+        return game.db.put({
+          _id: dbDefaultSettings._id,
+          _rev: res._rev,
+          name: res.name,
+          wargameTitle: res.wargameTitle,
+          data: res.data,
+          gameTurn: 0,
+          phase: ADJUDICATION_PHASE,
+          turnEndTime: moment().add(res.data.overview.realtimeTurnTime, 'ms').format(),
+          wargameInitiated: true,
+        })
+      })
+      .then(() => {
+        return game.db.get(dbDefaultSettings._id)
+      })
+      .then((res) => {
+        return game.db.put({
+          _id: new Date().toISOString(),
+          infoType: true,
+          name: res.name,
+          wargameTitle: res.wargameTitle,
+          data: res.data,
+          gameTurn: res.gameTurn,
+          phase: res.phase,
+          turnEndTime: moment().add(res.data.overview.realtimeTurnTime, 'ms').format(),
+          wargameInitiated: res.wargameInitiated,
+        })
+      })
+      .then(() => {
+        return game.db.get(dbDefaultSettings._id)
+      })
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
+      })
+  })
+};
+
 export const updateWargameTitle = (dbName, title) => {
 
   return getAllWargames()
@@ -377,10 +427,7 @@ export const saveChannel = (dbName, newName, newData, oldName) => {
         if (res.wargameInitiated) {
           let data = res;
           data.data = updatedData;
-          createLatestWargameRevision(dbName, data)
-            .then((res) => {
-              resolve(res);
-            })
+          resolve(createLatestWargameRevision(dbName, data))
         } else {
           db.put({
             _id: dbDefaultSettings._id,
@@ -732,8 +779,6 @@ export const nextGameTurn = (dbName) => {
   return new Promise((resolve, reject) => {
     getLatestWargameRevision(dbName)
       .then((res) => {
-
-        res.wargameInitiated = res.gameTurn > 0;
 
         switch (res.phase) {
           case PLANNING_PHASE:
