@@ -24,7 +24,6 @@
     "save-modules": "npm install && cd ./client && npm install && cd ../offline && node save-modules",
     "dev": "nodemon server.js",
     "heroku-postbuild": "cd ./client && npm i && npm run build",
-
     "start": "node server.js"
   },
   "repository": {
