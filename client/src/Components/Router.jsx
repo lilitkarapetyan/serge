@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 
 import UniversalRouter from "universal-router";
 
-import ChooseInterface from "../Views/ChooseInterface";
 import GameDesignerInterface from '../Views/GameDesignerInterface';
 import MessageTemplates from '../Views/MessageTemplates';
 import MessageLibrary from '../Views/MessageLibrary';
@@ -18,8 +17,7 @@ import ExportPrint from "../Views/ExportPrint";
 import PlayerUi from "../Views/PlayerUi";
 import EditWelcomeScreen from "../Views/EditWelcomeScreen";
 import {
-  ADMIN_ROUTE,
-  BASE_ROUTE, CREATE_MESSAGE_ROUTE,
+  ADMIN_ROUTE, CREATE_MESSAGE_ROUTE,
   CREATE_TEMPLATE_ROUTE, EDIT_MESSAGE_ROUTE,
   EDIT_TEMPLATE_ROUTE, EXPORT_ROUTE, EXPORT_MESSAGES_SUBROUTE, EXPORT_FORCES_SUBROUTE, EXPORT_PRINT_SUBROUTE, GAME_SETUP_ROUTE,
   MESSAGE_CREATOR_BASE_ROUTE, MESSAGE_LIBRARY_ROUTE, MESSAGE_TEMPLATE_ROUTE, PLAYERUI_ROUTE, WELCOME_SCREEN_EDIT_ROUTE
@@ -46,7 +44,6 @@ class Router extends Component {
     };
 
     this.routes = [
-      { path: BASE_ROUTE, action: () => <ChooseInterface /> },
       { path: ADMIN_ROUTE, action: () => <GameDesignerInterface /> },
       { path: MESSAGE_TEMPLATE_ROUTE, action: () => <MessageTemplates /> },
       { path: MESSAGE_LIBRARY_ROUTE, action: () => <MessageLibrary /> },
@@ -74,7 +71,7 @@ class Router extends Component {
     // let currentPath = new URL(window.location.href).pathname;
 
     this.state = {
-      currentView: <ChooseInterface />
+      currentView: null,
     };
 
     this.router = new UniversalRouter(this.routes);
