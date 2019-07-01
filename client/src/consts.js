@@ -35,6 +35,9 @@ export const EDIT_MESSAGE_ROUTE = '/edit/message';
 export const GAME_SETUP_ROUTE = '/serge/gameSetup';
 export const WELCOME_SCREEN_EDIT_ROUTE = '/serge/editWelcomeScreen';
 export const EXPORT_ROUTE = '/serge/export';
+export const EXPORT_MESSAGES_SUBROUTE = '/messages';
+export const EXPORT_FORCES_SUBROUTE = '/foeces';
+export const EXPORT_PRINT_SUBROUTE = '/print/:id';
 export const PLAYERUI_ROUTE = '/serge/player';
 
 export const expiredStorage = new ExpiredStorage();
@@ -66,8 +69,8 @@ export const forceTemplate = {
   uniqid: null,
   overview: 'An overview written here..',
   roles: [{
-    name: 'General',
-    password: `pass${uniqId.time()}`,
+    name: 'CO',
+    password: `p${uniqId.time()}`,
     control: false,
     isObserver: false,
     isInsightViewer: false,
@@ -84,7 +87,7 @@ export const umpireForceTemplate = {
   overview: 'Umpire force.',
   roles: [{
     name: 'Game Control',
-    password: `pass${uniqId.time()}`,
+    password: `p${uniqId.time()}`,
     control: true,
     isObserver: true,
     isInsightViewer: true,

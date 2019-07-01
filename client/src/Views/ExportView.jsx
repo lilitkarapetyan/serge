@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import {
+  ADMIN_ROUTE,
+  EXPORT_ROUTE,
+  EXPORT_MESSAGES_SUBROUTE,
+  EXPORT_FORCES_SUBROUTE,
+} from "../consts";
 
 import Link from "../Components/Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,8 +19,8 @@ class ExportView extends Component {
 
     this.state = {
       tabs: [
-        { title: 'Export Messages', url: '/client/export/messages', urlalt: '/client/export' },
-        { title: 'Export Forces', url: '/client/export/forces', urlalt: null }
+        { title: 'Export Messages', url: EXPORT_ROUTE + EXPORT_MESSAGES_SUBROUTE, urlalt: EXPORT_ROUTE },
+        { title: 'Export Forces', url: EXPORT_ROUTE + EXPORT_FORCES_SUBROUTE, urlalt: null }
       ]
     }
   }
@@ -22,6 +28,11 @@ class ExportView extends Component {
   checkTab = tab => (tab.url === this.props.currentViewURI || tab.urlalt === this.props.currentViewURI ? "active-tab" : '')
 
   render() {
+    if(!this.props.wargame.isLoading && !this.props.wargame.wargameInitiated) {
+      // this.props.setTab(ADMIN_ROUTE);
+    }
+
+
     return (
       <div className="view-wrapper view-wrapper-gamesetup">
         <ul className="tab-nav">
@@ -30,7 +41,7 @@ class ExportView extends Component {
           ))}
         </ul>
         <div id="sidebar">
-          <Link onClickHandler={this.notSavedNotification} href="/client/umpireMenu" id="home-btn"><FontAwesomeIcon icon={faArrowLeft} size="2x" /></Link>
+          <Link href={ADMIN_ROUTE} id="home-btn"><FontAwesomeIcon icon={faArrowLeft} size="2x" /></Link>
         </div>
         <div className="export-container">
           {this.props.children}
@@ -40,7 +51,7 @@ class ExportView extends Component {
   }
 }
 // export default ExportView;
-const mapStateToProps = ({currentViewURI}) => ({currentViewURI});
+const mapStateToProps = ({currentViewURI, wargame}) => ({currentViewURI, wargame});
 
 const mapDispatchToProps = dispatch => ({
   setTab: tab => { dispatch(setCurrentViewFromURI(tab)) }

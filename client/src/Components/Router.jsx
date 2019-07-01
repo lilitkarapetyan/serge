@@ -21,7 +21,7 @@ import {
   ADMIN_ROUTE,
   BASE_ROUTE, CREATE_MESSAGE_ROUTE,
   CREATE_TEMPLATE_ROUTE, EDIT_MESSAGE_ROUTE,
-  EDIT_TEMPLATE_ROUTE, EXPORT_ROUTE, GAME_SETUP_ROUTE,
+  EDIT_TEMPLATE_ROUTE, EXPORT_ROUTE, EXPORT_MESSAGES_SUBROUTE, EXPORT_FORCES_SUBROUTE, EXPORT_PRINT_SUBROUTE, GAME_SETUP_ROUTE,
   MESSAGE_CREATOR_BASE_ROUTE, MESSAGE_LIBRARY_ROUTE, MESSAGE_TEMPLATE_ROUTE, PLAYERUI_ROUTE, WELCOME_SCREEN_EDIT_ROUTE
 } from "../consts";
 import '../scss/App.scss';
@@ -57,12 +57,12 @@ class Router extends Component {
           { path: EDIT_MESSAGE_ROUTE, action: () => <EditMessage /> },
         ]
       },
-      { path: '/client/export', children:
+      { path: EXPORT_ROUTE, children:
         [
           { path: '', action: () => <ExportMessages /> },
-          { path: '/messages', action: () => <ExportMessages /> },
-          { path: '/forces', action: () => <ExportForces /> },
-          { path: '/print/:id', action: () => <ExportPrint /> },
+          { path: EXPORT_MESSAGES_SUBROUTE, action: () => <ExportMessages /> },
+          { path: EXPORT_FORCES_SUBROUTE, action: () => <ExportForces /> },
+          { path: EXPORT_PRINT_SUBROUTE, action: () => <ExportPrint /> },
         ]
       },
       { path: GAME_SETUP_ROUTE, action: () => <GameSetup /> },
