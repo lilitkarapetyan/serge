@@ -84,7 +84,7 @@ class AdminAndInsightsTabsContainer extends Component {
           model={this.state.model}
           factory={this.factory}
         />
-        <div className="role-info" data-tour="second-step">
+        <div className="role-info" style={{ backgroundColor: force.color, }} data-tour="second-step">
           <span className="role-type">{ this.props.playerUi.selectedRole }</span>
           <div className="contain-force-skin">
             <div className="force-skin">

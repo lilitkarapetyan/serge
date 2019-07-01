@@ -81,29 +81,33 @@ class MessageListItem extends Component {
   render() {
 
     let itemTitle;
-    const expanded = !this.state.collapsed || this.props.detail.isOpen;
-    if (this.props.detail.message.title) {
-      itemTitle = this.props.detail.message.title;
-    } else if(this.props.detail.message.content) {
+    const { detail } = this.props;
+    const { details, message, isOpen } = detail || {};
+    const { collapsed, hasBeenRead } = this.state;
+    const expanded = !collapsed || isOpen;
+    const dynamicBorderColor = `${details.from.forceColor}${hasBeenRead ? 'B3':''}`;
+    if (message.title) {
+      itemTitle = message.title;
+    } else if(message.content) {
       // yes, we have content (probably chat) use it
-      itemTitle = this.props.detail.message.content;
+      itemTitle = message.content;
     } else {
       // no content, just use message-type
-      itemTitle = this.props.detail.details.messageType;
+      itemTitle = details.messageType;
     }
 
     return (
       <React.Fragment key={this.props.key}>
         <Collapsible
           trigger={
-            <div className="message-title-wrap" style={{borderColor: this.props.detail.details.from.forceColor}}>
+            <div className="message-title-wrap" style={{borderColor: dynamicBorderColor}}>
               <FontAwesomeIcon icon={expanded ? faMinus : faPlus} size="1x" />
               <div className="message-title">{itemTitle}</div>
               <div className="info-wrap">
-                <span className="info-body">{moment(this.props.detail.details.timestamp).format("HH:mm")}</span>
-                <Badge pill variant="dark">{this.props.detail.details.from.role}</Badge>
-                <Badge pill variant="secondary">{this.props.detail.details.messageType}</Badge>
-                {!this.state.hasBeenRead && <Badge pill variant="warning">Unread</Badge>}
+                <span className="info-body">{moment(details.timestamp).format("HH:mm")}</span>
+                <Badge pill variant="dark">{details.from.role}</Badge>
+                <Badge pill variant="secondary">{details.messageType}</Badge>
+                {!hasBeenRead && <Badge pill variant="warning">Unread</Badge>}
               </div>
             </div>
           }
@@ -112,10 +116,10 @@ class MessageListItem extends Component {
           open={expanded}
           onOpening={this.open}
           onClosing={this.close}
-          className={ !this.state.hasBeenRead ? 'message-item-unread' : '' }
+          className={ !hasBeenRead ? 'message-item-unread' : '' }
         >
           <div key={`${this.props.key}-preview`} className="message-preview-player wrap"
-           style={{borderColor: this.props.detail.details.from.forceColor}}><MessagePreview detail={this.props.detail.message} from={this.props.detail.details.from} privateMessage={this.props.detail.details.privateMessage} /></div>
+           style={{borderColor: dynamicBorderColor}}><MessagePreview detail={message} from={details.from} privateMessage={details.privateMessage} /></div>
         </Collapsible>
       </React.Fragment>
     )
