@@ -45,7 +45,7 @@ class GameChannels extends Component {
               {force.overview}
             </div>
 
-            <div className="role-info">
+            <div className="role-info" style={{ backgroundColor: this.props.playerUi.forceColor, }}>
                 <span className="role-type">&nbsp;</span>
                 <div className="contain-force-skin">
                     <div className="force-skin">
