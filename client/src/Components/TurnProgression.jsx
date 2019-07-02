@@ -154,38 +154,24 @@ class TurnProgression extends Component {
           }
           <FontAwesomeIcon icon={faShoePrints} size="2x" onClick={this.openTour} data-tour="third-step" />
         </div>
-        
-        {/* <<<<<<< ui_dark
-        <div className={classNames({"flex-content-wrapper": true, "turn-progression-ui": true, "adjunction-phase": adjunctionPhase})} data-tour="sixth-step">
+
+        <div className={classNames({"flex-content-wrapper": true, "turn-progression-ui": true, "adjudication-phase": adjudicationPhase})} data-tour="sixth-step">
           <div className="turn-info-phase">
             <h5>Turn {this.props.playerUi.currentTurn} - {this.props.playerUi.phase} phase</h5>
             <time dateTime={this.props.playerUi.gameDate}>{moment(this.props.playerUi.gameDate).format("DD/MM/YYYY HH:mm")}</time>
+            {this.props.playerUi.controlUi ? <GameControls /> : false}
           </div>
           <div className="turn-info-remaining text-center">
-            <span className={classNames({"time-left": true, "ended": this.state.ended, "warning": this.state.warning})}>{this.state.minutesLeft}:{this.state.secondsLeft}</span>
-            <span className="info-helper">Time left</span>
-            {this.props.playerUi.controlUi ? <GameControls /> : false}
-            
-            we've made some changes to the turn progression UI and functionality, I think it's broken your design so i've left the code here commented for your convenience
-======= */}
-        <div className={classNames({"flex-content-wrapper": true, "turn-progression-ui": true, "adjudication-phase": adjudicationPhase})} data-tour="sixth-step">
-          <div>
-            <h5>Turn {this.props.playerUi.currentTurn}</h5>
-            <h5>{moment(this.props.playerUi.gameDate).format("DD/MM/YYYY HH:mm")}</h5>
-            {this.props.playerUi.controlUi ? <GameControls /> : false}
-          </div>
-          <div>
-            <h3 className="time-left">{this.props.playerUi.phase} phase</h3>
             {this.props.playerUi.phase === PLANNING_PHASE &&
               <>
-                <h2 className={classNames({"time-left": true, "ended": this.state.ended, "warning": this.state.warning})}>{this.state.minutesLeft}:{this.state.secondsLeft}</h2>
-                <h3 className="time-left">Left</h3>
+                <span className={classNames({"time-left": true, "ended": this.state.ended, "warning": this.state.warning})}>{this.state.minutesLeft}:{this.state.secondsLeft}</span>
+                <span className="info-helper">Time left</span>
               </>
             }
             {this.props.playerUi.phase === ADJUDICATION_PHASE &&
               <>
-                <h2 className="time-left">{this.state.minutesUp}:{this.state.secondsUp}</h2>
-                <h3 className="time-left">Elapsed</h3>
+                <span className="time-left">{this.state.minutesUp}:{this.state.secondsUp}</span>
+                <span className="info-helper">Elapsed</span>
               </>
             }
           </div>
