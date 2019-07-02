@@ -99,6 +99,7 @@ class Channel extends Component {
           {this.props.playerUi.channels[curChannel].forceIcons.map((url, i) => <img key={`indicator${i}`} className="force-indicator" src={url} alt="" />)}
           <button name="mark as read" className="btn btn-action btn-action--secondary" onClick={this.markAllRead}>Mark all read</button>
           <button name="Send 10 messages" className="btn btn-action btn-action--secondary" onClick={this.sendMultiple}>Send Multiple</button>
+          {this.props.playerUi.channels[curChannel].messages.length}
         </div>
 
         <div className="message-list">
