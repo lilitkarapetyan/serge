@@ -1,5 +1,10 @@
 @import 'dependencies/variables';
 
+@mixin panel-item-wrap($radius) {
+  border-radius: $radius;
+  background-color: $backgroundAlphaPrimary;
+}
+
 .serge-logo {
   display: block;
   margin: 0 auto;
@@ -8,12 +13,10 @@
 }
 
 .message-preview-player {
-  margin-top: 0;
-  margin-bottom: 6px;
   margin-left: 16px;
   border-left-style: solid;
   border-left-width: 4px;
-  padding-left: 30px;
+  @include panel-item-wrap(0 0 4px 0);
 
   h3 {
     font-size: 1.4em;
@@ -21,47 +24,64 @@
   }
 
   span {
-    font-size: 1.25em;
-    font-family: monospace;
-  }
-
-  .info-wrap {
-    display: flex;
-    align-items: center;
-
-    span {
-      font-size: 13px;
-      font-weight: 400;
-      margin-right: 6px;
-    }
-
-    .badge {
-      font-size: 11px;
-    }
+    font-size: 14px;
+    opacity: .8;
   }
 }
 
 .feedback-channel {
-  //padding: 20px;
   background: $lightBg;
   max-width: 15%;
 
   .message-list {
-
     padding: 20px;
   }
 }
 
+.info-wrap {
+  display: flex;
+  align-items: center;
+  padding-left: 22px;
+
+  .info-body {
+    font-size: 11px;
+    font-weight: 400;
+    margin-right: 6px;
+    display: inline-block;
+    opacity: .5;
+    line-height: 1;
+  }
+
+  .out-of-game-feed & {
+    padding-left: 0;
+    display: block;
+    overflow: hidden;
+
+    time {
+      font-size: 11px;
+      color: rgba(7, 89, 134, 0.5);
+      display: inline-block;
+      margin-right: 12px;
+      margin-top: 2px;
+      vertical-align: middle;
+    }
+  }
+}
+
 #title-editable {
-  font-family: "Segoe UI", sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 1.85em;
   font-weight: 500;
-  color: $secondaryColor;
+  color: rgba(255,255,255,.7);
   border: none;
   background: transparent;
   text-overflow: ellipsis;
   display: inline-block;
   width: 300px;
+
+  #game-setup-head & {
+    color: $adminColor;
+  }
 }
 
 .savewargame-icon {
@@ -71,18 +91,14 @@
 }
 
 .out-of-game-feed {
-  background: $lightBg;
+  background: #ffffff;
+  color: #000000;
   max-width: 25%;
 
   .flexlayout__layout {
     position: relative;
     display: flex;
     flex-grow: 2;
-  }
-
-  span {
-    font-size: .85em;
-    font-family: "Segoe UI", sans-serif;
   }
 }
 
@@ -95,88 +111,83 @@
   max-height: 100vh;
   overflow: hidden;
 
+  .unread,
+  .flexlayout__tab_button[class*="unread"]{
+    &:after {
+      content: 'new';
+      font-size: 10px;
+      display: inline-block;
+      margin-left: 5px;
+      margin-top: -5px;
+      vertical-align: middle;
+      color: rgba(255, 255, 255, 0.7);
+    }
+  }
+
   .unread-1 {
     &:after {
-      position: absolute;
-      top: -.5em;
       content: '(1)';
-      font-size: .65em;
     }
   }
   .unread-2 {
     &:after {
-      position: absolute;
-      top: -.5em;
       content: '(2)';
-      font-size: .65em;
     }
   }
   .unread-3 {
     &:after {
-      position: absolute;
-      top: -.5em;
       content: '(3)';
-      font-size: .65em;
     }
   }
   .unread-4 {
     &:after {
-      position: absolute;
-      top: -.5em;
       content: '(4)';
-      font-size: .65em;
     }
   }
   .unread-5 {
     &:after {
-      position: absolute;
-      top: -.5em;
       content: '(5)';
-      font-size: .65em;
     }
   }
   .unread-6 {
     &:after {
-      position: absolute;
-      top: -.5em;
       content: '(6)';
-      font-size: .65em;
     }
   }
   .unread-7 {
     &:after {
-      position: absolute;
-      top: -.5em;
       content: '(7)';
-      font-size: .65em;
     }
   }
   .unread-8 {
     &:after {
-      position: absolute;
-      top: -.5em;
       content: '(8)';
-      font-size: .65em;
     }
   }
   .unread-9plus {
     &:after {
-      position: absolute;
-      top: -.5em;
       content: '(9+)';
-      font-size: .65em;
     }
   }
 
   #private-message-input-label {
-    background: $greyBg;
-    font-family: 'Courier New', Courier, monospace;
+    margin-left: 0;
+    font-weight: 600;
+    text-transform: uppercase;
+    @include typo-secondary;
+
+    .svg-inline--fa {
+      display: inline-block;
+      vertical-align: middle;
+      margin-top: -5px;
+      margin-right: 10px;
+      width: 0.625em;
+    }
   }
 
   #private-message-input {
     height: 65px;
     font-family: 'Courier New', Courier, monospace;
-    background: $greyBg;
     font-style: italic;
     resize: none;
   }
@@ -196,16 +207,22 @@
   .forces-in-channel {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    padding: 0 28px 0 16px;
 
     button {
       margin-left: auto;
+      margin-right: -16px;
       font-size: 12px;
     }
 
     .force-indicator {
       width: 24px;
       height: 24px;
-      margin-left: 10px;
+
+      + .force-indicator {
+        margin-left: 10px;
+      }
     }
   }
 
@@ -222,7 +239,94 @@
 
   &.out-of-game-feed {
     .message-list {
-      max-height: calc(100vh - 400px);
+      max-height: calc(100vh - 132px);
+      padding: 16px;
+
+      .message-preview-player {
+        margin-left: 0;
+        margin-bottom: 20px;
+        display: block;
+        border-left: none;
+        width: auto;
+        box-shadow: none;
+        padding: 0 0 0 16px;
+        position: relative;
+        font-family: 'Open Sans', 'sans-serif';
+        font-size: 13px;
+        clear: both;
+
+        .data {
+          font-size: 13px;
+        }
+
+        .message-bullet {
+          display: inline-block;
+          width: 6px;
+          height: 6px;
+          background-color: $grey2;
+          position: absolute;
+          left: 0;
+          top: 10px
+        }
+
+        &.own-message {
+          background-color: #ecf2fa;
+          border-radius: 30px 30px 0 30px;
+          padding: 6px 24px 12px;
+          float: right;
+          display: inline-block;
+          width: auto;
+
+          &:after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-top: 15px solid #ecf2fa;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            margin-bottom: -15px;
+          }
+
+          time,
+          .badge {
+            float: right;
+          }
+
+          time {
+            margin-left: 12px;
+            margin-right: 0;
+          }
+        }
+      }
+    }
+
+    .new-message-creator {
+      background-image: none;
+      background-color: #ffffff;
+      border-radius: 0;
+      box-shadow: none;
+      border-top: 2px solid $borderFieldAdmin;
+      padding: 8px 16px;
+
+      .form-control-label {
+        display: none;
+      }
+
+      .btn-action {
+        width: 32px;
+        height: 32px;
+        background-image: url('dependencies/images/send.png');
+        background-color: $buttonActionAdmin;
+        background-size: 24px 24px;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 100%;
+        position: relative;
+        z-index: 5;
+      }
     }
   }
 
@@ -233,16 +337,18 @@
     flex-grow: 2;
 
     .wrap {
-      // padding: 16px;
+      padding: 2px 16px 16px 32px;
     }
 
     .turn-marker {
+      display: block;
       width: 100%;
-      border-bottom: 1px solid $grey2;
-      color: $grey2;
+      color: rgba(255, 255, 255, 0.3);
       text-align: right;
       padding-right: 10px;
-      padding-top: 18px;
+      padding-top: 4px;
+      font-size: 12px;
+      font-weight: 600;
     }
 
     .feedback-marker {
@@ -264,13 +370,6 @@
       border-bottom: 2px solid $grey2;
     }
 
-    span.detail
-    {
-      background-color: #ddd;
-      color:#000;
-      padding: 2px;
-    }
-
     span.detail-title {
       text-decoration: underline;
     }
@@ -278,23 +377,56 @@
 
   .Collapsible {
     position: relative;
-    padding-bottom: 16px;
+    color: #ffffff;
+    padding-right: 12px;
+
+    + .Collapsible {
+      margin-top: 8px;
+    }
+
+    &.message-item-unread {
+      .Collapsible__trigger {
+        .message-title-wrap{
+          background-color: $backgroundAlphaBold;
+
+          &:after {
+            background-color: $actionSecondaryColor;
+          }
+        }
+
+        .message-title {
+          font-weight: 600;
+          color: $actionSecondaryColor;
+        }
+      }
+    }
 
     &__trigger {
       display: block;
-      padding: 0;
-      font-size: 1.45em;
-      font-family: monospace;
       line-height: 1.75em;
-      font-weight: 500;
       cursor: pointer;
 
       .message-title-wrap {
         display: block;
-        padding: 0 16px;
+        padding: 6px 12px 12px;
         margin-left: 16px;
         border-left-width: 4px;
         border-left-style: solid;
+        position: relative;
+        @include panel-item-wrap(0 4px 4px 0);
+
+        &:after {
+          content: '';
+          display: block;
+          width: 6px;
+          height: 6px;
+          border-radius: 100%;
+          background-color: rgba(0, 0, 0, 0.4);
+          position: absolute;
+          right: 16px;
+          top: 50%;
+          transform: translate3d(0, -50%, 0);
+        }
       }
 
       .message-title {
@@ -303,31 +435,15 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-      }
-
-      .info-wrap {
-        display: flex;
-        align-items: center;
-
-        span {
-          font-size: 13px;
-          font-weight: 400;
-        }
-      }
-
-      .badge {
-        font-size: 55%;
-        font-weight: 200;
-        font-family: monospace;
-        height: fit-content;
-        margin-left: 10px;
-        line-height: 1.5em;
-        padding: 0 6px;
+        font-size: 14px;
+        font-weight: normal;
+        color: #ffffff;
       }
 
       svg {
-        margin-right: 10px;
-        padding: 2px;
+        margin-right: 8px;
+        padding: 4px 2px 2px;
+        color: $actionSecondaryColor;
       }
 
       img {
@@ -336,23 +452,28 @@
         height: 32px;
         border-radius: 100%;
       }
-    }
 
-    &:nth-of-type(even) {
-      background: $lightGrey;
+      &.is-open {
+        .message-title-wrap {
+          box-shadow: none;
+          border-radius: 0 4px 0 0;
+        }
+      }
     }
   }
 
   .badge {
-    font-size: 11px;
-    font-weight: 200;
-    font-family: monospace;
-    display: block;
+    font-size: 8px;
     width: fit-content;
     height: auto;
     margin-top: 2px;
-    line-height: 1.5em;
-    padding: 0 6px;
+    line-height: 1;
+    padding: 3px 8px;
+    text-transform: uppercase;
+
+    & + .badge {
+      margin-left: 4px;
+    }
   }
 
   .new-message-orderable {
@@ -365,10 +486,42 @@
     position: absolute;
     bottom: 0;
     width: 100%;
-    background: #f5f5f5;
-    padding: 0 16px 16px;
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.4);
+    padding: 1px;
+    background-image: linear-gradient(to bottom, #3fb7ac, #9dfff1 36%, rgba(2, 37, 96, 0));
 
-    @include drawerShadow();
+    .Collapsible {
+      padding: 8px 16px;
+      background: $backgroundActionHead;
+      border-radius: 4px 4px 0 0;
+
+      &__trigger {
+        font-size: 14px;
+        text-align: center;
+        text-transform: uppercase;
+        color: #ffffff;
+        line-height: 1;
+        padding: 6px 0 3px;
+        position: relative;
+        @include typo-secondary;
+
+        &:after {
+          content: '';
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+          background-image: url('dependencies/images/arrow-open.png');
+          margin-left: 4px;
+          margin-top: -6px;
+          vertical-align: middle;
+        }
+
+        &.is-open:after {
+          background-image: url('dependencies/images/arrow-close.png');
+        }
+      }
+    }
 
     .message-input {
       margin-bottom: 18px;
@@ -379,17 +532,19 @@
     }
 
     #message-creator {
-      font-family: Courier;
+      font-family: "Open Sans", sans-serif;
       font-weight: bold;
       color: $secondaryColor;
+      padding-top: 8px;
 
       h3 {
         display: none;
       }
 
       .bg-light {
-        background-color: #f5f5f5 !important;
+        background-color: transparent!important;
       }
+
       .card {
         border: none;
 
@@ -405,12 +560,10 @@
   }
 
   .data {
-    padding: 0 6px 0 2px;
     word-break: break-word;
 
     a {
-      display: inline;
-      font-weight: bold;
+      color: #ffffff;
     }
   }
 }
@@ -429,42 +582,85 @@
 
 .demo-passwords {
   position: absolute;
-  top: 10px;
+  top: 50%;
   left: 50px;
+  background: rgba(0,0,0, .5);
+  border-radius: 4px;
+  padding: 16px;
+  transform: translate3d(0, -50%, 0);
 
   li {
     cursor: pointer;
-    color: blue;
+    color: $linkColor;
     text-decoration: underline;
   }
 }
 
 .role-info {
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  justify-content: space-between;
+  display: block;
   align-items: center;
-  padding: 14px 14px 20px;
-  background: $greyBg;
+  padding: 8px 0 8px 16px;
+  position: relative;
+  background: $forceDefaultColor;
 
   .role-type {
-    font-size: 20px;
-    font-weight: 500;
+    font-size: 13px;
+    font-weight: 600;
+    font-style: italic;
+    color: $adminColor;
   }
 
-  .force-type {
-    font-size: 26px;
-    font-weight: 500;
-    margin-left: auto;
+  .contain-force-skin {
+    position: absolute;
+    border-bottom: 48px solid $forceDefaultColor;
+    border-left: 26px solid transparent;
+    margin: -8px 0 0;
+    width: 50%;
+    right: 0;
+    top: 0;
+    bottom: 0;
   }
 
-  img {
-    width: auto;
-    height: 36px;
-    margin-left: 12px;
-    cursor: pointer;
+  .force-skin {
+    position: absolute;
+    border-bottom: 48px solid $adminColor;
+    border-left: 26px solid transparent;
+    margin-left: -25px;
+    right: 0;
+    top: 1px;
+    left: 0;
+
+    .force-type {
+      position: absolute;
+      left: 0;
+      top: 26px;
+      font-size: 14px;
+      margin-left: auto;
+      text-transform: uppercase;
+      color: #ffffff;
+      width: 85%;
+      transform: translate3d(0,-50%,0);
+      display: block;
+      letter-spacing: .015em;
+      padding-left: 12px;
+      @include typo-secondary;
+    }
+
+    .role-icon {
+      position: absolute;
+      top: 26px;
+      right: 16px;
+      cursor: pointer;
+      transform: translate3d(0,-50%,0);
+    }
   }
+}
+
+.role-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 100%;
+  border: 1px solid $forceDefaultColor;
 }
 
 .force-objectives {
@@ -474,9 +670,12 @@
   width: 750px;
   height: 550px;
   padding: 14px;
-  border: 5px solid $primaryColor;
-  background: $lightBg;
+  border: 1px solid $forceDefaultColor;
+  border-right: none;
+  border-radius: 4px 0 0 0;
+  background: $adminColor;
   overflow: hidden;
+  z-index: 9;
 
   .objective-text {
     margin-top: 15px;
@@ -486,8 +685,8 @@
 
   .role-info {
     position: absolute;
-    bottom: 1px;
-    right: -5px;
-    background: $lightBg;
+    bottom: 0;
+    left: 0;
+    right: 0;
   }
 }

@@ -60,16 +60,10 @@ class GameAdmin extends Component {
         />
 
         <div className="new-message-creator wrap" data-tour="seventh-step">
-          <Collapsible
-            trigger={"New Message"}
-            transitionTime={200}
-            easing={'ease-in-out'}
-          >
-            <MessageCreatorChatChannel
+          <MessageCreatorChatChannel
               curChannel={CHAT_CHANNEL_ID}
               schema={this.props.playerUi.chatChannel.template}
-            />
-          </Collapsible>
+          />
         </div>
       </>
     );

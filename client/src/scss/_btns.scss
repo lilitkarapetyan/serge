@@ -34,52 +34,47 @@
   }
 }
 
+.btn-block {
+  display: block!important;
+  width: 100% !important;
+}
+
 .btn-secondary {
-  // override bootstrap specificity
-  margin-bottom: 0;
-  background: none;
-  border: none;
-  box-shadow: none;
-  border-radius: 2px !important;
-
-  &:hover {
-    background: $primaryTriadColorTransparent;
-  }
-
-  &:active,
-  &:focus,
-  &:visited {
-    color: $primaryTriadColor !important;
-    background: none !important;
-    border: none !important;
-    box-shadow: none !important;
-  }
+  font-size: 12px;
 
   &:disabled {
     background: none !important;
     color: #707070;
   }
 
-  span {
-    color: $primaryTriadColor;
-    font-weight: 500;
+  .view-wrapper & {
+    background-color: $secondaryColor;
+
+    &:hover {
+      background-color: $secondaryColor;
+    }
   }
 
-  i {
-    color: $primaryTriadColor;
+  .new-message-creator & {
+    span {
+      color: $primaryTriadColor;
+      font-weight: 500;
+    }
+
+    i {
+      color: $primaryTriadColor;
+    }
   }
 }
 
 #function {
   padding-left: 1.15em;
-  height: fit-content;
 }
 
 a.link,
 span.link {
-  display: block;
+  display: inline-block;
   width: fit-content;
-  height: fit-content;
   padding: 8px 14px 8px 6px;
   font-size: 16px;
   font-weight: 500;
@@ -88,7 +83,6 @@ span.link {
   border-radius: 2px;
   text-transform: uppercase;
   cursor: pointer;
-
   @include shadow();
 
   svg {
@@ -114,10 +108,27 @@ span.link {
   }
 
   &--secondary {
-    //margin-bottom: 1.15em;
     color: $primaryTriadColor;
-    background: none;
-    box-shadow: none;
+    background-color: $backgroundAlphaPrimary;
+    @include primaryShadow;
+
+    .view-wrapper &,
+    .out-of-game-feed & {
+      background-color: $secondaryColor;
+
+      &:hover {
+        background-color: $secondaryColor;
+      }
+    }
+
+    .out-of-game-feed & {
+      padding: 4px 16px;
+      font-size: 10px;
+      margin-bottom: 16px;
+      display: block;
+      box-shadow: none;
+      @include typo-secondary;
+    }
 
     &:hover {
       background: $primaryTriadColorTransparent;
@@ -135,45 +146,79 @@ span.link {
 
   &--next-turn {
     margin-top: 20px;
+    font-size: 12px;
+    height: auto;
+    @include typo-secondary;
   }
 }
 
 button {
   width: fit-content;
-  height: fit-content;
   border: none;
 }
 
 .btn-action {
-  display: block;
+  display: inline-block;
   width: fit-content;
   padding: 8px 14px;
-  //margin-left: 6px;
   font-size: 16px;
   font-weight: 500;
   border-radius: 2px;
   text-transform: uppercase;
 
   &--primary {
-    color: $lightBlue;
-    background: $primaryTriadColor;
-
-    @include shadow();
+    color: #ffffff;
+    background-color: $backgroundActionHead;
+    @include primaryShadow;
     @include transition();
 
     &:hover {
       color: $lightBlue;
+      background-color: $backgroundField;
       @include btnDown();
     }
   }
 
+  &--form {
+    display: inline-block;
+    padding: 1px 0;
+    background-image: linear-gradient(to bottom, #3fb7ac, #9dfff1 36%, rgba(2, 37, 96, 0));
+    box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.4);
+    border-radius: 6px;
+    font-size: 12px;
+    text-align: center;
+    color: #ffffff;
+    @include typo-secondary;
+
+    > span {
+      display: block;
+      border-radius: 4px;
+      border: none;
+      padding: 6px 20px;
+      background-color: $backgroundField;
+    }
+  }
+
   &--secondary {
-    color: $primaryTriadColor;
+    color: $actionSecondaryColor;
     background: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    @include typo-secondary;
 
     &:hover {
       color: $primaryTriadColor;
     }
+  }
+
+  &--complimentary {
+    font-size: 12px;
+    color: #ffffff;
+    text-transform: uppercase;
+    background-color: $backgroundCustom;
+    border-radius: 4px;
+    padding: 10px 14px;
+    @include typo-secondary;
   }
 }
 

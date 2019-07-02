@@ -1,5 +1,25 @@
 @import 'variables';
 
+@mixin splitterAlphaBg {
+    &[style*="ew-resize"] {
+        background: rgba(255,255,255,.25);
+        background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 100%);
+        background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 100%);
+        background: -o-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 100%);
+        background: -ms-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 100%);
+        background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 100%);
+    }
+
+    &[style*="ns-resize"] {
+        background: rgba(255,255,255,.25);
+        background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 100%);
+        background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 100%);
+        background: -o-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 100%);
+        background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 100%);
+        background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 100%);
+    }
+}
+
 .flexlayout__layout {
     left: 0;
     top: 0;
@@ -11,17 +31,16 @@
 }
 
 .flexlayout__splitter {
-    background-color: #ddd;
+    background-color: transparent;
 }
 
 .flexlayout__splitter:hover {
-    background-color: #ccc;
+    @include splitterAlphaBg;
 }
 
 .flexlayout__splitter_drag {
-    border-radius: 5px;
-    background-color: #bbb;
     z-index: 1000;
+    @include splitterAlphaBg;
 }
 
 .flexlayout__outline_rect {
@@ -72,10 +91,7 @@
 
 .flexlayout__tabset {
     overflow: hidden;
-    background-color: white;
     box-sizing: border-box;
-    /* border-radius: 5px; */
-    /* box-shadow: 2px 2px 4px #aaa; */
 }
 
 
@@ -83,26 +99,40 @@
     overflow: auto;
     position:absolute;
     box-sizing: border-box;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .flexlayout__tab_button {
     cursor: pointer;
-    padding: 2px 8px 3px 8px;
+    padding: 2px 16px 3px;
     margin: 2px;
     float: left;
     vertical-align: top;
     box-sizing: border-box;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    color: $linkColor;
+    @include typo-secondary;
 }
 
 .flexlayout__tab_button--selected {
-    color: $darkGrey;
-    background-color: $greyBg;
-    border-bottom: 2px solid $primaryColor;
-}
+    color: #ffffff;
+    box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.4);
+    border-style: solid;
+    border-width: 1px;
+    border-image-source: linear-gradient(to bottom, #3fb7ac, #9dfff1 36%, rgba(2, 37, 96, 0));
+    border-image-slice: 1;
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
 
-.flexlayout__tab_button--unselected {
-    color: gray;
+    .out-of-game-feed & {
+        background-color: $backgroundActionHead;
+        box-shadow: none;
+        border-image-source: none;
+        border: none;
+        border-radius: 4px 4px 0 0;
+        height: auto!important;
+    }
 }
 
 .flexlayout__tab_button_leading {
@@ -163,7 +193,6 @@
 }
 
 .flexlayout__tab_header_outer {
-    background-color: white;
     position: absolute;
     left: 0;
     right: 0;
@@ -176,21 +205,14 @@
     top: 0;
     bottom: 0;
     width: 10000px;
-    font-family: "Segoe UI", sans-serif;
     font-size: 16px;
     font-weight: 500;
     text-transform: uppercase;
     line-height: 2em;
-}
 
-.flexlayout__tabset-selected
-{
-    background: $greyBg;
-}
-
-.flexlayout__tabset-maximized
-{
-    background: $greyBg;
+    .out-of-game-feed & {
+        transform: translate3d(16px, 0, 0);
+    }
 }
 
 .flexlayout__tab_toolbar {
@@ -217,10 +239,6 @@
     border:none;
     outline-width: 0;
     background: transparent url("./images/restore.png") no-repeat center;
-}
-
-.flexlayout__popup_menu {
-
 }
 
 .flexlayout__popup_menu_item {

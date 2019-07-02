@@ -147,9 +147,27 @@ class TurnProgression extends Component {
       <>
         <div className="flex-content wargame-title">
           <h3>{this.props.playerUi.wargameTitle}</h3>
-          <FontAwesomeIcon className="lessons-modal-button" icon={faCommentAlt} size="2x" onClick={this.showLessonsModal}  data-tour="third-step" />
-          <FontAwesomeIcon icon={faShoePrints} size="2x" onClick={this.openTour}  data-tour="third-step" />
+          {
+            <span onClick={this.showLessonsModal} className="wargame-title-icon" data-tour="third-step">
+              <strong className="sr-only">Show lesson</strong>
+            </span>
+          }
+          <FontAwesomeIcon icon={faShoePrints} size="2x" onClick={this.openTour} data-tour="third-step" />
         </div>
+        
+        {/* <<<<<<< ui_dark
+        <div className={classNames({"flex-content-wrapper": true, "turn-progression-ui": true, "adjunction-phase": adjunctionPhase})} data-tour="sixth-step">
+          <div className="turn-info-phase">
+            <h5>Turn {this.props.playerUi.currentTurn} - {this.props.playerUi.phase} phase</h5>
+            <time dateTime={this.props.playerUi.gameDate}>{moment(this.props.playerUi.gameDate).format("DD/MM/YYYY HH:mm")}</time>
+          </div>
+          <div className="turn-info-remaining text-center">
+            <span className={classNames({"time-left": true, "ended": this.state.ended, "warning": this.state.warning})}>{this.state.minutesLeft}:{this.state.secondsLeft}</span>
+            <span className="info-helper">Time left</span>
+            {this.props.playerUi.controlUi ? <GameControls /> : false}
+            
+            we've made some changes to the turn progression UI and functionality, I think it's broken your design so i've left the code here commented for your convenience
+======= */}
         <div className={classNames({"flex-content-wrapper": true, "turn-progression-ui": true, "adjudication-phase": adjudicationPhase})} data-tour="sixth-step">
           <div>
             <h5>Turn {this.props.playerUi.currentTurn}</h5>

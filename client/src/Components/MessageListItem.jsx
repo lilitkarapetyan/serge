@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-
 import '../scss/App.scss';
-
 import Badge from "react-bootstrap/Badge";
-
 import {expiredStorage, LOCAL_STORAGE_TIMEOUT} from "../consts";
 import {
   faPlus,
@@ -21,6 +18,7 @@ class MessageListItem extends Component {
     super(props);
     this.state = {
       hasBeenRead: !!expiredStorage.getItem(this.props.userId + this.props.detail._id),
+      collapsed: true,
     }
   }
 
@@ -68,50 +66,60 @@ class MessageListItem extends Component {
     this.props.open(this.props.detail);
     expiredStorage.setItem(this.props.userId + this.props.detail._id, "read", LOCAL_STORAGE_TIMEOUT);
     this.setState({
+      collapsed: false,
       hasBeenRead: true,
     });
   };
 
   close = () => {
     this.props.close(this.props.detail);
+    this.setState({
+      collapsed: true,
+    });
   };
 
   render() {
 
     let itemTitle;
-    if (this.props.detail.message.title) {
-      itemTitle = this.props.detail.message.title;
-    } else if(this.props.detail.message.content) {
+    const { detail } = this.props;
+    const { details, message, isOpen } = detail || {};
+    const { collapsed, hasBeenRead } = this.state;
+    const expanded = !collapsed || isOpen;
+    const dynamicBorderColor = `${details.from.forceColor}${hasBeenRead ? 'B3':''}`;
+    if (message.title) {
+      itemTitle = message.title;
+    } else if(message.content) {
       // yes, we have content (probably chat) use it
-      itemTitle = this.props.detail.message.content;
+      itemTitle = message.content;
     } else {
       // no content, just use message-type
-      itemTitle = this.props.detail.details.messageType;
+      itemTitle = details.messageType;
     }
 
     return (
       <React.Fragment key={this.props.key}>
         <Collapsible
           trigger={
-            <div className="message-title-wrap" style={{borderColor: this.props.detail.details.from.forceColor}}>
-              <FontAwesomeIcon icon={this.props.detail.isOpen ? faMinus : faPlus} size="1x" />
+            <div className="message-title-wrap" style={{borderColor: dynamicBorderColor}}>
+              <FontAwesomeIcon icon={expanded ? faMinus : faPlus} size="1x" />
               <div className="message-title">{itemTitle}</div>
               <div className="info-wrap">
-                <Badge pill variant="primary">{moment(this.props.detail.details.timestamp).format("HH:mm")}</Badge>
-                <Badge pill variant="dark">{this.props.detail.details.from.force} \\ {this.props.detail.details.from.role}</Badge>
-                <Badge pill variant="secondary">{this.props.detail.details.messageType}</Badge>
-                {!this.state.hasBeenRead && <Badge pill variant="warning">Unread</Badge>}
+                <span className="info-body">{moment(details.timestamp).format("HH:mm")}</span>
+                <Badge pill variant="dark">{details.from.role}</Badge>
+                <Badge pill variant="secondary">{details.messageType}</Badge>
+                {!hasBeenRead && <Badge pill variant="warning">Unread</Badge>}
               </div>
             </div>
           }
           transitionTime={200}
           easing={'ease-in-out'}
-          open={this.props.detail.isOpen}
+          open={expanded}
           onOpening={this.open}
           onClosing={this.close}
+          className={ !hasBeenRead ? 'message-item-unread' : '' }
         >
           <div key={`${this.props.key}-preview`} className="message-preview-player wrap"
-           style={{borderColor: this.props.detail.details.from.forceColor}}><MessagePreview detail={this.props.detail.message} from={this.props.detail.details.from} privateMessage={this.props.detail.details.privateMessage} /></div>
+           style={{borderColor: dynamicBorderColor}}><MessagePreview detail={message} from={details.from} privateMessage={details.privateMessage} /></div>
         </Collapsible>
       </React.Fragment>
     )

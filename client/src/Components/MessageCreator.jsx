@@ -77,7 +77,7 @@ class JsonCreator extends Component {
 
   createEditor(schema) {
     this.editor = new JSONEditor(this.editorPreviewRef.current, {
-      schema: schema,
+      schema,
       theme: 'bootstrap4',
       disable_collapse: true,
       disable_edit_json: true,
@@ -88,16 +88,20 @@ class JsonCreator extends Component {
   render() {
     return (
       <>
-        <div id="message-creator" ref={this.editorPreviewRef}></div>
+        <div className="form-group" id="message-creator" ref={this.editorPreviewRef}></div>
         {
           this.props.privateMessage && (
-            <div className="flex-content">
+            <div className="flex-content form-group">
               <label htmlFor="" className="material-label" id="private-message-input-label"><FontAwesomeIcon size="2x" icon={faUserSecret}/>Private message</label>
-              <textarea id="private-message-input" className="material-input" ref={this.privateMessageRef} />
+              <textarea id="private-message-input" className="form-control" ref={this.privateMessageRef} />
             </div>
           )
         }
-        <button name="send" className="btn btn-action btn-action--primary" onClick={this.sendMessage}>Send</button>
+          <div className="form-group">
+              <button name="send" className="btn btn-action btn-action--form" onClick={this.sendMessage}>
+                  <span>Send Message</span>
+              </button>
+          </div>
       </>
     );
   }

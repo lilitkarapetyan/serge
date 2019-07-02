@@ -1,7 +1,6 @@
 @import "dependencies/variables";
 
 .wargame-title {
-  background: $lightBg;
   flex-grow: 0;
   justify-content: space-between !important;
   align-items: center;
@@ -10,7 +9,11 @@
 
   h3 {
     width: fit-content;
-    color: $primaryTriadColor;
+    color: $adminColor;
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    @include typo-primary;
   }
 
   svg {
@@ -19,49 +22,74 @@
   }
 }
 
-.turn-progression-ui {
-  background: $primaryTriadColor;
-  flex-grow: 0;
-  justify-content: space-between;
-  padding: $umpireMenuMargin;
+.wargame-title-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url('dependencies/images/chat-blue@2x.png');
+  background-size: 20px 20px;
+  background-position: center;
+}
+
+.turn-info-phase {
+  @include typo-primary;
 
   &.adjudication-phase {
     background: $grey;
   }
 
-  h3, h4, h5, h6, p, span {
-    color: $lightBlue !important;
-  }
-
   h5 {
-    font-weight: 400;
-    line-height: 1.75em;
-  }
-  h6 {
-    font-weight: 200;
-  }
-  h3, h6 {
-    text-align: center;
+    color: $actionSecondaryColor;
+    font-size: 14px;
+    font-weight: 700;
   }
 
-  //h3, h4 {
-  //  line-height: 1.5em;
-  //}
+  time {
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Open Sans', 'sans-serif';
+    display: inline-block;
+    padding-top: 8px;
+  }
+}
 
-  h2.ended {
+.turn-info-remaining {
+  .time-left {
+    font-size: 22px;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 1;
+  }
+
+  .info-helper {
+    font-size: 10px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.4);
+    display: block;
+  }
+}
+
+.turn-progression-ui {
+  background: $backgroundProgression;
+  color: #ffffff;
+  flex-grow: 0;
+  justify-content: space-between;
+  padding: $umpireMenuMargin;
+  margin: $umpireMenuMargin;
+  margin-top: 0;
+  border-radius: 4px;
+
+  &.adjunction-phase {
+    background: $grey;
+  }
+
+  .ended {
     &:before {
       content: "-";
     }
   }
 
-  .time-left {
-    color: $lightBlue;
-    font-family:monospace;
-    text-align: center;
-    line-height: 1.5em;
-  }
-
-  h2.warning {
+  .warning {
     animation: blink 1s infinite;
   }
 
