@@ -91,9 +91,9 @@ class JsonCreator extends Component {
         <div className="form-group" id="message-creator" ref={this.editorPreviewRef}></div>
         {
           this.props.privateMessage && (
-            <div className="flex-content">
+            <div className="flex-content form-group">
               <label htmlFor="" className="material-label" id="private-message-input-label"><FontAwesomeIcon size="2x" icon={faUserSecret}/>Private message</label>
-              <textarea id="private-message-input" className="material-input" ref={this.privateMessageRef} />
+              <textarea id="private-message-input" className="form-control" ref={this.privateMessageRef} />
             </div>
           )
         }
