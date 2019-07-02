@@ -307,10 +307,14 @@ export const playerUiReducer = (state = initialState, action) => {
             forceIcons: channel.participants.filter((participant) => participant.forceUniqid !== newState.selectedForce).map((participant) => participant.icon),
             messages: messages.filter((message) => message.details.channel === channel.uniqid || message.infoType === true),
             unreadMessageCount: messages.filter((message) => {
+              if (message.hasOwnProperty("infoType")) {
+                return false;
+              } else {
                 return (
                   expiredStorage.getItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${message._id}`) === null &&
                   message.details.channel === channel.uniqid
                 )
+              }
             }).length,
             observing,
           };
@@ -333,7 +337,11 @@ export const playerUiReducer = (state = initialState, action) => {
       newState.channels[action.payload.channel].messages = messages;
 
       newState.channels[action.payload.channel].unreadMessageCount = messages.filter((message) => {
-        return expiredStorage.getItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${message._id}`) === null
+        if (message.hasOwnProperty("infoType")) {
+          return false;
+        } else {
+          return expiredStorage.getItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${message._id}`) === null
+        }
       }).length;
 
       break;
