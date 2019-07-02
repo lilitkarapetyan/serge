@@ -34,6 +34,10 @@
 .turn-info-phase {
   @include typo-primary;
 
+  &.adjudication-phase {
+    background: $grey;
+  }
+
   h5 {
     color: $actionSecondaryColor;
     font-size: 14px;

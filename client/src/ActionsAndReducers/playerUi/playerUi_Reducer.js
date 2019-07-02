@@ -20,6 +20,7 @@ const initialState = {
   gameTurnTime: 0,
   realtimeTurnTime: 0,
   turnEndTime: '',
+  adjudicationStartTime: 0,
   gameDescription: '',
   currentWargame: '',
   wargameTitle: '',
@@ -59,6 +60,7 @@ export const playerUiReducer = (state = initialState, action) => {
       newState.showAccessCodes = action.payload.data.overview.showAccessCodes;
       newState.gameDate = action.payload.data.overview.gameDate;
       newState.gameTurnTime = action.payload.data.overview.gameTurnTime;
+      newState.adjudicationStartTime = action.payload.adjudicationStartTime;
       newState.realtimeTurnTime = action.payload.data.overview.realtimeTurnTime;
       newState.timeWarning = action.payload.data.overview.timeWarning;
       newState.turnEndTime = action.payload.turnEndTime;
@@ -305,10 +307,14 @@ export const playerUiReducer = (state = initialState, action) => {
             forceIcons: channel.participants.filter((participant) => participant.forceUniqid !== newState.selectedForce).map((participant) => participant.icon),
             messages: messages.filter((message) => message.details.channel === channel.uniqid || message.infoType === true),
             unreadMessageCount: messages.filter((message) => {
+              if (message.hasOwnProperty("infoType")) {
+                return false;
+              } else {
                 return (
                   expiredStorage.getItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${message._id}`) === null &&
                   message.details.channel === channel.uniqid
                 )
+              }
             }).length,
             observing,
           };
@@ -331,7 +337,11 @@ export const playerUiReducer = (state = initialState, action) => {
       newState.channels[action.payload.channel].messages = messages;
 
       newState.channels[action.payload.channel].unreadMessageCount = messages.filter((message) => {
-        return expiredStorage.getItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${message._id}`) === null
+        if (message.hasOwnProperty("infoType")) {
+          return false;
+        } else {
+          return expiredStorage.getItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${message._id}`) === null
+        }
       }).length;
 
       break;
