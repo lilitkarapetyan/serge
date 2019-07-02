@@ -44,8 +44,6 @@ export const playerUiReducer = (state = initialState, action) => {
   let newState = copyState(state);
 
   let messages;
-  let message;
-  let index;
   let channels = {};
 
   switch (action.type) {
@@ -224,11 +222,13 @@ export const playerUiReducer = (state = initialState, action) => {
         if (action.payload.details.channel === CHAT_CHANNEL_ID) {
           newState.chatChannel.messages.unshift(copyState(action.payload));
         } else if (!!newState.channels[action.payload.details.channel]) {
+
           newState.channels[action.payload.details.channel].messages.unshift({
             ...copyState(action.payload),
             hasBeenRead: false,
             isOpen: false
           });
+
           newState.channels[action.payload.details.channel].unreadMessageCount++;
         }
       }
@@ -328,15 +328,15 @@ export const playerUiReducer = (state = initialState, action) => {
 
     case ActionConstant.OPEN_MESSAGE:
 
-      messages = newState.channels[action.payload.channel].messages;
+      // mutating `messages` array - copyState at top of switch
+      for (let i=0, len = newState.channels[action.payload.channel].messages.length ; i<len ; i++) {
+        if (newState.channels[action.payload.channel].messages[i]._id === action.payload.message._id) {
+          newState.channels[action.payload.channel].messages[i].isOpen = true;
+          break;
+        }
+      }
 
-      message = copyState(action.payload.message);
-      message.isOpen = true;
-      index = messages.findIndex((item) => item._id === action.payload.message._id);
-      messages.splice(index, 1, message);
-      newState.channels[action.payload.channel].messages = messages;
-
-      newState.channels[action.payload.channel].unreadMessageCount = messages.filter((message) => {
+      newState.channels[action.payload.channel].unreadMessageCount = newState.channels[action.payload.channel].messages.filter((message) => {
         if (message.hasOwnProperty("infoType")) {
           return false;
         } else {
@@ -348,13 +348,13 @@ export const playerUiReducer = (state = initialState, action) => {
 
     case ActionConstant.CLOSE_MESSAGE:
 
-      messages = newState.channels[action.payload.channel].messages;
-
-      message = copyState(action.payload.message);
-      message.isOpen = false;
-      index = messages.findIndex((item) => item._id === action.payload.message._id);
-      messages.splice(index, 1, message);
-      newState.channels[action.payload.channel].messages = messages;
+      // mutating messages array - copyState at top of switch
+      for (let i=0, len = newState.channels[action.payload.channel].messages.length ; i<len ; i++) {
+        if (newState.channels[action.payload.channel].messages[i]._id === action.payload.message._id) {
+          newState.channels[action.payload.channel].messages[i].isOpen = false;
+          break;
+        }
+      }
 
       break;
 

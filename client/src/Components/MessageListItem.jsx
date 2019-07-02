@@ -14,61 +14,9 @@ import MessagePreview from "../Components/MessagePreviewPlayerUi";
 
 class MessageListItem extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      hasBeenRead: !!expiredStorage.getItem(this.props.userId + this.props.detail._id),
-      collapsed: true,
-    }
-  }
-
-  componentWillUpdate(nextProps, nextState, nextContext) {
-
-    if (!this.props.allMarkedRead && nextProps.allMarkedRead) {
-      this.setState({
-        hasBeenRead: true,
-      });
-    }
-    // react reuses the component with different data when the messages array updates.
-    // perform check against component detail _id to see if it's a new message and set
-    // hasBeenRead correctly.
-    if (
-      !this.state.hasBeenRead &&
-      this.props.detail._id === nextProps.detail._id &&
-      expiredStorage.getItem(this.props.userId + nextProps.detail._id) === "read"
-    ) {
-      this.setState({
-        hasBeenRead: true,
-      })
-    }
-
-    if (
-      this.props.detail._id !== nextProps.detail._id &&
-      expiredStorage.getItem(this.props.userId + nextProps.detail._id) === "read"
-    ) {
-      this.setState({
-        hasBeenRead: true,
-      });
-      this.forceUpdate();
-    }
-    if (
-      this.props.detail._id !== nextProps.detail._id &&
-      expiredStorage.getItem(this.props.userId + nextProps.detail._id) === null
-    ) {
-      this.setState({
-        hasBeenRead: false,
-      });
-      this.forceUpdate();
-    }
-  }
-
   open = () => {
-    this.props.open(this.props.detail);
     expiredStorage.setItem(this.props.userId + this.props.detail._id, "read", LOCAL_STORAGE_TIMEOUT);
-    this.setState({
-      collapsed: false,
-      hasBeenRead: true,
-    });
+    this.props.open(this.props.detail);
   };
 
   close = () => {
@@ -83,8 +31,7 @@ class MessageListItem extends Component {
     let itemTitle;
     const { detail } = this.props;
     const { details, message, isOpen } = detail || {};
-    const { collapsed, hasBeenRead } = this.state;
-    const expanded = !collapsed || isOpen;
+    // const expanded = !collapsed || isOpen;
     const dynamicBorderColor = `${details.from.forceColor}${hasBeenRead ? 'B3':''}`;
     if (message.title) {
       itemTitle = message.title;
@@ -96,12 +43,14 @@ class MessageListItem extends Component {
       itemTitle = details.messageType;
     }
 
+    let hasBeenRead = expiredStorage.getItem(this.props.userId + this.props.detail._id) === "read";
+
     return (
       <React.Fragment key={this.props.key}>
         <Collapsible
           trigger={
             <div className="message-title-wrap" style={{borderColor: dynamicBorderColor}}>
-              <FontAwesomeIcon icon={expanded ? faMinus : faPlus} size="1x" />
+              <FontAwesomeIcon icon={isOpen ? faMinus : faPlus} size="1x" />
               <div className="message-title">{itemTitle}</div>
               <div className="info-wrap">
                 <span className="info-body">{moment(details.timestamp).format("HH:mm")}</span>
@@ -113,7 +62,7 @@ class MessageListItem extends Component {
           }
           transitionTime={200}
           easing={'ease-in-out'}
-          open={expanded}
+          open={isOpen}
           onOpening={this.open}
           onClosing={this.close}
           className={ !hasBeenRead ? 'message-item-unread' : '' }
