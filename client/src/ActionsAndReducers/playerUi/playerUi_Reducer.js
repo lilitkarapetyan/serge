@@ -14,7 +14,7 @@ const initialState = {
   selectedRole: '',
   isObserver: false,
   controlUi: false,
-  currentTurn: 1,
+  currentTurn: 0,
   phase: '',
   gameDate: '',
   gameTurnTime: 0,
@@ -97,7 +97,7 @@ export const playerUiReducer = (state = initialState, action) => {
 
     case ActionConstant.SET_LATEST_WARGAME_MESSAGE:
 
-      if (action.payload.hasOwnProperty('infoType') && action.payload.phase === "planning") {
+      if (action.payload.hasOwnProperty('infoType')) {
         let message = {
           details: {
             channel: `infoTypeChannelMarker${uniqId.time()}`
@@ -113,6 +113,7 @@ export const playerUiReducer = (state = initialState, action) => {
           } else {
             let isParticipant = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
             let allRolesIncluded = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.length === 0);
+
             if (isParticipant || allRolesIncluded || newState.isObserver) {
               // ok, this is a channel we wish to display
             } else {
@@ -150,6 +151,16 @@ export const playerUiReducer = (state = initialState, action) => {
             !!newState.channels[channel.uniqid]
           ) {
             newState.channels[channel.uniqid].observing = false;
+          }
+
+          // if channel already created update templates.
+          if (
+            (channelActive || allRoles) &&
+            !!newState.channels[channel.uniqid]
+          ) {
+            let participatingForce = channel.participants.find((p) => p.forceUniqid === newState.selectedForce);
+            let chosenTemplates = participatingForce.templates;
+            newState.channels[channel.uniqid].templates = chosenTemplates.map((template) => template.value);
           }
 
           // if channel already created
@@ -342,12 +353,12 @@ export const playerUiReducer = (state = initialState, action) => {
       newState.channels[action.channel].unreadMessageCount = 0;
       break;
 
-    default:
-
     case ActionConstant.OPEN_TOUR:
 
       newState.tourIsOpen = action.isOpen;
       break;
+
+    default:
 
       return newState;
   }

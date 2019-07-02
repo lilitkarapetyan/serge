@@ -11,6 +11,7 @@ import {
   setAllTemplates,
   failedLoginFeedbackMessage,
   openTour,
+  initiateGame,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 import lineBreak from "../Helpers/splitNewLineBreak";
 import {
@@ -36,6 +37,7 @@ class PlayerUi extends Component {
       selectedWargame: '',
       wargameAccessCode: '',
       rolePassword: '',
+      tourIsOpen: false,
     };
 
 
@@ -47,7 +49,13 @@ class PlayerUi extends Component {
   componentWillReceiveProps(nextProps, nextContext) {
     if (nextProps.playerUi.selectedForce && nextProps.playerUi.selectedRole && this.state.isTourOpen === undefined) {
       this.setState({
-        isTourOpen: expiredStorage.getItem(`${nextProps.playerUi.wargameTitle}-${nextProps.playerUi.selectedForce}-${nextProps.playerUi.selectedRole}-tourDone`) !== "done",
+        tourIsOpen: expiredStorage.getItem(`${nextProps.playerUi.wargameTitle}-${nextProps.playerUi.selectedForce}-${nextProps.playerUi.selectedRole}-tourDone`) !== "done",
+      })
+    }
+
+    if (nextProps.playerUi.tourIsOpen !== this.props.playerUi.tourIsOpen) {
+      this.setState({
+        tourIsOpen: nextProps.playerUi.tourIsOpen,
       })
     }
   }
@@ -113,6 +121,10 @@ class PlayerUi extends Component {
     this.props.dispatch(openTour(false));
   };
 
+  initiateGameplay = () => {
+    this.props.dispatch(initiateGame(this.props.playerUi.currentWargame));
+  };
+
   render() {
 
     if (this.state.landingScreen) {
@@ -170,6 +182,30 @@ class PlayerUi extends Component {
       },
     ];
 
+    if (this.props.playerUi.selectedForce === umpireForceTemplate.uniqid && !this.props.playerUi.wargameInitiated) {
+      return (
+        <div className="flex-content-wrapper">
+          <div className="pre-start-screen">
+            <button name="initate game" className="btn btn-action btn-action--primary" onClick={this.initiateGameplay}>Initiate Game</button>
+          </div>
+        </div>
+      )
+    }
+
+    if (this.props.playerUi.selectedForce && this.props.playerUi.selectedRole && !this.props.playerUi.wargameInitiated) {
+      return (
+        <div className="flex-content-wrapper">
+          <div className="pre-start-screen">
+            <div id="loading">
+              <div>
+                <div id="loader"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
     if (this.props.playerUi.selectedForce && this.props.playerUi.selectedRole) {
       return (
         <>
@@ -181,7 +217,7 @@ class PlayerUi extends Component {
           {/* GUIDED TOUR */}
           <Tour
             steps={steps}
-            isOpen={this.props.playerUi.tourIsOpen}
+            isOpen={this.state.tourIsOpen}
             onRequestClose={this.closeTour}
             startAt={0}
           />
