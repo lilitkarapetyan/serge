@@ -1,5 +1,17 @@
 @import 'dependencies/variables';
 
+@mixin white-on-message-creator {
+  .new-message-creator & {
+    color: #ffffff
+  }
+}
+
+@mixin game-admin-input {
+  color: $textFieldAdmin;
+  background-color: #ffffff;
+  box-shadow: none;
+}
+
 .form-group {
   margin-bottom: 0;
 
@@ -8,45 +20,48 @@
   }
 
   .form-control-label {
-    line-height: 1;
-    color: #ffffff;
+    line-height: 1;;
     font-size: 12px;
     margin-bottom: 8px;
     text-transform: capitalize;
+    @include white-on-message-creator;
   }
 }
 
 .form-control {
   font-family: 'Open Sans', 'sans-serif';
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.8);
   border-radius: 4px;
-  border: none;
-  background-color: $backgroundField;
-  @include fieldShadow;
 
-  &:focus {
-    color: rgba(255, 255, 255, 0.8);
+  .new-message-creator & {
+    border: none;
     background-color: $backgroundField;
+    color: rgba(255, 255, 255, 0.8);
     @include fieldShadow;
-  }
 
-  &::-webkit-input-placeholder,
-  &::-moz-placeholder,
-  &:-moz-placeholder,
-  &:-ms-input-placeholder {
-    color: rgba(255, 255, 255, 0.2);
+    &:focus {
+      color: rgba(255, 255, 255, 0.8);
+      background-color: $backgroundField;
+      @include fieldShadow;
+    }
 
-    .out-of-game-feed & {
-      color: $placeholderFieldAdmin;
+    &::-webkit-input-placeholder,
+    &::-moz-placeholder,
+    &:-moz-placeholder,
+    &:-ms-input-placeholder {
+      .new-message-creator & {
+        color: rgba(255, 255, 255, 0.2);
+      }
     }
   }
 
   .out-of-game-feed & {
-    color: $textFieldAdmin;
-    background-color: #ffffff;
-    box-shadow: none;
     border-radius: 0;
     padding: 0;
+    @include game-admin-input;
+
+    &:focus {
+      @include game-admin-input;
+    }
   }
 }

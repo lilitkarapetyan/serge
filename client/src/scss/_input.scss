@@ -33,14 +33,18 @@ select {
 
 
 textarea.material-input,
-input.material-input {
+input.material-input,
+.flatpickr-input{
   display: block;
   padding: 5px;
   margin-bottom: 16px;
-  border: 2px solid $primaryColor;
   border-radius: 4px;
   min-width: 250px;
   background: $lightBg;
+
+  .new-message-creator & {
+    border: 2px solid $primaryColor;
+  }
 }
 
 label.material-label {

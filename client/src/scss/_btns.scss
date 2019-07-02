@@ -47,20 +47,22 @@
     color: #707070;
   }
 
-  span {
-    color: $primaryTriadColor;
-    font-weight: 500;
-  }
-
-  i {
-    color: $primaryTriadColor;
-  }
-
   .view-wrapper & {
     background-color: $secondaryColor;
 
     &:hover {
       background-color: $secondaryColor;
+    }
+  }
+
+  .new-message-creator & {
+    span {
+      color: $primaryTriadColor;
+      font-weight: 500;
+    }
+
+    i {
+      color: $primaryTriadColor;
     }
   }
 }
