@@ -122,51 +122,51 @@
       vertical-align: middle;
       color: rgba(255, 255, 255, 0.7);
     }
-  }
 
-  .unread-1 {
-    &:after {
-      content: '(1)'!important;
+    &.unread-1 {
+      &:after {
+        content: '(1)';
+      }
     }
-  }
-  .unread-2 {
-    &:after {
-      content: '(2)'!important;
+    &.unread-2 {
+      &:after {
+        content: '(2)';
+      }
     }
-  }
-  .unread-3 {
-    &:after {
-      content: '(3)'!important;
+    &.unread-3 {
+      &:after {
+        content: '(3)';
+      }
     }
-  }
-  .unread-4 {
-    &:after {
-      content: '(4)'!important;
+    &.unread-4 {
+      &:after {
+        content: '(4)';
+      }
     }
-  }
-  .unread-5 {
-    &:after {
-      content: '(5)'!important;
+    &.unread-5 {
+      &:after {
+        content: '(5)';
+      }
     }
-  }
-  .unread-6 {
-    &:after {
-      content: '(6)'!important;
+    &.unread-6 {
+      &:after {
+        content: '(6)';
+      }
     }
-  }
-  .unread-7 {
-    &:after {
-      content: '(7)'!important;
+    &.unread-7 {
+      &:after {
+        content: '(7)';
+      }
     }
-  }
-  .unread-8 {
-    &:after {
-      content: '(8)'!important;
+    &.unread-8 {
+      &:after {
+        content: '(8)';
+      }
     }
-  }
-  .unread-9plus {
-    &:after {
-      content: '(9+)'!important;
+    &.unread-9plus {
+      &:after {
+        content: '(9+)';
+      }
     }
   }
 
