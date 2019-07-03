@@ -21,23 +21,17 @@ class TurnProgression extends Component {
 
     let seconds = end - now;
 
+    this.state = {
+      minutesLeft: ('0' + Math.floor(seconds / 60)).slice(-2),
+      secondsLeft: ('0' + Math.floor(seconds % 60)).slice(-2),
+      ended: false,
+      startTime: Math.round(new Date(this.props.playerUi.adjudicationStartTime).getTime()/1000),
+    };
+
     if (this.props.playerUi.phase === PLANNING_PHASE) {
-      this.state = {
-        minutesLeft: ('0' + Math.floor(seconds / 60)).slice(-2),
-        secondsLeft: ('0' + Math.floor(seconds % 60)).slice(-2),
-        ended: false,
-      };
       this.interval = setInterval(this.timer, 1000);
     }
-
-    if (this.props.playerUi.phase === ADJUDICATION_PHASE) {
-      this.state = {
-        minutesLeft: '00',
-        secondsLeft: '00',
-        ended: false,
-        startTime: Math.round(new Date(this.props.playerUi.adjudicationStartTime).getTime()/1000),
-      };
-
+    else if (this.props.playerUi.phase === ADJUDICATION_PHASE) {
       this.interval = setInterval(this.countup, 1000);
     }
 
