@@ -226,3 +226,11 @@ button {
   color: $grey2;
   cursor: not-allowed !important;
 }
+
+
+.btn-helper {
+  display: inline-block;
+  margin-left: 5px;
+  font-size: 12px;
+  font-weight: 600;
+}

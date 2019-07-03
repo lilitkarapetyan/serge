@@ -75,7 +75,7 @@ export const forceTemplate = {
     isInsightViewer: false,
   }],
   icon: serverPath+'default_img/forceDefault.png',
-  color: '#0000ff',
+  color: '#3dd0ff',
   umpire: false,
   dirty: false,
 };

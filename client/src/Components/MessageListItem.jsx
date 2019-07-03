@@ -32,6 +32,7 @@ class MessageListItem extends Component {
     const { detail } = this.props;
     const { details, message, isOpen } = detail || {};
     // const expanded = !collapsed || isOpen;
+    const hasBeenRead = expiredStorage.getItem(this.props.userId + this.props.detail._id) === "read";
     const dynamicBorderColor = `${details.from.forceColor}${hasBeenRead ? 'B3':''}`;
     if (message.title) {
       itemTitle = message.title;
@@ -42,8 +43,6 @@ class MessageListItem extends Component {
       // no content, just use message-type
       itemTitle = details.messageType;
     }
-
-    let hasBeenRead = expiredStorage.getItem(this.props.userId + this.props.detail._id) === "read";
 
     return (
       <React.Fragment key={this.props.key}>
