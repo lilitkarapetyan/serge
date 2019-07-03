@@ -8,8 +8,11 @@ import machineryFailure from '../Schemas/machinery_failure.json';
 import weatherForecast from '../Schemas/weather_forecase.json';
 import chat from '../Schemas/chat.json';
 import message from '../Schemas/message.json';
+import rfi from '../Schemas/rfi.json';
+import rfs from '../Schemas/rfs.json';
 import link from '../Schemas/link.json';
 import dailyIntentions from '../Schemas/DailyIntentions.json';
+import pg19WeeklyOrders from '../Schemas/PG19_WeeklyOrders.json';
 import stateofworld from '../Schemas/StateOfWorld.json';
 
 var db = new PouchDB(databasePath+MSG_TYPE_STORE);
@@ -53,6 +56,24 @@ export const populateDb = () => {
         };
         promises.push(db.put(messageInput));
 
+        var rfiInput = {
+          _id: uniqid.time(),
+          lastUpdated: new Date().toISOString(),
+          title: 'Request for Information',
+          details: rfi,
+          completed: false
+        };
+        promises.push(db.put(rfiInput));
+
+        var rfsInput = {
+          _id: uniqid.time(),
+          lastUpdated: new Date().toISOString(),
+          title: 'Request for Support',
+          details: rfs,
+          completed: false
+        };
+        promises.push(db.put(rfsInput));
+
         var chatInput = {
           _id: uniqid.time(),
           lastUpdated: new Date().toISOString(),
@@ -82,6 +103,16 @@ export const populateDb = () => {
         };
 
         promises.push(db.put(dailyInput));
+
+        var pg19WeeklyInput = {
+          _id: uniqid.time(),
+          lastUpdated: new Date().toISOString(),
+          title: 'PG19 Weekly Orders',
+          details: pg19WeeklyOrders,
+          completed: false
+        };
+
+        promises.push(db.put(pg19WeeklyInput));
 
         var sowInput = {
           _id: uniqid.time(),
