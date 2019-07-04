@@ -115,12 +115,12 @@
   .flexlayout__tab_button[class*="unread"]{
     &:after {
       content: 'new';
-      font-size: 10px;
+      font-size: 14px;
       display: inline-block;
       margin-left: 5px;
       margin-top: -5px;
       vertical-align: middle;
-      color: rgba(255, 255, 255, 0.7);
+      color: #ff4141;
     }
 
     &.unread-1 {
