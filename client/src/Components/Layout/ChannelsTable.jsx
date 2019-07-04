@@ -109,6 +109,16 @@ class ChannelsTable extends Component {
       } else {
         value = data[prop];
       }
+
+      if (!value && prop === "roles") {
+        row.push(<td key={`allRoles${key}`} className="all-roles">All roles</td>);
+        continue;
+      }
+      if (!value && prop === "templates") {
+        row.push(<td key={`templates${key}`} className="templates">Chat if empty</td>);
+        continue;
+      }
+
       row.push(<td key={`${value}${key}`}>{value}</td>)
     }
     row.push(
