@@ -14,6 +14,10 @@ import MessagePreview from "../Components/MessagePreviewPlayerUi";
 
 class MessageListItem extends Component {
 
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    return this.props.detail._id !== nextProps.detail._id || this.props.detail.isOpen !== nextProps.detail.isOpen;
+  }
+
   open = () => {
     expiredStorage.setItem(this.props.userId + this.props.detail._id, "read", LOCAL_STORAGE_TIMEOUT);
     this.props.open(this.props.detail);

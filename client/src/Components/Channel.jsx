@@ -110,12 +110,12 @@ class Channel extends Component {
           {this.props.playerUi.channels[curChannel].messages.map((item, i) => {
 
             if (item.infoType) {
-              return <p className="turn-marker" key={`${i}-turnmarker`}>Turn {item.gameTurn}</p>
+              return <p className="turn-marker" key={`${item.gameTurn}-turnmarker`}>Turn {item.gameTurn}</p>
             }
             return (
               <MessageListItem
                 detail={item}
-                key={`${i}-messageitem`}
+                key={`${item._id}-messageitem`}
                 allMarkedRead={this.state.allMarkedRead}
                 userId={`${this.props.playerUi.currentWargame}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}`}
                 open={this.openMessage}
