@@ -49,9 +49,9 @@ const listenNewMessage = ({db, name, dispatch}) => {
       })();
     })
     .on('error', function (err) {
-      if (err) {
-        dispatch(addNotification("Serge disconnected.", "error"));
-      }
+      // if (err) {
+        // dispatch(addNotification("Serge disconnected.", "error"));
+      // }
       listenNewMessage({db, name, dispatch});
     });
 };
