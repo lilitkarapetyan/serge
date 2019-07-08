@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import '../scss/App.scss';
 import Badge from "react-bootstrap/Badge";
-import {expiredStorage, LOCAL_STORAGE_TIMEOUT} from "../consts";
 import {
   faPlus,
   faMinus,
@@ -15,11 +14,15 @@ import MessagePreview from "../Components/MessagePreviewPlayerUi";
 class MessageListItem extends Component {
 
   shouldComponentUpdate(nextProps, nextState, nextContext) {
-    return this.props.detail._id !== nextProps.detail._id || this.props.detail.isOpen !== nextProps.detail.isOpen;
+    return (
+      this.props.detail._id !== nextProps.detail._id ||
+      this.props.detail.isOpen !== nextProps.detail.isOpen ||
+      this.props.detail.hasBeenRead !== nextProps.detail.hasBeenRead // used in mark all read button only
+    );
   }
 
   open = () => {
-    expiredStorage.setItem(this.props.userId + this.props.detail._id, "read", LOCAL_STORAGE_TIMEOUT);
+    // expiredStorage.setItem(this.props.userId + this.props.detail._id, "read", LOCAL_STORAGE_TIMEOUT);
     this.props.open(this.props.detail);
   };
 
@@ -34,9 +37,9 @@ class MessageListItem extends Component {
 
     let itemTitle;
     const { detail } = this.props;
-    const { details, message, isOpen } = detail || {};
+    const { details, message, isOpen, hasBeenRead } = detail || {};
     // const expanded = !collapsed || isOpen;
-    const hasBeenRead = expiredStorage.getItem(this.props.userId + this.props.detail._id) === "read";
+    // const hasBeenRead = expiredStorage.getItem(this.props.userId + this.props.detail._id) === "read";
     const dynamicBorderColor = `${details.from.forceColor}${hasBeenRead ? 'B3':''}`;
     if (message.title) {
       itemTitle = message.title;

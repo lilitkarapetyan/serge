@@ -30,9 +30,6 @@ class Channel extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      allMarkedRead: false,
-    };
   }
 
   componentWillMount() {
@@ -42,15 +39,7 @@ class Channel extends Component {
   }
 
   markAllRead = () => {
-
     this.props.dispatch(markAllAsRead(this.props.channel));
-
-    this.props.playerUi.channels[this.props.channel].messages.forEach((message) => {
-      expiredStorage.setItem(`${this.props.playerUi.currentWargame}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}${message._id}`, "read", LOCAL_STORAGE_TIMEOUT);
-    });
-    this.setState({
-      allMarkedRead: true,
-    })
   };
 
   openMessage = (message) => {
@@ -62,7 +51,7 @@ class Channel extends Component {
   };
 
   // sendMultiple = () => {
-
+  //
   //   let count = 0;
   //   const tenMessages = setInterval(() => {
   //     count++;
@@ -77,15 +66,15 @@ class Channel extends Component {
   //       messageType: "Volume test",
   //       timestamp: new Date().toISOString(),
   //     };
-
+  //
   //     let message = {
   //       content: lorem.generateSentences(Math.floor(Math.random()*10))
   //     };
-
+  //
   //     this.props.dispatch(saveMessage(this.props.playerUi.currentWargame, details, message));
-
+  //
   //     if (count === 100) clearInterval(tenMessages);
-
+  //
   //   }, 100);
   // };
 
@@ -116,7 +105,6 @@ class Channel extends Component {
               <MessageListItem
                 detail={item}
                 key={`${item._id}-messageitem`}
-                allMarkedRead={this.state.allMarkedRead}
                 userId={`${this.props.playerUi.currentWargame}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}`}
                 open={this.openMessage}
                 close={this.closeMessage}

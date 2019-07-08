@@ -3,7 +3,8 @@ import chat from "../../Schemas/chat.json";
 import copyState from "../../Helpers/copyStateHelper";
 import {
   CHAT_CHANNEL_ID,
-  expiredStorage
+  expiredStorage,
+  LOCAL_STORAGE_TIMEOUT
 } from "../../consts";
 import _ from "lodash";
 import uniqId from "uniqid";
@@ -249,7 +250,7 @@ export const playerUiReducer = (state = initialState, action) => {
         }
         return {
           ...message,
-          hasBeenRead: false,
+          hasBeenRead: expiredStorage.getItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${message._id}`) === "read",
           isOpen: false
         };
       });
@@ -332,6 +333,8 @@ export const playerUiReducer = (state = initialState, action) => {
       for (let i=0, len = newState.channels[action.payload.channel].messages.length ; i<len ; i++) {
         if (newState.channels[action.payload.channel].messages[i]._id === action.payload.message._id) {
           newState.channels[action.payload.channel].messages[i].isOpen = true;
+          newState.channels[action.payload.channel].messages[i].hasBeenRead = true;
+          expiredStorage.setItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${action.payload.message._id}`, "read", LOCAL_STORAGE_TIMEOUT);
           break;
         }
       }
@@ -361,6 +364,12 @@ export const playerUiReducer = (state = initialState, action) => {
     case ActionConstant.MARK_ALL_AS_READ:
 
       newState.channels[action.channel].unreadMessageCount = 0;
+
+      newState.channels[action.channel].messages.forEach((message) => {
+        message.hasBeenRead = true;
+        expiredStorage.setItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${message._id}`, "read", LOCAL_STORAGE_TIMEOUT);
+      });
+
       break;
 
     case ActionConstant.OPEN_TOUR:
