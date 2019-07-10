@@ -57,7 +57,8 @@ class TabsSearchList extends Component {
                 <span
                   key={item.uniqid}
                   className={classNames({"list-title": true, active})}
-                  onMouseOver={that.displayControls.bind(that, item.uniqid)} onMouseLeave={that.hideControls}
+                  onMouseOver={that.displayControls.bind(that, item.uniqid)}
+                  onMouseLeave={that.hideControls}
                   onClick={that.setSelected.bind(that, item)}>
                   {item.name}
                   {that.state.activeTitle === item.uniqid &&

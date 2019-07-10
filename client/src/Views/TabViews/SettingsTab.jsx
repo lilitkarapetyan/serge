@@ -139,6 +139,7 @@ class SettingsTab extends Component {
               <div className="flex-content flex-content--sml">
                 <TextInputMasked
                   mask="11 11 11 11"
+                  name="wargame turn time"
                   placeholder="DD HH MM SS"
                   className="material-input"
                   label="Wargame turn time (DD HH MM SS)"
@@ -152,6 +153,7 @@ class SettingsTab extends Component {
               <div className="flex-content flex-content--sml">
                 <TextInputMasked
                   mask="11 11 11 11"
+                  name="real time planning allowance"
                   placeholder="DD HH MM SS"
                   className="material-input"
                   label="Real time planning allowance (DD HH MM SS)"
@@ -172,6 +174,7 @@ class SettingsTab extends Component {
                 {/*/>*/}
                 <TextInputMasked
                   mask="11 11 11"
+                  name="time warning"
                   placeholder="HH MM SS"
                   className="material-input"
                   label="Time warning at (HH MM SS) remaining"
@@ -200,6 +203,7 @@ class SettingsTab extends Component {
               <label htmlFor="" className="material-label">Start time</label>
               <div className="flex-content flex-content--fill">
                 <Flatpickr
+                  name="start time"
                   value={this.props.wargame.data[this.props.wargame.currentTab].gameDate}
                   onChange={this.updateStartDate}
                   options={{

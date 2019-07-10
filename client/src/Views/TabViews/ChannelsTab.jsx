@@ -176,6 +176,7 @@ class ForcesTab extends Component {
           <div className="flex-content--fill channelsTab">
             <div className="flex-content--row">
               <TextInput
+                name="channel-name"
                 id="editable-title"
                 updateStore={this.updateChannelName}
                 options={{numInput: false}}
