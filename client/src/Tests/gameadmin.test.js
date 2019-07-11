@@ -67,7 +67,6 @@ describe('Login to admin and create game', () => {
   test('Should be no wargames', async () => {
 
     await page.goto('localhost:8080/serge/admin');
-    
     let wargameTitles = await page.evaluate(() => [...document.querySelectorAll('.searchlist-title')].map((title) => title.innerText));
     expect(wargameTitles).toHaveLength(0);
 
@@ -606,9 +605,8 @@ describe('Channels tab', () => {
     let inputs = await page.$$('.css-10nd86i');
     await inputs[0].click();
 
-    // react select options
-    let options = await page.$$('.css-wqgs6e');
-    await options[0].click();
+    await page.evaluate(() => [...document.querySelectorAll('.css-11unzgr div')].find((option) => option.innerText === 'White').click());
+
 
     await page.click('svg[data-icon="check"]');
 
@@ -628,26 +626,21 @@ describe('Channels tab', () => {
 
     // react select inputs
     let inputs = await page.$$('.css-10nd86i');
-    let options;
 
     //css-wqgs6e highlighted item (if first item)
     // css-v73v8k items that aren't highlighted.
 
     await inputs[0].click();
-
-    // react select options
-    options = await page.$$('.css-wqgs6e');
-    await options[0].click();
+    await page.evaluate(() => [...document.querySelectorAll('.css-11unzgr div')].find((option) => option.innerText === 'White').click());
 
     // roles select
     await inputs[1].click();
-    options = await page.$$('.css-wqgs6e');
-    await options[0].click();
+    await page.evaluate(() => [...document.querySelectorAll('.css-11unzgr div')].find((option) => option.innerText === 'Game Control').click());
 
     // templates select
     await inputs[2].click();
-    options = await page.$$('.css-v73v8k');
-    await options[1].click();
+    await page.evaluate(() => [...document.querySelectorAll('.css-11unzgr div')].find((option) => option.innerText === 'Daily intentions').click());
+
 
     await page.click('svg[data-icon="check"]');
 
@@ -787,22 +780,17 @@ describe('Channels tab', () => {
 
     // react select inputs
     let inputs = await page.$$('.css-10nd86i');
-    let options;
-
-    //css-wqgs6e highlighted item (if first item)
-    // css-v73v8k items that aren't highlighted.
 
     await inputs[0].click();
     // react select options
-    options = await page.$$('.css-wqgs6e');
-    await options[0].click();
+    await page.evaluate(() => [...document.querySelectorAll('.css-11unzgr div')].find((option) => option.innerText === 'White').click());
 
     await page.click('svg[data-icon="check"]');
 
     await inputs[0].click();
     // react select options
-    options = await page.$$('.css-v73v8k');
-    await options[0].click();
+    await page.evaluate(() => [...document.querySelectorAll('.css-11unzgr div')].find((option) => option.innerText === 'Red force').click());
+
 
     await page.click('svg[data-icon="check"]');
 
@@ -821,16 +809,16 @@ describe('Channels tab', () => {
 });
 
 
-afterAll(async () => {
-
-  // Delete wargame after testing
-  await page.click('#home-btn');
-  await page.hover('.searchlist-title');
-  await page.click('.wargame-option-menu-btn');
-
-  await page.evaluate(() => {
-    [...document.querySelectorAll('.wargame-option-menu span')][3].click();
-  });
-
-  await page.click('button[name="delete"]');
-});
+// afterAll(async () => {
+//
+//   // Delete wargame after testing
+//   await page.click('#home-btn');
+//   await page.hover('.searchlist-title');
+//   await page.click('.wargame-option-menu-btn');
+//
+//   await page.evaluate(() => {
+//     [...document.querySelectorAll('.wargame-option-menu span')][3].click();
+//   });
+//
+//   await page.click('button[name="delete"]');
+// });
