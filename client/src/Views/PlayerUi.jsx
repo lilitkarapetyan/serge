@@ -182,11 +182,11 @@ class PlayerUi extends Component {
       },
     ];
 
-    if (this.props.playerUi.selectedForce === umpireForceTemplate.uniqid && !this.props.playerUi.wargameInitiated) {
+    if (this.props.playerUi.selectedForce === umpireForceTemplate.uniqid && this.props.playerUi.controlUi && !this.props.playerUi.wargameInitiated) {
       return (
         <div className="flex-content-wrapper">
           <div className="pre-start-screen">
-            <button name="initate game" className="btn btn-action btn-action--primary" onClick={this.initiateGameplay}>Initiate Game</button>
+            <button name="initiate game" className="btn btn-action btn-action--primary" onClick={this.initiateGameplay}>Initiate Game</button>
           </div>
         </div>
       )
