@@ -18,12 +18,23 @@ class GameChannels extends Component {
 
   render() {
 
+    let force = this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce);
+
+    if (!force) {
+      return (
+        <div className="flex-content--center">
+          <h1>Chosen force not in game</h1>
+          <h4>Please reload and select a force</h4>
+        </div>
+      )
+    }
+
     return (
       <div className="flex-content flex-content--row-wrap">
-        <div className="message-feed">
+        <div className="message-feed" data-tour="fourth-step">
           <ChannelTabsContainer />
         </div>
-        <div className={classNames({"message-feed": true, "out-of-game-feed": true, "umpire-feed": this.props.playerUi.controlUi})}>
+        <div className={classNames({"message-feed": true, "out-of-game-feed": true, "umpire-feed": this.props.playerUi.controlUi})} data-tour="fifth-step">
           <TurnProgression />
           <AdminAndInsightsTabsContainer />
         </div>
@@ -31,12 +42,17 @@ class GameChannels extends Component {
           <div className="force-objectives" style={{borderColor: this.props.playerUi.forceColor}}>
             <h3>Objectives</h3>
             <div className="objective-text">
-              {this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).overview}
+              {force.overview}
             </div>
 
-            <div className="role-info">
-              <span className="force-type">{ this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).name }</span>
-              <img src={this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).icon} alt="" onClick={this.showHideForceObjectives} />
+            <div className="role-info" style={{ backgroundColor: this.props.playerUi.forceColor, }}>
+                <span className="role-type">&nbsp;</span>
+                <div className="contain-force-skin">
+                    <div className="force-skin">
+                        <span className="force-type">{ force.name }</span>
+                        <img className="role-icon" src={force.icon} alt="" onClick={this.showHideForceObjectives} />
+                    </div>
+                </div>
             </div>
           </div>
         }

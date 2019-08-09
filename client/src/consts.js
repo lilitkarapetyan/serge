@@ -1,4 +1,6 @@
 import uniqId from "uniqid";
+import moment from "moment";
+import ExpiredStorage from "expired-storage";
 
 export const serverPath = process.env.REACT_APP_SERVER_PATH;
 // export const serverPath = 'http://localhost:8080/';
@@ -10,16 +12,37 @@ REACT_APP_SERVER_PATH='http://localhost:8080/'
 
 export const databasePath = `${serverPath}db/`;
 
+export const DEFAULT_SERVER = "Nelson";
+export const DEFAULT_PORT = "8080";
+
 export const MSG_STORE = "messages";
 export const MSG_TYPE_STORE = "message_types";
+export const SERGE_INFO = "serge_info";
 export const CHAT_CHANNEL_ID = "game-admin";
-export const POLL_TIMEOUT = 250;
 
 export const PLANNING_PHASE = 'planning';
 export const ADJUDICATION_PHASE = 'adjudication';
 
+export const ADMIN_ROUTE = '/serge/admin';
+export const MESSAGE_TEMPLATE_ROUTE = '/serge/messageTemplates';
+export const MESSAGE_LIBRARY_ROUTE = '/serge/messageLibrary';
+export const MESSAGE_CREATOR_BASE_ROUTE = '/serge/messageCreator';
+export const CREATE_TEMPLATE_ROUTE = '/create/template';
+export const EDIT_TEMPLATE_ROUTE = '/edit/template';
+export const CREATE_MESSAGE_ROUTE = '/create/message';
+export const EDIT_MESSAGE_ROUTE = '/edit/message';
+export const GAME_SETUP_ROUTE = '/serge/gameSetup';
+export const WELCOME_SCREEN_EDIT_ROUTE = '/serge/editWelcomeScreen';
+export const EXPORT_ROUTE = '/serge/export';
+export const EXPORT_MESSAGES_SUBROUTE = '/messages';
+export const EXPORT_FORCES_SUBROUTE = '/foeces';
+export const EXPORT_PRINT_SUBROUTE = '/print/:id';
+export const PLAYERUI_ROUTE = '/serge/player';
+
+export const expiredStorage = new ExpiredStorage();
+export const LOCAL_STORAGE_TIMEOUT = 2592000; // one month
+
 export const MAX_LISTENERS = 82;
-export const LONG_POLLING = true;
 
 export const headers = {
   'Content-Type': 'application/json',
@@ -28,18 +51,31 @@ export const headers = {
   'Access-Control-Allow-Headers': 'Authorization, Lang'
 };
 
+export const defaultGameInfo = {
+  imageUrl: '/default_img/sergeDefault.png',
+  title: "Serge",
+  description: `Welcome you have arrived at the development centre gaming facility.\n
+  You will use this web-based application to interact with players from other forces, together with the umpires in the White Cell.\n
+  At any point during your time here you can submit insights via the Insights button at the top-right of the gaming page.
+  These insights could relate to the current doctrine being explored, the performance of your force, or how the game is being organised / facilitated.\n
+  Thanks in advance for your participation.\n
+  Maj Duncan Dare, PO1 Gaming`,
+  showAccessCodes: false,
+};
+
 export const forceTemplate = {
   name: '',
   uniqid: null,
   overview: 'An overview written here..',
   roles: [{
-    name: 'General',
-    password: `pass${uniqId.time()}`,
+    name: 'CO',
+    password: `p${uniqId.time()}`,
     control: false,
     isObserver: false,
+    isInsightViewer: false,
   }],
   icon: serverPath+'default_img/forceDefault.png',
-  color: '#0000ff',
+  color: '#3dd0ff',
   umpire: false,
   dirty: false,
 };
@@ -50,17 +86,16 @@ export const umpireForceTemplate = {
   overview: 'Umpire force.',
   roles: [{
     name: 'Game Control',
-    password: `pass${uniqId.time()}`,
+    password: `p${uniqId.time()}`,
     control: true,
     isObserver: true,
+    isInsightViewer: true,
   }],
   icon: serverPath+'default_img/umpireDefault.png',
-  color: '#FFFFFF',
+  color: '#FCFBEE',
   umpire: true,
   dirty: false,
 };
-
-// export const channelTemplate = [];
 
 export const channelTemplate = {
   name: '',
@@ -80,12 +115,10 @@ export const dbDefaultSettings = {
       realtimeTurnTime: 300000,
       timeWarning: 60000,
       // turnStrategy: '',
-      startTime: new Date().toISOString(),
+      gameDate: moment(new Date(), moment.ISO_8601).format(),
+      showAccessCodes: false,
       complete: false,
-      // mark page as dirty the first time it's opened,
-      // in order to overwrite existing time
-      // values with the above defaults
-      dirty: true,
+      dirty: false,
     },
     forces: {
       name: "Forces",
@@ -103,10 +136,8 @@ export const dbDefaultSettings = {
     }
   },
   wargameInitiated: false,
-  gameTurn: 1,
-  phase: '',
-  gameDate: null,
-  gameTurnTime: null,
-  realtimeTurnTime: null,
+  gameTurn: 0,
+  phase: ADJUDICATION_PHASE,
   turnEndTime: null,
+  adjudicationStartTime: moment().format(),
 };

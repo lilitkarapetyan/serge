@@ -109,6 +109,16 @@ class ChannelsTable extends Component {
       } else {
         value = data[prop];
       }
+
+      if (!value && prop === "roles") {
+        row.push(<td key={`allRoles${key}`} className="all-roles">All roles</td>);
+        continue;
+      }
+      if (!value && prop === "templates") {
+        row.push(<td key={`templates${key}`} className="templates">Chat if empty</td>);
+        continue;
+      }
+
       row.push(<td key={`${value}${key}`}>{value}</td>)
     }
     row.push(
@@ -210,6 +220,7 @@ class ChannelsTable extends Component {
               return data.subscriptionId === this.state.subscriptionToEdit ? <EditSubscriptionRow
                                                                                   key={data.subscriptionId}
                                                                                   data={data}
+                                                                                  forcesList={this.props.wargame.data.forces.forces}
                                                                                   messageTypes={this.props.messageTypes}
                                                                                   forceOptions={this.state.forceOptions}
                                                                                   roleOptions={this.state.roleOptions}

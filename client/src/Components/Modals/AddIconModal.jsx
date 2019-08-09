@@ -3,6 +3,7 @@ import ModalWrapper from './ModalWrapper';
 import "../../scss/App.scss";
 import { connect } from 'react-redux';
 import DropZone from "../Inputs/DropZone";
+import {saveIcon} from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
 
 class AddIconModal extends Component {
@@ -11,13 +12,11 @@ class AddIconModal extends Component {
     this.props.dispatch(modalAction.close());
   };
 
-
-  handleKeyDown = (e) => {
-    if (e.key === 'Enter' && this.state.roleName.length > 0 && !this.state.sameName) this.addRole();
+  saveIcon = (file) => {
+    this.props.dispatch(saveIcon(file));
   };
 
   render() {
-
 
     if (!this.props.currentModal.open) return false;
 
@@ -25,7 +24,10 @@ class AddIconModal extends Component {
       <ModalWrapper>
         <div className="display-text-wrapper">
           <h3>Add an icon</h3>
-          <DropZone />
+          <DropZone
+            maxSize={20000}
+            saveHandler={this.saveIcon}
+          />
         </div>
       </ModalWrapper>
     )

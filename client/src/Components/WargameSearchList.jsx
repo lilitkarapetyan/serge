@@ -6,21 +6,20 @@ import _ from "lodash";
 
 import {
   editWargame,
-  duplicateWargame,
-  exportWargame
+  cleanWargame,
+  exportWargame, duplicateWargame
 } from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
 
 import {setCurrentViewFromURI} from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
 
 import {
-  faClone,
-  faPencilAlt,
-  faTrash,
-  faFileDownload,
+  faEllipsisH,
 } from "@fortawesome/free-solid-svg-icons";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {modalAction} from "../ActionsAndReducers/Modal/Modal_ActionCreators";
+import {EXPORT_ROUTE, GAME_SETUP_ROUTE} from "../consts";
+import WargameOptionMenu from "./WargameOptionMenu";
 
 class WargameSearchList extends Component {
 
@@ -31,6 +30,7 @@ class WargameSearchList extends Component {
       messageList: this.props.listData,
       searchQuery: this.props.listData,
       searchInput: "",
+      wargameMenuOpen: false,
     };
   }
 
@@ -56,23 +56,28 @@ class WargameSearchList extends Component {
     }
   }
 
-  setSelectedWargame(name) {
+  setSelectedWargame(name, event) {
+    event.stopPropagation();
     this.props.dispatch(editWargame(name));
-    this.props.dispatch(setCurrentViewFromURI('/client/gameSetup'));
+    this.props.dispatch(setCurrentViewFromURI(GAME_SETUP_ROUTE));
   }
 
-  exportWargame(name) {
+  exportWargame = (name) => {
     this.props.dispatch(exportWargame(name));
-    this.props.dispatch(setCurrentViewFromURI('/client/export'));
-  }
+    this.props.dispatch(setCurrentViewFromURI(EXPORT_ROUTE));
+  };
 
-  duplicateWargame(name) {
+  cleanWargame = (name) => {
+    this.props.dispatch(cleanWargame(name));
+  };
+
+  duplicateWargame = (name) => {
     this.props.dispatch(duplicateWargame(name));
-  }
+  };
 
-  deleteWargame(name) {
+  deleteWargame = (name) => {
     this.props.dispatch(modalAction.open("deleteWargame", name));
-  }
+  };
 
   filterMessages = (input) => {
 
@@ -100,6 +105,19 @@ class WargameSearchList extends Component {
     });
   };
 
+  showWargameMenu = (title, event) => {
+    event.stopPropagation();
+    this.setState({
+      wargameMenuOpen: title,
+    });
+  };
+
+  hideWargameMenu = () => {
+    this.setState({
+      wargameMenuOpen: false,
+    });
+  };
+
   render() {
 
     var that = this;
@@ -107,7 +125,7 @@ class WargameSearchList extends Component {
     var list = this.state.searchInput ? this.state.searchQuery : this.state.messageList;
 
     return (
-      <div className="searchlist">
+      <div className="wargame-searchlist">
         <input type="text" className="searchlist-input" key="search-templates" placeholder="Search games" onChange={ this.filterMessages } value={this.state.searchInput} />
         <div className="searchlist-list">
           { list.map(function(db) {
@@ -119,14 +137,24 @@ class WargameSearchList extends Component {
                 onMouseOver={that.displayControls.bind(that, db.title)}
                 onMouseLeave={that.hideControls}
               >
-                {db.title}
+                {db.initiated ?
+                  <div className="wargame-started-highlight"></div>
+                  :
+                  <div className="wargame-unstarted-highlight"></div>
+                }
+                <span onClick={that.setSelectedWargame.bind(that, db.name)}>{db.title}</span>
                 {that.state.activeTitle === db.title &&
-                  <>
-                    <FontAwesomeIcon icon={faPencilAlt} title="Edit wargame" onClick={that.setSelectedWargame.bind(that, db.name)} />
-                    <FontAwesomeIcon icon={faClone} title="Duplicate wargame" onClick={that.duplicateWargame.bind(that, db.name)} />
-                    <FontAwesomeIcon icon={faTrash} title="Delete wargame" onClick={that.deleteWargame.bind(that, db.name)} />
-                    <FontAwesomeIcon icon={faFileDownload} title="Export wargame" onClick={that.exportWargame.bind(that, db.name)} />
-                  </>
+                <FontAwesomeIcon icon={faEllipsisH} className="wargame-option-menu-btn" title="Wargame menu" onClick={that.showWargameMenu.bind(that, db.title)} />
+                }
+                { that.state.wargameMenuOpen === db.title &&
+                  <WargameOptionMenu
+                    hideMenu={that.hideWargameMenu}
+                    dbName={db.name}
+                    cleanWargame={that.cleanWargame}
+                    duplicateWargame={that.duplicateWargame}
+                    exportWargame={that.exportWargame}
+                    deleteWargame={that.deleteWargame}
+                  />
                 }
               </span>
             )

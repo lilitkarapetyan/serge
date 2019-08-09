@@ -6,6 +6,7 @@ import * as messageTypesApi from "../../api/messageTypes_api";
 
 import {setCurrentViewFromURI} from "../setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
 import {addNotification} from "../Notification/Notification_ActionCreators";
+import {MESSAGE_TEMPLATE_ROUTE} from "../../consts";
 
 const DBMessageSaveStatus = (status) => ({
   type: ActionConstant.DB_MESSAGE_STATUS,
@@ -40,6 +41,10 @@ export const populateMessageTypesDb = () => {
 
     await messageTypesApi.populateDb();
 
+    let messages = await messageTypesApi.getAllMessagesFromDb();
+
+    dispatch(DBSaveMessageArray(messages));
+
     dispatch(populatingDb(false));
   }
 };
@@ -68,7 +73,7 @@ export const createMessageType = (schema) => {
         dispatch(DBSaveMessageArray(messages));
 
         dispatch(loadingDBMessageCreate(false));
-        dispatch(setCurrentViewFromURI("/client/umpireMenu/templates"));
+        dispatch(setCurrentViewFromURI(MESSAGE_TEMPLATE_ROUTE));
       }
 
     } catch (err) {
@@ -118,7 +123,7 @@ export const updateMessageType = (schema, id) => {
 
         dispatch(DBSaveMessageArray(allMessages));
         dispatch(loadingDBMessageCreate(false));
-        dispatch(setCurrentViewFromURI("/client/umpireMenu/templates"));
+        dispatch(setCurrentViewFromURI(MESSAGE_TEMPLATE_ROUTE));
 
       }
     } catch (e) {

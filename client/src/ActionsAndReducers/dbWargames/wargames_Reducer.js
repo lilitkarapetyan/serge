@@ -5,7 +5,8 @@ import uniqId from "uniqid";
 import {
   forceTemplate,
   channelTemplate,
-  dbDefaultSettings, serverPath,
+  dbDefaultSettings,
+  serverPath, DEFAULT_SERVER,
 } from "../../consts";
 
 var initialState = {
@@ -17,6 +18,7 @@ var initialState = {
   data: {...dbDefaultSettings.data},
   currentTab: Object.keys(dbDefaultSettings.data)[0],
   wargameInitiated: false,
+  adminNotLoggedIn: true,
 };
 
 var getNameFromPath = function (dbPath) {
@@ -96,7 +98,7 @@ export const wargamesReducer = (state = initialState, action) => {
       let newForce = forceTemplate;
       newForce.name = action.payload.name;
       newForce.uniqid = action.payload.uniqid;
-      newForce.roles[0].password = `pass${uniqId.time()}`;
+      newForce.roles[0].password = `p${uniqId.time()}`;
 
       newState.data[tab].forces.push(newForce);
       break;
@@ -170,6 +172,11 @@ export const wargamesReducer = (state = initialState, action) => {
 
       selected = newState.data[tab].selectedForce.name;
       newState.data[tab].forces.find((f) => f.name === selected).icon = serverPath + action.icon.slice(1);
+      break;
+
+    case ActionConstant.LOGIN_ADMIN:
+
+      newState.adminNotLoggedIn = false;
       break;
 
     default:

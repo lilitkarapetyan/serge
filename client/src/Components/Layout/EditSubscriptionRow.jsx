@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
 
 import '../../scss/App.scss';
 import Select from "react-select";
@@ -15,19 +14,53 @@ class EditSubscriptionRow extends Component {
   constructor(props) {
     super(props);
 
+    let roleOptions = [];
+
+    let matchedForce = this.props.forcesList.find((f) => f.uniqid === this.props.data.forceUniqid);
+
+    if (matchedForce) {
+      matchedForce.roles.forEach((role) => {
+        roleOptions.push({
+          value: role.name,
+          label: role.name,
+        });
+      });
+    }
+
     this.state = {
       subscriptionId: this.props.data.subscriptionId,
-      editSubscriptionForce: {value: this.props.data.force, label: this.props.data.force},
+      editSubscriptionForce: {value: this.props.data.forceUniqid, label: this.props.data.force},
       editSubscriptionRoles: this.props.data.roles,
       editSubscriptionTemplates: this.props.data.templates,
+      roleOptions,
     };
+  }
 
-    console.log(this.props.data.templates);
+  componentWillUpdate(nextProps, nextState, nextContext) {
+    if (this.state.editSubscriptionForce.value !== nextState.editSubscriptionForce.value) {
+
+      let roleOptions = [];
+
+      let roles = this.props.forcesList.find((f) => f.uniqid === nextState.editSubscriptionForce.value).roles;
+
+      roles.forEach((role) => {
+        roleOptions.push({
+          value: role.name,
+          label: role.name,
+        });
+      });
+
+      this.setState({
+        roleOptions,
+      });
+    }
   }
 
   updateSubscriptionForce = (option) => {
     this.setState({
       editSubscriptionForce: option,
+      editSubscriptionRoles: [],
+      editSubscriptionTemplates: [],
     });
   };
 
@@ -58,8 +91,8 @@ class EditSubscriptionRow extends Component {
       force: this.state.editSubscriptionForce.label,
       roles: this.state.editSubscriptionRoles,
       templates,
-      forceUniqid: this.props.data.forceUniqid,
-      icon: this.props.data.icon,
+      forceUniqid: this.state.editSubscriptionForce.value,
+      icon: this.props.forcesList.find((force) => this.state.editSubscriptionForce.value === force.uniqid).icon,
     };
     this.props.updateRecipient(this.state.subscriptionId, subscriptionData);
     this.props.cancelEdit();
@@ -82,7 +115,7 @@ class EditSubscriptionRow extends Component {
         <td>
           <Select
             value={this.state.editSubscriptionRoles}
-            options={this.props.roleOptions}
+            options={this.state.roleOptions}
             onChange={this.updateSubscriptionRole}
             isMulti
           />
@@ -105,4 +138,4 @@ class EditSubscriptionRow extends Component {
 }
 
 
-export default connect()(EditSubscriptionRow);
+export default EditSubscriptionRow;

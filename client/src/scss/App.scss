@@ -2,11 +2,14 @@
 
 @import 'dependencies/variables';
 @import 'dependencies/reset';
+@import 'dependencies/bootstrap';
 @import '~bootstrap/scss/bootstrap';
 @import '~flatpickr/dist/themes/light.css';
+@import 'base';
 @import 'flex-layout';
 @import 'typography';
 @import 'btns';
+@import 'forms';
 @import 'sidebar';
 @import 'json-editor';
 @import 'message-preview';
@@ -22,6 +25,11 @@
 @import 'version';
 @import 'turnProgresion';
 @import 'export';
+@import 'print';
+
+#root {
+  height: 100%;
+}
 
 .view-wrapper {
   position: relative;
@@ -40,11 +48,7 @@
 #umpire {
   width: 100vw;
   height: 100vh;
-  padding: 15vh 12vw;
-
-  a, span {
-    margin-bottom: 1.15em;
-  }
+  padding: 15vh 0 15vh 22vw;
   h2 {
     margin-bottom: 1em;
   }

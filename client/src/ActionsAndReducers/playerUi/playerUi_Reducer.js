@@ -1,7 +1,11 @@
 import ActionConstant from '../ActionConstants';
 import chat from "../../Schemas/chat.json";
 import copyState from "../../Helpers/copyStateHelper";
-import {CHAT_CHANNEL_ID} from "../../consts";
+import {
+  CHAT_CHANNEL_ID,
+  expiredStorage,
+  LOCAL_STORAGE_TIMEOUT
+} from "../../consts";
 import _ from "lodash";
 import uniqId from "uniqid";
 
@@ -11,12 +15,13 @@ const initialState = {
   selectedRole: '',
   isObserver: false,
   controlUi: false,
-  currentTurn: 1,
+  currentTurn: 0,
   phase: '',
   gameDate: '',
   gameTurnTime: 0,
   realtimeTurnTime: 0,
   turnEndTime: '',
+  adjudicationStartTime: 0,
   gameDescription: '',
   currentWargame: '',
   wargameTitle: '',
@@ -32,6 +37,7 @@ const initialState = {
   showObjective: false,
   wargameInitiated: false,
   feedbackMessages: [],
+  tourIsOpen: false,
 };
 
 export const playerUiReducer = (state = initialState, action) => {
@@ -39,7 +45,6 @@ export const playerUiReducer = (state = initialState, action) => {
   let newState = copyState(state);
 
   let messages;
-  let index;
   let channels = {};
 
   switch (action.type) {
@@ -51,10 +56,12 @@ export const playerUiReducer = (state = initialState, action) => {
       newState.wargameInitiated = action.payload.wargameInitiated;
       newState.currentTurn = action.payload.gameTurn;
       newState.phase = action.payload.phase;
-      newState.gameDate = action.payload.gameDate;
-      newState.gameTurnTime = action.payload.gameTurnTime;
-      newState.realtimeTurnTime = action.payload.realtimeTurnTime;
-      newState.timeWarning = action.payload.timeWarning;
+      newState.showAccessCodes = action.payload.data.overview.showAccessCodes;
+      newState.gameDate = action.payload.data.overview.gameDate;
+      newState.gameTurnTime = action.payload.data.overview.gameTurnTime;
+      newState.adjudicationStartTime = action.payload.adjudicationStartTime;
+      newState.realtimeTurnTime = action.payload.data.overview.realtimeTurnTime;
+      newState.timeWarning = action.payload.data.overview.timeWarning;
       newState.turnEndTime = action.payload.turnEndTime;
       newState.gameDescription = action.payload.data.overview.gameDescription;
       newState.allChannels = action.payload.data.channels.channels;
@@ -70,6 +77,7 @@ export const playerUiReducer = (state = initialState, action) => {
       newState.selectedRole = action.payload.name;
       newState.controlUi = action.payload.control;
       newState.isObserver = action.payload.isObserver;
+      newState.isInsightViewer = action.payload.isInsightViewer;
       break;
 
     case ActionConstant.SET_ALL_TEMPLATES_PLAYERUI:
@@ -90,7 +98,7 @@ export const playerUiReducer = (state = initialState, action) => {
 
     case ActionConstant.SET_LATEST_WARGAME_MESSAGE:
 
-      if (action.payload.hasOwnProperty('infoType') && action.payload.phase === "planning") {
+      if (action.payload.hasOwnProperty('infoType')) {
         let message = {
           details: {
             channel: `infoTypeChannelMarker${uniqId.time()}`
@@ -104,9 +112,15 @@ export const playerUiReducer = (state = initialState, action) => {
           if (!matchedChannel) {
             delete newState.channels[channelId];
           } else {
-            let channelActive = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
-            let allRoles = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.length === 0);
-            if (!channelActive && !allRoles && !newState.isObserver) delete newState.channels[channelId];
+            let isParticipant = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
+            let allRolesIncluded = matchedChannel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.length === 0);
+
+            if (isParticipant || allRolesIncluded || newState.isObserver) {
+              // ok, this is a channel we wish to display
+            } else {
+              // no, we no longer need to display this channel
+              delete newState.channels[channelId];
+            }
           }
         }
 
@@ -115,6 +129,40 @@ export const playerUiReducer = (state = initialState, action) => {
 
           let channelActive = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
           let allRoles = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.length === 0);
+
+
+          // rename channel
+          if (
+            (channelActive || allRoles) &&
+            !!newState.channels[channel.uniqid]
+          ) {
+            newState.channels[channel.uniqid].name = channel.name;
+          }
+
+          // update observing status when observer removed from channel participants
+          if (
+            (!channelActive && !allRoles) &&
+            newState.isObserver &&
+            !!newState.channels[channel.uniqid]
+          ) {
+            newState.channels[channel.uniqid].observing = true;
+          } else if (
+            (channelActive || allRoles) &&
+            newState.isObserver &&
+            !!newState.channels[channel.uniqid]
+          ) {
+            newState.channels[channel.uniqid].observing = false;
+          }
+
+          // if channel already created update templates.
+          if (
+            (channelActive || allRoles) &&
+            !!newState.channels[channel.uniqid]
+          ) {
+            let participatingForce = channel.participants.find((p) => p.forceUniqid === newState.selectedForce);
+            let chosenTemplates = participatingForce.templates;
+            newState.channels[channel.uniqid].templates = chosenTemplates.map((template) => template.value);
+          }
 
           // if channel already created
           if (
@@ -130,8 +178,7 @@ export const playerUiReducer = (state = initialState, action) => {
           if (
             (channelActive || allRoles) &&
             !newState.channels[channel.uniqid]
-          )
-          {
+          ) {
             let participatingRole = channel.participants.some((p) => p.forceUniqid === newState.selectedForce && p.roles.some((role) => role.value === newState.selectedRole));
             let participatingForce = channel.participants.find((p) => p.forceUniqid === newState.selectedForce);
 
@@ -145,8 +192,7 @@ export const playerUiReducer = (state = initialState, action) => {
             if (isParticipant || allRolesIncluded) {
               if (chosenTemplates.length === 0) {
                 templates = newState.allTemplates.filter((template) => template.title === "Chat");
-              }
-              else {
+              } else {
                 templates = chosenTemplates.map((template) => template.value);
               }
             }
@@ -167,20 +213,23 @@ export const playerUiReducer = (state = initialState, action) => {
                 observing,
               };
             }
-            newState.channels = channels;
+            newState.channels = _.defaults(channels, newState.channels);
           }
 
         });
 
       } else if (!action.payload.hasOwnProperty('infoType')) {
 
-        if (action.payload.details.channel === CHAT_CHANNEL_ID)
-        {
-          newState.chatChannel.messages.unshift(action.payload);
-        }
-        else if (!!newState.channels[action.payload.details.channel])
-        {
-          newState.channels[action.payload.details.channel].messages.unshift({...action.payload, hasBeenRead: false, isOpen: false});
+        if (action.payload.details.channel === CHAT_CHANNEL_ID) {
+          newState.chatChannel.messages.unshift(copyState(action.payload));
+        } else if (!!newState.channels[action.payload.details.channel]) {
+
+          newState.channels[action.payload.details.channel].messages.unshift({
+            ...copyState(action.payload),
+            hasBeenRead: false,
+            isOpen: false
+          });
+
           newState.channels[action.payload.details.channel].unreadMessageCount++;
         }
       }
@@ -199,7 +248,11 @@ export const playerUiReducer = (state = initialState, action) => {
             gameTurn: message.gameTurn,
           }
         }
-        return {...message, hasBeenRead: false, isOpen: false};
+        return {
+          ...message,
+          hasBeenRead: expiredStorage.getItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${message._id}`) === "read",
+          isOpen: false
+        };
       });
 
       let reduceTurnMarkers = (message) => {
@@ -235,8 +288,7 @@ export const playerUiReducer = (state = initialState, action) => {
         if (isParticipant || allRolesIncluded) {
           if (chosenTemplates.length === 0) {
             templates = newState.allTemplates.filter((template) => template.title === "Chat");
-          }
-          else {
+          } else {
             templates = chosenTemplates.map((template) => template.value);
           }
         }
@@ -249,14 +301,22 @@ export const playerUiReducer = (state = initialState, action) => {
 
         if (!newState.isObserver && !isParticipant && !allRolesIncluded) return;
 
-
         if (allRolesIncluded || isParticipant || newState.isObserver) {
           channels[channel.uniqid] = {
             name: channel.name,
             templates,
             forceIcons: channel.participants.filter((participant) => participant.forceUniqid !== newState.selectedForce).map((participant) => participant.icon),
             messages: messages.filter((message) => message.details.channel === channel.uniqid || message.infoType === true),
-            unreadMessageCount: messages.filter((message) => message.details.channel === channel.uniqid).length,
+            unreadMessageCount: messages.filter((message) => {
+              if (message.hasOwnProperty("infoType")) {
+                return false;
+              } else {
+                return (
+                  expiredStorage.getItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${message._id}`) === null &&
+                  message.details.channel === channel.uniqid
+                )
+              }
+            }).length,
             observing,
           };
         }
@@ -269,42 +329,56 @@ export const playerUiReducer = (state = initialState, action) => {
 
     case ActionConstant.OPEN_MESSAGE:
 
-      messages = newState.channels[action.payload.channel].messages;
+      // mutating `messages` array - copyState at top of switch
+      for (let i=0, len = newState.channels[action.payload.channel].messages.length ; i<len ; i++) {
+        if (newState.channels[action.payload.channel].messages[i]._id === action.payload.message._id) {
+          newState.channels[action.payload.channel].messages[i].isOpen = true;
+          newState.channels[action.payload.channel].messages[i].hasBeenRead = true;
+          expiredStorage.setItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${action.payload.message._id}`, "read", LOCAL_STORAGE_TIMEOUT);
+          break;
+        }
+      }
 
-      action.payload.message.isOpen = true;
-      action.payload.message.hasBeenRead = true;
-      index = messages.findIndex((item) => item._id === action.payload.message._id);
-      messages.splice(index, 1, action.payload.message);
-      newState.channels[action.payload.channel].messages = messages;
-
-      let unreadMessages = newState.channels[action.payload.channel].messages.filter((message) => {
-        return !message.hasOwnProperty("infoType") && !message.hasBeenRead;
-      });
-
-      newState.channels[action.payload.channel].unreadMessageCount = unreadMessages.length;
+      newState.channels[action.payload.channel].unreadMessageCount = newState.channels[action.payload.channel].messages.filter((message) => {
+        if (message.hasOwnProperty("infoType")) {
+          return false;
+        } else {
+          return expiredStorage.getItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${message._id}`) === null
+        }
+      }).length;
 
       break;
 
     case ActionConstant.CLOSE_MESSAGE:
 
-      messages = newState.channels[action.payload.channel].messages;
-      action.payload.message.isOpen = false;
-      index = messages.findIndex((item) => item._id === action.payload.message._id);
-      messages.splice(index, 1, action.payload.message);
-      newState.channels[action.payload.channel].messages = messages;
+      // mutating messages array - copyState at top of switch
+      for (let i=0, len = newState.channels[action.payload.channel].messages.length ; i<len ; i++) {
+        if (newState.channels[action.payload.channel].messages[i]._id === action.payload.message._id) {
+          newState.channels[action.payload.channel].messages[i].isOpen = false;
+          break;
+        }
+      }
 
       break;
 
     case ActionConstant.MARK_ALL_AS_READ:
 
-      newState.channels[action.payload].messages.forEach((message) => {
-        if (message.hasOwnProperty("hasBeenRead")) message.hasBeenRead = true;
+      newState.channels[action.channel].unreadMessageCount = 0;
+
+      newState.channels[action.channel].messages.forEach((message) => {
+        message.hasBeenRead = true;
+        expiredStorage.setItem(`${newState.currentWargame}-${newState.selectedForce}-${newState.selectedRole}${message._id}`, "read", LOCAL_STORAGE_TIMEOUT);
       });
-      newState.channels[action.payload].unreadMessageCount = 0;
 
       break;
 
+    case ActionConstant.OPEN_TOUR:
+
+      newState.tourIsOpen = action.isOpen;
+      break;
+
     default:
+
       return newState;
   }
 

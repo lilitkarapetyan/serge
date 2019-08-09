@@ -6,6 +6,7 @@ import * as messagesApi from "../../api/messages_api";
 
 import { addNotification } from "../Notification/Notification_ActionCreators";
 import {setCurrentViewFromURI} from "../setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
+import {MESSAGE_LIBRARY_ROUTE} from "../../consts";
 
 const DBMessageSaveStatus = (status) => ({
   type: ActionConstant.DB_MESSAGE_STATUS,
@@ -56,7 +57,7 @@ export const createMessage = (message, schema) => {
         let messages = await messagesApi.getAllMessagesFromDb();
         dispatch(DBSaveMessageArray(messages));
         dispatch(loadingDBMessageCreate(false));
-        dispatch(setCurrentViewFromURI("/client/umpireMenu/library"));
+        dispatch(setCurrentViewFromURI(MESSAGE_LIBRARY_ROUTE));
       }
     } catch(e) {
       dispatch(loadingDBMessageCreate(false));
@@ -109,7 +110,7 @@ export const updateMessage = (message, id) => {
         dispatch(DBSaveMessagePreview(message));
         dispatch(DBSaveMessageArray(messages));
         dispatch(loadingDBMessageCreate(false));
-        dispatch(setCurrentViewFromURI("/client/umpireMenu/library"));
+        dispatch(setCurrentViewFromURI(MESSAGE_LIBRARY_ROUTE));
 
       }
     } catch (e) {

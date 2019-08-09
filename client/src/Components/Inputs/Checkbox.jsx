@@ -16,9 +16,10 @@ class Checkbox extends Component {
           id={this.props.id}
           type="checkbox"
           onChange={this.onChange}
-          defaultChecked={this.props.isChecked}
+          checked={this.props.isChecked}
+          title={this.props.title}
         />
-        <label htmlFor={this.props.id}>{this.props.label}</label>
+        <label title={this.props.title} htmlFor={this.props.id}>{this.props.label}</label>
       </div>
     );
   }
@@ -29,6 +30,7 @@ Checkbox.propTypes = {
   label: PropTypes.string.isRequired,
   isChecked: PropTypes.bool.isRequired,
   updateStore: PropTypes.func.isRequired,
+  title: PropTypes.string,
 };
 
 export default Checkbox;

@@ -38,6 +38,8 @@ class JsonCreator extends Component {
       timestamp: new Date().toISOString(),
     };
 
+    if (this.editor.getValue().content === "") return;
+
     this.props.dispatch(saveMessage(this.props.playerUi.currentWargame, messageDetails, this.editor.getValue()));
   };
 
@@ -63,10 +65,14 @@ class JsonCreator extends Component {
 
   render() {
     return (
-      <>
-        <div id="message-creator" ref={this.editorPreviewRef}></div>
-        <button name="send" className="btn btn-action btn-action--primary" onClick={this.sendMessage}>Send</button>
-      </>
+      <div className="media">
+        <div className="media-body" id="message-creator" ref={this.editorPreviewRef}></div>
+        <div className="align-self-center">
+          <button name="send" className="btn btn-action btn-action--complimentary" onClick={this.sendMessage}>
+            <span className="sr-only">Send</span>
+          </button>
+        </div>
+      </div>
     );
   }
 }

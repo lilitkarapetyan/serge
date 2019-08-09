@@ -1,6 +1,8 @@
 import ActionConstant from '../ActionConstants';
 import * as wargamesApi from "../../api/wargames_api";
 import {modalAction} from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
+import {addNotification} from "../Notification/Notification_ActionCreators";
+import isError from "../../Helpers/isError";
 
 export const setCurrentWargame = (data) => ({
   type: ActionConstant.SET_CURRENT_WARGAME_PLAYER,
@@ -51,14 +53,19 @@ export const closeMessage = (channel, message) => ({
   payload: {channel, message},
 });
 
-export const markAllAsRead = (channel) => ({
-  type: ActionConstant.MARK_ALL_AS_READ,
-  payload: channel,
-});
-
 export const setAllTemplates = (templates) => ({
   type: ActionConstant.SET_ALL_TEMPLATES_PLAYERUI,
   payload: templates,
+});
+
+export const markAllAsRead = (channel) => ({
+  type: ActionConstant.MARK_ALL_AS_READ,
+  channel,
+});
+
+export const openTour = (isOpen) => ({
+  type: ActionConstant.OPEN_TOUR,
+  isOpen,
 });
 
 
@@ -67,22 +74,6 @@ export const startListening = (dbName) => {
     wargamesApi.listenForWargameChanges(dbName, dispatch);
   }
 };
-
-export const getWargame = (gamePath) => {
-  return async (dispatch) => {
-
-    let wargame = await wargamesApi.getWargame(gamePath);
-
-    dispatch(setCurrentWargame(wargame));
-  }
-};
-
-export const nextGameTurn = (dbName) => {
-  return async (dispatch) => {
-    await wargamesApi.nextGameTurn(dbName);
-  }
-};
-
 
 export const initiateGame = (dbName) => {
   return async (dispatch) => {
@@ -93,23 +84,59 @@ export const initiateGame = (dbName) => {
   }
 };
 
-
-export const sendFeedbackMessage = (dbName, playerInfo, message) => {
+export const getWargame = (gamePath) => {
   return async (dispatch) => {
 
-    await wargamesApi.postFeedback(dbName, playerInfo, message);
+    let wargame = await wargamesApi.getWargame(gamePath);
+
+    if (isError(wargame)) {
+      dispatch(addNotification("Serge disconnected", "error"));
+    } else {
+      dispatch(setCurrentWargame(wargame));
+    }
+  }
+};
+
+export const nextGameTurn = (dbName) => {
+  return async (dispatch) => {
+    await wargamesApi.nextGameTurn(dbName);
+  }
+};
+
+
+export const sendFeedbackMessage = (dbName, fromDetails, message) => {
+  return async (dispatch) => {
+
+    await wargamesApi.postFeedback(dbName, fromDetails, message);
 
     dispatch(modalAction.close());
   }
 };
 
+export const failedLoginFeedbackMessage = (dbName, password) => {
+  return async () => {
+
+    let address = await wargamesApi.getIpAddress();
+
+    let from = {
+      force: address.ip,
+      forceColor: '#970000',
+      role: '',
+      name: password,
+    };
+    await wargamesApi.postFeedback(dbName, from, "A failed login attempt has been made.")
+
+  }
+};
+
 export const saveMessage = (dbName, details, message) => {
-  return async (dispatch) => {
+  return async () => {
 
     await wargamesApi.postNewMessage(dbName, details, message);
 
   }
 };
+
 
 export const getAllWargameFeedback = (dbName) => {
   return async (dispatch) => {

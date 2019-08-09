@@ -9,6 +9,7 @@ import { notificationReducer } from "../ActionsAndReducers/Notification/Notifica
 import { playerUiReducer } from "../ActionsAndReducers/playerUi/playerUi_Reducer";
 import { loadingDbReducer } from "../ActionsAndReducers/loadingDb_Reducer";
 import { exportItems } from "../ActionsAndReducers/ExportItems/ExportItems_Reducer";
+import { gameInfo } from "../ActionsAndReducers/sergeInfo/sergeInfo_Reducer";
 
 import thunk from 'redux-thunk';
 
@@ -30,4 +31,5 @@ export default createStore(combineReducers({
   playerUi: playerUiReducer,
   dbLoading: loadingDbReducer,
   exportItems,
+  gameInfo,
 }), applyMiddleware(...middlewares));

@@ -10,6 +10,7 @@ import '../scss/App.scss';
 import {
   showHideObjectives
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
+import _ from "lodash";
 
 var json = {
   global: {
@@ -35,7 +36,7 @@ class AdminAndInsightsTabsContainer extends Component {
     super(props);
 
     this.state = {
-      gameAdmin: 'GameAdmin',
+      gameAdmin: 'Game Admin',
       insights: 'Insights',
       model: FlexLayout.Model.fromJson(json),
       channelNames: [],
@@ -51,7 +52,7 @@ class AdminAndInsightsTabsContainer extends Component {
       FlexLayout.Actions.addNode({type: "tab", component: this.state.gameAdmin, name: this.state.gameAdmin, id: this.state.gameAdmin}, "#2", FlexLayout.DockLocation.CENTER, -1)
     );
 
-    if (this.props.playerUi.controlUi) {
+    if (this.props.playerUi.isInsightViewer) {
       this.state.model.doAction(
         FlexLayout.Actions.addNode({type: "tab", component: this.state.insights, name: this.state.insights, id: this.state.insights}, "#2", FlexLayout.DockLocation.CENTER, -1)
       );
@@ -83,10 +84,14 @@ class AdminAndInsightsTabsContainer extends Component {
           model={this.state.model}
           factory={this.factory}
         />
-        <div className="role-info" style={{borderBottom: this.props.playerUi.forceColor, borderBottomWidth: "6px", borderBottomStyle: "solid"}}>
+        <div className="role-info" style={{ backgroundColor: force.color, }} data-tour="second-step">
           <span className="role-type">{ this.props.playerUi.selectedRole }</span>
-          <span className="force-type">{ force.name }</span>
-          <img src={force.icon} alt="" onClick={this.showHideForceObjectives} />
+          <div className="contain-force-skin">
+            <div className="force-skin">
+              <span className="force-type">{ force.name }</span>
+              <img className="role-icon" src={force.icon} alt="" onClick={this.showHideForceObjectives} />
+            </div>
+          </div>
         </div>
       </>
     );

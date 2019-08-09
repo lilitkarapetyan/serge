@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import '../scss/App.scss';
-import {connect} from "react-redux";
 
 import MessageCreator from "../Components/MessageCreator.jsx";
 import Collapsible from "react-collapsible";
@@ -29,6 +28,11 @@ class NewMessage extends Component {
     if (this.props.curChannel !== nextProps.curChannel) {
       this.setState({
         selectedSchema: null,
+      })
+    }
+    if (nextProps.templates.length === 1) {
+      this.setState({
+        selectedSchema: nextProps.templates[0].details,
       })
     }
   }
@@ -66,6 +70,7 @@ class NewMessage extends Component {
           <MessageCreator
             schema={this.state.selectedSchema}
             curChannel={this.props.curChannel}
+            privateMessage={this.props.privateMessage}
           />
         </Collapsible>
       </div>
@@ -75,6 +80,8 @@ class NewMessage extends Component {
 
 NewMessage.propTypes = {
   templates: PropTypes.array.isRequired,
+  curChannel: PropTypes.string.isRequired,
+  privateMessage: PropTypes.bool.isRequired,
 };
 
 export default NewMessage;
