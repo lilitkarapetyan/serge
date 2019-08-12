@@ -46,6 +46,7 @@ class TextInput extends Component {
           onMouseOver={this.props.onMouseOver}
           onMouseOut={this.props.onMouseOut}
           title={this.props.title}
+          name={this.props.name}
         />
       </>
     );

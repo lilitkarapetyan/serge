@@ -107,6 +107,7 @@ class EditSubscriptionRow extends Component {
       <tr>
         <td>
           <Select
+            name="force-edit-selection"
             value={this.state.editSubscriptionForce}
             options={this.props.forceOptions}
             onChange={this.updateSubscriptionForce}
@@ -114,6 +115,7 @@ class EditSubscriptionRow extends Component {
         </td>
         <td>
           <Select
+            name="role-edit-selection"
             value={this.state.editSubscriptionRoles}
             options={this.state.roleOptions}
             onChange={this.updateSubscriptionRole}
@@ -122,6 +124,7 @@ class EditSubscriptionRow extends Component {
         </td>
         <td>
           <Select
+            name="template-edit-selection"
             value={this.state.editSubscriptionTemplates}
             options={this.props.templateOptions}
             onChange={this.updateSubscriptionTemplates}

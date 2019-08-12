@@ -186,7 +186,7 @@ class PlayerUi extends Component {
       return (
         <div className="flex-content-wrapper">
           <div className="pre-start-screen">
-            <button name="initate game" className="btn btn-action btn-action--primary" onClick={this.initiateGameplay}>Initiate Game</button>
+            <button name="initiate game" className="btn btn-action btn-action--primary" onClick={this.initiateGameplay}>Initiate Game</button>
           </div>
         </div>
       )

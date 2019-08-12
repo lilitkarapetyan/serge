@@ -194,6 +194,7 @@ class ForcesTab extends Component {
 
         <div className="flex-content flex-content--row">
           <TextInput
+            name="force-name"
             id="editable-title"
             updateStore={this.updateForceName}
             options={{numInput: false}}
@@ -212,6 +213,7 @@ class ForcesTab extends Component {
 
         <p className="heading--sml">Overview &amp; Objectives</p>
         <TextArea
+          name="objectives"
           updateStore={this.updateForceOverview}
           data={forceOverview}
         />
