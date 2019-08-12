@@ -27,6 +27,12 @@
     border-color: #ffeeba;
   }
 
+  &.error {
+    color: #d9d9d9;
+    background-color: #b6261a;
+    border-color: #9b0a05;
+  }
+
   &.success {
     color: #155724;
     background-color: #d4edda;

@@ -1,6 +1,8 @@
 import ActionConstant from '../ActionConstants';
 import * as wargamesApi from "../../api/wargames_api";
 import {modalAction} from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
+import {addNotification} from "../Notification/Notification_ActionCreators";
+import isError from "../../Helpers/isError";
 
 export const setCurrentWargame = (data) => ({
   type: ActionConstant.SET_CURRENT_WARGAME_PLAYER,
@@ -82,13 +84,16 @@ export const initiateGame = (dbName) => {
   }
 };
 
-
 export const getWargame = (gamePath) => {
   return async (dispatch) => {
 
     let wargame = await wargamesApi.getWargame(gamePath);
 
-    dispatch(setCurrentWargame(wargame));
+    if (isError(wargame)) {
+      dispatch(addNotification("Serge disconnected", "error"));
+    } else {
+      dispatch(setCurrentWargame(wargame));
+    }
   }
 };
 

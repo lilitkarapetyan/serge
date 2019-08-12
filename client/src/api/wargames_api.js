@@ -25,6 +25,7 @@ import {
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 
 import moment from "moment";
+import {addNotification} from "../ActionsAndReducers/Notification/Notification_ActionCreators";
 
 var wargameDbStore = [];
 
@@ -48,7 +49,9 @@ const listenNewMessage = ({db, name, dispatch}) => {
       })();
     })
     .on('error', function (err) {
-      console.log(err);
+      // if (err) {
+        // dispatch(addNotification("Serge disconnected.", "error"));
+      // }
       listenNewMessage({db, name, dispatch});
     });
 };
@@ -184,6 +187,7 @@ export const getLatestWargameRevision = (dbName) => {
       if (latestWargame) return latestWargame;
       return getWargameLocalFromName(dbName);
     })
+    .catch(err => err);
 };
 
 export const editWargame = (dbPath) => {
@@ -873,6 +877,9 @@ export const getAllMessages = dbName => {
 
   return db.allDocs({include_docs: true, descending: true})
     .then(res => res.rows.map(a => a.doc))
+    .catch(() => {
+      throw new Error("Serge disconnected");
+    });
 };
 
 
