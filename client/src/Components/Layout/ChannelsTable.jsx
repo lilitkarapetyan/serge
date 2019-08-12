@@ -232,6 +232,7 @@ class ChannelsTable extends Component {
             <tr>
               <td>
                 <Select
+                  name="force-selection"
                   value={this.state.selectedForce}
                   options={this.state.forceOptions}
                   onChange={this.setSelectedForce}
@@ -239,6 +240,7 @@ class ChannelsTable extends Component {
               </td>
               <td>
                 <Select
+                  name="role-selection"
                   value={this.state.selectedRoles}
                   options={this.state.roleOptions}
                   onChange={this.setSelectedRole}
@@ -248,6 +250,7 @@ class ChannelsTable extends Component {
               </td>
               <td>
                 <Select
+                  name="template-selection"
                   value={this.state.selectedTemplates}
                   options={this.state.templateOptions}
                   onChange={this.setSelectedTemplate}
@@ -258,7 +261,7 @@ class ChannelsTable extends Component {
               <td>
                 <FontAwesomeIcon icon={faUndoAlt} title="Delete channel" onClick={this.clearChannelData} />
                 <FontAwesomeIcon
-                  icon={faCheck} title="Duplicate channel"
+                  icon={faCheck} title="Confirm channel"
                   className={classNames({"btn--disabled": !this.state.selectedForce.value})}
                   onClick={this.addToChannel} />
               </td>

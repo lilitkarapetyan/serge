@@ -21,6 +21,7 @@ class TextInputMasked extends Component {
           id={this.props.id || null}
           onChange={this.onChange}
           value={this.props.data ? this.props.data : ""}
+          name={this.props.name}
         />
       </>
     );

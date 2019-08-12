@@ -562,6 +562,9 @@
     }
 
     #message-creator {
+      max-height: 80vh;
+      overflow-y: auto;
+      overflow-x: hidden;
       font-family: "Open Sans", sans-serif;
       font-weight: bold;
       color: $secondaryColor;
