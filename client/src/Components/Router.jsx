@@ -16,11 +16,13 @@ import ExportForces from "../Views/ExportForces";
 import ExportPrint from "../Views/ExportPrint";
 import PlayerUi from "../Views/PlayerUi";
 import EditWelcomeScreen from "../Views/EditWelcomeScreen";
+import DemoScreen from "../Views/DemoScreen";
 import {
   ADMIN_ROUTE, CREATE_MESSAGE_ROUTE,
   CREATE_TEMPLATE_ROUTE, EDIT_MESSAGE_ROUTE,
   EDIT_TEMPLATE_ROUTE, EXPORT_ROUTE, EXPORT_MESSAGES_SUBROUTE, EXPORT_FORCES_SUBROUTE, EXPORT_PRINT_SUBROUTE, GAME_SETUP_ROUTE,
-  MESSAGE_CREATOR_BASE_ROUTE, MESSAGE_LIBRARY_ROUTE, MESSAGE_TEMPLATE_ROUTE, PLAYERUI_ROUTE, WELCOME_SCREEN_EDIT_ROUTE
+  MESSAGE_CREATOR_BASE_ROUTE, MESSAGE_LIBRARY_ROUTE, MESSAGE_TEMPLATE_ROUTE, PLAYERUI_ROUTE, WELCOME_SCREEN_EDIT_ROUTE,
+  DEMO_ROUTE,
 } from "../consts";
 import '../scss/App.scss';
 import {setCurrentViewFromURI} from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
@@ -65,7 +67,8 @@ class Router extends Component {
       { path: GAME_SETUP_ROUTE, action: () => <GameSetup /> },
       { path: EXPORT_ROUTE, action: () => <ExportMessages /> },
       { path: PLAYERUI_ROUTE, action: () => <PlayerUi /> },
-      { path: WELCOME_SCREEN_EDIT_ROUTE, action: () => <EditWelcomeScreen /> }
+      { path: WELCOME_SCREEN_EDIT_ROUTE, action: () => <EditWelcomeScreen /> },
+      { path: DEMO_ROUTE, action: () => <DemoScreen /> },
     ];
 
     // let currentPath = new URL(window.location.href).pathname;

@@ -38,6 +38,7 @@ export const EXPORT_MESSAGES_SUBROUTE = '/messages';
 export const EXPORT_FORCES_SUBROUTE = '/foeces';
 export const EXPORT_PRINT_SUBROUTE = '/print/:id';
 export const PLAYERUI_ROUTE = '/serge/player';
+export const DEMO_ROUTE = '/serge/demo';
 
 export const expiredStorage = new ExpiredStorage();
 export const LOCAL_STORAGE_TIMEOUT = 2592000; // one month
