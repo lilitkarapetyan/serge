@@ -182,7 +182,7 @@ class PlayerUi extends Component {
       },
     ];
 
-    if (this.props.playerUi.selectedForce === umpireForceTemplate.uniqid && !this.props.playerUi.wargameInitiated) {
+    if (this.props.playerUi.selectedForce === umpireForceTemplate.uniqid && this.props.playerUi.controlUi && !this.props.playerUi.wargameInitiated) {
       return (
         <div className="flex-content-wrapper">
           <div className="pre-start-screen">
