@@ -68,5 +68,10 @@
     "not op_mini all"
   ],
   "homepage": "https://serge-dev.herokuapp.com/client/build",
-  "devDependencies": {}
+  "devDependencies": {
+    "enzyme": "^3.10.0",
+    "jest-puppeteer": "^4.2.0",
+    "puppeteer": "^1.18.1",
+    "react-test-renderer": "^16.8.6"
+  }
 }
