@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import FlexLayout from "flexlayout-react";
-import { ADMIN_ROUTE, PLAYERUI_ROUTE } from "../consts";
+import RouterDashboard from "../Components/Router/RouterDashboard";
+import PlayerUi from "./PlayerUi";
 import "../scss/dependencies/flexlayout-react.scss";
 import '../scss/App.scss';
 
@@ -25,24 +26,56 @@ const json = {
             "name": "Game Designer",
             "component": "game-designer",
           },
+        ],
+        "active": true
+      },
+      {
+        "type": "tabset",
+        "id": "#demo-tabset-player-1",
+        "children": [
+
           {
             "type": "tab",
             "id": "#demo-player-1",
             "name": "Player",
             "component": "player",
           },
+        ],
+        "active": true
+      },
+      {
+        "type": "tabset",
+        "id": "#demo-tabset-player-2",
+        "children": [
+
           {
             "type": "tab",
             "id": "#demo-player-2",
             "name": "Player",
             "component": "player",
           },
+        ],
+        "active": true
+      },
+      {
+        "type": "tabset",
+        "id": "#demo-tabset-player-3",
+        "children": [
+
           {
             "type": "tab",
             "id": "#demo-player-3",
             "name": "Player",
             "component": "player",
           },
+        ],
+        "active": true
+      },
+      {
+        "type": "tabset",
+        "id": "#demo-tabset-player-4",
+        "children": [
+
           {
             "type": "tab",
             "id": "#demo-player-4",
@@ -51,7 +84,7 @@ const json = {
           },
         ],
         "active": true
-      }
+      },
     ]
   },
   "borders": []
@@ -69,14 +102,10 @@ class DemoScreen extends Component {
   factory = (node) => {
     const component = node.getComponent();
     const sources = {
-      'game-designer': ADMIN_ROUTE,
-      'player': PLAYERUI_ROUTE,
+      'game-designer': <RouterDashboard/>,
+      'player': <PlayerUi/>,
     };
-    return (
-        <iframe className="demo-iframe" src={`${window.location.origin}${sources[component]}`}>
-          Demo Screen { sources[component] }
-        </iframe>
-    );
+    return sources[component];
   };
 
   tabRender = (node) => {
