@@ -27,7 +27,6 @@
   #root > & {
     height: 100%;
     background-image: url("dependencies/images/tile.png");
-    color: #ffffff;
     background-blend-mode: lighten;
     background-color: $backgroundBody;
   }
@@ -118,5 +117,14 @@
         }
       }
     }
+  }
+}
+
+#root {
+  .flexlayout__layout:not(.flexlayout__layout--demo),
+  .flex-content--welcome,
+  .flex-landing-screen,
+  .flex-transparent {
+    color: #ffffff;
   }
 }

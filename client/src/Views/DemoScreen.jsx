@@ -108,8 +108,7 @@ class DemoScreen extends Component {
     return sources[component];
   };
 
-  tabRender = (node) => {
-  };
+  classNameMapper = (defaultClassName) => `${defaultClassName} ${defaultClassName}--demo`;
 
   render() {
     return (
@@ -118,7 +117,8 @@ class DemoScreen extends Component {
           <FlexLayout.Layout
             model={this.model}
             factory={this.factory}
-            onRenderTab={this.tabRender}
+            classNameMapper={this.classNameMapper}
+            className="flex-layout-demo"
           />
         </div>
       </div>

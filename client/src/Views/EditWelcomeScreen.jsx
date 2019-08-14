@@ -111,7 +111,7 @@ class EditWelcomeScreen extends Component {
   render() {
 
     return (
-        <div className="flex-content-wrapper">
+        <div className="flex-content-wrapper flex-transparent">
           <div id="sidebar_admin">
             <Link href={ADMIN_ROUTE} class="link link--large">Games</Link>
             <Link href={MESSAGE_TEMPLATE_ROUTE} class="link link--large">Message Templates</Link>

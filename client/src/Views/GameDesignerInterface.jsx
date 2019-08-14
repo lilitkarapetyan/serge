@@ -75,7 +75,7 @@ class GameDesignerInterface extends Component {
 
     if (this.props.wargame.adminNotLoggedIn) {
       return (
-        <div id="umpire" className="flex-content-wrapper">
+        <div id="umpire" className="flex-content-wrapper flex-landing-screen">
           <div className="flex-content flex-content--center">
             <h2>Password</h2>
             <TextInput
@@ -92,7 +92,7 @@ class GameDesignerInterface extends Component {
     }
 
     return (
-      <div id="umpire" className="flex-content-wrapper">
+      <div id="umpire" className="flex-content-wrapper flex-transparent">
         <div id="sidebar_admin">
           <Link href={ADMIN_ROUTE} class="link link--large link--active">Games</Link>
           <Link href={MESSAGE_TEMPLATE_ROUTE} class="link link--large">Message Templates</Link>
