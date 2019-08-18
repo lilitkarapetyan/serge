@@ -6,7 +6,6 @@ import { currentViewURIReducer } from "../ActionsAndReducers/setCurrentViewFromU
 import { umpireMenuReducer } from "../ActionsAndReducers/UmpireMenu/umpireMenu_Reducer";
 import { wargamesReducer } from "../ActionsAndReducers/dbWargames/wargames_Reducer";
 import { notificationReducer } from "../ActionsAndReducers/Notification/Notification_Reducer";
-import { playerUiReducer } from "../ActionsAndReducers/playerUi/playerUi_Reducer";
 import { loadingDbReducer } from "../ActionsAndReducers/loadingDb_Reducer";
 import { exportItems } from "../ActionsAndReducers/ExportItems/ExportItems_Reducer";
 import { gameInfo } from "../ActionsAndReducers/sergeInfo/sergeInfo_Reducer";
@@ -28,7 +27,6 @@ export default createStore(combineReducers({
   currentModal,
   notifications: notificationReducer,
   wargame: wargamesReducer,
-  playerUi: playerUiReducer,
   dbLoading: loadingDbReducer,
   exportItems,
   gameInfo,

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import RouterDashboard from "./RouterDashboard";
-import PlayerUi from "../../Views/PlayerUi";
+import PlayerUiWrapper from "../../Views/PlayerUiWrapper";
 import DemoScreen from "../../Views/DemoScreen";
 import {
   ADMIN_ROUTE,
@@ -11,7 +11,7 @@ import {
 
 const components = {
   [ADMIN_ROUTE]: <RouterDashboard/>,
-  [PLAYERUI_ROUTE]: <PlayerUi/>,
+  [PLAYERUI_ROUTE]: <PlayerUiWrapper/>,
   [DEMO_ROUTE]: <DemoScreen/>,
 };
 

@@ -68,7 +68,6 @@ export const openTour = (isOpen) => ({
   isOpen,
 });
 
-
 export const startListening = (dbName) => {
   return (dispatch) => {
     wargamesApi.listenForWargameChanges(dbName, dispatch);
@@ -77,18 +76,14 @@ export const startListening = (dbName) => {
 
 export const initiateGame = (dbName) => {
   return async (dispatch) => {
-
     let wargame = await wargamesApi.initiateGame(dbName);
-
     dispatch(setCurrentWargame(wargame));
   }
 };
 
 export const getWargame = (gamePath) => {
   return async (dispatch) => {
-
     let wargame = await wargamesApi.getWargame(gamePath);
-
     if (isError(wargame)) {
       dispatch(addNotification("Serge disconnected", "error"));
     } else {
@@ -103,7 +98,6 @@ export const nextGameTurn = (dbName) => {
   }
 };
 
-
 export const sendFeedbackMessage = (dbName, fromDetails, message) => {
   return async (dispatch) => {
 
@@ -115,9 +109,7 @@ export const sendFeedbackMessage = (dbName, fromDetails, message) => {
 
 export const failedLoginFeedbackMessage = (dbName, password) => {
   return async () => {
-
     let address = await wargamesApi.getIpAddress();
-
     let from = {
       force: address.ip,
       forceColor: '#970000',
@@ -125,36 +117,27 @@ export const failedLoginFeedbackMessage = (dbName, password) => {
       name: password,
     };
     await wargamesApi.postFeedback(dbName, from, "A failed login attempt has been made.")
-
   }
 };
 
 export const saveMessage = (dbName, details, message) => {
   return async () => {
-
     await wargamesApi.postNewMessage(dbName, details, message);
-
   }
 };
 
-
 export const getAllWargameFeedback = (dbName) => {
   return async (dispatch) => {
-
     let messages = await wargamesApi.getAllMessages(dbName);
     messages = messages.filter((message) => message.hasOwnProperty('feedback'));
-
     dispatch(setWargameFeedback(messages));
   }
 };
 
 export const getAllWargameMessages = (name) => {
   return async (dispatch) => {
-
     let messages = await wargamesApi.getAllMessages(name);
-
     messages = messages.filter((message) => !message.hasOwnProperty('feedback'));
-
     dispatch(setWargameMessages(messages));
   }
 };
