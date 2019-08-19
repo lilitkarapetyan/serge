@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import classNames from "classnames";
 import { showHideObjectives } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
-// import TurnProgression from "../Components/TurnProgression";
+import TurnProgression from "../Components/TurnProgression";
 // import ChannelTabsContainer from "./ChannelTabsContainer";
 // import AdminAndInsightsTabsContainer from "./AdminAndInsightsTabsContainer";
 import { PlayerStateContext } from "../Store/PlayerUi";
@@ -34,7 +34,7 @@ class GameChannels extends Component {
           {/*<ChannelTabsContainer />*/}
         </div>
         <div className={classNames({"message-feed": true, "out-of-game-feed": true, "umpire-feed": state.controlUi})} data-tour="fifth-step">
-          {/*<TurnProgression />*/}
+          <TurnProgression />
           {/*<AdminAndInsightsTabsContainer />*/}
         </div>
         { state.showObjective &&
