@@ -1,55 +1,51 @@
-import React, { Component } from 'react';
-import { connect } from "react-redux";
-
+import React, { Component } from "react";
+import { CHAT_CHANNEL_ID, expiredStorage, LOCAL_STORAGE_TIMEOUT } from "../consts";
 import MessageCreatorChatChannel from "../Components/MessageCreatorChatChannel";
 import MessagesListChatChannel from "./MessagesListChatChannel";
-
-import {CHAT_CHANNEL_ID, expiredStorage, LOCAL_STORAGE_TIMEOUT} from "../consts";
-import '../scss/App.scss';
-import Collapsible from "react-collapsible";
 import MessagesListRenderProp from "./MessagesListRenderProp";
-
+import { PlayerStateContext } from "../Store/PlayerUi";
+import "../scss/App.scss";
 
 class GameAdmin extends Component {
+  static contextType = PlayerStateContext;
 
-  constructor(props) {
+  constructor(props, context) {
     super(props);
-
+    const [ state ] = context;
     this.state = {
-      activeTab: Object.keys(this.props.playerUi.channels)[0],
+      activeTab: Object.keys(state.channels)[0],
       allMarkedRead: false,
       showObjectives: false,
     };
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
-    let channelLength = Object.keys(this.props.playerUi.chatChannel.messages).length;
-    let nextChannelLength = Object.keys(nextProps.playerUi.chatChannel.messages).length;
+  componentDidMount() {
+    const [ state ] = this.context;
+    let channelLength = Object.keys(state.chatChannel.messages).length;
 
-    if (channelLength !== nextChannelLength) {
+    if (channelLength) {
       this.setState({allMarkedRead: false});
     }
-
   }
 
   markAllAsRead = () => {
-    this.props.playerUi.chatChannel.messages.forEach((message) => {
-      expiredStorage.setItem(this.props.playerUi.currentWargame + message._id, "read", LOCAL_STORAGE_TIMEOUT);
+    const [ state ] = this.context;
+    state.chatChannel.messages.forEach((message) => {
+      expiredStorage.setItem(state.currentWargame + message._id, "read", LOCAL_STORAGE_TIMEOUT);
     });
     this.setState({
       allMarkedRead: true,
     })
   };
 
-
   render() {
-
+    const [ state ] = this.context;
     return (
       <>
         <MessagesListRenderProp
           curChannel={CHAT_CHANNEL_ID}
-          messages={this.props.playerUi.chatChannel.messages}
-          userId={`${this.props.playerUi.wargameTitle}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}`}
+          messages={state.chatChannel.messages}
+          userId={`${state.wargameTitle}-${state.selectedForce}-${state.selectedRole}`}
           allMarkedRead={this.state.allMarkedRead}
           render={messages => (
             <MessagesListChatChannel
@@ -62,7 +58,7 @@ class GameAdmin extends Component {
         <div className="new-message-creator wrap" data-tour="seventh-step">
           <MessageCreatorChatChannel
               curChannel={CHAT_CHANNEL_ID}
-              schema={this.props.playerUi.chatChannel.template}
+              schema={state.chatChannel.template}
           />
         </div>
       </>
@@ -70,8 +66,4 @@ class GameAdmin extends Component {
   }
 }
 
-const mapStateToProps = ({ playerUi }) => ({
-  playerUi,
-});
-
-export default connect(mapStateToProps)(GameAdmin);
+export default GameAdmin;

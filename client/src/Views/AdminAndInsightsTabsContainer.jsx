@@ -1,18 +1,13 @@
-import React, { Component } from 'react';
-import { connect } from "react-redux";
+import React, { Component } from "react";
 import FlexLayout from "flexlayout-react";
 import GameAdmin from "./GameAdmin";
 import InsightsChannel from "./InsightsChannel";
+import { showHideObjectives } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
+import { PlayerStateContext } from "../Store/PlayerUi";
 import "../scss/dependencies/flexlayout-react.scss";
-import '../scss/App.scss';
+import "../scss/App.scss";
 
-
-import {
-  showHideObjectives
-} from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
-import _ from "lodash";
-
-var json = {
+const json = {
   global: {
     tabSetTabStripHeight: 45,
     tabEnableClose: false,
@@ -28,13 +23,11 @@ var json = {
   }
 };
 
-
-
 class AdminAndInsightsTabsContainer extends Component {
+  static contextType = PlayerStateContext;
 
   constructor(props) {
     super(props);
-
     this.state = {
       gameAdmin: 'Game Admin',
       insights: 'Insights',
@@ -43,22 +36,22 @@ class AdminAndInsightsTabsContainer extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.addTabs();
   }
 
   addTabs() {
+    const [ state ] = this.context;
     this.state.model.doAction(
       FlexLayout.Actions.addNode({type: "tab", component: this.state.gameAdmin, name: this.state.gameAdmin, id: this.state.gameAdmin}, "#2", FlexLayout.DockLocation.CENTER, -1)
     );
 
-    if (this.props.playerUi.isInsightViewer) {
+    if (state.isInsightViewer) {
       this.state.model.doAction(
         FlexLayout.Actions.addNode({type: "tab", component: this.state.insights, name: this.state.insights, id: this.state.insights}, "#2", FlexLayout.DockLocation.CENTER, -1)
       );
     }
   }
-
 
   factory = (node) => {
     if (node.getName() === this.state.gameAdmin) {
@@ -69,14 +62,14 @@ class AdminAndInsightsTabsContainer extends Component {
     }
   };
 
-
   showHideForceObjectives = () => {
-    this.props.dispatch(showHideObjectives());
+    const [ , dispatch ] = this.context;
+    dispatch(showHideObjectives());
   };
 
   render() {
-
-    let force = this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce);
+    const [ state ] = this.context;
+    let force = state.allForces.find((force) => force.uniqid === state.selectedForce);
 
     return (
       <>
@@ -85,7 +78,7 @@ class AdminAndInsightsTabsContainer extends Component {
           factory={this.factory}
         />
         <div className="role-info" style={{ backgroundColor: force.color, }} data-tour="second-step">
-          <span className="role-type">{ this.props.playerUi.selectedRole }</span>
+          <span className="role-type">{ state.selectedRole }</span>
           <div className="contain-force-skin">
             <div className="force-skin">
               <span className="force-type">{ force.name }</span>
@@ -98,8 +91,4 @@ class AdminAndInsightsTabsContainer extends Component {
   }
 }
 
-const mapStateToProps = ({ playerUi }) => ({
-  playerUi,
-});
-
-export default connect(mapStateToProps)(AdminAndInsightsTabsContainer);
+export default AdminAndInsightsTabsContainer;

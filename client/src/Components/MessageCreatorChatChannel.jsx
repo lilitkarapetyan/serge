@@ -1,37 +1,32 @@
-import React, { Component } from 'react';
-
-import { connect } from "react-redux";
-
-import JSONEditor from '@json-editor/json-editor';
-import '../scss/App.scss';
-
-import {
-  saveMessage,
-} from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
+import React, { Component } from "react";
+import JSONEditor from "@json-editor/json-editor";
+import { saveMessage } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
+import { PlayerStateContext } from "../Store/PlayerUi";
+import "../scss/App.scss";
 
 class JsonCreator extends Component {
+  static contextType = PlayerStateContext;
 
   constructor(props) {
     super(props);
 
     this.editor = null;
     this.editorPreviewRef = React.createRef();
-
     this.state = {
       selectedSchema: ''
     };
   }
 
   sendMessage = () => {
-
-    let curForce = this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce);
+    const [ state, dispatch ] = this.context;
+    let curForce = state.allForces.find((force) => force.uniqid === state.selectedForce);
 
     let messageDetails = {
-      channel: this.props.playerUi.chatChannel.name,
+      channel: state.chatChannel.name,
       from: {
         force: curForce.name,
-        forceColor: this.props.playerUi.forceColor,
-        role: this.props.playerUi.selectedRole,
+        forceColor: state.forceColor,
+        role: state.selectedRole,
         icon: curForce.icon,
       },
       messageType: this.props.schema.title,
@@ -40,20 +35,20 @@ class JsonCreator extends Component {
 
     if (this.editor.getValue().content === "") return;
 
-    this.props.dispatch(saveMessage(this.props.playerUi.currentWargame, messageDetails, this.editor.getValue()));
+    dispatch(saveMessage(state.currentWargame, messageDetails, this.editor.getValue()));
   };
 
-  componentWillReceiveProps(nextProps, nextContext) {
+  componentDidMount() {
     if (this.editor) {
       this.editor.destroy();
       this.editor = null;
     }
 
-    if (nextProps.schema && nextProps.schema.type) {
+    if (this.props.schema && this.props.schema.type) {
         if (this.editor) return;
 
       this.editor = new JSONEditor(this.editorPreviewRef.current, {
-        schema: nextProps.schema,
+        schema: this.props.schema,
         theme: 'bootstrap4',
         disable_collapse: true,
         disable_edit_json: true,
@@ -77,8 +72,4 @@ class JsonCreator extends Component {
   }
 }
 
-const mapStateToProps = ({ playerUi }) => ({
-  playerUi
-});
-
-export default connect(mapStateToProps)(JsonCreator);
+export default JsonCreator;

@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { showHideObjectives } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 import TurnProgression from "../Components/TurnProgression";
 import ChannelTabsContainer from "./ChannelTabsContainer";
-// import AdminAndInsightsTabsContainer from "./AdminAndInsightsTabsContainer";
+import AdminAndInsightsTabsContainer from "./AdminAndInsightsTabsContainer";
 import { PlayerStateContext } from "../Store/PlayerUi";
 import "../scss/App.scss";
 
@@ -35,7 +35,7 @@ class GameChannels extends Component {
         </div>
         <div className={classNames({"message-feed": true, "out-of-game-feed": true, "umpire-feed": state.controlUi})} data-tour="fifth-step">
           <TurnProgression />
-          {/*<AdminAndInsightsTabsContainer />*/}
+          <AdminAndInsightsTabsContainer />
         </div>
         { state.showObjective &&
           <div className="force-objectives" style={{borderColor: state.forceColor}}>
