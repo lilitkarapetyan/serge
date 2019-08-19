@@ -30,6 +30,9 @@ class Channel extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      allMarkedRead: false,
+    };
   }
 
   componentWillMount() {
