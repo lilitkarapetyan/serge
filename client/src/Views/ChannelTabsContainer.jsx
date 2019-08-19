@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
-import { connect } from "react-redux";
+import React, { Component } from "react";
 import FlexLayout from "flexlayout-react";
 import Channel from "../Components/Channel";
 import _ from "lodash";
+import { expiredStorage, LOCAL_STORAGE_TIMEOUT } from "../consts";
+import { getAllWargameMessages } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
+import { PlayerStateContext } from "../Store/PlayerUi";
 import "../scss/dependencies/flexlayout-react.scss";
-import '../scss/App.scss';
-import {getAllWargameMessages} from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
+import "../scss/App.scss";
 
-import {expiredStorage, LOCAL_STORAGE_TIMEOUT} from "../consts";
-
-var json = {
+const json = {
   global: {
     tabSetTabStripHeight: 45,
     tabEnableClose: false,
@@ -24,30 +23,24 @@ var json = {
   }
 };
 
-
-
 class ChannelTabsContainer extends Component {
+  static contextType = PlayerStateContext;
 
-  constructor(props) {
+  constructor(props, context) {
     super(props);
-
-    let modelName = `FlexLayout-model-${this.props.playerUi.wargameTitle}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}`;
-
+    const [ state, dispatch ] = context;
+    let modelName = `FlexLayout-model-${state.wargameTitle}-${state.selectedForce}-${state.selectedRole}`;
     let model = expiredStorage.getItem(modelName);
-
     this.model = model ? FlexLayout.Model.fromJson(JSON.parse(model)) : FlexLayout.Model.fromJson(json);
-
-    this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
-
     this.state = {
       modelName,
     };
+    dispatch(getAllWargameMessages(state.currentWargame));
   }
 
-
-  componentWillReceiveProps(nextProps, nextContext) {
-
-    let channels = nextProps.playerUi.channels;
+  componentDidMount() {
+    const [ state ] = this.context;
+    let channels = state.channels;
     let channelNames = [];
 
     for (let channelId in channels) {
@@ -57,10 +50,8 @@ class ChannelTabsContainer extends Component {
     let modelTabs = Object.values(this.model._idMap)
       .filter((node) => node._attributes.type === "tab")
       .map((node) => ({ id: node._attributes.id, name: node._attributes.name }));
-
     let newChannels = _.differenceBy(channelNames, modelTabs, (channel) => channel.id);
     let channelsToRemove = _.differenceBy(modelTabs, channelNames, (channel) => channel.id);
-
     let matchingChannels = _.intersectionBy(channelNames, modelTabs, (item) => item.id);
     let channelsToRename = _.differenceBy(matchingChannels, modelTabs, (item) => item.name);
 
@@ -77,11 +68,8 @@ class ChannelTabsContainer extends Component {
     }
   }
 
-
   addToTabs(newChannels) {
-
     let modelTabs = Object.values(this.model._idMap);
-
     let tabsetMatch = modelTabs.find((tab) => tab._attributes.type === "tabset");
     let tabsetId = tabsetMatch._attributes.id;
     newChannels.forEach((channel) => {
@@ -94,7 +82,6 @@ class ChannelTabsContainer extends Component {
   }
 
   removeFromTabs(channelsToRemove) {
-
     channelsToRemove.forEach((channel) => {
       if (this.model._idMap[channel.id]) {
         this.model.doAction(
@@ -121,11 +108,10 @@ class ChannelTabsContainer extends Component {
   }
 
   factory = (node) => {
-
-    if (_.isEmpty(this.props.playerUi.channels)) return;
-    let curChannelEntry = Object.entries(this.props.playerUi.channels).find((entry) => entry[1].name === node.getName());
+    const [ state ] = this.context;
+    if (_.isEmpty(state.channels)) return;
+    let curChannelEntry = Object.entries(state.channels).find((entry) => entry[1].name === node.getName());
     return <Channel channel={curChannelEntry[0]} />
-
   };
 
   modelChanged = () => {
@@ -133,10 +119,10 @@ class ChannelTabsContainer extends Component {
   };
 
   tabRender = (node) => {
+    const [ state ] = this.context;
+    if (_.isEmpty(state.channels)) return;
 
-    if (_.isEmpty(this.props.playerUi.channels)) return;
-
-    let channel = Object.entries(this.props.playerUi.channels).find((entry) => entry[1].name === node.getName())[1];
+    let channel = Object.entries(state.channels).find((entry) => entry[1].name === node.getName())[1];
 
     if (node._attributes.className !== "" && channel.unreadMessageCount === 0) {
       node.getModel().doAction(FlexLayout.Actions.updateNodeAttributes(node.getId(), {className: ""}));
@@ -171,15 +157,6 @@ class ChannelTabsContainer extends Component {
   };
 
   render() {
-
-    // if (_.isEmpty(this.props.playerUi.channels)) {
-    //   return (
-    //     <div className="no-channel-notification">
-    //       <h1>No Channels subscribed to.</h1>
-    //     </div>
-    //   )
-    // }
-
     return (
       <>
         <FlexLayout.Layout
@@ -193,8 +170,4 @@ class ChannelTabsContainer extends Component {
   }
 }
 
-const mapStateToProps = ({ playerUi }) => ({
-  playerUi,
-});
-
-export default connect(mapStateToProps)(ChannelTabsContainer);
+export default ChannelTabsContainer;
