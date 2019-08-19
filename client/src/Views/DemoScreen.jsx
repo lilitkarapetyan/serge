@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import { connect } from "react-redux";
+import React, { Component } from "react";
 import FlexLayout from "flexlayout-react";
 import RouterDashboard from "../Components/Router/RouterDashboard";
-import PlayerUi from "./PlayerUi";
+import PlayerUiWrapper from "./PlayerUiWrapper";
 import "../scss/dependencies/flexlayout-react.scss";
 import '../scss/App.scss';
 
@@ -103,7 +102,7 @@ class DemoScreen extends Component {
     const component = node.getComponent();
     const sources = {
       'game-designer': <RouterDashboard/>,
-      'player': <PlayerUi/>,
+      'player': <PlayerUiWrapper/>,
     };
     return sources[component];
   };
