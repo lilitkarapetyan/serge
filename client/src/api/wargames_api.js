@@ -1,11 +1,12 @@
 import uniqid from "uniqid";
 import _ from "lodash";
-import {fetch} from "whatwg-fetch";
 import deepCopy from "../Helpers/copyStateHelper";
 
 import calcComplete from "../Helpers/calcComplete";
 
 import PouchDB from "pouchdb";
+import pouchAllDBs from 'pouchdb-all-dbs';
+
 import {
   databasePath,
   serverPath,
@@ -28,6 +29,8 @@ import moment from "moment";
 import {addNotification} from "../ActionsAndReducers/Notification/Notification_ActionCreators";
 
 var wargameDbStore = [];
+
+pouchAllDBs(PouchDB);
 
 const listenNewMessage = ({db, name, dispatch}) => {
 
@@ -65,11 +68,9 @@ export const listenForWargameChanges = (name, dispatch) => {
 
 
 export const populateWargame = (dispatch) => {
-  return fetch(serverPath+'allDbs')
-    .then((response) => {
-      return response.json();
-    })
-    .then((dbs) => {
+  return PouchDB.allDbs()
+    .then(dbs => dbs.filter(dbName => dbName.match(/wargame/)))
+    .then(dbs => {
       const wargameNames = wargameDbStore.map((db) => db.name);
       let toCreate = _.difference(dbs, wargameNames);
       toCreate = _.pull(toCreate, MSG_STORE, MSG_TYPE_STORE, SERGE_INFO, "_replicator", "_users");
@@ -102,24 +103,37 @@ export const populateWargame = (dispatch) => {
 };
 
 export const clearWargames = () => {
-  fetch(serverPath+'clearAll')
-    .then(() => {
-      window.location.reload(true);
-    });
+  return PouchDB.allDbs()
+    .then(dbs => dbs.filter(dbName => (dbName.match(/wargame/) || dbName.match(/all_dbs/))))
+    .then(dbs => {
+      // dbs.push(databasePath+MSG_TYPE_STORE);
+      // dbs.push(databasePath+MSG_STORE);
+      // dbs.push(databasePath+SERGE_INFO);
+      dbs.forEach((db, key) => {
+        new PouchDB(db).destroy().then(() => {
+          if(key === dbs.length-1) window.location.reload(true);
+        });
+      })
+    })
 };
 
 export const getIpAddress = () => {
-  return fetch(serverPath+'getIp')
-    .then((res) => res.json());
+  return {ip: "localhost"}
 };
 
 export const saveIcon = (file) => {
-  return fetch(serverPath+'saveIcon', {
-    method: 'POST',
-    "Content-Type": "image/png",
-    body: file,
-  })
-    .then((res) => res.json());
+  return new Promise((resolve, reject) => {
+    let fr = new FileReader();
+    fr.onload = e => {
+      if(e.target.result) {
+        resolve({path: e.target.result});
+      }
+      else {
+        reject(e.target.error);
+      }
+    };
+    fr.readAsDataURL(file);
+  });
 };
 
 export const deleteWargame = (wargamePath) => {
@@ -902,7 +916,10 @@ export const getAllWargames = function () {
 };
 
 const getNameFromPath = function (dbPath) {
-  let path = new URL(dbPath).pathname;
-  let index = path.lastIndexOf('/');
-  return path.substring(index + 1);
+  if(serverPath.length) {
+    let path = new URL(dbPath).pathname;
+    let index = path.lastIndexOf('/');
+    return path.substring(index + 1)
+  }
+  return dbPath;
 };

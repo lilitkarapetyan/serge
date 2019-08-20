@@ -4,7 +4,6 @@ import {
   SERGE_INFO,
   defaultGameInfo, serverPath
 } from "../consts";
-import {fetch} from "whatwg-fetch";
 
 const LOCAL_DOC = "_local/settings";
 
@@ -61,10 +60,16 @@ export const saveGameInformation = ({title, description, imageUrl}) => {
 };
 
 export const saveLogo = (file) => {
-  return fetch(serverPath+'saveLogo', {
-    method: 'POST',
-    "Content-Type": "image/png",
-    body: file,
-  })
-    .then((res) => res.json());
+  return new Promise((resolve, reject) => {
+    let fr = new FileReader();
+    fr.onload = e => {
+      if(e.target.result) {
+        resolve({path: e.target.result});
+      }
+      else {
+        reject(e.target.error);
+      }
+    };
+    fr.readAsDataURL(file);
+  });
 };

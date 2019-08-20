@@ -10,7 +10,7 @@ it's under gitignore and you don't need change this value before every deploymen
 REACT_APP_SERVER_PATH='http://localhost:8080/'
 */
 
-export const databasePath = `${serverPath}db/`;
+export const databasePath = '';
 
 export const DEFAULT_SERVER = "Nelson";
 export const DEFAULT_PORT = "8080";

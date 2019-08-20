@@ -128,7 +128,7 @@ class WargameSearchList extends Component {
       <div className="wargame-searchlist">
         <input type="text" className="searchlist-input" key="search-templates" placeholder="Search games" onChange={ this.filterMessages } value={this.state.searchInput} />
         <div className="searchlist-list">
-          { list.map(function(db) {
+          { list && list.map(function(db) {
             // let active
             return (
               <span

@@ -9,7 +9,7 @@ const PouchDB = require('pouchdb-core')
   .plugin(require('pouchdb-mapreduce'))
   .plugin(require('pouchdb-replication'))
   .defaults({
-    prefix: 'db/',
+    prefix: '',
     adapter: 'websql'
   });
 
