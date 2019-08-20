@@ -13,6 +13,9 @@ The Serge application runs with a NodeJS backend server. When a NodeJS applicati
 5. Unzip the installation on the destination PC
 6. From the top level folder, run `npm run offline-install` - this will install the dependencies in the correct locations
 
+### Installing as a service
+On a MS Windows PC, Serge can be installed as a service - meaning it starts whenever that machine starts.  Perform this by executing `installSergeService.bat`.  Windows will popup up a series of confirmation boxes to approve the installation. On completion, Serge will be installed under MS Windows as `Serge Server`.   You can find the script to uninstall the service.  It's not imaginagively named.
+
 ### For development
 The live demo version of Serge requires a hard-coded path to the backend server.
 
