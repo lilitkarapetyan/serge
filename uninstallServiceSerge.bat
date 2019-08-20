@@ -1,3 +1,3 @@
-echo "Uninstalling service..."
-start "uninstall service - Serge server" node uninstallServiceSerge.js
-echo "Service uninstalled."
+@echo "Uninstalling service..."
+node uninstallServiceSerge.js
+@echo "Service uninstalled."
