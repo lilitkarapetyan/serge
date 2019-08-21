@@ -93,16 +93,14 @@ export const getWargame = (gamePath) => {
 };
 
 export const nextGameTurn = (dbName) => {
-  return async (dispatch) => {
+  return async () => {
     await wargamesApi.nextGameTurn(dbName);
   }
 };
 
 export const sendFeedbackMessage = (dbName, fromDetails, message) => {
   return async (dispatch) => {
-
     await wargamesApi.postFeedback(dbName, fromDetails, message);
-
     dispatch(modalAction.close());
   }
 };

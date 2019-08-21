@@ -26,7 +26,7 @@ class InsightsChannel extends Component {
       this.setState({allMarkedRead: false});
     }
 
-    dispatch(getAllWargameFeedback(state.currentWargame));
+    getAllWargameFeedback(state.currentWargame)(dispatch);
   }
 
   markAllAsRead = () => {

@@ -7,8 +7,8 @@ class GameControls extends Component {
   static contextType = PlayerStateContext;
 
   nextTurn = () => {
-    const [ state, dispatch ] = this.context;
-    dispatch(nextGameTurn(state.currentWargame));
+    const [ state ] = this.context;
+    nextGameTurn(state.currentWargame);
   };
 
   render() {
