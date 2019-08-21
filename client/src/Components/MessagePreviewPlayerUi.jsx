@@ -1,19 +1,18 @@
-import React, { Component } from 'react';
-import {connect} from 'react-redux';
-
-import '../scss/App.scss';
+import React, { Component } from "react";
 import check from "check-types";
 import moment from "moment";
+import { faUserSecret } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { umpireForceTemplate } from "../consts";
 import isValidUrl from "../Helpers/isValidUrl";
 import lineBreak from "../Helpers/splitNewLineBreak";
-import {
-  faUserSecret
-} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {umpireForceTemplate} from "../consts";
+import { PlayerStateContext } from "../Store/PlayerUi";
+import "../scss/App.scss";
+
 const Fragment = React.Fragment;
 
 class MessagePreview extends Component {
+  static contextType = PlayerStateContext;
 
   createObjItem(pair) {
     const that = this;
@@ -82,12 +81,10 @@ class MessagePreview extends Component {
 
 
   deconstructObj(obj) {
-
     const that = this;
     const keyPropPairs = Object.entries(obj);
 
     return keyPropPairs.map((pair, i) => {
-
       if (check.object(pair[1])) return that.createObjItem(pair);
       if (check.array.of.object(pair[1])) return that.deconstructArr(pair);
       if (check.boolean(pair[1])) return that.createBoolItem(pair);
@@ -104,13 +101,12 @@ class MessagePreview extends Component {
     return s.charAt(0).toUpperCase() + s.slice(1);
   };
 
-
   render() {
-
     if (!this.props.detail) return false;
 
     const that = this;
     const keyPropPairs = Object.entries(this.props.detail);
+    const [ state ] = this.context;
 
     return (
       <>
@@ -130,7 +126,7 @@ class MessagePreview extends Component {
           );
         })}
         {this.props.privateMessage &&
-         this.props.playerUi.selectedForce === umpireForceTemplate.uniqid && (
+         state.selectedForce === umpireForceTemplate.uniqid && (
             <>
               <span className="detail">
                 <FontAwesomeIcon size="1x" icon={faUserSecret}/>
@@ -145,8 +141,4 @@ class MessagePreview extends Component {
   }
 }
 
-const mapStateToProps = ({ playerUi }) => ({
-  playerUi
-});
-
-export default connect(mapStateToProps)(MessagePreview);
+export default MessagePreview;

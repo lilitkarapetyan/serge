@@ -35,10 +35,18 @@ class ChannelTabsContainer extends Component {
     this.state = {
       modelName,
     };
-    dispatch(getAllWargameMessages(state.currentWargame));
+    getAllWargameMessages(state.currentWargame)(dispatch);
   }
 
   componentDidMount() {
+    this.computeTabs();
+  }
+
+  componentDidUpdate() {
+    this.computeTabs();
+  }
+
+  computeTabs() {
     const [ state ] = this.context;
     let channels = state.channels;
     let channelNames = [];
@@ -48,8 +56,8 @@ class ChannelTabsContainer extends Component {
     }
 
     let modelTabs = Object.values(this.model._idMap)
-      .filter((node) => node._attributes.type === "tab")
-      .map((node) => ({ id: node._attributes.id, name: node._attributes.name }));
+        .filter((node) => node._attributes.type === "tab")
+        .map((node) => ({ id: node._attributes.id, name: node._attributes.name }));
     let newChannels = _.differenceBy(channelNames, modelTabs, (channel) => channel.id);
     let channelsToRemove = _.differenceBy(modelTabs, channelNames, (channel) => channel.id);
     let matchingChannels = _.intersectionBy(channelNames, modelTabs, (item) => item.id);

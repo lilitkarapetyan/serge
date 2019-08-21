@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import '../scss/App.scss';
-
-import MessageCreator from "../Components/MessageCreator.jsx";
 import Collapsible from "react-collapsible";
+import MessageCreator from "../Components/MessageCreator.jsx";
 import DropdownInput from "../Components/Inputs/DropdownInput";
+import "../scss/App.scss";
 
 class NewMessage extends Component {
-
   constructor(props) {
     super(props);
 
@@ -45,9 +43,7 @@ class NewMessage extends Component {
 
 
   render() {
-
     const templates = this.props.templates.map((item) => ({value: JSON.stringify(item.details), option: item.title }));
-
     let classes = "new-message-creator wrap";
     if (this.props.orderableChannel) classes += " new-message-orderable";
 

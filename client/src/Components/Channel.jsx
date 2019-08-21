@@ -1,82 +1,45 @@
-import React, { Component } from 'react';
-import { connect } from "react-redux";
+import React, { Component } from "react";
+import { umpireForceTemplate } from "../consts";
 import MessageListItem from "../Components/MessageListItem";
 import NewMessage from "./NewMessage";
-import '../scss/App.scss';
 import {
   closeMessage,
   getAllWargameMessages,
   openMessage,
-  markAllAsRead, saveMessage, bulkPost,
+  markAllAsRead,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
-
-import {LOCAL_STORAGE_TIMEOUT, expiredStorage} from "../consts";
-import { umpireForceTemplate } from "../consts";
-
-import {LoremIpsum} from "lorem-ipsum";
-
-const lorem = new LoremIpsum({
-  sentencesPerParagraph: {
-    max: 8,
-    min: 4
-  },
-  wordsPerSentence: {
-    max: 16,
-    min: 4
-  }
-});
+import { PlayerStateContext } from "../Store/PlayerUi";
+import "../scss/App.scss";
 
 class Channel extends Component {
+  static contextType = PlayerStateContext;
 
   constructor(props) {
     super(props);
   }
 
-  componentWillMount() {
-    if (this.props.playerUi.channels[this.props.channel].messages.length === 0) {
-      this.props.dispatch(getAllWargameMessages(this.props.playerUi.currentWargame));
+  componentDidMount() {
+    const [ state, dispatch ] = this.context;
+
+    if (state.channels[this.props.channel].messages.length === 0) {
+      getAllWargameMessages(state.currentWargame)(dispatch);
     }
   }
 
   markAllRead = () => {
-    this.props.dispatch(markAllAsRead(this.props.channel));
+    const [ , dispatch ] = this.context;
+    dispatch(markAllAsRead(this.props.channel));
   };
 
   openMessage = (message) => {
-    this.props.dispatch(openMessage(this.props.channel, message));
+    const [ , dispatch ] = this.context;
+    dispatch(openMessage(this.props.channel, message));
   };
 
   closeMessage = (message) => {
-    this.props.dispatch(closeMessage(this.props.channel, message));
+    const [ , dispatch ] = this.context;
+    dispatch(closeMessage(this.props.channel, message));
   };
-
-  // sendMultiple = () => {
-  //
-  //   let count = 0;
-  //   const tenMessages = setInterval(() => {
-  //     count++;
-  //     let details = {
-  //       channel: this.props.channel,
-  //       from: {
-  //         force: this.props.playerUi.selectedForce.name,
-  //         forceColor: this.props.playerUi.forceColor,
-  //         role: this.props.playerUi.selectedRole,
-  //         icon: "",
-  //       },
-  //       messageType: "Volume test",
-  //       timestamp: new Date().toISOString(),
-  //     };
-  //
-  //     let message = {
-  //       content: lorem.generateSentences(Math.floor(Math.random()*10))
-  //     };
-  //
-  //     this.props.dispatch(saveMessage(this.props.playerUi.currentWargame, details, message));
-  //
-  //     if (count === 100) clearInterval(tenMessages);
-  //
-  //   }, 100);
-  // };
 
   render() {
 
@@ -84,19 +47,19 @@ class Channel extends Component {
     // <button name="Send 10 messages" className="btn btn-action btn-action--secondary" onClick={this.sendMultiple}>Send Multiple</button>
     // <span className="btn-helper">{this.props.playerUi.channels[curChannel].messages.length}</span>
 
-
     let curChannel = this.props.channel;
+    const [ state ] = this.context;
 
     return (
       <>
         <div className="forces-in-channel">
-          {this.props.playerUi.channels[curChannel].forceIcons.map((url, i) => <img key={`indicator${i}`} className="force-indicator role-icon" src={url} alt="" />)}
+          {state.channels[curChannel].forceIcons.map((url, i) => <img key={`indicator${i}`} className="force-indicator role-icon" src={url} alt="" />)}
           <button name="mark as read" className="btn btn-action btn-action--secondary" onClick={this.markAllRead}>Mark all read</button>
         </div>
 
         <div className="message-list">
 
-          {this.props.playerUi.channels[curChannel].messages.map((item, i) => {
+          {state.channels[curChannel].messages.map((item, i) => {
 
             if (item.infoType) {
               return <p className="turn-marker" key={`${item.gameTurn}-turnmarker`}>Turn {item.gameTurn}</p>
@@ -106,7 +69,7 @@ class Channel extends Component {
                 detail={item}
                 key={`${item._id}-messageitem`}
                 allMarkedRead={this.state.allMarkedRead}
-                userId={`${this.props.playerUi.currentWargame}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}`}
+                userId={`${state.currentWargame}-${state.selectedForce}-${state.selectedRole}`}
                 open={this.openMessage}
                 close={this.closeMessage}
               />
@@ -114,12 +77,12 @@ class Channel extends Component {
           })}
         </div>
         {
-          this.props.playerUi.channels[curChannel].observing === false &&
+          state.channels[curChannel].observing === false &&
           <NewMessage
             orderableChannel={true}
             curChannel={curChannel}
-            privateMessage={this.props.playerUi.selectedForce === umpireForceTemplate.uniqid}
-            templates={this.props.playerUi.channels[curChannel].templates}
+            privateMessage={state.selectedForce === umpireForceTemplate.uniqid}
+            templates={state.channels[curChannel].templates}
           />
         }
       </>
@@ -127,8 +90,4 @@ class Channel extends Component {
   }
 }
 
-const mapStateToProps = ({ playerUi }) => ({
-  playerUi,
-});
-
-export default connect(mapStateToProps)(Channel);
+export default Channel;

@@ -1,44 +1,33 @@
-import React, { Component } from 'react';
-
-import { connect } from "react-redux";
-
-import JSONEditor from '@json-editor/json-editor';
-import '../scss/App.scss';
-
-import {
-  saveMessage,
-} from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
-
-import {
-  faUserSecret
-} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import React, { Component } from "react";
+import JSONEditor from "@json-editor/json-editor";
+import { faUserSecret } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { saveMessage } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
+import { PlayerStateContext } from "../Store/PlayerUi";
+import "../scss/App.scss";
 
 class JsonCreator extends Component {
+  static contextType = PlayerStateContext;
 
   constructor(props) {
     super(props);
-
     this.editor = null;
     this.editorPreviewRef = React.createRef();
     this.privateMessageRef = React.createRef();
-
-
     this.state = {
       selectedSchema: ''
     };
   }
 
   sendMessage = () => {
-
-    let curForce = this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce);
-
+    const [ state ] = this.context;
+    let curForce = state.allForces.find((force) => force.uniqid === state.selectedForce);
     let details = {
       channel: this.props.curChannel,
       from: {
         force: curForce.name,
-        forceColor: this.props.playerUi.forceColor,
-        role: this.props.playerUi.selectedRole,
+        forceColor: state.forceColor,
+        role: state.selectedRole,
         icon: curForce.icon,
       },
       messageType: this.props.schema.title,
@@ -52,7 +41,7 @@ class JsonCreator extends Component {
 
     if (this.editor.getValue().content === "") return;
 
-    this.props.dispatch(saveMessage(this.props.playerUi.currentWargame, details, this.editor.getValue()));
+    saveMessage(state.currentWargame, details, this.editor.getValue());
 
     this.editor.destroy();
     this.editor = null;
@@ -60,7 +49,6 @@ class JsonCreator extends Component {
   };
 
   componentWillReceiveProps(nextProps, nextContext) {
-
     if (
       this.props.schema &&
       this.props.schema.title !== nextProps.schema.title
@@ -107,8 +95,4 @@ class JsonCreator extends Component {
   }
 }
 
-const mapStateToProps = ({ playerUi }) => ({
-  playerUi
-});
-
-export default connect(mapStateToProps)(JsonCreator);
+export default JsonCreator;

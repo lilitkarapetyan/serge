@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import '../scss/App.scss';
+import React, { Component } from "react";
 import Badge from "react-bootstrap/Badge";
 import {
   faPlus,
@@ -10,9 +8,9 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import moment from "moment";
 import Collapsible from "react-collapsible";
 import MessagePreview from "../Components/MessagePreviewPlayerUi";
+import "../scss/App.scss";
 
 class MessageListItem extends Component {
-
   shouldComponentUpdate(nextProps, nextState, nextContext) {
     return (
       this.props.detail._id !== nextProps.detail._id ||
@@ -22,7 +20,6 @@ class MessageListItem extends Component {
   }
 
   open = () => {
-    // expiredStorage.setItem(this.props.userId + this.props.detail._id, "read", LOCAL_STORAGE_TIMEOUT);
     this.props.open(this.props.detail);
   };
 
@@ -82,4 +79,4 @@ class MessageListItem extends Component {
 }
 
 
-export default connect()(MessageListItem);
+export default MessageListItem;
