@@ -38,10 +38,6 @@ class ChannelTabsContainer extends Component {
     getAllWargameMessages(state.currentWargame)(dispatch);
   }
 
-  componentDidMount() {
-    this.computeTabs();
-  }
-
   componentDidUpdate() {
     this.computeTabs();
   }
