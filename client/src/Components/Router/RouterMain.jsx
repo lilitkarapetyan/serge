@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import RouterDashboard from "./RouterDashboard";
+import PlayerUi from "../../Views/PlayerUi";
 import PlayerUiWrapper from "../../Views/PlayerUiWrapper";
 import DemoScreen from "../../Views/DemoScreen";
 import {

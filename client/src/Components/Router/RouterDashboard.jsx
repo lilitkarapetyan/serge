@@ -1,18 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import UniversalRouter from "universal-router";
-import GameDesignerInterface from '../../Views/GameDesignerInterface';
-import MessageTemplates from '../../Views/MessageTemplates';
-import MessageLibrary from '../../Views/MessageLibrary';
-import EditMessage from '../../Views/EditMessage';
-import CreateMessage from '../../Views/CreateMessage';
-import EditTemplate from '../../Views/EditTemplate';
-import CreateTemplate from '../../Views/CreateTemplate';
-import GameSetup from "../../Views/GameSetup";
-import ExportMessages from "../../Views/ExportMessages";
-import ExportForces from "../../Views/ExportForces";
-import ExportPrint from "../../Views/ExportPrint";
-import EditWelcomeScreen from "../../Views/EditWelcomeScreen";
 import {
   DEMO_ROUTE,
   ADMIN_ROUTE, CREATE_MESSAGE_ROUTE,
@@ -20,6 +8,19 @@ import {
   EDIT_TEMPLATE_ROUTE, EXPORT_ROUTE, EXPORT_MESSAGES_SUBROUTE, EXPORT_FORCES_SUBROUTE, EXPORT_PRINT_SUBROUTE, GAME_SETUP_ROUTE,
   MESSAGE_CREATOR_BASE_ROUTE, MESSAGE_LIBRARY_ROUTE, MESSAGE_TEMPLATE_ROUTE, WELCOME_SCREEN_EDIT_ROUTE,
 } from "../../consts";
+import GameDesignerInterface from "../../Views/GameDesignerInterface";
+import MessageTemplates from "../../Views/MessageTemplates";
+import MessageLibrary from "../../Views/MessageLibrary";
+import EditMessage from "../../Views/EditMessage";
+import CreateMessage from "../../Views/CreateMessage";
+import EditTemplate from "../../Views/EditTemplate";
+import CreateTemplate from "../../Views/CreateTemplate";
+import GameSetup from "../../Views/GameSetup";
+import ExportMessages from "../../Views/ExportMessages";
+import ExportForces from "../../Views/ExportForces";
+import ExportPrint from "../../Views/ExportPrint";
+import EditWelcomeScreen from "../../Views/EditWelcomeScreen";
+import ModalSwitchAdmin from "../Modals/ModalSwitch/ModalSwitchAdmin";
 import { setCurrentViewFromURI } from "../../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators";
 
 const routes = [
@@ -74,6 +75,7 @@ class RouterDashboard extends Component {
   render() {
     return (
       <>
+        <ModalSwitchAdmin/>
         { this.state.currentView }
       </>
     );

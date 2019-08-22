@@ -1,15 +1,17 @@
-import React, {Component} from 'react';
-import ModalWrapper from './ModalWrapper';
-import "../../scss/App.scss";
-import { connect } from 'react-redux';
-import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
-import {faCommentAlt} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {sendFeedbackMessage} from "../../ActionsAndReducers/playerUi/playerUi_ActionCreators";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { faCommentAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ModalWrapper from "./ModalWrapper";
 import TextArea from "../Inputs/TextArea";
 import TextInput from "../Inputs/TextInput";
+import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
+import { sendFeedbackMessage } from "../../ActionsAndReducers/playerUi/playerUi_ActionCreators";
+import { PlayerStateContext } from "../../Store/PlayerUi";
+import "../../scss/App.scss";
 
 class InsightsModal extends Component {
+  static contextType = PlayerStateContext;
 
   constructor(props) {
     super(props);
@@ -18,6 +20,8 @@ class InsightsModal extends Component {
       name: '',
       message: '',
     };
+
+    this.send = this.send.bind(this);
   }
 
   hideModal = () => {
@@ -37,16 +41,17 @@ class InsightsModal extends Component {
   };
 
   send = () => {
-    let forceName = this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).name;
+    const [ state ] = this.context;
+    let forceName = state.allForces.find((force) => force.uniqid === state.selectedForce).name;
 
     let from = {
       force: forceName,
-      forceColor: this.props.playerUi.forceColor,
-      role: this.props.playerUi.selectedRole,
+      forceColor: state.forceColor,
+      role: state.selectedRole,
       name: this.state.name,
     };
 
-    this.props.dispatch(sendFeedbackMessage(this.props.playerUi.currentWargame, from, this.state.message))
+    sendFeedbackMessage(state.currentWargame, from, this.state.message)(this.props.dispatch);
   };
 
   render() {
@@ -90,8 +95,7 @@ class InsightsModal extends Component {
   }
 }
 
-const mapStateToProps = ({ playerUi, currentModal }) => ({
-  playerUi,
+const mapStateToProps = ({ currentModal }) => ({
   currentModal
 });
 

@@ -1,22 +1,18 @@
-import React, {Component} from 'react';
-import "../../scss/App.scss";
-import { connect } from 'react-redux';
-import AddRoleModal from "./AddRoleModal";
-import DeleteModal from './DeleteModal';
-import DeleteWargameModal from "./DeleteWargameModal";
-import UnsavedForceModal from "./UnsavedForceModal";
-import UnsavedChannelModal from "./UnsavedChannelModal";
-import AddIconModal from "./AddIconModal";
-import LessonsModal from "./InsightsModal";
-import ColorPickerModal from "./ColorPickerModal";
-import AddLogoModal from "./AddLogoModal";
+import React, {Component} from "react";
+import { connect } from "react-redux";
+import AddRoleModal from "../AddRoleModal";
+import DeleteModal from "../DeleteModal";
+import DeleteWargameModal from "../DeleteWargameModal";
+import UnsavedForceModal from "../UnsavedForceModal";
+import UnsavedChannelModal from "../UnsavedChannelModal";
+import AddIconModal from "../AddIconModal";
+import ColorPickerModal from "../ColorPickerModal";
+import AddLogoModal from "../AddLogoModal";
+import "../../../scss/App.scss";
 
-class ModalSwitch extends Component {
-
+class ModalSwitchAdmin extends Component {
   render() {
-
-    var modal;
-
+    let modal;
     switch (this.props.currentModal.modal) {
 
       case "delete":
@@ -43,10 +39,6 @@ class ModalSwitch extends Component {
         modal = <AddIconModal />;
         break;
 
-      case "lessons":
-        modal = <LessonsModal />;
-        break;
-
       case "colorpicker":
         modal = <ColorPickerModal />;
         break;
@@ -66,10 +58,10 @@ class ModalSwitch extends Component {
       </>
     )
   }
-};
+}
 
 const mapStateToProps = ({ currentModal }) => ({
   currentModal,
 });
 
-export default connect(mapStateToProps)(ModalSwitch);
+export default connect(mapStateToProps)(ModalSwitchAdmin);

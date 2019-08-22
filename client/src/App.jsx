@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
-import { Provider } from 'react-redux';
-import ModalSwitch from "./Components/Modals/ModalSwitch";
+import React, { Component } from "react";
+import { Provider } from "react-redux";
 import Notifications from "./Components/Notifications";
 import Version from "./Views/Version";
 import RouterMain from "./Components/Router/RouterMain";
-import './scss/App.scss';
-import Store from './Store/Store';
+import Store from "./Store/Store";
+import "./scss/App.scss";
 
 class App extends Component {
   componentDidMount() {
@@ -14,12 +13,11 @@ class App extends Component {
 
   render() {
     return (
-        <Provider store={Store}>
-          <RouterMain />
-          <ModalSwitch />
-          <Notifications />
-          <Version />
-        </Provider>
+      <Provider store={Store}>
+        <RouterMain />
+        <Notifications />
+        <Version />
+      </Provider>
     );
   }
 }
