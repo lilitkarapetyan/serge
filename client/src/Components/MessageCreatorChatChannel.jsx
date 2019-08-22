@@ -18,7 +18,7 @@ class JsonCreator extends Component {
   }
 
   sendMessage = () => {
-    const [ state, dispatch ] = this.context;
+    const [ state ] = this.context;
     let curForce = state.allForces.find((force) => force.uniqid === state.selectedForce);
 
     let messageDetails = {
@@ -38,14 +38,14 @@ class JsonCreator extends Component {
     saveMessage(state.currentWargame, messageDetails, this.editor.getValue())();
   };
 
-  componentDidMount() {
+  setupEditor() {
     if (this.editor) {
       this.editor.destroy();
       this.editor = null;
     }
 
     if (this.props.schema && this.props.schema.type) {
-        if (this.editor) return;
+      if (this.editor) return;
 
       this.editor = new JSONEditor(this.editorPreviewRef.current, {
         schema: this.props.schema,
@@ -57,6 +57,13 @@ class JsonCreator extends Component {
     }
   }
 
+  componentDidMount() {
+    this.setupEditor();
+  }
+
+  componentDidUpdate() {
+    this.setupEditor();
+  }
 
   render() {
     return (
