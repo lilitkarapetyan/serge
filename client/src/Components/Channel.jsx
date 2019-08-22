@@ -68,7 +68,6 @@ class Channel extends Component {
               <MessageListItem
                 detail={item}
                 key={`${item._id}-messageitem`}
-                allMarkedRead={this.state.allMarkedRead}
                 userId={`${state.currentWargame}-${state.selectedForce}-${state.selectedRole}`}
                 open={this.openMessage}
                 close={this.closeMessage}
