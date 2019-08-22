@@ -3,7 +3,7 @@ import FlexLayout from "flexlayout-react";
 import RouterDashboard from "../Components/Router/RouterDashboard";
 import PlayerUiWrapper from "./PlayerUiWrapper";
 import "../scss/dependencies/flexlayout-react.scss";
-import '../scss/App.scss';
+import "../scss/App.scss";
 
 const json = {
   "global": {
@@ -107,7 +107,7 @@ class DemoScreen extends Component {
     return sources[component];
   };
 
-  classNameMapper = (defaultClassName) => `${defaultClassName} ${defaultClassName}--demo`;
+  classNameMapper = (defaultClassName) => `${defaultClassName} ${defaultClassName}--undo-transparent`;
 
   render() {
     return (

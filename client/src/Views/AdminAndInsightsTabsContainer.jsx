@@ -67,6 +67,8 @@ class AdminAndInsightsTabsContainer extends Component {
     dispatch(showHideObjectives());
   };
 
+  classNameMapper = (defaultClassName) => `${defaultClassName} ${defaultClassName}--undo-transparent`;
+
   render() {
     const [ state ] = this.context;
     let force = state.allForces.find((force) => force.uniqid === state.selectedForce);
@@ -76,6 +78,7 @@ class AdminAndInsightsTabsContainer extends Component {
         <FlexLayout.Layout
           model={this.state.model}
           factory={this.factory}
+          classNameMapper={this.classNameMapper}
         />
         <div className="role-info" style={{ backgroundColor: force.color, }} data-tour="second-step">
           <span className="role-type">{ state.selectedRole }</span>

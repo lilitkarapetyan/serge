@@ -35,7 +35,7 @@ class JsonCreator extends Component {
 
     if (this.editor.getValue().content === "") return;
 
-    dispatch(saveMessage(state.currentWargame, messageDetails, this.editor.getValue()));
+    saveMessage(state.currentWargame, messageDetails, this.editor.getValue())();
   };
 
   componentDidMount() {
