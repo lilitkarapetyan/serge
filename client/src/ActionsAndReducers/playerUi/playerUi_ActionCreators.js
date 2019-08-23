@@ -134,8 +134,10 @@ export const getAllWargameFeedback = (dbName) => {
 
 export const getAllWargameMessages = (name) => {
   return async (dispatch) => {
-    let messages = await wargamesApi.getAllMessages(name);
-    messages = messages.filter((message) => !message.hasOwnProperty('feedback'));
-    dispatch(setWargameMessages(messages));
+    let allMessages = await wargamesApi.getAllMessages(name), messages, feedback;
+    messages = allMessages.filter((message) => !message.hasOwnProperty('feedback'));
+    feedback = allMessages.filter((message) => message.hasOwnProperty('feedback'));
+    await dispatch(setWargameMessages(messages));
+    await dispatch(setWargameFeedback(feedback));
   }
 };

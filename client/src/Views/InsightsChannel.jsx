@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {LOCAL_STORAGE_TIMEOUT, expiredStorage} from "../consts";
-import { getAllWargameFeedback } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 import { PlayerStateContext } from "../Store/PlayerUi";
 import MessagesListInsightsChannel from "./MessagesListInsightsChannel";
 import MessagesListRenderProp from "./MessagesListRenderProp";
@@ -11,7 +10,7 @@ class InsightsChannel extends Component {
 
   constructor(props, context) {
     super(props);
-    const [ state ] = this.context;
+    const [ state ] = context;
     this.state = {
       activeTab: Object.keys(state.channels)[0],
       allMarkedRead: false,
@@ -25,8 +24,6 @@ class InsightsChannel extends Component {
     if (channelLength) {
       this.setState({allMarkedRead: false});
     }
-
-    getAllWargameFeedback(state.currentWargame)(dispatch);
   }
 
   markAllAsRead = () => {
