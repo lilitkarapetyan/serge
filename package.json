@@ -3,12 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "bin": "bin.js",
   "dependencies": {
     "adm-zip": "^0.4.13",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-pouchdb": "^4.1.0",
     "nodemon": "^1.18.11",
+    "opn": "^6.0.0",
     "path": "^0.12.7",
     "pouchdb-adapter-http": "^7.0.0",
     "pouchdb-adapter-node-websql": "^7.0.0",
@@ -22,12 +24,17 @@
     "node-windows": "^0.1.14"
   },
   "devDependencies": {},
+  "pkg": {
+    "assets": ["client/build/**/*"]
+  },
   "scripts": {
     "offline-install": "cd ./offline && node install-modules &&  cd ../client && npm run build",
     "save-modules": "npm install && cd ./client && npm install && cd ../offline && node save-modules",
     "dev": "nodemon server.js",
     "heroku-postbuild": "cd ./client && npm i && npm run build",
-    "start": "node server.js"
+    "start": "node server.js",
+    "build-client": "pkg . --out-path ./pkg-builds/client",
+    "build-server": "pkg ./server.js --out-path ./pkg-builds/server"
   },
   "repository": {
     "type": "git",
