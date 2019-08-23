@@ -9,5 +9,5 @@
 /img
 .env.local
 .env.development
-
+/daemon
 /log.txt
