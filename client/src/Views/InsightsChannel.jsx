@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {LOCAL_STORAGE_TIMEOUT, expiredStorage} from "../consts";
+import { LOCAL_STORAGE_TIMEOUT, expiredStorage } from "../consts";
 import { PlayerStateContext } from "../Store/PlayerUi";
 import MessagesListInsightsChannel from "./MessagesListInsightsChannel";
 import MessagesListRenderProp from "./MessagesListRenderProp";
@@ -18,7 +18,7 @@ class InsightsChannel extends Component {
   }
 
   componentDidMount() {
-    const [ state, dispatch ] = this.context;
+    const [ state ] = this.context;
     let channelLength = Object.keys(state.feedbackMessages).length;
 
     if (channelLength) {

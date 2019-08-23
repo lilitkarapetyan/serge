@@ -43,18 +43,15 @@ class PlayerUi extends Component {
     this.props.dispatch(getSergeGameInformation());
   };
 
-  componentDidMount() {
+  componentDidUpdate() {
     const [ state ] = this.context;
-    if (state.selectedForce && state.selectedRole && this.state.isTourOpen === undefined) {
-      this.setState({
-        tourIsOpen: expiredStorage.getItem(`${state.wargameTitle}-${state.selectedForce}-${state.selectedRole}-tourDone`) !== "done",
-      })
-    }
-
-    if (state.tourIsOpen !== state.tourIsOpen) {
-      this.setState({
-        tourIsOpen: state.tourIsOpen,
-      })
+    if(state.selectedForce && state.selectedRole) {
+      const storageTourIsOpen = expiredStorage.getItem(`${state.wargameTitle}-${state.selectedForce}-${state.selectedRole}-tourDone`) !== "done";
+      if (storageTourIsOpen !== this.state.tourIsOpen) {
+        this.setState({
+          tourIsOpen: storageTourIsOpen,
+        })
+      }
     }
   }
 

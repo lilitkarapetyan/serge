@@ -14,10 +14,6 @@ import "../scss/App.scss";
 class Channel extends Component {
   static contextType = PlayerStateContext;
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     const [ state, dispatch ] = this.context;
 
