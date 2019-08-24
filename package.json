@@ -29,10 +29,7 @@
   "devDependencies": {},
   "pkg": {
     "assets": [
-      "client/build/**/*",
-      "default_img/**/*",
-      "node_modules/sqlite3/lib/binding/**/*",
-      "node_modules/pouchdb-fauxton/www/**/*"
+      "client/build/**/*"
     ]
   },
   "scripts": {
@@ -42,7 +39,7 @@
     "heroku-postbuild": "cd ./client && npm i && npm run build",
     "start": "node server.js",
     "build-client": "pkg . --out-path ./pkg-builds/client",
-    "build-server": "pkg ./server.js --out-path ./pkg-builds/server && node pkgCopyNodes.js"
+    "build-server": "node pkgResolveErrors.js && pkg ./server.js -c pkg-server.json --out-path ./pkg-builds/server && node pkgCopyNodes.js"
   },
   "repository": {
     "type": "git",

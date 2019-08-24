@@ -1,0 +1,12 @@
+{
+  "name": "serge_server",
+  "version": "1.0.0",
+  "bin": "server.js",
+  "pkg": {
+    "assets": [
+      "client/build/**/*",
+      "default_img/**/*",
+      "node_modules/pouchdb-fauxton/www/**/*"
+    ]
+  }
+}
