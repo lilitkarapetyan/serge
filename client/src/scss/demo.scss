@@ -1,0 +1,46 @@
+.demo-content-wrapper {
+  #umpire {
+    width: 50vw;
+    height: 45vh;
+    padding: 5vh 0 5vh 0;
+    justify-content: center;
+  }
+
+  #sidebar_admin,
+  #sidebar {
+    width: 10vw;
+    height: 100%;
+    position: absolute;
+
+    .link,
+    .link--active {
+      font-size: 1.25em;
+      margin-bottom: 1px;
+    }
+  }
+
+  #sidebar {
+    width: 5vw;
+  }
+
+  #home-btn {
+    width: 100%;
+  }
+
+  input[name=force-name] {
+    max-width: 220px;
+  }
+
+  .view-wrapper-gamesetup {
+    min-height: 45vh;
+  }
+
+  .force-color-icon {
+    margin-left: -20px;
+    margin-top: 10px;
+  }
+
+  .force-input-wrap {
+    flex-direction: column;
+  }
+}

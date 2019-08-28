@@ -4,6 +4,7 @@ import RouterDashboard from "../Components/Router/RouterDashboard";
 import PlayerUiWrapper from "./PlayerUiWrapper";
 import "../scss/dependencies/flexlayout-react.scss";
 import "../scss/App.scss";
+import "../scss/demo.scss";
 
 const json = {
   "global": {
@@ -16,70 +17,70 @@ const json = {
     "id": "#demo-row-main",
     "children": [
       {
-        "type": "tabset",
-        "id": "#demo-tabset-main",
+        "type": "row",
+        "id": "#demo-row-main-first",
         "children": [
           {
-            "type": "tab",
-            "id": "#demo-game-designer",
-            "name": "Game Designer",
-            "component": "game-designer",
+            "type": "tabset",
+            "id": "#demo-tabset-main",
+            "children": [
+              {
+                "type": "tab",
+                "id": "#demo-game-designer",
+                "name": "Game Designer",
+                "component": "game-designer",
+              },
+            ],
+            "active": true
+          },
+          {
+            "type": "tabset",
+            "id": "#demo-tabset-player-1",
+            "children": [
+
+              {
+                "type": "tab",
+                "id": "#demo-player-1",
+                "name": "Player",
+                "component": "player",
+              },
+            ],
+            "active": true
           },
         ],
         "active": true
       },
       {
-        "type": "tabset",
-        "id": "#demo-tabset-player-1",
+        "type": "row",
+        "id": "#demo-row-main-second",
         "children": [
-
           {
-            "type": "tab",
-            "id": "#demo-player-1",
-            "name": "Player",
-            "component": "player",
+            "type": "tabset",
+            "id": "#demo-tabset-player-2",
+            "children": [
+
+              {
+                "type": "tab",
+                "id": "#demo-player-2",
+                "name": "Player",
+                "component": "player",
+              },
+            ],
+            "active": true
           },
-        ],
-        "active": true
-      },
-      {
-        "type": "tabset",
-        "id": "#demo-tabset-player-2",
-        "children": [
-
           {
-            "type": "tab",
-            "id": "#demo-player-2",
-            "name": "Player",
-            "component": "player",
-          },
-        ],
-        "active": true
-      },
-      {
-        "type": "tabset",
-        "id": "#demo-tabset-player-3",
-        "children": [
+            "type": "tabset",
+            "id": "#demo-tabset-player-3",
+            "children": [
 
-          {
-            "type": "tab",
-            "id": "#demo-player-3",
-            "name": "Player",
-            "component": "player",
-          },
-        ],
-        "active": true
-      },
-      {
-        "type": "tabset",
-        "id": "#demo-tabset-player-4",
-        "children": [
-
-          {
-            "type": "tab",
-            "id": "#demo-player-4",
-            "name": "Player",
-            "component": "player",
+              {
+                "type": "tab",
+                "id": "#demo-player-3",
+                "name": "Player",
+                "component": "player",
+              },
+            ],
+            "active": true
           },
         ],
         "active": true
@@ -89,10 +90,7 @@ const json = {
   "borders": []
 };
 
-
-
 class DemoScreen extends Component {
-
   constructor(props) {
     super(props);
     this.model = FlexLayout.Model.fromJson(json);
@@ -111,7 +109,7 @@ class DemoScreen extends Component {
 
   render() {
     return (
-      <div className="flex-content-wrapper">
+      <div className="flex-content-wrapper demo-content-wrapper">
         <div className="flex-content flex-content--fill">
           <FlexLayout.Layout
             model={this.model}
