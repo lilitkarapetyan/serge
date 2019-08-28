@@ -41,5 +41,4 @@ push to heroku
 
 ### Build executable files
 In project root directory
-Run `build-client` to create a static server with builded React app.
-Run `build-server` to create a server with builded React app, api cals and server side pouchDb.
+Run `npm run pkg-build` to create a server with last build client version and server.

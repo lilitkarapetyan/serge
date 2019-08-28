@@ -9,7 +9,7 @@ const nodeFiles = [
   }
 ];
 
-const pkgServerPath = __dirname + "/pkg-builds/server";
+const pkgServerPath = __dirname + "/pkg-builds";
 
 console.log("Copy node files...");
 
@@ -26,6 +26,7 @@ for(let {name, path, file} of nodeFiles) {
       fs.copyFile(files[0], `${pkgServerPath}/${file}`, (err) => {
         if(err) {
           console.log(`${prefix} copying failed`);
+          console.log(err);
         }
         else {
           console.log(`${prefix} ${file} successfully copied`);

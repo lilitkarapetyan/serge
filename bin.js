@@ -1,19 +1,24 @@
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
+const server = require("./server");
 const opn = require('opn');
-const app = express();
 
-app.use(cors());
-
-app.use(express.static(path.join(__dirname)));
-
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/client/build/index.html'));
-});
+if(process.argv[2]) {
+  console.log(`running client with remote server "${process.argv[2]}"`);
+}
+else {
+  console.log("running client with local server");
+  console.log("(You can give the second parameter as the remote server URL)");
+}
 
 const port = process.env.PORT || 8080;
-app.listen(port);
 
-console.log('App is listening on port ' + port);
+server(
+  82,                                   //event emmiter max listeners
+  { prefix: 'db/', adapter: 'websql' }, //PouchDb Options
+  {},                                   //cors options
+  './db',                               //database directory
+  './img',                              //images directory
+  port,                                 //port
+  process.argv[2] || null,              //remote server path
+);
+
 opn(`http://localhost:${port}/serge/admin`);

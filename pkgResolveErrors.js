@@ -11,3 +11,4 @@ fs.writeFile(file, "", 'utf8', err => {
   if(err) return console.log(err);
   else console.log("error correction [pouchdb-fauxton]: success");
 });
+console.log("");

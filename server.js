@@ -1,4 +1,6 @@
-require('events').EventEmitter.defaultMaxListeners = 82;
+const runServer = (eventEmmiterMaxListeners, pouchOptions, corsOptions, dbDir, imgDir, port, remoteServer) => {
+
+require('events').EventEmitter.defaultMaxListeners = eventEmmiterMaxListeners;
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -8,10 +10,7 @@ const PouchDB = require('pouchdb-core')
   .plugin(require('pouchdb-adapter-http'))
   .plugin(require('pouchdb-mapreduce'))
   .plugin(require('pouchdb-replication'))
-  .defaults({
-    prefix: 'db/',
-    adapter: 'websql'
-  });
+  .defaults(pouchOptions);
 
 const fs = require('fs');
 
@@ -21,15 +20,12 @@ const cors = require('cors');
 
 const app = express();
 
-app.use(cors());
-
-let dbDir = './db';
+app.use(cors(corsOptions));
 
 if (!fs.existsSync(dbDir)) {
   fs.mkdirSync(dbDir);
 }
 
-let imgDir = './img';
 if (!fs.existsSync(imgDir)) {
   fs.mkdirSync(imgDir);
 }
@@ -99,7 +95,9 @@ app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
 
-const port = process.env.PORT || 8080;
 app.listen(port);
 
 console.log('App is listening on port ' + port);
+}
+
+module.exports = runServer;
