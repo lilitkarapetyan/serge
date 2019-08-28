@@ -29,7 +29,7 @@ class ChannelTabsContainer extends Component {
   constructor(props, context) {
     super(props);
     const [ state, dispatch ] = context;
-    let modelName = `FlexLayout-model-${state.wargameTitle}-${state.selectedForce}-${state.selectedRole}`;
+    let modelName = `FlexLayout-model-${state.currentWargame}-${state.selectedForce}-${state.selectedRole}`;
     let model = expiredStorage.getItem(modelName);
     this.model = model ? FlexLayout.Model.fromJson(JSON.parse(model)) : FlexLayout.Model.fromJson(json);
     this.state = {
