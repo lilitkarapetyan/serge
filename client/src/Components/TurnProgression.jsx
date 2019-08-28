@@ -28,6 +28,7 @@ class TurnProgression extends Component {
       secondsLeft: ('0' + Math.floor(seconds % 60)).slice(-2),
       ended: false,
       startTime: Math.round(new Date(state.adjudicationStartTime).getTime()/1000),
+      phase: state.phase,
     };
 
     if (state.phase === PLANNING_PHASE) {
@@ -39,29 +40,12 @@ class TurnProgression extends Component {
   }
 
   componentDidMount() {
-    const [ state ] = this.context;
-    if (
-      state.phase === PLANNING_PHASE
-    ) {
-      this.clearInterval();
-      this.interval = setInterval(this.timer, 1000);
-    }
-
-    if (
-      state.phase === ADJUDICATION_PHASE
-    ) {
-      this.setState({
-        minutesUp: '00',
-        secondsUp: '00',
-        startTime: Math.round(new Date(state.adjudicationStartTime).getTime()/1000),
-      });
-      this.clearInterval();
-      this.interval = setInterval(this.countup, 1000);
-    }
+    this.initInterval();
   }
 
   componentDidUpdate() {
     const [ state ] = this.context;
+    this.initInterval();
     if (
       this.state.minutesLeft === '00' &&
       this.state.secondsLeft === '00' &&
@@ -109,6 +93,30 @@ class TurnProgression extends Component {
       minutesUp,
       secondsUp: ('0' + Math.round(seconds % 60)).slice(-2),
     })
+  };
+
+  initInterval = () => {
+    const [ state ] = this.context;
+    const startInterval = {
+      [PLANNING_PHASE]: this.timer,
+      [ADJUDICATION_PHASE]: this.countup,
+    };
+
+    if( this.state.phase === state.phase ) return;
+
+    if (
+      state.phase === ADJUDICATION_PHASE
+    ) {
+      this.setState({
+        minutesUp: '00',
+        secondsUp: '00',
+        startTime: Math.round(new Date(state.adjudicationStartTime).getTime()/1000),
+      });
+    }
+
+    this.clearInterval();
+    this.interval = setInterval(startInterval[state.phase], 1000);
+    this.setState({ phase: state.phase });
   };
 
   clearInterval = () => {

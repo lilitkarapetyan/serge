@@ -8,7 +8,7 @@ class GameControls extends Component {
 
   nextTurn = () => {
     const [ state ] = this.context;
-    nextGameTurn(state.currentWargame);
+    nextGameTurn(state.currentWargame)();
   };
 
   render() {
