@@ -107,20 +107,22 @@ class MessageLibrary extends Component {
     return (
       <div className="view-wrapper" id="umpire">
         <SidebarAdmin activeTab={MESSAGE_LIBRARY_ROUTE}/>
-        <h1>Message Library</h1>
-        <div className="flex-content-wrapper">
-          <div id="selection" className="flex-content">
-            { this.createSearchListSection() }
-          </div>
-          <div id="preview" className="flex-content flex-content--big">
-            <p className="heading--sml">Preview</p>
-            <div className="message-preview">
-              <MessagePreview detail={this.props.messages.messagePreview.details} />
+        <div className="flex-content flex-content--big flex-content--last contain-message-library">
+          <h1>Message Library</h1>
+          <div className="flex-content-wrapper">
+            <div id="selection" className="flex-content">
+              { this.createSearchListSection() }
             </div>
-          </div>
-          <div id="function" className="flex-content flex-content--sml">
-            <p className="heading--sml">Actions</p>
-            {this.createMessagesActions()}
+            <div id="preview" className="flex-content flex-content--big">
+              <p className="heading--sml">Preview</p>
+              <div className="message-preview">
+                <MessagePreview detail={this.props.messages.messagePreview.details} />
+              </div>
+            </div>
+            <div id="function" className="flex-content flex-content--sml">
+              <p className="heading--sml">Actions</p>
+              {this.createMessagesActions()}
+            </div>
           </div>
         </div>
       </div>
