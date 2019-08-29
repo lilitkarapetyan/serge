@@ -3,7 +3,11 @@
     width: 50vw;
     height: 45vh;
     padding: 5vh 0 5vh 0;
-    justify-content: center;
+
+    &.flex-landing-screen,
+    &.flex-jc-center {
+      justify-content: center;
+    }
   }
 
   #sidebar_admin,
@@ -42,5 +46,32 @@
 
   .force-input-wrap {
     flex-direction: column;
+  }
+
+  .contain-message-templates {
+    width: 75%;
+    align-self: flex-end;
+  }
+
+  .searchlist-list {
+    .searchlist-title {
+      display: block;
+    }
+  }
+
+  #preview-editor {
+    h3 {
+      > span {
+        display: block;
+      }
+
+      .btn-group {
+        margin-left: 0!important;
+
+        + .btn-group {
+          margin-left: 10px!important;
+        }
+      }
+    }
   }
 }

@@ -10,8 +10,8 @@ import Link from "./Link";
 export default (props) => {
  const menus = {
    [ADMIN_ROUTE]: 'Games',
-   [MESSAGE_LIBRARY_ROUTE]: 'Message Templates',
-   [MESSAGE_TEMPLATE_ROUTE]: 'Message Library',
+   [MESSAGE_TEMPLATE_ROUTE]: 'Message Templates',
+   [MESSAGE_LIBRARY_ROUTE]: 'Message Library',
    [WELCOME_SCREEN_EDIT_ROUTE]: 'Welcome Screen',
  };
  return (

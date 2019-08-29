@@ -112,21 +112,23 @@ class MessageTemplates extends Component {
     return (
       <div className="view-wrapper" id="umpire">
         <SidebarAdmin activeTab={MESSAGE_TEMPLATE_ROUTE}/>
-        <h1>Message Templates</h1>
-        <div className="flex-content-wrapper">
-          <div id="selection" className="flex-content">
-            { this.createSearchListSection() }
-          </div>
-          <div id="preview" className="flex-content flex-content--big">
-            <p className="heading--sml">Preview</p>
-            <JsonCreator id="preview"
-                         disabled={true}
-                         previewForm={true}
-            />
-          </div>
-          <div id="function" className="flex-content flex-content--sml">
-            <p className="heading--sml">Actions</p>
-              {this.createTemplatesActions()}
+        <div className="flex-content flex-content--big flex-content--last contain-message-templates">
+          <h1>Message Templates</h1>
+          <div className="flex-content-wrapper">
+            <div id="selection" className="flex-content">
+              { this.createSearchListSection() }
+            </div>
+            <div id="preview" className="flex-content flex-content--big">
+              <p className="heading--sml">Preview</p>
+              <JsonCreator id="preview"
+                disabled={true}
+                previewForm={true}
+              />
+            </div>
+            <div id="function" className="flex-content flex-content--sml">
+              <p className="heading--sml">Actions</p>
+                {this.createTemplatesActions()}
+            </div>
           </div>
         </div>
       </div>

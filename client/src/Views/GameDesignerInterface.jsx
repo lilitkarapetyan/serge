@@ -81,7 +81,7 @@ class GameDesignerInterface extends Component {
     }
 
     return (
-      <div id="umpire" className="flex-content-wrapper flex-transparent">
+      <div id="umpire" className="flex-content-wrapper flex-transparent flex-jc-center">
         <SidebarAdmin activeTab={ADMIN_ROUTE} />
         <div className="flex-content flex-content--big flex-content--last">
           <h2>Games</h2>
