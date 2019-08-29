@@ -1,40 +1,29 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {connect} from "react-redux";
-
 import Link from "../Components/Link";
-
-import '../scss/App.scss';
+import SidebarAdmin from "../Components/SidebarAdmin";
+import TextInput from "../Components/Inputs/TextInput";
+import WargameSearchList from "../Components/WargameSearchList";
 import {
   ADMIN_ROUTE,
   GAME_SETUP_ROUTE,
-  MESSAGE_LIBRARY_ROUTE,
-  MESSAGE_TEMPLATE_ROUTE,
-  WELCOME_SCREEN_EDIT_ROUTE,
 } from "../consts";
-
 import {
   createNewWargameDB,
   clearWargames,
   populateWargameStore,
   checkAdminAccess,
 } from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
-
-import WargameSearchList from "../Components/WargameSearchList";
-import {
-  populateMessageTypesDb
-} from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
-import TextInput from "../Components/Inputs/TextInput";
+import { populateMessageTypesDb } from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
+import "../scss/App.scss";
 
 class GameDesignerInterface extends Component {
-
   constructor(props) {
     super(props);
-
     this.state = {
       password: "",
     }
   }
-
 
   componentWillMount() {
     this.props.dispatch(populateMessageTypesDb());
@@ -93,12 +82,7 @@ class GameDesignerInterface extends Component {
 
     return (
       <div id="umpire" className="flex-content-wrapper flex-transparent">
-        <div id="sidebar_admin">
-          <Link href={ADMIN_ROUTE} class="link link--large link--active">Games</Link>
-          <Link href={MESSAGE_TEMPLATE_ROUTE} class="link link--large">Message Templates</Link>
-          <Link href={MESSAGE_LIBRARY_ROUTE} class="link link--large">Message Library</Link>
-          <Link href={WELCOME_SCREEN_EDIT_ROUTE} class="link link--large">Welcome Screen</Link>
-        </div>
+        <SidebarAdmin activeTab={ADMIN_ROUTE} />
         <div className="flex-content flex-content--big flex-content--last">
           <h2>Games</h2>
           <Link
@@ -112,7 +96,7 @@ class GameDesignerInterface extends Component {
             onClickHandler={this.clearWargames}
           >Clear wargames</Link>
           <WargameSearchList key="searchlist"
-                             listData={this.props.wargame.wargameList}
+            listData={this.props.wargame.wargameList}
           />
         </div>
       </div>
@@ -120,7 +104,6 @@ class GameDesignerInterface extends Component {
   }
 }
 
-// empty mapStateToProps is here for react-redux to wire up the dispatch function to props so firing actions is possible.
 const mapStateToProps = ({wargame, dbLoading}) => ({
   wargame,
   dbLoading

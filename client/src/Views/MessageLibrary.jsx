@@ -1,29 +1,27 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import Link from "../Components/Link";
-
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencilAlt, faClone, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import {
-  getAllMessages,
-  duplicateMessage, getSingleMessage
-} from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
-
-import { modalAction } from "../ActionsAndReducers/Modal/Modal_ActionCreators";
-
-import MessagePreview from "../Components/MessagePreview";
-import '../scss/App.scss';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPencilAlt, faClone, faTrash, faPlus} from "@fortawesome/free-solid-svg-icons";
-import SearchList from "../Components/SearchList";
-import {setSelectedSchema} from "../ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators";
-import {
-  ADMIN_ROUTE,
   CREATE_MESSAGE_ROUTE,
   EDIT_MESSAGE_ROUTE,
-  MESSAGE_CREATOR_BASE_ROUTE, MESSAGE_LIBRARY_ROUTE, MESSAGE_TEMPLATE_ROUTE, WELCOME_SCREEN_EDIT_ROUTE
+  MESSAGE_CREATOR_BASE_ROUTE,
+  MESSAGE_LIBRARY_ROUTE,
 } from "../consts";
+import SearchList from "../Components/SearchList";
+import Link from "../Components/Link";
+import MessagePreview from "../Components/MessagePreview";
+import SidebarAdmin from "../Components/SidebarAdmin";
+import {
+  getAllMessages,
+  duplicateMessage,
+  getSingleMessage
+} from "../ActionsAndReducers/dbMessages/messages_ActionCreators";
+import { modalAction } from "../ActionsAndReducers/Modal/Modal_ActionCreators";
+import { setSelectedSchema } from "../ActionsAndReducers/UmpireMenu/umpireMenu_ActionCreators";
+import "../scss/App.scss";
 
 class MessageLibrary extends Component {
-
   constructor(props) {
     super(props);
 
@@ -40,7 +38,6 @@ class MessageLibrary extends Component {
   };
 
   componentWillReceiveProps(nextProps, nextContext) {
-
     if (this.state.searchQuery.length === 0) {
       // only on page load
       this.setState({
@@ -51,19 +48,16 @@ class MessageLibrary extends Component {
     if (nextProps.messages.messages.length !== this.props.messages.messages.length) setTimeout(this.filterMessages, 1); // setTimeout to wait one tick to allow messageList to update
   }
 
-
   setSelectedSchemaId = (item) => {
       this.props.dispatch(setSelectedSchema(item.schema._id));
       this.props.dispatch(getSingleMessage(item._id));
   };
-
 
   // event listener functions from the DOM will lose scope of this to the React Class unless stated as an arrow function
   // or this is bound to them within the constructor like.. this.filterMessages = this.filterMessages.bind(this);
   // arrow functions are es6 syntax and preferable if babel compiler can compile them. - They have the scope of where they're
   // defined unlike a normal function that has it's own scope.
   filterMessages = (input) => {
-
     let value = input ? input.target.value : this.state.searchQuery;
 
     let filteredMessages = this.props.messages.messages.filter(function(mes) {
@@ -76,21 +70,19 @@ class MessageLibrary extends Component {
     });
   };
 
-
   createSearchListSection() {
     return [
-        <Link href={`${MESSAGE_CREATOR_BASE_ROUTE}${CREATE_MESSAGE_ROUTE}`} key="messages" class="link"><FontAwesomeIcon icon={faPlus} />Create new Message</Link>,
-        <SearchList key="searchlist"
-                    listData={this.state.messageList}
-                    searchQuery={this.state.searchQuery}
-                    filter={this.filterMessages}
-                    selected={this.props.messages.messagePreviewId}
-                    setSelected={this.setSelectedSchemaId}
-                    placeholder={'Select template'}
-        />
+      <Link href={`${MESSAGE_CREATOR_BASE_ROUTE}${CREATE_MESSAGE_ROUTE}`} key="messages" class="link"><FontAwesomeIcon icon={faPlus} />Create new Message</Link>,
+      <SearchList key="searchlist"
+        listData={this.state.messageList}
+        searchQuery={this.state.searchQuery}
+        filter={this.filterMessages}
+        selected={this.props.messages.messagePreviewId}
+        setSelected={this.setSelectedSchemaId}
+        placeholder={'Select template'}
+      />
     ];
   }
-
 
   createMessagesActions() {
     return this.props.messages.messagePreviewId.length > 0 ?
@@ -107,22 +99,14 @@ class MessageLibrary extends Component {
     this.props.dispatch(duplicateMessage(this.props.messages.messagePreviewId));
   };
 
-
   deleteMessage = () => {
     this.props.dispatch(modalAction.open("delete"));
   };
 
-
   render() {
     return (
       <div className="view-wrapper" id="umpire">
-        <div id="sidebar_admin">
-          {/*<Link href={BASE_ROUTE} id="home-btn"><FontAwesomeIcon icon={faArrowLeft} size="2x" /></Link>*/}
-          <Link href={ADMIN_ROUTE} class="link link--large">Games</Link>
-          <Link href={MESSAGE_TEMPLATE_ROUTE} class="link link--large">Message Templates</Link>
-          <Link href={MESSAGE_LIBRARY_ROUTE} class="link link--large link--active">Message Library</Link>
-          <Link href={WELCOME_SCREEN_EDIT_ROUTE} class="link link--large">Welcome Screen</Link>
-        </div>
+        <SidebarAdmin activeTab={MESSAGE_LIBRARY_ROUTE}/>
         <h1>Message Library</h1>
         <div className="flex-content-wrapper">
           <div id="selection" className="flex-content">
