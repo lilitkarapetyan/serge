@@ -44,13 +44,13 @@
     padding-left: 12vw;
   }
 
+  .welcome-action-primary {
+    display: flex;
+  }
+
   .serge-custom-logo {
     max-width: 150px;
     margin-bottom: 30px;
-  }
-
-  .welcome-action-primary {
-    display: flex;
   }
 
   input[name=force-name] {
@@ -92,5 +92,34 @@
         }
       }
     }
+  }
+
+  .contain-welcome-screen {
+    width: 75%;
+    display: flex;
+    align-items: center;
+  }
+
+  .flex-content-wrapper--welcome,
+  .flex-content--welcome {
+    height: 45vh;
+  }
+
+  .flex-content--welcome {
+    .has-demo-passwords {
+      position: relative;
+      width: 75%;
+      padding-left: 22vw;
+      align-self: flex-start;
+    }
+
+    .demo-passwords {
+      width: 18vw;
+    }
+  }
+
+  .serge-logo {
+    width: 150px;
+    margin-right: 50px;
   }
 }

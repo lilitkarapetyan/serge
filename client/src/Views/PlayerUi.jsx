@@ -132,11 +132,15 @@ class PlayerUi extends Component {
       return (
         <div className="flex-content-wrapper flex-content-wrapper--welcome">
           <div className="flex-content flex-content--welcome">
-            <div className="flex-content--center">
-              <img className="serge-logo" src={this.props.gameInfo.imageUrl} alt="Serge gaming" />
-              <h1>{this.props.gameInfo.title}</h1>
-              {lineBreak(this.props.gameInfo.description)}
-              <button name="play" className="btn btn-action btn-action--primary" onClick={this.enterSerge}>Play</button>
+            <div className="flex-content--center contain-welcome-screen">
+              <div className="welcome-logo">
+                <img className="serge-logo" src={this.props.gameInfo.imageUrl} alt="Serge gaming" />
+              </div>
+              <div className="welcome-desc">
+                <h1>{this.props.gameInfo.title}</h1>
+                {lineBreak(this.props.gameInfo.description)}
+                <button name="play" className="btn btn-action btn-action--primary" onClick={this.enterSerge}>Play</button>
+              </div>
             </div>
           </div>
         </div>
@@ -230,7 +234,7 @@ class PlayerUi extends Component {
       <div className="flex-content-wrapper flex-content-wrapper--welcome">
         <div className="flex-content flex-content--welcome">
           {!state.selectedForce && !state.selectedRole &&
-            <div className="flex-content--center">
+            <div className={`flex-content--center ${this.state.selectedWargame && state.showAccessCodes ? 'has-demo-passwords': ''}`}>
               <h1>Set wargame</h1>
               <DropdownInput
                 data={this.state.selectedWargame}
