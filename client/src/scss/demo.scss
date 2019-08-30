@@ -1,12 +1,16 @@
 .demo-content-wrapper {
   #umpire {
     width: 50vw;
-    height: 45vh;
+    height: auto;
     padding: 5vh 0 5vh 0;
 
     &.flex-landing-screen,
     &.flex-jc-center {
       justify-content: center;
+    }
+
+    &.flex-landing-screen {
+      height: 45vh;
     }
   }
 
@@ -31,12 +35,26 @@
     width: 100%;
   }
 
-  input[name=force-name] {
-    max-width: 220px;
+  .view-wrapper-gamesetup {
+    padding: 0 0 6vh 5vw;
+    min-height: 45vh;
   }
 
-  .view-wrapper-gamesetup {
-    min-height: 45vh;
+  .welcome-page {
+    padding-left: 12vw;
+  }
+
+  .serge-custom-logo {
+    max-width: 150px;
+    margin-bottom: 30px;
+  }
+
+  .welcome-action-primary {
+    display: flex;
+  }
+
+  input[name=force-name] {
+    max-width: 220px;
   }
 
   .force-color-icon {

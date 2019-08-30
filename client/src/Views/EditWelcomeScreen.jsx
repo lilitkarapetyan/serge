@@ -111,10 +111,13 @@ class EditWelcomeScreen extends Component {
         <SidebarAdmin activeTab={WELCOME_SCREEN_EDIT_ROUTE}/>
         <div className="flex-content flex-content--big flex-content--last welcome-page">
           <h1>Welcome Screen</h1>
-          <span className="link link--noIcon welcome-screen-save" onClick={this.saveWelcomeScreen}>Save changes</span>
+
           <div className="flex-content flex-content--row">
-            <h5>Image</h5>
-            <span className="image-upload-link" onClick={this.uploadImage}>Upload new image</span>
+            <div className="welcome-action-primary">
+              <h5>Image</h5>
+              <span className="image-upload-link" onClick={this.uploadImage}>Upload new image</span>
+            </div>
+            <span className="link link--noIcon welcome-screen-save" onClick={this.saveWelcomeScreen}>Save changes</span>
           </div>
           <img alt="Serge logo" className="serge-custom-logo" src={this.props.gameInfo.imageUrl} />
           <div className="section">
