@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { faCommentAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ModalWrapper from "./ModalWrapper";
 import TextArea from "../Inputs/TextArea";
 import TextInput from "../Inputs/TextInput";
-import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
-import { sendFeedbackMessage } from "../../ActionsAndReducers/playerUi/playerUi_ActionCreators";
+import {
+  sendFeedbackMessage,
+  closeModal
+} from "../../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 import { PlayerStateContext } from "../../Store/PlayerUi";
 import "../../scss/App.scss";
 
@@ -20,12 +21,11 @@ class InsightsModal extends Component {
       name: '',
       message: '',
     };
-
-    this.send = this.send.bind(this);
   }
 
   hideModal = () => {
-    this.props.dispatch(modalAction.close());
+    const [ , dispatch ] = this.context;
+    dispatch(closeModal());
   };
 
   setName = (val) => {
@@ -41,7 +41,7 @@ class InsightsModal extends Component {
   };
 
   send = () => {
-    const [ state ] = this.context;
+    const [ state, dispatch ] = this.context;
     let forceName = state.allForces.find((force) => force.uniqid === state.selectedForce).name;
 
     let from = {
@@ -51,12 +51,13 @@ class InsightsModal extends Component {
       name: this.state.name,
     };
 
-    sendFeedbackMessage(state.currentWargame, from, this.state.message)(this.props.dispatch);
+    sendFeedbackMessage(state.currentWargame, from, this.state.message)(dispatch);
   };
 
   render() {
+    const [ state ] = this.context;
 
-    if (!this.props.currentModal.open) return false;
+    if (!state.modalOpened) return false;
 
     return (
       <ModalWrapper>
@@ -77,7 +78,6 @@ class InsightsModal extends Component {
           </div>
           <div className="text-input-wrap">
             <TextInput
-              id="name-input"
               className="material-input"
               label="Name: optional"
               updateStore={this.setName}
@@ -95,8 +95,4 @@ class InsightsModal extends Component {
   }
 }
 
-const mapStateToProps = ({ currentModal }) => ({
-  currentModal
-});
-
-export default connect(mapStateToProps)(InsightsModal);
+export default InsightsModal;

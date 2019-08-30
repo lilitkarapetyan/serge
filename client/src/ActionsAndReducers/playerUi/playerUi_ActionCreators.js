@@ -1,6 +1,5 @@
 import ActionConstant from '../ActionConstants';
 import * as wargamesApi from "../../api/wargames_api";
-import {modalAction} from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
 import {addNotification} from "../Notification/Notification_ActionCreators";
 import isError from "../../Helpers/isError";
 
@@ -68,6 +67,15 @@ export const openTour = (isOpen) => ({
   isOpen,
 });
 
+export const openModal = (modalName) => ({
+  type: ActionConstant.OPEN_MODAL,
+  modalName,
+});
+
+export const closeModal = () => ({
+  type: ActionConstant.CLOSE_MODAL,
+});
+
 export const startListening = (dbName) => {
   return (dispatch) => {
     wargamesApi.listenForWargameChanges(dbName, dispatch);
@@ -101,7 +109,7 @@ export const nextGameTurn = (dbName) => {
 export const sendFeedbackMessage = (dbName, fromDetails, message) => {
   return async (dispatch) => {
     await wargamesApi.postFeedback(dbName, fromDetails, message);
-    dispatch(modalAction.close());
+    dispatch(closeModal());
   }
 };
 

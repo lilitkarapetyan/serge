@@ -38,6 +38,7 @@ export const initialState = {
   wargameInitiated: false,
   feedbackMessages: [],
   tourIsOpen: false,
+  modalOpened: null,
 };
 
 export const playerUiReducer = (state = initialState, action) => {
@@ -365,6 +366,14 @@ export const playerUiReducer = (state = initialState, action) => {
 
     case ActionConstant.OPEN_TOUR:
       newState.tourIsOpen = action.isOpen;
+      break;
+
+    case ActionConstant.OPEN_MODAL:
+      newState.modalOpened = action.modalName;
+      break;
+
+    case ActionConstant.CLOSE_MODAL:
+      newState.modalOpened = null;
       break;
 
     default:

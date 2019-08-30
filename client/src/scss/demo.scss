@@ -101,8 +101,13 @@
   }
 
   .flex-content-wrapper--welcome,
-  .flex-content--welcome {
+  .flex-content--welcome,
+  .message-feed {
     height: 45vh;
+  }
+
+  .message-feed.out-of-game-feed .message-list {
+    max-height: calc(45vh - 372px);
   }
 
   .flex-content--welcome {

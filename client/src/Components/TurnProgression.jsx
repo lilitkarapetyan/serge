@@ -7,8 +7,10 @@ import { faShoePrints } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ADJUDICATION_PHASE, PLANNING_PHASE } from "../consts";
 import GameControls from "../Components/GameControls";
-import { modalAction } from "../ActionsAndReducers/Modal/Modal_ActionCreators";
-import { openTour } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
+import {
+  openTour,
+  openModal
+} from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
 import { PlayerStateContext } from "../Store/PlayerUi";
 import "../scss/App.scss";
 
@@ -128,7 +130,8 @@ class TurnProgression extends Component {
   };
 
   showLessonsModal = () => {
-    this.props.dispatch(modalAction.open("lessons"));
+    const [ , dispatch ] = this.context;
+    dispatch(openModal("lessons"));
   };
 
   openTour = () => {
