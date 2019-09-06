@@ -6,7 +6,6 @@ export const currentViewURIReducer = (state = '/', action) => {
 
   switch (action.type) {
     case ActionConstant.SET_CURRENT_VIEW_FROM_URI:
-      window.history.pushState({}, '', action.payload);
       newState = action.payload;
       return newState;
 

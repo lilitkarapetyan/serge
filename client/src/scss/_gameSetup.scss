@@ -96,7 +96,6 @@
     width: 32px;
     height: 32px;
     margin: 0 20px;
-    //border-radius: 100%;
     align-self: center;
   }
 
@@ -105,17 +104,24 @@
     border: 1px solid black;
   }
 
+  .force-color-icon {
+    display: flex;
+
+    .link {
+      align-self: center;
+    }
+  }
+
+  .force-input-wrap {
+    display: flex;
+  }
+
   .force-button-wrap {
     flex-grow: 2;
 
     span {
       float: right;
       margin-left: 20px;
-    }
-
-    span:last-child {
-      float: left;
-      margin-left: 0;
     }
   }
 

@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import Badge from "react-bootstrap/Badge";
-import '../scss/App.scss';
 import moment from "moment";
 import classNames from "classnames";
+import "../scss/App.scss";
 
 class MessagesListChatChannel extends Component {
-
   render() {
-
     let messages = this.props.messages;
 
     return (

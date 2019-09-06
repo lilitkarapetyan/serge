@@ -9,7 +9,7 @@ import {
 import _ from "lodash";
 import uniqId from "uniqid";
 
-const initialState = {
+export const initialState = {
   selectedForce: '',
   forceColor: '',
   selectedRole: '',
@@ -38,19 +38,16 @@ const initialState = {
   wargameInitiated: false,
   feedbackMessages: [],
   tourIsOpen: false,
+  modalOpened: null,
 };
 
 export const playerUiReducer = (state = initialState, action) => {
-
   let newState = copyState(state);
-
   let messages;
   let channels = {};
 
   switch (action.type) {
-
     case ActionConstant.SET_CURRENT_WARGAME_PLAYER:
-
       newState.currentWargame = action.payload.name;
       newState.wargameTitle = action.payload.wargameTitle;
       newState.wargameInitiated = action.payload.wargameInitiated;
@@ -97,7 +94,6 @@ export const playerUiReducer = (state = initialState, action) => {
       break;
 
     case ActionConstant.SET_LATEST_WARGAME_MESSAGE:
-
       if (action.payload.hasOwnProperty('infoType')) {
         let message = {
           details: {
@@ -237,7 +233,6 @@ export const playerUiReducer = (state = initialState, action) => {
       break;
 
     case ActionConstant.SET_ALL_MESSAGES:
-
       messages = action.payload.map((message) => {
         if (message.hasOwnProperty('infoType')) {
           return {
@@ -328,7 +323,6 @@ export const playerUiReducer = (state = initialState, action) => {
       break;
 
     case ActionConstant.OPEN_MESSAGE:
-
       // mutating `messages` array - copyState at top of switch
       for (let i=0, len = newState.channels[action.payload.channel].messages.length ; i<len ; i++) {
         if (newState.channels[action.payload.channel].messages[i]._id === action.payload.message._id) {
@@ -350,7 +344,6 @@ export const playerUiReducer = (state = initialState, action) => {
       break;
 
     case ActionConstant.CLOSE_MESSAGE:
-
       // mutating messages array - copyState at top of switch
       for (let i=0, len = newState.channels[action.payload.channel].messages.length ; i<len ; i++) {
         if (newState.channels[action.payload.channel].messages[i]._id === action.payload.message._id) {
@@ -362,7 +355,6 @@ export const playerUiReducer = (state = initialState, action) => {
       break;
 
     case ActionConstant.MARK_ALL_AS_READ:
-
       newState.channels[action.channel].unreadMessageCount = 0;
 
       newState.channels[action.channel].messages.forEach((message) => {
@@ -373,12 +365,18 @@ export const playerUiReducer = (state = initialState, action) => {
       break;
 
     case ActionConstant.OPEN_TOUR:
-
       newState.tourIsOpen = action.isOpen;
       break;
 
-    default:
+    case ActionConstant.OPEN_MODAL:
+      newState.modalOpened = action.modalName;
+      break;
 
+    case ActionConstant.CLOSE_MODAL:
+      newState.modalOpened = null;
+      break;
+
+    default:
       return newState;
   }
 

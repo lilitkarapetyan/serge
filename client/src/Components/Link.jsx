@@ -1,16 +1,11 @@
-import React, { Component } from 'react';
-import {connect} from 'react-redux';
-
+import React, { Component } from "react";
+import {connect} from "react-redux";
 import { setCurrentViewFromURI } from "../ActionsAndReducers/setCurrentViewFromURI/setCurrentViewURI_ActionCreators"
-
-import '../scss/App.scss';
+import "../scss/App.scss";
 
 class Link extends Component {
-
   onClickHandler = (e) => {
-
     if (this.props.onClickHandler) this.props.onClickHandler();
-
     if (this.props.disable) return;
 
     const aNewTab = e.metaKey || e.ctrlKey;
@@ -23,18 +18,15 @@ class Link extends Component {
   };
 
   render() {
-
     return (
       <span href={this.props.href}
-            onClick={!this.props.disabled ? this.onClickHandler : () => false}
-            id={this.props.id ? this.props.id : null}
-            className={this.props.class ? this.props.class : null}>
-
+        onClick={!this.props.disabled ? this.onClickHandler : () => false}
+        id={this.props.id ? this.props.id : null}
+        className={this.props.class ? this.props.class : null}>
         {this.props.children}
       </span>
     );
   }
 }
-
 
 export default connect()(Link);

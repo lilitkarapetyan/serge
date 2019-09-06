@@ -1,12 +1,8 @@
-import React, { Component } from 'react';
-import '../scss/App.scss';
-
-import {
-  expiredStorage
-} from "../consts";
+import React, { Component } from "react";
+import { expiredStorage } from "../consts";
+import "../scss/App.scss";
 
 class MessagesListRenderProp extends Component {
-
   constructor(props) {
     super(props);
 
@@ -22,9 +18,7 @@ class MessagesListRenderProp extends Component {
     };
   }
 
-
   componentWillReceiveProps(nextProps, nextContext) {
-
     if (!this.props.allMarkedRead && nextProps.allMarkedRead) {
       this.setState({
         messages: this.state.messages.map((message) => ({...message, hasBeenRead: true})),
@@ -67,7 +61,6 @@ class MessagesListRenderProp extends Component {
   }
 
   render() {
-
     return (
       <div className="message-list">
         {this.props.render(this.state.messages)}

@@ -3,7 +3,7 @@ import moment from "moment";
 import ExpiredStorage from "expired-storage";
 
 export const serverPath = process.env.REACT_APP_SERVER_PATH;
-//export const serverPath = 'http://localhost:8080/';
+// export const serverPath = 'http://localhost:8080/';
 /*
 for development just create .env.local file in client folder and add line,
 it's under gitignore and you don't need change this value before every deployment:
@@ -38,6 +38,7 @@ export const EXPORT_MESSAGES_SUBROUTE = '/messages';
 export const EXPORT_FORCES_SUBROUTE = '/foeces';
 export const EXPORT_PRINT_SUBROUTE = '/print/:id';
 export const PLAYERUI_ROUTE = '/serge/player';
+export const DEMO_ROUTE = '/serge/demo';
 
 export const expiredStorage = new ExpiredStorage();
 export const LOCAL_STORAGE_TIMEOUT = 2592000; // one month
