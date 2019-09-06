@@ -94,6 +94,16 @@ class DemoScreen extends Component {
   constructor(props) {
     super(props);
     this.model = FlexLayout.Model.fromJson(json);
+    this.flexlayout = React.createRef()
+    this.timeId = undefined
+  }
+
+  componentDidMount() {
+    this.timeId = setTimeout(() => { this.flexlayout.current.forceUpdate(); });
+  }
+
+  componentWillUnmount() {
+    if(this.timeId) clearTimeout(this.timeId);
   }
 
   factory = (node) => {
@@ -112,6 +122,7 @@ class DemoScreen extends Component {
       <div className="flex-content-wrapper demo-content-wrapper">
         <div className="flex-content flex-content--fill">
           <FlexLayout.Layout
+            ref={this.flexlayout}
             model={this.model}
             factory={this.factory}
             classNameMapper={this.classNameMapper}
