@@ -1,6 +1,6 @@
 .demo-content-wrapper {
   #umpire {
-    width: 50vw;
+    width: 48vw;
     height: auto;
     padding: 5vh 0 5vh 0;
 
@@ -126,5 +126,41 @@
   .serge-logo {
     width: 150px;
     margin-right: 50px;
+  }
+
+  .game-designer-action {
+    .link + .link {
+      margin-left: 15px;
+    }
+  }
+}
+
+@media screen and (max-width: 1336px) {
+  .flex-content--welcome {
+    .contain-welcome-screen {
+      width: 90%;
+    }
+
+    .serge-logo {
+      width: 100px;
+    }
+
+    .welcome-desc {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .paragraph {
+        font-size: .75rem;
+      }
+    }
+  }
+
+  .demo-content-wrapper {
+    #umpire {
+      &.flex-landing-screen {
+        height: 40vh;
+      }
+    }
   }
 }
