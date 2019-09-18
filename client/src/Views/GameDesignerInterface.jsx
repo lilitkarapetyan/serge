@@ -85,16 +85,18 @@ class GameDesignerInterface extends Component {
         <SidebarAdmin activeTab={ADMIN_ROUTE} />
         <div className="flex-content flex-content--big flex-content--last">
           <h2>Games</h2>
-          <Link
-            href={GAME_SETUP_ROUTE}
-            class="link link--noIcon"
-            onClickHandler={this.createWargame}
-          >Create</Link>
-          <Link
-            href={ADMIN_ROUTE}
-            class="link link--noIcon link--secondary"
-            onClickHandler={this.clearWargames}
-          >Clear wargames</Link>
+          <div className="btn-group game-designer-action">
+            <Link
+                href={GAME_SETUP_ROUTE}
+                class="link link--noIcon"
+                onClickHandler={this.createWargame}
+            >Create</Link>
+            <Link
+                href={ADMIN_ROUTE}
+                class="link link--noIcon link--secondary"
+                onClickHandler={this.clearWargames}
+            >Clear wargames</Link>
+          </div>
           <WargameSearchList key="searchlist"
             listData={this.props.wargame.wargameList}
           />
