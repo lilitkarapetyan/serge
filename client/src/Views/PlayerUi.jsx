@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
-import '../scss/App.scss';
+import Tour from "reactour";
+import lineBreak from "../Helpers/splitNewLineBreak";
 import {
   getWargame,
   setForce,
@@ -13,25 +14,22 @@ import {
   openTour,
   initiateGame,
 } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
-import lineBreak from "../Helpers/splitNewLineBreak";
-import {
-  addNotification,
-} from "../ActionsAndReducers/Notification/Notification_ActionCreators";
+import { addNotification } from "../ActionsAndReducers/Notification/Notification_ActionCreators";
+import { getSergeGameInformation } from "../ActionsAndReducers/sergeInfo/sergeInfo_ActionCreators";
+import { umpireForceTemplate, expiredStorage, LOCAL_STORAGE_TIMEOUT } from "../consts";
+import { populateWargameStore } from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
+import { populateMessageTypesDb } from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
 import DropdownInput from "../Components/Inputs/DropdownInput";
-import GameChannels from "./GameChannels";
 import TextInput from "../Components/Inputs/TextInput";
-import {getSergeGameInformation} from "../ActionsAndReducers/sergeInfo/sergeInfo_ActionCreators";
-import {umpireForceTemplate, expiredStorage, LOCAL_STORAGE_TIMEOUT} from "../consts";
-import {populateWargameStore} from "../ActionsAndReducers/dbWargames/wargames_ActionCreators";
-import {populateMessageTypesDb} from "../ActionsAndReducers/dbMessageTypes/messageTypes_ActionCreators";
-import Tour from "reactour";
-
+import GameChannels from "./GameChannels";
+import { PlayerStateContext } from "../Store/PlayerUi";
+import '../scss/App.scss';
 
 class PlayerUi extends Component {
+  static contextType = PlayerStateContext;
 
   constructor(props) {
     super(props);
-
     this.state = {
       landingScreen: true,
       selectedWargame: '',
@@ -40,33 +38,32 @@ class PlayerUi extends Component {
       tourIsOpen: false,
     };
 
-
     this.props.dispatch(populateMessageTypesDb());
     this.props.dispatch(populateWargameStore());
     this.props.dispatch(getSergeGameInformation());
   };
 
-  componentWillReceiveProps(nextProps, nextContext) {
-    if (nextProps.playerUi.selectedForce && nextProps.playerUi.selectedRole && this.state.isTourOpen === undefined) {
-      this.setState({
-        tourIsOpen: expiredStorage.getItem(`${nextProps.playerUi.wargameTitle}-${nextProps.playerUi.selectedForce}-${nextProps.playerUi.selectedRole}-tourDone`) !== "done",
-      })
-    }
-
-    if (nextProps.playerUi.tourIsOpen !== this.props.playerUi.tourIsOpen) {
-      this.setState({
-        tourIsOpen: nextProps.playerUi.tourIsOpen,
-      })
+  componentDidUpdate() {
+    const [ state ] = this.context;
+    if(state.selectedForce && state.selectedRole) {
+      const storageTourIsOpen = expiredStorage.getItem(`${state.wargameTitle}-${state.selectedForce}-${state.selectedRole}-tourDone`) !== "done";
+      if (storageTourIsOpen !== this.state.tourIsOpen) {
+        this.setState({
+          tourIsOpen: storageTourIsOpen,
+        })
+      }
     }
   }
 
   updateSelectedWargame = (selectedWargame) => {
+    const [ , dispatch ] = this.context;
     this.setState({selectedWargame});
-    this.props.dispatch(getWargame(selectedWargame));
+    getWargame(selectedWargame)(dispatch);
   };
 
   goBack = () => {
-    this.props.dispatch(setForce(""));
+    const [ , dispatch ] = this.context;
+    dispatch(setForce(""));
   };
 
   setRolePassword = (value) => {
@@ -82,32 +79,33 @@ class PlayerUi extends Component {
   };
 
   checkPassword = () => {
+    const [ state, dispatch ] = this.context;
     let pass = this.state.rolePassword;
-
     let matchRole = (force) => force.roles.find((role) => role.password === pass);
-
-    let force = this.props.playerUi.allForces[_.findIndex(this.props.playerUi.allForces, matchRole)];
+    let force = state.allForces[_.findIndex(state.allForces, matchRole)];
 
     if (force === undefined) {
       this.props.dispatch(addNotification("Access code incorrect", "warning"));
-      this.props.dispatch(failedLoginFeedbackMessage(this.props.playerUi.currentWargame, pass));
+      failedLoginFeedbackMessage(state.currentWargame, pass);
       return;
     }
 
     let role = force.roles[_.findIndex(force.roles, (role) => role.password === pass)];
 
-    this.props.dispatch(setForce(force.uniqid));
-    this.props.dispatch(setRole(role));
-    this.props.dispatch(setAllTemplates(this.props.messageTypes.messages));
-    this.props.dispatch(startListening(this.props.playerUi.currentWargame));
+    dispatch(setForce(force.uniqid));
+    dispatch(setRole(role));
+    dispatch(setAllTemplates(this.props.messageTypes.messages));
+    startListening(state.currentWargame)(dispatch);
   };
 
   roleOptions() {
-    return this.props.playerUi.allForces.map((force) => ({name: force.name, roles: force.roles}));
+    const [ state ] = this.context;
+    return state.allForces.map((force) => ({name: force.name, roles: force.roles}));
   }
 
   showHideForceObjectives = () => {
-    this.props.dispatch(showHideObjectives());
+    const [ , dispatch ] = this.context;
+    dispatch(showHideObjectives());
   };
 
   enterSerge = () => {
@@ -117,25 +115,32 @@ class PlayerUi extends Component {
   };
 
   closeTour = () => {
-    expiredStorage.setItem(`${this.props.playerUi.wargameTitle}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}-tourDone`, "done", LOCAL_STORAGE_TIMEOUT);
-    this.props.dispatch(openTour(false));
+    const [ state, dispatch ] = this.context;
+    expiredStorage.setItem(`${state.wargameTitle}-${state.selectedForce}-${state.selectedRole}-tourDone`, "done", LOCAL_STORAGE_TIMEOUT);
+    dispatch(openTour(false));
   };
 
   initiateGameplay = () => {
-    this.props.dispatch(initiateGame(this.props.playerUi.currentWargame));
+    const [ state, dispatch ] = this.context;
+    initiateGame(state.currentWargame)(dispatch);
   };
 
   render() {
+    const [ state ] = this.context;
 
     if (this.state.landingScreen) {
       return (
         <div className="flex-content-wrapper flex-content-wrapper--welcome">
           <div className="flex-content flex-content--welcome">
-            <div className="flex-content--center">
-              <img className="serge-logo" src={this.props.gameInfo.imageUrl} alt="Serge gaming" />
-              <h1>{this.props.gameInfo.title}</h1>
-              {lineBreak(this.props.gameInfo.description)}
-              <button name="play" className="btn btn-action btn-action--primary" onClick={this.enterSerge}>Play</button>
+            <div className="flex-content--center contain-welcome-screen">
+              <div className="welcome-logo">
+                <img className="serge-logo" src={this.props.gameInfo.imageUrl} alt="Serge gaming" />
+              </div>
+              <div className="welcome-desc">
+                <h1>{this.props.gameInfo.title}</h1>
+                {lineBreak(this.props.gameInfo.description)}
+                <button name="play" className="btn btn-action btn-action--primary" onClick={this.enterSerge}>Play</button>
+              </div>
             </div>
           </div>
         </div>
@@ -182,7 +187,7 @@ class PlayerUi extends Component {
       },
     ];
 
-    if (this.props.playerUi.selectedForce === umpireForceTemplate.uniqid && this.props.playerUi.controlUi && !this.props.playerUi.wargameInitiated) {
+    if (state.selectedForce === umpireForceTemplate.uniqid && state.controlUi && !state.wargameInitiated) {
       return (
         <div className="flex-content-wrapper">
           <div className="pre-start-screen">
@@ -192,7 +197,7 @@ class PlayerUi extends Component {
       )
     }
 
-    if (this.props.playerUi.selectedForce && this.props.playerUi.selectedRole && !this.props.playerUi.wargameInitiated) {
+    if (state.selectedForce && state.selectedRole && !state.wargameInitiated) {
       return (
         <div className="flex-content-wrapper">
           <div className="pre-start-screen">
@@ -206,7 +211,7 @@ class PlayerUi extends Component {
       )
     }
 
-    if (this.props.playerUi.selectedForce && this.props.playerUi.selectedRole) {
+    if (state.selectedForce && state.selectedRole) {
       return (
         <>
           <div className="flex-content-wrapper" data-tour="first-step">
@@ -228,8 +233,8 @@ class PlayerUi extends Component {
     return (
       <div className="flex-content-wrapper flex-content-wrapper--welcome">
         <div className="flex-content flex-content--welcome">
-          {!this.props.playerUi.selectedForce && !this.props.playerUi.selectedRole &&
-            <div className="flex-content--center">
+          {!state.selectedForce && !state.selectedRole &&
+            <div className={`flex-content--center ${this.state.selectedWargame && state.showAccessCodes ? 'has-demo-passwords': ''}`}>
               <h1>Set wargame</h1>
               <DropdownInput
                 data={this.state.selectedWargame}
@@ -245,7 +250,7 @@ class PlayerUi extends Component {
                   data={this.state.rolePassword || ''}
                 />
               </div>
-              {this.state.selectedWargame && this.props.playerUi.showAccessCodes &&
+              {this.state.selectedWargame && state.showAccessCodes &&
                 <div className="demo-passwords">
                   <h3>Not visible in production</h3>
                   {this.roleOptions().map((force) => {
@@ -270,8 +275,7 @@ class PlayerUi extends Component {
   }
 }
 
-const mapStateToProps = ({ playerUi, wargame, messageTypes, gameInfo }) => ({
-  playerUi,
+const mapStateToProps = ({ wargame, messageTypes, gameInfo }) => ({
   wargame,
   messageTypes,
   gameInfo,

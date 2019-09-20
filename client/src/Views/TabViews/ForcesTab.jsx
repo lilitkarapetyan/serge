@@ -1,6 +1,18 @@
-import React, { Component } from 'react';
-import {connect} from "react-redux";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import uniqid from "uniqid";
+import classNames from "classnames";
+import _ from "lodash";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { forceTemplate } from "../../consts";
+import checkUnique from "../../Helpers/checkUnique";
 import TabsSearchList from "../../Components/TabsSearchList";
+import TextArea from "../../Components/Inputs/TextArea";
+import RemovableGroupItem from "../../Components/Layout/RemovableGroupItem";
+import TextInput from "../../Components/Inputs/TextInput";
+import { addNotification } from "../../ActionsAndReducers/Notification/Notification_ActionCreators";
+import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
 import {
   setSelectedForce,
   saveForce,
@@ -9,20 +21,7 @@ import {
   setTabUnsaved,
   setTabSaved,
 } from "../../ActionsAndReducers/dbWargames/wargames_ActionCreators";
-import '../../scss/App.scss';
-import TextArea from "../../Components/Inputs/TextArea";
-import RemovableGroupItem from "../../Components/Layout/RemovableGroupItem";
-import TextInput from "../../Components/Inputs/TextInput";
-import uniqid from "uniqid";
-
-import {forceTemplate} from "../../consts";
-import _ from "lodash";
-import checkUnique from "../../Helpers/checkUnique";
-import {addNotification} from "../../ActionsAndReducers/Notification/Notification_ActionCreators";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTrash} from "@fortawesome/free-solid-svg-icons";
-import {modalAction} from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
-import classNames from "classnames";
+import "../../scss/App.scss";
 
 class ForcesTab extends Component {
 
@@ -193,21 +192,25 @@ class ForcesTab extends Component {
       <div className="flex-content--fill forcesTab">
 
         <div className="flex-content flex-content--row">
-          <TextInput
-            name="force-name"
-            id="editable-title"
-            updateStore={this.updateForceName}
-            options={{numInput: false}}
-            data={forceName}
-          />
+          <div className="force-input-wrap">
+            <TextInput
+                name="force-name"
+                id="editable-title"
+                updateStore={this.updateForceName}
+                options={{numInput: false}}
+                data={forceName}
+            />
 
-          <div className="force-color" style={{background: forceColor}} onClick={this.toggleColorPicker} />
-          <img className="force-icon" src={forceIcon} alt="" />
+            <div className="force-color-icon">
+              <div className="force-color" style={{background: forceColor}} onClick={this.toggleColorPicker} />
+              <img className="force-icon" src={forceIcon} alt="" />
+              <span className="link link--secondary link--noIcon" onClick={this.openIconModal}>Change icon</span>
+            </div>
+          </div>
 
           <div className="force-button-wrap">
             <span className="link link--noIcon" onClick={this.saveForce}>save force</span>
             <span className={classNames({"link": true, "link--secondary": true, "link--disabled": isUmpire})} onClick={this.deleteForce}><FontAwesomeIcon icon={faTrash} />Delete</span>
-            <span className="link link--secondary link--noIcon" onClick={this.openIconModal}>Change icon</span>
           </div>
         </div>
 

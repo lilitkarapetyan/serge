@@ -38,9 +38,9 @@ class JsonCreator extends Component {
     }
 
     if (
-      nextProps.umpireMenu.selectedSchemaID.length > 0 &&
-      nextProps.messageTypes &&
-      nextProps.messageTypes.messages.length > 0
+        nextProps.umpireMenu.selectedSchemaID.length > 0 &&
+        nextProps.messageTypes &&
+        nextProps.messageTypes.messages.length > 0
     ) {
 
       if (this.editor) return;
@@ -52,9 +52,9 @@ class JsonCreator extends Component {
     }
 
     if (
-      nextProps.messages.messagePreviewId.length > 0 &&
-      nextProps.messageTypes.messages.length > 0 &&
-      !nextProps.disabled
+        nextProps.messages.messagePreviewId.length > 0 &&
+        nextProps.messageTypes.messages.length > 0 &&
+        !nextProps.disabled
     ) {
 
       const data = nextProps.messages.messages.find(function(mes) {
@@ -77,15 +77,18 @@ class JsonCreator extends Component {
 
 
   render() {
+    const SaveMessage = () => (
+      this.editor ? (
+        <div className="button-wrap">
+          { !this.props.disabled ? <span onClick={this.saveMessage} className="link"><FontAwesomeIcon icon={faSave} />Save Message</span> : null }
+        </div>
+      ) : null
+    );
     return (
       <>
-        <div className="button-wrap">
-          {!this.props.disabled ? <span onClick={this.saveMessage} className="link"><FontAwesomeIcon icon={faSave} />Save Message</span> : null }
-        </div>
-          <div id="preview-editor" ref={this.editorPreviewRef}></div>
-        <div className="button-wrap">
-          {!this.props.disabled ? <span onClick={this.saveMessage} className="link"><FontAwesomeIcon icon={faSave} />Save Message</span> : null }
-        </div>
+        <SaveMessage />
+        <div id="preview-editor" ref={this.editorPreviewRef}></div>
+        <SaveMessage />
       </>
     );
   }

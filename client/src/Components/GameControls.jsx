@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import '../scss/App.scss';
-import {connect} from "react-redux";
-
-import {nextGameTurn} from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
+import React, { Component } from "react";
+import { nextGameTurn } from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
+import { PlayerStateContext } from "../Store/PlayerUi";
+import "../scss/App.scss";
 
 class GameControls extends Component {
+  static contextType = PlayerStateContext;
 
   nextTurn = () => {
-    // this.props.clearInterval();
-    this.props.dispatch(nextGameTurn(this.props.playerUi.currentWargame));
+    const [ state ] = this.context;
+    nextGameTurn(state.currentWargame)();
   };
 
   render() {
@@ -20,9 +20,4 @@ class GameControls extends Component {
   }
 }
 
-
-const mapStateToProps = ({playerUi}) => ({
-  playerUi
-});
-
-export default connect(mapStateToProps)(GameControls);
+export default GameControls;

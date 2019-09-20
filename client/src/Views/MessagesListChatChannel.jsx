@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
-import { connect } from "react-redux";
+import React, { Component } from "react";
 import Badge from "react-bootstrap/Badge";
-import '../scss/App.scss';
 import moment from "moment";
-import classNames from "classnames"
+import classNames from "classnames";
+import { PlayerStateContext } from "../Store/PlayerUi";
+import "../scss/App.scss";
 
 class MessagesListChatChannel extends Component {
+  static contextType = PlayerStateContext;
   constructor(props) {
     super(props);
     this.state = {
@@ -14,7 +15,8 @@ class MessagesListChatChannel extends Component {
   }
 
   componentDidMount() {
-    const { allForces, selectedForce } = this.props.playerUi || {};
+    const [ state ] = this.context;
+    const { allForces, selectedForce } = state || {};
       if( allForces && selectedForce ) {
           this.state.force = {
               ...this.state.force,
@@ -59,8 +61,4 @@ class MessagesListChatChannel extends Component {
   }
 }
 
-const mapStateToProps = ({ playerUi }) => ({
-    playerUi,
-});
-
-export default connect(mapStateToProps)(MessagesListChatChannel);
+export default MessagesListChatChannel;

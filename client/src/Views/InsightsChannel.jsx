@@ -1,42 +1,35 @@
-import React, { Component } from 'react';
-import { connect } from "react-redux";
-import {
-  getAllWargameFeedback,
-} from "../ActionsAndReducers/playerUi/playerUi_ActionCreators";
-import '../scss/App.scss';
+import React, { Component } from "react";
+import { LOCAL_STORAGE_TIMEOUT, expiredStorage } from "../consts";
+import { PlayerStateContext } from "../Store/PlayerUi";
 import MessagesListInsightsChannel from "./MessagesListInsightsChannel";
 import MessagesListRenderProp from "./MessagesListRenderProp";
-
-import {LOCAL_STORAGE_TIMEOUT, expiredStorage} from "../consts";
+import "../scss/App.scss";
 
 class InsightsChannel extends Component {
+  static contextType = PlayerStateContext;
 
-  constructor(props) {
+  constructor(props, context) {
     super(props);
-
+    const [ state ] = context;
     this.state = {
-      activeTab: Object.keys(this.props.playerUi.channels)[0],
+      activeTab: Object.keys(state.channels)[0],
       allMarkedRead: false,
     };
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
-    let channelLength = Object.keys(this.props.playerUi.feedbackMessages).length;
-    let nextChannelLength = Object.keys(nextProps.playerUi.feedbackMessages).length;
+  componentDidMount() {
+    const [ state ] = this.context;
+    let channelLength = Object.keys(state.feedbackMessages).length;
 
-    if (channelLength !== nextChannelLength) {
+    if (channelLength) {
       this.setState({allMarkedRead: false});
     }
-
-  }
-
-  componentWillMount() {
-    this.props.dispatch(getAllWargameFeedback(this.props.playerUi.currentWargame));
   }
 
   markAllAsRead = () => {
-    this.props.playerUi.feedbackMessages.forEach((message) => {
-      expiredStorage.setItem(this.props.playerUi.currentWargame + message._id, "read", LOCAL_STORAGE_TIMEOUT);
+    const [ state ] = this.context;
+    state.feedbackMessages.forEach((message) => {
+      expiredStorage.setItem(state.currentWargame + message._id, "read", LOCAL_STORAGE_TIMEOUT);
     });
     this.setState({
       allMarkedRead: true,
@@ -44,11 +37,13 @@ class InsightsChannel extends Component {
   };
 
   render() {
+    const [ state ] = this.context;
+
     return (
       <MessagesListRenderProp
         curChannel={"feedback_messages"}
-        messages={this.props.playerUi.feedbackMessages}
-        userId={`${this.props.playerUi.wargameTitle}-${this.props.playerUi.selectedForce}-${this.props.playerUi.selectedRole}`}
+        messages={state.feedbackMessages}
+        userId={`${state.wargameTitle}-${state.selectedForce}-${state.selectedRole}`}
         allMarkedRead={this.state.allMarkedRead}
         render={messages => (
           <MessagesListInsightsChannel
@@ -61,8 +56,4 @@ class InsightsChannel extends Component {
   }
 }
 
-const mapStateToProps = ({ playerUi }) => ({
-  playerUi,
-});
-
-export default connect(mapStateToProps)(InsightsChannel);
+export default InsightsChannel;

@@ -1,15 +1,18 @@
-import React, {Component} from 'react';
-import ModalWrapper from './ModalWrapper';
-import "../../scss/App.scss";
-import { connect } from 'react-redux';
-import { modalAction } from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
-import {faCommentAlt} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {sendFeedbackMessage} from "../../ActionsAndReducers/playerUi/playerUi_ActionCreators";
+import React, { Component } from "react";
+import { faCommentAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ModalWrapper from "./ModalWrapper";
 import TextArea from "../Inputs/TextArea";
 import TextInput from "../Inputs/TextInput";
+import {
+  sendFeedbackMessage,
+  closeModal
+} from "../../ActionsAndReducers/playerUi/playerUi_ActionCreators";
+import { PlayerStateContext } from "../../Store/PlayerUi";
+import "../../scss/App.scss";
 
 class InsightsModal extends Component {
+  static contextType = PlayerStateContext;
 
   constructor(props) {
     super(props);
@@ -21,7 +24,8 @@ class InsightsModal extends Component {
   }
 
   hideModal = () => {
-    this.props.dispatch(modalAction.close());
+    const [ , dispatch ] = this.context;
+    dispatch(closeModal());
   };
 
   setName = (val) => {
@@ -37,21 +41,23 @@ class InsightsModal extends Component {
   };
 
   send = () => {
-    let forceName = this.props.playerUi.allForces.find((force) => force.uniqid === this.props.playerUi.selectedForce).name;
+    const [ state, dispatch ] = this.context;
+    let forceName = state.allForces.find((force) => force.uniqid === state.selectedForce).name;
 
     let from = {
       force: forceName,
-      forceColor: this.props.playerUi.forceColor,
-      role: this.props.playerUi.selectedRole,
+      forceColor: state.forceColor,
+      role: state.selectedRole,
       name: this.state.name,
     };
 
-    this.props.dispatch(sendFeedbackMessage(this.props.playerUi.currentWargame, from, this.state.message))
+    sendFeedbackMessage(state.currentWargame, from, this.state.message)(dispatch);
   };
 
   render() {
+    const [ state ] = this.context;
 
-    if (!this.props.currentModal.open) return false;
+    if (!state.modalOpened) return false;
 
     return (
       <ModalWrapper>
@@ -72,7 +78,6 @@ class InsightsModal extends Component {
           </div>
           <div className="text-input-wrap">
             <TextInput
-              id="name-input"
               className="material-input"
               label="Name: optional"
               updateStore={this.setName}
@@ -90,9 +95,4 @@ class InsightsModal extends Component {
   }
 }
 
-const mapStateToProps = ({ playerUi, currentModal }) => ({
-  playerUi,
-  currentModal
-});
-
-export default connect(mapStateToProps)(InsightsModal);
+export default InsightsModal;

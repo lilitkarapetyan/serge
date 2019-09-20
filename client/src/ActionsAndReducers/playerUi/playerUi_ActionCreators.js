@@ -1,6 +1,5 @@
 import ActionConstant from '../ActionConstants';
 import * as wargamesApi from "../../api/wargames_api";
-import {modalAction} from "../../ActionsAndReducers/Modal/Modal_ActionCreators";
 import {addNotification} from "../Notification/Notification_ActionCreators";
 import isError from "../../Helpers/isError";
 
@@ -68,6 +67,14 @@ export const openTour = (isOpen) => ({
   isOpen,
 });
 
+export const openModal = (modalName) => ({
+  type: ActionConstant.OPEN_MODAL,
+  modalName,
+});
+
+export const closeModal = () => ({
+  type: ActionConstant.CLOSE_MODAL,
+});
 
 export const startListening = (dbName) => {
   return (dispatch) => {
@@ -77,18 +84,14 @@ export const startListening = (dbName) => {
 
 export const initiateGame = (dbName) => {
   return async (dispatch) => {
-
     let wargame = await wargamesApi.initiateGame(dbName);
-
     dispatch(setCurrentWargame(wargame));
   }
 };
 
 export const getWargame = (gamePath) => {
   return async (dispatch) => {
-
     let wargame = await wargamesApi.getWargame(gamePath);
-
     if (isError(wargame)) {
       dispatch(addNotification("Serge disconnected", "error"));
     } else {
@@ -98,26 +101,21 @@ export const getWargame = (gamePath) => {
 };
 
 export const nextGameTurn = (dbName) => {
-  return async (dispatch) => {
+  return async () => {
     await wargamesApi.nextGameTurn(dbName);
   }
 };
 
-
 export const sendFeedbackMessage = (dbName, fromDetails, message) => {
   return async (dispatch) => {
-
     await wargamesApi.postFeedback(dbName, fromDetails, message);
-
-    dispatch(modalAction.close());
+    dispatch(closeModal());
   }
 };
 
 export const failedLoginFeedbackMessage = (dbName, password) => {
   return async () => {
-
     let address = await wargamesApi.getIpAddress();
-
     let from = {
       force: address.ip,
       forceColor: '#970000',
@@ -125,36 +123,29 @@ export const failedLoginFeedbackMessage = (dbName, password) => {
       name: password,
     };
     await wargamesApi.postFeedback(dbName, from, "A failed login attempt has been made.")
-
   }
 };
 
 export const saveMessage = (dbName, details, message) => {
   return async () => {
-
     await wargamesApi.postNewMessage(dbName, details, message);
-
   }
 };
 
-
 export const getAllWargameFeedback = (dbName) => {
   return async (dispatch) => {
-
     let messages = await wargamesApi.getAllMessages(dbName);
     messages = messages.filter((message) => message.hasOwnProperty('feedback'));
-
     dispatch(setWargameFeedback(messages));
   }
 };
 
 export const getAllWargameMessages = (name) => {
   return async (dispatch) => {
-
-    let messages = await wargamesApi.getAllMessages(name);
-
-    messages = messages.filter((message) => !message.hasOwnProperty('feedback'));
-
-    dispatch(setWargameMessages(messages));
+    let allMessages = await wargamesApi.getAllMessages(name), messages, feedback;
+    messages = allMessages.filter((message) => !message.hasOwnProperty('feedback'));
+    feedback = allMessages.filter((message) => message.hasOwnProperty('feedback'));
+    await dispatch(setWargameMessages(messages));
+    await dispatch(setWargameFeedback(feedback));
   }
 };
