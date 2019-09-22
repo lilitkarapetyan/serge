@@ -20,6 +20,8 @@ const cors = require('cors');
 
 const app = express();
 
+const clientPublicPath = "/client/build";
+
 app.use(cors(corsOptions));
 
 if (!fs.existsSync(dbDir)) {
@@ -88,11 +90,20 @@ app.post('/saveLogo', (req, res) => {
 
 });
 
+if(remoteServer) {
+  app.get(clientPublicPath + '/gconfig.js', (req, res) => {
+    res.type('.js').send(`
+      window.G_CONFIG = {
+        REACT_APP_SERVER_PATH: "${remoteServer}"
+      }
+    `);
+  });
+}
 
 app.use(express.static(path.join(__dirname)));
 
 app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+  res.sendFile(path.join(__dirname + clientPublicPath + '/index.html'));
 });
 
 app.listen(port);
